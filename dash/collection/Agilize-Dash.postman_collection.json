@@ -1,0 +1,525 @@
+{
+	"info": {
+		"_postman_id": "79b5c75a-7a08-4348-9df7-a917760d9647",
+		"name": "Agilize-Dash",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6366578"
+	},
+	"item": [
+		{
+			"name": "habilidade-controller",
+			"item": [
+				{
+					"name": "salvar",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.unset('habilidades-id');\r",
+									"var response = JSON.parse(responseBody);\r",
+									"pm.collectionVariables.set(\"habilidades-id\",response.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\r\n    \"nome\": \"{{$randomProductName}}\",\r\n    \"backend\": \"true\"\r\n  }"
+						},
+						"url": {
+							"raw": "{{url}}/habilidades",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"habilidades"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obter por id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/habilidades/{{habilidades-id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"habilidades",
+								"{{habilidades-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obter todos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/habilidades",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"habilidades"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obter todos Copy",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/habilidades/{{habilidades-id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"habilidades",
+								"{{habilidades-id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "colaborador-controller",
+			"item": [
+				{
+					"name": "salvar",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.unset('colaborador-id');\r",
+									"var response = JSON.parse(responseBody);\r",
+									"pm.collectionVariables.set(\"colaborador-id\",response.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"{{$randomFullName}}\",\r\n  \"email\": \"{{$randomEmail}}\",\r\n  \"github\": \"{{$randomUserName}}\",\r\n  \"habilidades\": [\r\n    {\r\n      \"id\": 1\r\n    }\r\n  ]\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/colaborador",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"colaborador"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obter por id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/colaborador/{{colaborador-id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"colaborador",
+								"{{colaborador-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obter todos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/colaborador",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"colaborador"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "competenciaController",
+			"item": [
+				{
+					"name": "salvar",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.unset('competencia-id');\r",
+									"var response = JSON.parse(responseBody);\r",
+									"pm.collectionVariables.set(\"competencia-id\",response.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"{{$randomCompanyName}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/competencia",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"competencia"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obter por id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/competencia/{{competencia-id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"competencia",
+								"{{competencia-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obter todos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/competencia",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"competencia"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "salvar /acoes/colaborador",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"competencia\": {\r\n    \"id\": {{competencia-id}}\r\n  },\r\n  \"colaborador\": {\r\n    \"id\": {{colaborador-id}}\r\n  },\r\n  \"progresso\": 10\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/competencia/colaborador",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"competencia",
+								"colaborador"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/colaborador/{id}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/competencia/colaborador/{{colaborador-id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"competencia",
+								"colaborador",
+								"{{colaborador-id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "acoesController",
+			"item": [
+				{
+					"name": "salvar",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.unset('acoes-id');\r",
+									"var response = JSON.parse(responseBody);\r",
+									"pm.collectionVariables.set(\"acoes-id\",response.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"{{$randomCompanyName}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/acoes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"acoes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obter por id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/acoes/{{acoes-id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"acoes",
+								"{{acoes-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obter todos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/acoes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"acoes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "salvar /acoes/colaborador",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"acao\": {\r\n    \"id\":1\r\n  },\r\n  \"colaborador\": {\r\n    \"id\": {{colaborador-id}}\r\n  },\r\n  \"progresso\": 10\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/acoes/colaborador",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"acoes",
+								"colaborador"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/colaborador/{id}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/acoes/colaborador/{{colaborador-id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"acoes",
+								"colaborador",
+								"{{colaborador-id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://localhost:8091",
+			"type": "string"
+		},
+		{
+			"key": "habilidades-id",
+			"value": ""
+		},
+		{
+			"key": "colaborador-id",
+			"value": ""
+		},
+		{
+			"key": "acoes-id",
+			"value": ""
+		},
+		{
+			"key": "competencia-id",
+			"value": ""
+		}
+	]
+}
