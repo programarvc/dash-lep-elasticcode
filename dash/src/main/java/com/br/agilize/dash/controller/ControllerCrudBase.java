@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 public abstract class ControllerCrudBase<T> {
-    private ServiceCrudBase service;
+    private ServiceCrudBase<T> service;
 
-    public ControllerCrudBase(ServiceCrudBase service) {
+    public ControllerCrudBase(ServiceCrudBase<T> service) {
         this.service = service;
     }
 
