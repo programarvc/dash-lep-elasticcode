@@ -3,11 +3,13 @@
         <div class="col-md-5">
             <div class="user-identification">
                 <div class="photo">
-                    <img src="./assets/images/igor.png" alt="foto do coder">
+                    <img src="./assets/images/allyson.png" alt="foto do colaborador">
                 </div>
                 <div class="personal-data">
-                    <span class="name">Igor Andrade</span>
-                    <span class="occupation">Frontend - Angular - React - React Native</span>
+                    <span class="name">{{currentColaborador.nome}}</span>
+                    <span class="occupation">
+                        <span *ngFor="let habilidade of currentColaborador.habilidades; let isFirst = first">{{ isFirst ? '' : '- ' }} {{habilidade.nome}}</span>
+                    </span>
                 </div>
             </div>
         </div>
@@ -20,32 +22,9 @@
                                 Coders
                             </button>
                             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                                <button ngbDropdownItem>
-                                    <a routerLink="/" [routerLinkActive]= "['active']" [routerLinkActiveOptions]= "{exact:true}">Allyson Santana</a>
-                               </button>
-                                <button ngbDropdownItem>
-                                    <a routerLink="/jakeline" [routerLinkActive]= "['active']" [routerLinkActiveOptions]= "{exact:true}">Jakeline</a>
-                                </button>
-                                <button ngbDropdownItem>
-                                    <a routerLink="/leandro" [routerLinkActive]= "['active']" [routerLinkActiveOptions]= "{exact:true}">Leandro Lucas Gonçalves</a>
-                                </button>
-                                <button ngbDropdownItem>
-                                    <a routerLink="/emilly" [routerLinkActive]= "['active']" [routerLinkActiveOptions]= "{exact:true}">Emilly Victória</a>
-                                </button>
-                                <button ngbDropdownItem>
-                                    <a routerLink="/roberto" [routerLinkActive]= "['active']" [routerLinkActiveOptions]= "{exact:true}">Roberto</a>
-                                </button>
-                                <button ngbDropdownItem>
-                                    <a routerLink="/mavis" [routerLinkActive]= "['active']" [routerLinkActiveOptions]= "{exact:true}">Mavis</a>
-                                </button>
-                                <button ngbDropdownItem>
-                                    <a routerLink="/tiagor" [routerLinkActive]= "['active']" [routerLinkActiveOptions]= "{exact:true}">Thiago Rodrigues</a>
-                                </button>
-                                <button ngbDropdownItem>
-                                    <a routerLink="/monaliza" [routerLinkActive]= "['active']" [routerLinkActiveOptions]= "{exact:true}">Monaliza Lorens</a>
-                                </button>
-                                <button ngbDropdownItem>
-                                    <a routerLink="/igor" [routerLinkActive]= "['active']" [routerLinkActiveOptions]= "{exact:true}">Igor Andrade</a>
+                                <button ngbDropdownItem *ngFor="let colaborador of colaboradores">
+                                    <a routerLink="{{'/' + colaborador.id}}" [routerLinkActive]="['active']"
+                                        [routerLinkActiveOptions]="{exact:true}">{{colaborador.nome}}</a>
                                 </button>
                             </div>
                         </div>
@@ -126,7 +105,7 @@
                                 <td>
                                     <div class="progress-bar-content">
                                         <div class="progress-bar">
-                                            <div class="progress-goal" style="width: 50%">
+                                            <div class="progress-goal" style="width: 70%">
                                                 <div class="goal-value" style="left: 96.5%">
                                                     <span>10</span>
                                                 </div>
@@ -140,7 +119,7 @@
                                 <td>
                                     <div class="progress-bar-content">
                                         <div class="progress-bar">
-                                            <div class="progress-goal" style="width: 90%">
+                                            <div class="progress-goal" style="width: 80%">
                                                 <div class="goal-value" style="left: 96.5%">
                                                     <span>10</span>
                                                 </div>
@@ -168,7 +147,7 @@
                                 <td>
                                     <div class="progress-bar-content">
                                         <div class="progress-bar">
-                                            <div class="progress-goal" style="width: 100%">
+                                            <div class="progress-goal" style="width: 90%">
                                                 <div class="goal-value" style="left: 96.5%">
                                                     <span>10</span>
                                                 </div>
@@ -182,7 +161,7 @@
                                 <td>
                                     <div class="progress-bar-content">
                                         <div class="progress-bar">
-                                            <div class="progress-goal" style="width: 80%">
+                                            <div class="progress-goal" style="width: 70%">
                                                 <div class="goal-value" style="left: 96.5%">
                                                     <span>10</span>
                                                 </div>
@@ -210,7 +189,7 @@
                                 <td>
                                     <div class="progress-bar-content">
                                         <div class="progress-bar">
-                                            <div class="progress-goal" style="width: 70%">
+                                            <div class="progress-goal" style="width: 80%">
                                                 <div class="goal-value" style="left: 96.5%">
                                                     <span>10</span>
                                                 </div>
@@ -238,7 +217,7 @@
                                 <td>
                                     <div class="progress-bar-content">
                                         <div class="progress-bar">
-                                            <div class="progress-goal" style="width: 80%">
+                                            <div class="progress-goal" style="width: 90%">
                                                 <div class="goal-value" style="left: 96.5%">
                                                     <span>10</span>
                                                 </div>
@@ -266,7 +245,7 @@
                                 <td>
                                     <div class="progress-bar-content">
                                         <div class="progress-bar">
-                                            <div class="progress-goal" style="width: 80%">
+                                            <div class="progress-goal" style="width: 100%">
                                                 <div class="goal-value" style="left: 96.5%">
                                                     <span>10</span>
                                                 </div>
@@ -280,7 +259,7 @@
                                 <td>
                                     <div class="progress-bar-content">
                                         <div class="progress-bar">
-                                            <div class="progress-goal" style="width: 90%">
+                                            <div class="progress-goal" style="width: 80%">
                                                 <div class="goal-value" style="left: 96.5%">
                                                     <span>10</span>
                                                 </div>
@@ -294,7 +273,7 @@
                                 <td>
                                     <div class="progress-bar-content">
                                         <div class="progress-bar">
-                                            <div class="progress-goal" style="width: 60%">
+                                            <div class="progress-goal" style="width: 70%">
                                                 <div class="goal-value" style="left: 96.5%">
                                                     <span>10</span>
                                                 </div>
@@ -322,7 +301,7 @@
                                 <td>
                                     <div class="progress-bar-content">
                                         <div class="progress-bar">
-                                            <div class="progress-goal" style="width: 80%">
+                                            <div class="progress-goal" style="width: 90%">
                                                 <div class="goal-value" style="left: 96.5%">
                                                     <span>10</span>
                                                 </div>
@@ -336,7 +315,7 @@
                                 <td>
                                     <div class="progress-bar-content">
                                         <div class="progress-bar">
-                                            <div class="progress-goal" style="width: 100%">
+                                            <div class="progress-goal" style="width: 90%">
                                                 <div class="goal-value" style="left: 96.5%">
                                                     <span>10</span>
                                                 </div>
@@ -350,7 +329,7 @@
                                 <td>
                                     <div class="progress-bar-content">
                                         <div class="progress-bar">
-                                            <div class="progress-goal" style="width: 90%">
+                                            <div class="progress-goal" style="width: 100%">
                                                 <div class="goal-value" style="left: 96.5%">
                                                     <span>10</span>
                                                 </div>
@@ -364,7 +343,7 @@
                                 <td>
                                     <div class="progress-bar-content">
                                         <div class="progress-bar">
-                                            <div class="progress-goal" style="width: 90%">
+                                            <div class="progress-goal" style="width: 80%">
                                                 <div class="goal-value" style="left: 96.5%">
                                                     <span>10</span>
                                                 </div>
@@ -382,15 +361,17 @@
             <div class="card">
                 <h2>Projeção para conclusão das metas</h2>
                 <img class="img-fluid" src="./assets/images/ampulheta.png" alt="ampulheta">
-                <span>2 semanas e 3 dias</span>
+                <span>7 semanas e 4 dias</span>
             </div>
             <div class="card">
                 <h2>Tempo médio de conclusão por curso</h2>
                 <div class="progress-circle circle-1">
                     <span>1h 30m</span>
                     <svg class="circle-container" viewBox="2 -2 28 36" xmlns="http://www.w3.org/2000/svg">
-                        <circle class="circle-container__background" r="16" cx="16" cy="16" shape-rendering="geometricPrecision"></circle>
-                        <circle class="circle-container__progress circle-1" r="16" cx="16" cy="16" style="stroke-dashoffset: 20" shape-rendering="geometricPrecision"></circle>
+                        <circle class="circle-container__background" r="16" cx="16" cy="16"
+                            shape-rendering="geometricPrecision"></circle>
+                        <circle class="circle-container__progress circle-1" r="16" cx="16" cy="16"
+                            style="stroke-dashoffset: 20" shape-rendering="geometricPrecision"></circle>
                     </svg>
                 </div>
             </div>
@@ -399,8 +380,10 @@
                 <div class="progress-circle circle-2">
                     <span>1h</span>
                     <svg class="circle-container" viewBox="2 -2 28 36" xmlns="http://www.w3.org/2000/svg">
-                        <circle class="circle-container__background" r="16" cx="16" cy="16" shape-rendering="geometricPrecision"></circle>
-                        <circle class="circle-container__progress circle-2" r="16" cx="16" cy="16" style="stroke-dashoffset: 40" shape-rendering="geometricPrecision"></circle>
+                        <circle class="circle-container__background" r="16" cx="16" cy="16"
+                            shape-rendering="geometricPrecision"></circle>
+                        <circle class="circle-container__progress circle-2" r="16" cx="16" cy="16"
+                            style="stroke-dashoffset: 40" shape-rendering="geometricPrecision"></circle>
                     </svg>
                 </div>
             </div>
@@ -471,8 +454,8 @@
                                     </td>
                                     <td>
                                         <div class="progress-bar">
-                                            <div class="progress-goal" style="width: 50%">
-                                                <span>50%</span>
+                                            <div class="progress-goal" style="width: 70%">
+                                                <span>70%</span>
                                             </div>
                                         </div>
                                     </td>
@@ -485,13 +468,14 @@
                                                 <img src="./assets/images/lapis.png" alt="lápis">
                                                 <b>Avaliação</b>
                                             </div>--->
-                                            <span>Avaliar curriculo para entender se há experiência similar ao Stack de tecnologias e FIT cultural com as empresas</span>
+                                            <span>Avaliar curriculo para entender se há experiência similar ao Stack de
+                                                tecnologias e FIT cultural com as empresas</span>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="progress-bar">
-                                            <div class="progress-goal" style="width: 100%">
-                                                <span>100%</span>
+                                            <div class="progress-goal" style="width: 80%">
+                                                <span>80%</span>
                                             </div>
                                         </div>
                                     </td>
@@ -504,7 +488,8 @@
                                                 <b>Trilhas</b>    
                                             </div>--->
                                             <span>
-                                                Ler documentação de API, buscar soluções em Foruns, realizar experimentos e estudos acessorios para resolução de problemas
+                                                Ler documentação de API, buscar soluções em Foruns, realizar
+                                                experimentos e estudos acessorios para resolução de problemas
                                             </span>
                                         </div>
                                     </td>
@@ -529,8 +514,8 @@
                                     </td>
                                     <td>
                                         <div class="progress-bar">
-                                            <div class="progress-goal" style="width: 100%">
-                                                <span>100%</span>
+                                            <div class="progress-goal" style="width: 90%">
+                                                <span>90%</span>
                                             </div>
                                         </div>
                                     </td>
@@ -548,8 +533,8 @@
                                     </td>
                                     <td>
                                         <div class="progress-bar">
-                                            <div class="progress-goal" style="width: 90%">
-                                                <span>90%</span>
+                                            <div class="progress-goal" style="width: 80%">
+                                                <span>80%</span>
                                             </div>
                                         </div>
                                     </td>
@@ -562,13 +547,14 @@
                                                 <img src="./assets/images/mala.png" alt="mala">
                                                 <b>On The Job</b>
                                             </div>--->
-                                            <span>Usar técnicas e ferramentas para explicar o design sem formalismos</span>
+                                            <span>Usar técnicas e ferramentas para explicar o design sem
+                                                formalismos</span>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="progress-bar">
-                                            <div class="progress-goal" style="width: 70%">
-                                                <span>70%</span>
+                                            <div class="progress-goal" style="width: 100%">
+                                                <span>100%</span>
                                             </div>
                                         </div>
                                     </td>
@@ -586,8 +572,8 @@
                                     </td>
                                     <td>
                                         <div class="progress-bar">
-                                            <div class="progress-goal" style="width: 80%">
-                                                <span>80%</span>
+                                            <div class="progress-goal" style="width: 90%">
+                                                <span>90%</span>
                                             </div>
                                         </div>
                                     </td>
@@ -624,8 +610,8 @@
                                     </td>
                                     <td>
                                         <div class="progress-bar">
-                                            <div class="progress-goal" style="width: 80%">
-                                                <span>80%</span>
+                                            <div class="progress-goal" style="width: 100%">
+                                                <span>100%</span>
                                             </div>
                                         </div>
                                     </td>
@@ -643,8 +629,8 @@
                                     </td>
                                     <td>
                                         <div class="progress-bar">
-                                            <div class="progress-goal" style="width: 90%">
-                                                <span>90%</span>
+                                            <div class="progress-goal" style="width: 80%">
+                                                <span>80%</span>
                                             </div>
                                         </div>
                                     </td>
@@ -662,8 +648,8 @@
                                     </td>
                                     <td>
                                         <div class="progress-bar">
-                                            <div class="progress-goal" style="width: 60%">
-                                                <span>60%</span>
+                                            <div class="progress-goal" style="width: 70%">
+                                                <span>70%</span>
                                             </div>
                                         </div>
                                     </td>
@@ -695,7 +681,28 @@
                                                 <img src="./assets/images/mala.png" alt="mala">
                                                 <b>On The Job</b>
                                             </div>--->
-                                            <span>Procurar assistência de terceiros no aprendizado, pesquisa, debug, resultados etc</span>
+                                            <span>Procurar assistência de terceiros no aprendizado, pesquisa, debug,
+                                                resultados etc</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="progress-bar">
+                                            <div class="progress-goal" style="width: 90%">
+                                                <span>90%</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="discipline">
+                                            <!--<div class="method">
+                                                <img src="./assets/images/mala.png" alt="mala">
+                                                <b>On The Job</b>
+                                            </div>--->
+                                            <span>Valorizar sinergia com os demais mesmo sacificando resultados
+                                                pessoais</span>
                                         </div>
                                     </td>
                                     <td>
@@ -714,32 +721,13 @@
                                                 <img src="./assets/images/mala.png" alt="mala">
                                                 <b>On The Job</b>
                                             </div>--->
-                                            <span>Valorizar sinergia com os demais mesmo sacificando resultados pessoais</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="progress-bar">
-                                            <div class="progress-goal" style="width: 90%">
-                                                <span>90%</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="discipline">
-                                            <!--<div class="method">
-                                                <img src="./assets/images/mala.png" alt="mala">
-                                                <b>On The Job</b>
-                                            </div>--->
                                             <span>Sustentar opinião ainda que discorde do gestor</span>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="progress-bar">
-                                            <div class="progress-goal" style="width: 90%">
-                                                <span>90%</span>
+                                            <div class="progress-goal" style="width: 80%">
+                                                <span>80%</span>
                                             </div>
                                         </div>
                                     </td>

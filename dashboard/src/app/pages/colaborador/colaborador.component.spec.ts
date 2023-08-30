@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AllysonComponent } from './allyson.component';
+import { ColaboradorComponent } from './colaborador.component';
 
-describe('AllysonComponent', () => {
-  let component: AllysonComponent;
-  let fixture: ComponentFixture<AllysonComponent>;
+describe('ColaboradorComponent', () => {
+  let component: ColaboradorComponent;
+  let fixture: ComponentFixture<ColaboradorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AllysonComponent ]
+      declarations: [ ColaboradorComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AllysonComponent);
+    fixture = TestBed.createComponent(ColaboradorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
