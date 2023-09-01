@@ -22,3 +22,15 @@ export interface CompetenciaByColaborador {
   competencia: Competencia;
   progresso: number;
 }
+
+export interface Acao {
+  id: number;
+  nome: string;
+ 
+}
+
+export interface AcaoByColaborador {
+  id: number;
+  acao: Acao;
+  progresso: number;
+}

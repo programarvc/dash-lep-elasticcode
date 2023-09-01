@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Colaborador, CompetenciaByColaborador } from 'src/app/types/colaborador-types';
+import { AcaoByColaborador, Colaborador, CompetenciaByColaborador } from 'src/app/types/colaborador-types';
+import { AcaoService } from 'src/services/acao/acao.service';
 import { ColaboradorService } from 'src/services/colaborador/colaborador.service';
 import { CompetenciaService } from 'src/services/competencia/competencia.service';
 
@@ -19,15 +20,17 @@ export class ColaboradorComponent implements OnInit {
     habilidades: [],
   };
   public competencias: CompetenciaByColaborador[] = [];
+  public acoes: AcaoByColaborador[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private colaboradorService: ColaboradorService,
     private competenciaService: CompetenciaService,
+    private acoesService: AcaoService
   ) {}
 
   async ngOnInit(): Promise<void> {
-    await this.getColaboradores();
+    this.getColaboradores();
     this.route.paramMap.subscribe((params) => {
       const id = params.get('colaboradorId');
       if (id) {
@@ -42,7 +45,8 @@ export class ColaboradorComponent implements OnInit {
     );
     if (colaborador) {
       this.currentColaborador = colaborador;
-      await this.getCompetencias(colaborador.id);
+       this.getCompetencias(colaborador.id);
+       this.getAcoes(colaborador.id);
     }
   }
 
@@ -56,9 +60,16 @@ export class ColaboradorComponent implements OnInit {
     });
   }
 
-  public async getCompetencias(id: number) {
+  public getCompetencias(id: number) {
     this.competenciaService.getCompetenciasByColaborador(id).subscribe((response) => {
       this.competencias = response;
     });
   }
+ public  getAcoes(id: number): void {
+    this.acoesService.getAcoesByColaborador(id).subscribe((response) => {
+      this.acoes = response;
+      console.log(this.acoes);
+    });
+  }
+  
 }
