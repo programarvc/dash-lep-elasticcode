@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Colaborador } from 'src/app/types/colaborador-types';
+import { Colaborador, CompetenciaByColaborador } from 'src/app/types/colaborador-types';
 import { ColaboradorService } from 'src/services/colaborador/colaborador.service';
+import { CompetenciaService } from 'src/services/competencia/competencia.service';
 
 @Component({
   selector: 'app-colaborador',
@@ -17,10 +18,12 @@ export class ColaboradorComponent implements OnInit {
     github: '',
     habilidades: [],
   };
+  public competencias: CompetenciaByColaborador[] = [];
 
   constructor(
     private route: ActivatedRoute,
-    private colaboradorService: ColaboradorService
+    private colaboradorService: ColaboradorService,
+    private competenciaService: CompetenciaService,
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -33,12 +36,13 @@ export class ColaboradorComponent implements OnInit {
     });
   }
 
-  public setCurrent(id: string) {
+  public async setCurrent(id: string) {
     const colaborador = this.colaboradores.find(
       (colaborador) => colaborador.id === parseInt(id)
     );
     if (colaborador) {
       this.currentColaborador = colaborador;
+      await this.getCompetencias(colaborador.id);
     }
   }
 
@@ -49,6 +53,12 @@ export class ColaboradorComponent implements OnInit {
       if (id) {
         this.setCurrent(id);
       }
+    });
+  }
+
+  public async getCompetencias(id: number) {
+    this.competenciaService.getCompetenciasByColaborador(id).subscribe((response) => {
+      this.competencias = response;
     });
   }
 }

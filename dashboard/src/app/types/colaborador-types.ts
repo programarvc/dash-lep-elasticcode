@@ -11,3 +11,14 @@ export interface Habilidade {
   nome: string;
   backend: boolean;
 }
+
+export interface Competencia {
+  id: number;
+  nome: string;
+}
+
+export interface CompetenciaByColaborador {
+  id: number;
+  competencia: Competencia;
+  progresso: number;
+}
