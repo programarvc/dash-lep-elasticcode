@@ -1,25 +1,23 @@
 package com.br.agilize.dash.service;
 
-import com.br.agilize.dash.exception.DashNotFoundException;
-import com.br.agilize.dash.mapper.AcoesColaboradorMapper;
-import com.br.agilize.dash.mapper.ColaboradorMapper;
-import com.br.agilize.dash.mapper.CompetenciaColaboradorMapper;
-import com.br.agilize.dash.mapper.CompetenciaMapper;
-import com.br.agilize.dash.model.dto.AcoesColaboradorDto;
-import com.br.agilize.dash.model.dto.CompetenciaColaboradorDto;
-import com.br.agilize.dash.model.dto.CompetenciaDto;
-import com.br.agilize.dash.model.entity.ColaboradorEntity;
-import com.br.agilize.dash.model.entity.CompetenciaEntity;
-import com.br.agilize.dash.repository.AcoesColaboradorRepository;
-import com.br.agilize.dash.repository.CompetenciaColaboradorRepository;
-import com.br.agilize.dash.repository.CompetenciaRepository;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import com.br.agilize.dash.exception.DashNotFoundException;
+import com.br.agilize.dash.mapper.ColaboradorMapper;
+import com.br.agilize.dash.mapper.CompetenciaColaboradorMapper;
+import com.br.agilize.dash.mapper.CompetenciaMapper;
+import com.br.agilize.dash.model.dto.CompetenciaColaboradorDto;
+import com.br.agilize.dash.model.dto.CompetenciaDto;
+import com.br.agilize.dash.model.entity.ColaboradorEntity;
+import com.br.agilize.dash.model.entity.CompetenciaEntity;
+import com.br.agilize.dash.repository.CompetenciaColaboradorRepository;
+import com.br.agilize.dash.repository.CompetenciaRepository;
 
 @Service
 @Transactional(propagation = Propagation.REQUIRED)

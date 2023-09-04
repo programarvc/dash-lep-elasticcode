@@ -67,6 +67,10 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "dashboard-web:build",
+            "proxyConfig": "proxy.conf.ts"
+          },
           "configurations": {
             "production": {
               "browserTarget": "tela-de-progresso-curso:build:production"
