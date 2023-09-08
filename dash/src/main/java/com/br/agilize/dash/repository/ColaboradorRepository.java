@@ -1,10 +1,11 @@
 package com.br.agilize.dash.repository;
 
-import com.br.agilize.dash.model.entity.ColaboradorEntity;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import com.br.agilize.dash.model.entity.ColaboradorEntity;
 
 @Repository
 public interface ColaboradorRepository extends JpaRepository<ColaboradorEntity, Long> {

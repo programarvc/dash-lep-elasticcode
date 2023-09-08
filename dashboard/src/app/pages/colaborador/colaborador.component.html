@@ -1,12 +1,15 @@
 <header>
     <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-6">
             <div class="user-identification">
                 <div class="photo">
                     <img src="./assets/images/allyson.png" alt="foto do colaborador">
                 </div>
                 <div class="personal-data">
-                    <span class="name">{{currentColaborador.nome}}</span>
+                    <span class="name">{{currentColaborador.nome}} -
+                        <span *ngFor="let empresa of empresasByColaborador let isFirst = first">{{ isFirst ? '' : ', '
+                            }} {{empresa.empresa.nome}}</span>
+                    </span>
                     <span class="occupation">
                         <span *ngFor="let habilidade of currentColaborador.habilidades; let isFirst = first">{{ isFirst
                             ? '' : '- ' }} {{habilidade.nome}}</span>
@@ -14,13 +17,29 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-7">
+        <div class="col-md-5">
             <div class="search">
                 <div class="filters-display">
                     <div class="filter">
                         <div ngbDropdown>
+                            <button type="button" id="dropdownEmpresa" ngbDropdownToggle>
+                                {{ currentEmpresa.nome ? currentEmpresa.nome : 'Empresas'}}
+                            </button>
+                            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                <button ngbDropdownItem (click)="selecionarEmpresa()">
+                                    Todas
+                                </button>
+                                <button ngbDropdownItem *ngFor="let empresa of empresas"
+                                    (click)="selecionarEmpresa(empresa.id)">
+                                    {{empresa.nome}}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="filter">
+                        <div ngbDropdown>
                             <button type="button" id="dropdownBasic1" ngbDropdownToggle>
-                                Coders
+                                {{ currentColaborador.nome ? currentColaborador.nome : 'Coders'}}
                             </button>
                             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
                                 <button ngbDropdownItem *ngFor="let colaborador of colaboradores">
@@ -152,7 +171,8 @@
                                     </td>
                                     <td>
                                         <div class="progress-bar">
-                                            <div class="progress-goal" [ngStyle]="{'width': (acao.progresso).toString() + '%'}">
+                                            <div class="progress-goal"
+                                                [ngStyle]="{'width': (acao.progresso).toString() + '%'}">
                                                 <span>{{acao.progresso}}%</span>
                                             </div>
                                         </div>
