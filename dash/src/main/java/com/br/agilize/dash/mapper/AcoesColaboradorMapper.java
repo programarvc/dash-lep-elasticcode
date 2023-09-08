@@ -1,5 +1,4 @@
 package com.br.agilize.dash.mapper;
-
 import com.br.agilize.dash.model.dto.AcoesColaboradorDto;
 import com.br.agilize.dash.model.entity.AcoesColaboradorEntity;
 import org.mapstruct.Mapper;
