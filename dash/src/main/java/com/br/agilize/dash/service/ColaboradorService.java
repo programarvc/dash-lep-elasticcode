@@ -1,22 +1,24 @@
 package com.br.agilize.dash.service;
 
-import com.br.agilize.dash.exception.DashNotFoundException;
-import com.br.agilize.dash.mapper.ColaboradorMapper;
-import com.br.agilize.dash.model.dto.ColaboradorDto;
-import com.br.agilize.dash.model.entity.ColaboradorEntity;
-import com.br.agilize.dash.repository.ColaboradorRepository;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import com.br.agilize.dash.exception.DashNotFoundException;
+import com.br.agilize.dash.mapper.ColaboradorMapper;
+import com.br.agilize.dash.model.dto.ColaboradorDto;
+import com.br.agilize.dash.model.entity.ColaboradorEntity;
+import com.br.agilize.dash.repository.ColaboradorRepository;
 
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
 public class ColaboradorService extends ServiceCrudBase<ColaboradorDto> {
     @Autowired
     private ColaboradorRepository repository;
+
     @Autowired
     private ColaboradorMapper mapper;
 
@@ -43,5 +45,4 @@ public class ColaboradorService extends ServiceCrudBase<ColaboradorDto> {
     public void excluirPorId(Long id) {
         this.repository.deleteById(id);
     }
-
 }

@@ -1,27 +1,23 @@
 package com.br.agilize.dash.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.br.agilize.dash.exception.DashNotFoundException;
 import com.br.agilize.dash.mapper.ColaboradorMapper;
 import com.br.agilize.dash.mapper.EmpresaColaboradorMapper;
 import com.br.agilize.dash.mapper.EmpresaMapper;
 import com.br.agilize.dash.model.dto.EmpresaColaboradorDto;
-
 import com.br.agilize.dash.model.dto.EmpresaDto;
 import com.br.agilize.dash.model.entity.ColaboradorEntity;
 import com.br.agilize.dash.model.entity.EmpresaEntity;
-
 import com.br.agilize.dash.repository.EmpresaColaboradorRepository;
 import com.br.agilize.dash.repository.EmpresaRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -85,4 +81,10 @@ public class EmpresaService extends ServiceCrudBase<EmpresaDto> {
 
     }
 
+    public List<EmpresaColaboradorDto> findByEmpresa(Long id) {
+        EmpresaEntity empresa = this.mapper.dtoToModel(this.obterPorId(id));
+
+        return this.empresaColaboradorRepository.findByEmpresa(empresa).stream()
+                .map(this.empresaColaboradorMapper::modelToDTO).collect(Collectors.toList());
+    }
 }

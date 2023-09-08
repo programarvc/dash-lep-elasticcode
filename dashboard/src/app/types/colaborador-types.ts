@@ -34,3 +34,14 @@ export interface AcaoByColaborador {
   acao: Acao;
   progresso: number;
 }
+
+export interface Empresa {
+  id: number;
+  nome: string;
+}
+
+export interface EmpresaByColaborador {
+  id: number;
+  empresa: Empresa;
+  colaborador: Colaborador;
+}

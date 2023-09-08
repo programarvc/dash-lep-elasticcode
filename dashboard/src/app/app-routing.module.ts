@@ -5,6 +5,7 @@ import { ColaboradorComponent } from './pages/colaborador/colaborador.component'
 
 const routes: Routes = [
   { path: ':colaboradorId', component: ColaboradorComponent },
+  { path: '', component: ColaboradorComponent },
 ];
 
 @NgModule({

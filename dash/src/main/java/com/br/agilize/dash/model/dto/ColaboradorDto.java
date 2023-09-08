@@ -11,7 +11,5 @@ public class ColaboradorDto {
     private String email;
     private String github;
     private List<HabilitadeDto> habilidades;
-    
-   
-
+    private List<EmpresaDto> empresas;
 }

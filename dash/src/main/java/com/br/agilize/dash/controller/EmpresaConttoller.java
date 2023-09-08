@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/empresas")
-public class EmpresaConttoller extends ControllerCrudBase <EmpresaDto>{
+public class EmpresaConttoller extends ControllerCrudBase<EmpresaDto> {
 
     private EmpresaService service;
 
@@ -24,22 +24,25 @@ public class EmpresaConttoller extends ControllerCrudBase <EmpresaDto>{
         this.service = service;
     }
 
-   @Operation(
-            summary = "Obtem Empresa do colaborador pelo id",
-            description = "Retorna as informações do objeto pelo do id",
-            tags = { "id", "get" })
+    @Operation(summary = "Obtem Empresa do colaborador pelo id", description = "Retorna as informações do objeto pelo do id", tags = {
+            "id", "get" })
     @GetMapping("/colaborador/{id}")
     public ResponseEntity<List<EmpresaColaboradorDto>> obterEmpresasColaboradorPorId(@PathVariable Long id) {
-        return ResponseEntity.ok( service.obterEmpresasColaborador(id));
+        return ResponseEntity.ok(service.obterEmpresasColaborador(id));
     }
 
-    @Operation(
-            summary = "Salva um objeto relacionando ação ao colaborador",
-            description = "Retorna as informações do objeto que foram salvas",
-            tags = { "salvar", "post" })
+    @Operation(summary = "Obtem colaboradores por id da empresa", description = "Retorna as informações do objeto pelo do id", tags = {
+            "id", "get" })
+    @GetMapping("/{id}/colaboradores")
+    public ResponseEntity<List<EmpresaColaboradorDto>> obterColaboradorPorEmpresaId(@PathVariable Long id) {
+        return ResponseEntity.ok(service.findByEmpresa(id));
+    }
+
+    @Operation(summary = "Salva um objeto relacionando ação ao colaborador", description = "Retorna as informações do objeto que foram salvas", tags = {
+            "salvar", "post" })
     @PostMapping("/colaborador")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<EmpresaColaboradorDto> salvarEmpresasColaborado(@RequestBody EmpresaColaboradorDto payload) {
-        return ResponseEntity.ok( service.salvarEmpresasColaborador(payload));
+        return ResponseEntity.ok(service.salvarEmpresasColaborador(payload));
     }
 }
