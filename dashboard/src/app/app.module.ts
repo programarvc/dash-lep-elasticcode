@@ -12,10 +12,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { HttpClientModule } from '@angular/common/http';
 import { ColaboradorComponent } from './pages/colaborador/colaborador.component';
-
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [AppComponent, SearchBarComponent, ColaboradorComponent],
-  imports: [HttpClientModule, BrowserModule, AppRoutingModule, NgbModule],
+  imports: [HttpClientModule, BrowserModule, AppRoutingModule,FormsModule, NgbModule],
   providers: [],
   bootstrap: [AppComponent],
 })

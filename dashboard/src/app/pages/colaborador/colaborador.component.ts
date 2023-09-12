@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterContentInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   AcaoByColaborador,
@@ -16,8 +16,10 @@ import { EmpresaService } from 'src/services/empresa/empresa.service';
   selector: 'app-colaborador',
   templateUrl: './colaborador.component.html',
   styleUrls: ['./colaborador.component.sass'],
+  
 })
 export class ColaboradorComponent implements OnInit {
+  
   public colaboradores: Colaborador[] = [];
   public currentColaborador: Colaborador = {
     id: 0,
@@ -34,6 +36,8 @@ export class ColaboradorComponent implements OnInit {
   public acoes: AcaoByColaborador[] = [];
   public empresas: Empresa[] = [];
   public empresasByColaborador: EmpresaByColaborador[] = [];
+  public searchResultsAcoes: AcaoByColaborador[] = [];
+  public searchResultsCompetencias:  CompetenciaByColaborador[] = [];
 
   constructor(
     private router: Router,
@@ -135,4 +139,24 @@ export class ColaboradorComponent implements OnInit {
       this.empresasByColaborador = response;
     });
   }
+
+  handleSearch(event: string) {
+    if(event !== ''){
+      this.searchResultsAcoes =  this.acoes.filter((acao)=> 
+      acao.acao.nome.toLowerCase().includes(event.toLowerCase()));
+  
+      this.searchResultsCompetencias =  this.competencias.filter((competencia)=> 
+      competencia.competencia.nome.toLowerCase().includes(event.toLowerCase()));
+    }
+    else{
+      this.searchResultsAcoes= [];
+      this.searchResultsCompetencias = [];
+    }
+
+    console.log(this.searchResultsAcoes);
+
+
+  }
+
+  
 }
