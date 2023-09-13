@@ -3,6 +3,7 @@ export interface Colaborador {
   nome: string;
   email: string;
   github: string;
+  avatar: string;
   habilidades: Habilidade[];
 }
 

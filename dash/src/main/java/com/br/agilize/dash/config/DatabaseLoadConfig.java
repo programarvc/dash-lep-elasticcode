@@ -43,7 +43,7 @@ public class DatabaseLoadConfig {
             colaborador.setNome("Allyson Santana");
             colaborador.setEmail("allyson.Santana@gmail.com");
             colaborador.setGithub("allyson.Santana");
-            colaborador.setGithub("allyson.Santana");
+            colaborador.setAvatar("https://dash.elasticcode.com.br/assets/images/allyson.png");
             colaborador.setHabilidades(habilitadeEntities);
 
             ColaboradorEntity colaboradorSalvo = colaboradorRepository.save(colaborador);
