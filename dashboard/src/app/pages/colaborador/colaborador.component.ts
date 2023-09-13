@@ -24,6 +24,7 @@ export class ColaboradorComponent implements OnInit {
     nome: '',
     email: '',
     github: '',
+    avatar: '',
     habilidades: [],
   };
   public currentEmpresa: Empresa = {

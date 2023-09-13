@@ -10,6 +10,7 @@ public class ColaboradorDto {
     private String nome;
     private String email;
     private String github;
+    private String avatar;
     private List<HabilitadeDto> habilidades;
     private List<EmpresaDto> empresas;
 }
