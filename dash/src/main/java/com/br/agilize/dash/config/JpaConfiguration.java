@@ -23,18 +23,18 @@ import io.github.cdimascio.dotenv.Dotenv;
 @Configuration
 public class JpaConfiguration {
   private final Gson gson = new Gson();
+  Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
 
   public JpaConfiguration() {
   }
 
   public DataSource dataSource() {
-    final AwsSecret dbCredentials = getSecret();
-    Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
     String env = dotenv.get("ENV");
 
     var dataSource = new SimpleDriverDataSource();
 
     if (env == null) {
+      final AwsSecret dbCredentials = getSecret();
       dataSource.setDriverClass(org.postgresql.Driver.class);
       dataSource.setUrl("jdbc:postgresql://" + dbCredentials.getHost() + ":" + dbCredentials.getPort()
           + "/" + dbCredentials.getDbInstanceIdentifier());
@@ -52,7 +52,7 @@ public class JpaConfiguration {
   }
 
   private AwsSecret getSecret() {
-    Region region = Region.of("us-west-2");
+    Region region = Region.of(dotenv.get("AWS_REGION"));
 
     var secretsManagerClient = SecretsManagerClient.builder()
         .region(region)
@@ -61,7 +61,7 @@ public class JpaConfiguration {
     String secret;
 
     var getSecretValueRequest = GetSecretValueRequest.builder()
-        .secretId("elasticcode-dash")
+        .secretId(dotenv.get("AWS_SECRET_ID"))
         .build();
 
     GetSecretValueResponse result = null;
