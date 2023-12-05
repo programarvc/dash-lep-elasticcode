@@ -1,0 +1,386 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo:wght@100;200;300;400;500;600;700;800&family=Outfit:wght@100;200;300;400;500;600;700&display=swap')
+
+*
+  font-family: 'Exo', sans-serif
+  box-sizing: border-box
+
+body
+    background-color: #e7e7e7
+
+a
+    color: inherit
+    text-decoration: none
+
+
+ul
+    list-style: none
+
+h2
+    font-size: 24px
+    font-weight: 700
+    margin: 0
+
+
+header
+    width: calc(100% - 30px)
+    margin: 0 15px 15px
+    padding: 15px
+    top: 0
+    position: fixed
+    z-index: 1000
+    background-color: #FFFFFF
+    box-shadow: 0px 9.36657px 26px rgb(0 0 0 / 11%)
+
+header .user-identification
+    display: flex
+    flex-direction: row
+    align-items: center
+    border-right: 1px solid #afa7a7
+
+.user-identification .photo img
+    width: 60px
+    margin-right: 10px
+    border-radius: 30px
+
+.user-identification  .personal-data
+    display: flex
+    flex-direction: column
+
+.personal-data  .name
+    font-size: 18px
+    font-weight: 600
+    line-height: 27px
+    color: #07347e
+
+.personal-data  .occupation
+    font-size: 15px
+    line-height: 18px
+    color: #afa7a7
+
+header .search
+    height: 100%
+    display: flex
+    flex-direction: row
+    justify-content: space-evenly
+    align-items: center
+    flex-wrap: wrap
+
+header .search .photo
+    display: none
+
+.search .filters-display,
+.informations,
+.informations .advancement,
+.informations .goal,
+.discipline,
+.method
+    display: flex
+    flex-direction: row
+    align-items: center
+
+
+.search .filter .dropdown-toggle
+    margin: 0 10px
+    border: 1px solid #a19c9c
+    border-radius: 5px
+    padding: 10px
+    background-color: #FFF
+    font-size: 16px
+    font-weight: 500
+    color: #a19c9c
+
+.search .filter .dropdown-toggle:hover
+    background-color: #e9ecef
+    color: #000
+
+.dropdown-item a.active
+    padding: 5px
+    background-color: #3f51b5
+    color: #FFF
+
+main
+    width: calc(100% - 30px)
+    margin: 112px 15px 0
+
+main section
+    margin-bottom: 30px
+    background-color: #FFF
+
+table tbody tr:nth-child(odd)
+    background-color: #f7f5f5cc
+
+.card
+    height: 453px
+    margin-bottom: 15px
+    padding: 15px
+    background-color: #FFF
+    border: none
+    border-radius: 0
+
+.card h2
+    text-align: center
+
+.card img
+    margin: auto
+    width: 160px
+
+.card span
+    text-align: center
+    font-size: 30px
+    font-weight: 700
+    line-height: 38px
+    color: #cd4e4e
+
+
+table
+    width: 100%
+
+thead
+    background-color: #07347e
+
+th
+    padding: 15px
+    color: #FFF
+    font-size: 24px
+    font-weight: 700
+
+.competencies thead tr th:nth-child(1),
+.courses thead tr th:nth-child(2)
+    width: 40%
+
+.courses thead tr th:nth-child(1)
+    width: 50%
+
+tbody
+    padding: 15px 0
+
+tbody tr
+    height: 63px
+
+td
+    padding: 0 15px
+    font-size: 20px
+    font-weight: 500
+    line-height: 24px
+
+.courses tbody tr:nth-child(1),
+.courses tbody tr:nth-child(10)
+    height: 25px
+
+.courses tbody tr td:nth-child(2),
+.courses tbody tr td:nth-child(3)
+    border-left: 2px solid #e2e2e2
+
+.competencies tbody tr td:nth-child(2)
+    min-width: 350px
+
+.legend
+    border-bottom: 2px solid #e2e2e2
+
+.informations .color
+    width: 15px
+    height: 15px
+    margin-right: 10px
+    border-radius: 10px
+
+.advancement
+    margin-right: 40px
+
+.advancement .color
+    background-color: #0f9caf
+
+.goal .color
+    background-color: #dbae2b
+
+.levels
+    display: flex
+    justify-content: space-between
+
+.informations span,
+.levels span
+    color: #a19c9c
+    font-size: 20px
+    font-weight: 600
+
+.discipline
+    min-width: 482px
+
+.method
+    height: 63px
+    width: 168px
+    margin-right: 30px
+    border-right: 2px solid #e2e2e2
+
+.method img
+    width: 35px
+    margin-right: 10px
+
+.progress-bar-content
+    position: relative
+    padding: 5px 0
+
+.progress-bar
+    width: 100%
+    height: 20px
+    border-radius: 10px
+    background-color: #e2e2e2
+
+.progress-goal
+    height: 20px
+    border-radius: 10px
+
+.competencies .progress-goal
+    background-color: #0f9caf
+
+.courses .progress-goal
+    background-color: #cd4e4e
+    display: flex
+    justify-content: flex-end
+    align-items: center
+
+.courses .progress-goal span
+    margin: 0 8px
+    color: #FFF
+    font-size: 12px
+    font-weight: 700
+
+.goal-value
+    position: absolute
+    top: 0px
+    width: 30px
+    height: 30px
+    background-color: #dbae2b
+    border: 2px solid #FFF
+    border-radius: 15px
+    display: flex
+    align-items: center
+    justify-content: center
+
+.goal-value span
+    font-size: 12px
+    font-weight: 700
+    color: #fff
+
+.progress-circle
+    position: relative
+    width: 100%
+    display: flex
+    justify-content: center
+    align-items: center
+
+.progress-circle span
+    position: absolute
+    font-size: 28px
+    font-weight: 700
+
+.progress-circle.circle-1 span
+    color: #af6dae
+
+.progress-circle.circle-2 span
+    color: #6daf78
+
+.circle-container
+  width: 70%
+  height: 70%
+  max-width: 400px
+  max-height: 400px
+  transform: rotate(-225deg)
+  stroke: #e2e2e2
+  stroke-width: 3px
+
+.circle-container__background
+  fill: none
+  stroke-dasharray: 75 100
+  stroke-linecap: round
+
+.circle-container__progress
+  fill: none
+  stroke-linecap: round
+  stroke-dasharray: 75 100
+  stroke-linecap: round
+  transition: stroke-dashoffset 1s ease-in-out
+
+.circle-container__progress.circle-1
+    stroke: #af6dae
+
+.circle-container__progress.circle-2
+    stroke: #6daf78
+
+
+section.graphic
+    background-color: #f7f7f7
+
+.graphic .image
+    padding: 20px
+    display: flex
+    justify-content: center
+    align-items: center
+
+@media(max-width: 1024px)
+    .discipline
+        width: 504px
+
+    .card img
+        width: 160px
+
+    .circle-container
+        width: 90%
+
+@media(max-width: 992px) and (min-width: 768px)
+    header .search
+        flex-wrap: nowrap
+
+    .card h2
+        font-size: 20px
+
+    .card span
+        font-size: 26px
+        line-height: 32px
+
+    .circle-container
+        width: 100%
+
+@media(max-width: 767px)
+    header .user-identification
+        border-right: none
+        margin-bottom: 15px
+
+    main
+        margin: 160px 15px 0
+
+    .card
+        height: 380px
+
+    .circle-container
+        width: 70%
+
+@media(max-width: 540px)
+    header .search
+        display: inline
+
+    header .search-bar
+        display: none
+
+    header .search .photo
+        display: block
+        margin: 0 auto 5px 0
+
+    header .search .photo img
+        width: 50px
+        border-radius: 25px
+
+    .search .search-bar
+        order: 1
+        margin-bottom: 15px
+
+    .search  .filters-display
+        margin: 15px 0 0 0
+        order: 2
+
+    .filters-display .filter .dropdown-toggle
+        margin: 0 0 0 10px
+
+
+
+
+
