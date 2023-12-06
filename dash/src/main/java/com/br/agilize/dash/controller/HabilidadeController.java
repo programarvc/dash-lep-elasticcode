@@ -3,7 +3,7 @@ package com.br.agilize.dash.controller;
 
 
 import com.br.agilize.dash.model.dto.HabilidadeColaboradorDto;
-import com.br.agilize.dash.model.dto.HabilitadeDto;
+import com.br.agilize.dash.model.dto.HabilidadeDto;
 
 import com.br.agilize.dash.service.HabilidadeService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -19,8 +19,9 @@ import java.util.List;
 @Tag(name = "HabilidadeController", description = "Api para gerenciar as habilidades")
 @Controller
 @RequestMapping("/habilidades")
-public class HabilidadeController extends ControllerCrudBase<HabilitadeDto> {
-
+public class HabilidadeController extends ControllerCrudBase<HabilidadeDto> {
+    
+    @Autowired
     private HabilidadeService service;
 
     public HabilidadeController(@Autowired HabilidadeService service) {

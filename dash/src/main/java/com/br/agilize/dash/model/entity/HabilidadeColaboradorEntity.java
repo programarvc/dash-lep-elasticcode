@@ -15,9 +15,10 @@ public class HabilidadeColaboradorEntity {
     private Long id;
 
     @ManyToOne
-    private ColaboradorEntity colaborador;
+    private HabilidadeEntity habilidade;
 
     @ManyToOne
-    private HabilitadeEntity habilitade;
+    private ColaboradorEntity colaborador;
+
 
 }

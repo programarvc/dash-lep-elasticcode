@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class HabilidadeColaboradorDto {
     private Long id;
-    private HabilitadeDto habilidade;
+    private HabilidadeDto habilidade;
     private ColaboradorDto colaborador;
   
 }

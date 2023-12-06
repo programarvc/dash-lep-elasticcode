@@ -15,9 +15,9 @@ public class EmpresaColaboradorEntity {
     private Long id;
 
     @ManyToOne
-    private ColaboradorEntity colaborador;
+    private EmpresaEntity empresa;
 
     @ManyToOne
-    private EmpresaEntity empresa;
+    private ColaboradorEntity colaborador;  
 
 }

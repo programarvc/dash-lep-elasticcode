@@ -6,7 +6,7 @@ import com.br.agilize.dash.model.entity.HabilidadeColaboradorEntity;
 import org.mapstruct.Mapper;
 
 @Mapper
-public interface HbilidadeColaboradorMapper extends  MapperBase<HabilidadeColaboradorEntity, HabilidadeColaboradorDto> {
+public interface HabilidadeColaboradorMapper extends  MapperBase<HabilidadeColaboradorEntity, HabilidadeColaboradorDto> {
     @Override
     HabilidadeColaboradorDto modelToDTO(HabilidadeColaboradorEntity entity);
 

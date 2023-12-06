@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/empresas")
-public class EmpresaConttoller extends ControllerCrudBase<EmpresaDto> {
+public class EmpresaController extends ControllerCrudBase<EmpresaDto> {
 
     private EmpresaService service;
 
-    public EmpresaConttoller(@Autowired EmpresaService service) {
+    public EmpresaController(@Autowired EmpresaService service) {
         super(service);
         this.service = service;
     }

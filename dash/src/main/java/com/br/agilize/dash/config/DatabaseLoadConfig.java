@@ -35,7 +35,7 @@ public class DatabaseLoadConfig {
     @Bean
     public CommandLineRunner loadData() {
         return (args) -> {
-            List<HabilitadeEntity> habilitadeEntities = cargaInicialHabilidades();
+            List<HabilidadeEntity> habilidadeEntities = cargaInicialHabilidades();
             List<CompetenciaEntity> competenciaEntities = cargaInicialCompetencia();
             List<AcoesEntity> acoesEntities = cargaInicialAcoes();
 
@@ -43,8 +43,7 @@ public class DatabaseLoadConfig {
             colaborador.setNome("Allyson Santana");
             colaborador.setEmail("allyson.Santana@gmail.com");
             colaborador.setGithub("allyson.Santana");
-            colaborador.setGithub("allyson.Santana");
-            colaborador.setHabilidades(habilitadeEntities);
+            colaborador.setHabilidades(habilidadeEntities);
 
             ColaboradorEntity colaboradorSalvo = colaboradorRepository.save(colaborador);
 
@@ -73,13 +72,13 @@ public class DatabaseLoadConfig {
         });
     }
 
-    private List<HabilitadeEntity> cargaInicialHabilidades() {
+    private List<HabilidadeEntity> cargaInicialHabilidades() {
         return Arrays.asList("Full Stack",
                 "Angular",
                 "React",
                 "NodeJs",
                 "Python").stream().map(habilidade -> {
-            HabilitadeEntity habilidadeEntity = new HabilitadeEntity();
+            HabilidadeEntity habilidadeEntity = new HabilidadeEntity();
             habilidadeEntity.setNome(habilidade);
             return habilidadeRepository.save(habilidadeEntity);
         }).collect(Collectors.toList());

@@ -7,7 +7,7 @@ import lombok.ToString;
 @Data
 @ToString
 @Entity
-public class HabilitadeEntity {
+public class HabilidadeEntity {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
