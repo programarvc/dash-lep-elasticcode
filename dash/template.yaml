@@ -56,10 +56,10 @@ Resources:
         ApplyOn: PublishedVersions
       VpcConfig:
         SecurityGroupIds:
-          - !Ref SECURITY_GROUP_ID
+          - !Ref SecurityGroupId
         SubnetIds:
-          - !Ref SUBNET_1_ID
-          - !Ref SUBNET_2_ID
+          - !Ref Subnet1Id
+          - !Ref Subnet2Id
       Architectures:
         - x86_64
       MemorySize: 2048
