@@ -32,6 +32,7 @@ dependencies {
 	implementation 'com.google.code.gson:gson:2.10.1'
 	implementation 'software.amazon.awssdk:secretsmanager:2.21.15'
 	implementation 'org.postgresql:postgresql'
+	implementation 'io.github.crac.com.amazonaws:aws-lambda-java-runtime-interface-client:1.0.0'
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -47,4 +48,9 @@ compileJava {
 	options.compilerArgs += [
 			'-Amapstruct.defaultComponentModel=spring'
 	]
+}
+
+tasks.withType(Test){
+scanForTestClasses = false
+	include "**/*Test.class"
 }

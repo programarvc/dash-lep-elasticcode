@@ -13,12 +13,8 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 import com.google.gson.Gson;
 
-import jakarta.persistence.EntityManagerFactory;
-import software.amazon.awssdk.services.secretsmanager.SecretsManagerClient;
-import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueRequest;
-import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueResponse;
-import software.amazon.awssdk.regions.Region;
 import io.github.cdimascio.dotenv.Dotenv;
+import jakarta.persistence.EntityManagerFactory;
 
 @Configuration
 public class JpaConfiguration {
@@ -29,54 +25,15 @@ public class JpaConfiguration {
   }
 
   public DataSource dataSource() {
-    String env = dotenv.get("ENV");
-
     var dataSource = new SimpleDriverDataSource();
 
-    if (env == null) {
-      final AwsSecret dbCredentials = getSecret();
-      dataSource.setDriverClass(org.postgresql.Driver.class);
-      dataSource.setUrl("jdbc:postgresql://" + dbCredentials.getHost() + ":" + dbCredentials.getPort()
-          + "/" + dbCredentials.getDbInstanceIdentifier());
-      dataSource.setUsername(dbCredentials.getUsername());
-      dataSource.setPassword(dbCredentials.getPassword());
-    } else {
-      dataSource.setDriverClass(org.postgresql.Driver.class);
-      dataSource.setUrl("jdbc:postgresql://" + dotenv.get("DB_HOST") + ":" + dotenv.get("DB_PORT")
-          + "/" + dotenv.get("DB_NAME"));
-      dataSource.setUsername(dotenv.get("DB_USER"));
-      dataSource.setPassword(dotenv.get("DB_PASSWORD"));
-    }
+    dataSource.setDriverClass(org.postgresql.Driver.class);
+    dataSource.setUrl("jdbc:postgresql://" + dotenv.get("DB_HOST") + ":" + dotenv.get("DB_PORT")
+        + "/" + dotenv.get("DB_NAME"));
+    dataSource.setUsername(dotenv.get("DB_USER"));
+    dataSource.setPassword(dotenv.get("DB_PASSWORD"));
 
     return dataSource;
-  }
-
-  private AwsSecret getSecret() {
-    Region region = Region.of(dotenv.get("AWS_REGION"));
-
-    var secretsManagerClient = SecretsManagerClient.builder()
-        .region(region)
-        .build();
-
-    String secret;
-
-    var getSecretValueRequest = GetSecretValueRequest.builder()
-        .secretId(dotenv.get("AWS_SECRET_ID"))
-        .build();
-
-    GetSecretValueResponse result = null;
-
-    try {
-      result = secretsManagerClient.getSecretValue(getSecretValueRequest);
-    } catch (Exception e) {
-      throw e;
-    }
-    if (result.secretString() != null) {
-      secret = result.secretString();
-      return gson.fromJson(secret, AwsSecret.class);
-    }
-
-    return null;
   }
 
   @Bean
