@@ -11,14 +11,11 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
-import com.google.gson.Gson;
-
 import io.github.cdimascio.dotenv.Dotenv;
 import jakarta.persistence.EntityManagerFactory;
 
 @Configuration
 public class JpaConfiguration {
-  private final Gson gson = new Gson();
   Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
 
   public JpaConfiguration() {

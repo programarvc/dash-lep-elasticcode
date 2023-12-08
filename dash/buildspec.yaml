@@ -1,0 +1,6 @@
+version: 0.2
+phases:
+  build:
+    commands:
+      - sam build --parameter-overrides SecurityGroupId="$SECURITY_GROUP_ID" Subnet1Id="$SUBNET_1_ID" Subnet2Id="$SUBNET_Y_ID" DBHost="$DB_HOST" DBPort="$DB_PORT" DBUser="$DB_USER" DBPassword="$DB_PASSWORD" DBName="$DB_NAME"
+      - sam deploy --no-confirm-changeset --no-fail-on-empty-changeset 

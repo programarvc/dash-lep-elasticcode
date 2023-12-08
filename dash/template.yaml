@@ -13,17 +13,23 @@ Globals:
         DB_USER: !Ref DBUser
         DB_PASSWORD: !Ref DBPassword
         DB_NAME: !Ref DBName
+        SECURITY_GROUP_ID: !Ref SecurityGroupId
+        SUBNET_1_ID: !Ref Subnet1Id
+        SUBNET_2_ID: !Ref Subnet2Id
 
 Parameters:
-  SecurityGroupId: 
+  SecurityGroupId:
     Description: Security Group for the application
     Type: String
-  Subnet1Id: 
+    Default: ''
+  Subnet1Id:
     Description: Subnet Id for the first subnet
     Type: String
-  Subnet2Id: 
+    Default: ''
+  Subnet2Id:
     Description: Subnet Id for the second subnet
     Type: String
+    Default: ''
   DatabaseSecretName:
     Description: The name of the secret holding database credentials
     Type: String
@@ -40,7 +46,7 @@ Parameters:
 
 Resources:
   DashboardApiFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Type: AWS::Serverless::Function
     Properties:
       CodeUri: .
       Handler: com.br.agilize.dash.handler.LambdaHandler::handleRequest
@@ -50,16 +56,16 @@ Resources:
         ApplyOn: PublishedVersions
       VpcConfig:
         SecurityGroupIds:
-          - !Ref SecurityGroupId
+          - !Ref SECURITY_GROUP_ID
         SubnetIds:
-          - !Ref Subnet1Id
-          - !Ref Subnet2Id
+          - !Ref SUBNET_1_ID
+          - !Ref SUBNET_2_ID
       Architectures:
         - x86_64
       MemorySize: 2048
-      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+      Environment:
         Variables:
-          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1 # More info about tiered compilation https://aws.amazon.com/blogs/compute/optimizing-aws-lambda-function-performance-for-java/
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
       Policies:
         - AWSSecretsManagerGetSecretValuePolicy:
             SecretArn: !Sub arn:aws:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:${DatabaseSecretName}
@@ -68,7 +74,7 @@ Resources:
         - SecretsManagerReadWrite
       Events:
         HelloWorld:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Type: Api
           Properties:
             Path: /{proxy+}
             Method: ANY
