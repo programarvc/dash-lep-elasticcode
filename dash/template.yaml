@@ -21,15 +21,12 @@ Parameters:
   SecurityGroupId:
     Description: Security Group for the application
     Type: String
-    Default: ''
   Subnet1Id:
     Description: Subnet Id for the first subnet
     Type: String
-    Default: ''
   Subnet2Id:
     Description: Subnet Id for the second subnet
     Type: String
-    Default: ''
   DatabaseSecretName:
     Description: The name of the secret holding database credentials
     Type: String
