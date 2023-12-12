@@ -12,7 +12,8 @@ import java.util.List;
 @Repository
 public interface HabilidadeColaboradorRepository extends JpaRepository<HabilidadeColaboradorEntity, Long> {
 
+    List<HabilidadeColaboradorEntity> findByHabilidade(HabilidadeEntity habilidade);
     List<HabilidadeColaboradorEntity> findByColaborador(ColaboradorEntity colaborador);
 
-    List<HabilidadeColaboradorEntity> findByHabilidade(HabilidadeEntity habilidade);
+
 }

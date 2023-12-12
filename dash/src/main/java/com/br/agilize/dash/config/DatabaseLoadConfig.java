@@ -27,6 +27,9 @@ public class DatabaseLoadConfig {
     private AcoesRepository acoesRepository;
 
     @Autowired
+    private EmpresaRepository empresaRepository;
+
+    @Autowired
     private CompetenciaColaboradorRepository competenciaColaboradorRepository;
 
     @Autowired
@@ -38,8 +41,9 @@ public class DatabaseLoadConfig {
             List<HabilidadeEntity> habilidadeEntities = cargaInicialHabilidades();
             List<CompetenciaEntity> competenciaEntities = cargaInicialCompetencia();
             List<AcoesEntity> acoesEntities = cargaInicialAcoes();
+            List<EmpresaEntity> empresaEntities= cargaInicialEmpresas();
 
-            ColaboradorEntity colaborador = new ColaboradorEntity();
+            /*ColaboradorEntity colaborador = new ColaboradorEntity();
             colaborador.setNome("Allyson Santana");
             colaborador.setEmail("allyson.Santana@gmail.com");
             colaborador.setGithub("allyson.Santana");
@@ -48,7 +52,9 @@ public class DatabaseLoadConfig {
             ColaboradorEntity colaboradorSalvo = colaboradorRepository.save(colaborador);
 
             vincularCompetencia(colaboradorSalvo, competenciaEntities);
-            vincularAcoes(colaboradorSalvo, acoesEntities);
+            vincularAcoes(colaboradorSalvo, acoesEntities);*/
+
+
         };
     }
 
@@ -74,10 +80,16 @@ public class DatabaseLoadConfig {
 
     private List<HabilidadeEntity> cargaInicialHabilidades() {
         return Arrays.asList("Full Stack",
+                "Back End",
+                "Front End",
+                "Spring Boot",
                 "Angular",
                 "React",
                 "NodeJs",
-                "Python").stream().map(habilidade -> {
+                "Python",
+                "Java",
+                "JavaScript",
+                "C#").stream().map(habilidade -> {
             HabilidadeEntity habilidadeEntity = new HabilidadeEntity();
             habilidadeEntity.setNome(habilidade);
             return habilidadeRepository.save(habilidadeEntity);
@@ -132,6 +144,18 @@ public class DatabaseLoadConfig {
             AcoesEntity entity = new AcoesEntity();
             entity.setNome(item);
             return acoesRepository.save(entity);
+        }).collect(Collectors.toList());
+    }
+
+    private List<EmpresaEntity> cargaInicialEmpresas() {
+        return Arrays.asList("Elastic Code",
+                "Programar Com Vc",
+                "Mutant",
+                "ESims",
+                "A5").stream().map(item -> {
+            EmpresaEntity entity = new EmpresaEntity();
+            entity.setNome(item);
+            return empresaRepository.save(entity);
         }).collect(Collectors.toList());
     }
 }

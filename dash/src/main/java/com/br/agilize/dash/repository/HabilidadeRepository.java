@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface HabilidadeRepository extends JpaRepository<HabilidadeEntity, Long> {
-    @Query(value = "SELECT new HabilidadeEntity(id, nome) FROM HabilidadeEntity")
+    @Query(value = "SELECT new HabilidadeEntity(id, nome, backend) FROM HabilidadeEntity")
     Page<HabilidadeEntity> findAllHab(Pageable pageable);
 }

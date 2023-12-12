@@ -31,11 +31,11 @@ public class ColaboradorEntity {
     private String github;
 
     @ManyToMany
-    @JoinTable(name = "empresa_colaborador", joinColumns = @JoinColumn(name = "colaborador_id"), inverseJoinColumns = @JoinColumn(name = "empresa_id"))
+    @JoinTable(name = "empresa_colaborador", joinColumns = @JoinColumn(name = "colaboradoId"), inverseJoinColumns = @JoinColumn(name = "empresaId"))
     private List<EmpresaEntity> empresas;
 
     @ManyToMany
-    @JoinTable(name = "colaborador_habilidade_entity", joinColumns = @JoinColumn(name = "colaborador_id"), inverseJoinColumns = @JoinColumn(name = "habilidade_id"))
+    @JoinTable(name = "colaborador_habilidade", joinColumns = @JoinColumn(name = "colaboradorId"), inverseJoinColumns = @JoinColumn(name = "habilidadeId"))
     private List<HabilidadeEntity> habilidades;
 
 }
