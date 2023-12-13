@@ -7,6 +7,7 @@ import com.br.agilize.dash.service.EmpresaService;
 import io.swagger.v3.oas.annotations.Operation;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,6 +39,23 @@ public class EmpresaController extends ControllerCrudBase<EmpresaDto> {
         return ResponseEntity.ok(service.findByEmpresa(id));
     }
 
+    @Operation(summary = "Obtem todas as associações entre empresas e colaboradores para uma empresa específica",
+            description = "Retorna uma lista de associações entre empresas e colaboradores para a empresa com o id fornecido",
+            tags = {"id", "get"})
+    @GetMapping("/empresa/{id}/colaboradores")
+    public ResponseEntity<List<EmpresaColaboradorDto>> obterEmpresasColaboradorAll(@PathVariable Long id) {
+        return ResponseEntity.ok(service.obterEmpresasColaboradorAll(id));
+    }
+
+
+    @Operation(summary = "Obtem todas as associações",
+            description = "Retorna uma lista de todas as associações entre empresas e colaboradores",
+            tags = {"get"})
+    @GetMapping("/colaboradores")
+    public ResponseEntity<List<Map<String, Long>>> obterTodasEmpresasColaboradores() {
+        return ResponseEntity.ok(service.obterTodasEmpresasColaboradores());
+    }
+
     @Operation(summary = "Salva um objeto relacionando ação ao colaborador", description = "Retorna as informações do objeto que foram salvas", tags = {
             "salvar", "post" })
     @PostMapping("/colaborador")
@@ -45,4 +63,5 @@ public class EmpresaController extends ControllerCrudBase<EmpresaDto> {
     public ResponseEntity<EmpresaColaboradorDto> salvarEmpresasColaborado(@RequestBody EmpresaColaboradorDto payload) {
         return ResponseEntity.ok(service.salvarEmpresasColaborador(payload));
     }
+
 }

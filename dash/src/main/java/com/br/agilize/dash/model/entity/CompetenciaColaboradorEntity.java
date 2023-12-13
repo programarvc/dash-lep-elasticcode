@@ -20,4 +20,7 @@ public class CompetenciaColaboradorEntity {
 
     @Column
     private Integer progresso;
+
+    @Column
+    private Integer meta;
 }

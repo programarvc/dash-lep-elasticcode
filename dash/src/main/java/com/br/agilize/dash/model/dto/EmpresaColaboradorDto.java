@@ -7,5 +7,7 @@ public class EmpresaColaboradorDto {
     private Long id;
     private EmpresaDto empresa;
     private ColaboradorDto colaborador;
-  
+
+
+
 }

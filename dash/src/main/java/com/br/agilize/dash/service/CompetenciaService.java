@@ -1,8 +1,12 @@
 package com.br.agilize.dash.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.br.agilize.dash.model.entity.AcoesColaboradorEntity;
+import com.br.agilize.dash.model.entity.CompetenciaColaboradorEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -76,5 +80,19 @@ public class CompetenciaService extends ServiceCrudBase<CompetenciaDto> {
                 .findByColaborador(colaborador).stream()
                 .map(this.competenciaColaboradorMapper::modelToDTO).collect(Collectors.toList());
 
+    }
+
+    public List<Map<String, Long>> obterTodasCompetenciasColaboradores() {
+        List<CompetenciaColaboradorEntity> todasAssociacoes = competenciaColaboradorRepository.findAll();
+
+        return todasAssociacoes.stream()
+                .map(competenciaAssociacao -> {
+                    Map<String, Long> ids = new HashMap<>();
+                    ids.put("colaborador_id", competenciaAssociacao.getColaborador().getId());
+                    ids.put("competencia_id", competenciaAssociacao.getCompetencia().getId());
+                    ids.put("id", competenciaAssociacao.getId());
+                    return ids;
+                })
+                .collect(Collectors.toList());
     }
 }

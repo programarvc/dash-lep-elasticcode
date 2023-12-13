@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Tag(name = "CompetenciaController", description = "Api para gerenciar as habilidades")
 @Controller
@@ -29,7 +30,7 @@ public class CompetenciaController extends ControllerCrudBase<CompetenciaDto> {
             description = "Retorna as informações do objeto pelo do id",
             tags = { "id", "get" })
     @GetMapping("/colaborador/{id}")
-    public ResponseEntity<List<CompetenciaColaboradorDto>> obterAcoesColaboradorPorId(@PathVariable Long id) {
+    public ResponseEntity<List<CompetenciaColaboradorDto>> obterCompetenciaColaboradorPorId(@PathVariable Long id) {
         return ResponseEntity.ok( service.obterCompetenciaColaborador(id));
     }
 
@@ -39,8 +40,16 @@ public class CompetenciaController extends ControllerCrudBase<CompetenciaDto> {
             tags = { "salvar", "post" })
     @PostMapping("/colaborador")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<CompetenciaColaboradorDto> salvarAcoesColaborado(@RequestBody CompetenciaColaboradorDto payload) {
+    public ResponseEntity<CompetenciaColaboradorDto> salvarCompetenciaColaborado(@RequestBody CompetenciaColaboradorDto payload) {
         return ResponseEntity.ok( service.salvarCompetenciaColaborador(payload));
+    }
+
+    @Operation(summary = "Obtem todas as associações",
+            description = "Retorna uma lista de todas as associações entre empresas e colaboradores",
+            tags = {"get"})
+    @GetMapping("/colaboradores")
+    public ResponseEntity<List<Map<String, Long>>> obterTodasCompetenciasColaboradores() {
+        return ResponseEntity.ok(service.obterTodasCompetenciasColaboradores());
     }
 
 }

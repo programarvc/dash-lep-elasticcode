@@ -1,6 +1,7 @@
 package com.br.agilize.dash.repository;
 
 import com.br.agilize.dash.model.entity.ColaboradorEntity;
+import com.br.agilize.dash.model.entity.EmpresaColaboradorEntity;
 import com.br.agilize.dash.model.entity.HabilidadeColaboradorEntity;
 
 import com.br.agilize.dash.model.entity.HabilidadeEntity;
@@ -15,5 +16,6 @@ public interface HabilidadeColaboradorRepository extends JpaRepository<Habilidad
     List<HabilidadeColaboradorEntity> findByHabilidade(HabilidadeEntity habilidade);
     List<HabilidadeColaboradorEntity> findByColaborador(ColaboradorEntity colaborador);
 
+    List<HabilidadeColaboradorEntity> findByHabilidadeId(Long id);
 
 }

@@ -10,6 +10,8 @@ import com.br.agilize.dash.model.dto.HabilidadeColaboradorDto;
 import com.br.agilize.dash.model.dto.HabilidadeDto;
 import com.br.agilize.dash.model.entity.ColaboradorEntity;
 
+import com.br.agilize.dash.model.entity.EmpresaColaboradorEntity;
+import com.br.agilize.dash.model.entity.HabilidadeColaboradorEntity;
 import com.br.agilize.dash.model.entity.HabilidadeEntity;
 import com.br.agilize.dash.repository.HabilidadeColaboradorRepository;
 import com.br.agilize.dash.repository.HabilidadeRepository;
@@ -18,7 +20,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -81,5 +85,19 @@ public class HabilidadeService extends ServiceCrudBase<HabilidadeDto> {
 
         return this.habilidadeColaboradorRepository.findByHabilidade(habilidade).stream()
                 .map(this.habilidadeColaboradorMapper::modelToDTO).collect(Collectors.toList());
+    }
+
+    public List<Map<String, Long>> obterTodasHabilidadesColaborador() {
+        List<HabilidadeColaboradorEntity> todasAssociacoes = habilidadeColaboradorRepository.findAll();
+
+        return todasAssociacoes.stream()
+                .map(habilidadeAssociacao -> {
+                    Map<String, Long> ids = new HashMap<>();
+                    ids.put("colaborador_id", habilidadeAssociacao.getColaborador().getId());
+                    ids.put("habilidade_id", habilidadeAssociacao.getHabilidade().getId());
+                    ids.put("id", habilidadeAssociacao.getId());
+                    return ids;
+                })
+                .collect(Collectors.toList());
     }
 }

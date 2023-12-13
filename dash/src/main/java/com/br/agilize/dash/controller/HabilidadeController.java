@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Tag(name = "HabilidadeController", description = "Api para gerenciar as habilidades")
 @Controller
@@ -48,6 +49,14 @@ public class HabilidadeController extends ControllerCrudBase<HabilidadeDto> {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<HabilidadeColaboradorDto> salvarHabilidadeColaborado(@RequestBody HabilidadeColaboradorDto payload) {
         return ResponseEntity.ok(service.salvarHabilidadeColaborador(payload));
+    }
+
+    @Operation(summary = "Obtem todas as associações",
+            description = "Retorna uma lista de todas as associações entre empresas e colaboradores",
+            tags = {"get"})
+    @GetMapping("/colaboradores")
+    public ResponseEntity<List<Map<String, Long>>> obterTodasHabilidadesColaboradores() {
+        return ResponseEntity.ok(service.obterTodasHabilidadesColaborador());
     }
 
 

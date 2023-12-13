@@ -1,8 +1,11 @@
 package com.br.agilize.dash.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.br.agilize.dash.model.entity.EmpresaColaboradorEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -79,6 +82,27 @@ public class EmpresaService extends ServiceCrudBase<EmpresaDto> {
                 .findByColaborador(colaborador).stream()
                 .map(this.empresaColaboradorMapper::modelToDTO).collect(Collectors.toList());
 
+    }
+
+    public List<EmpresaColaboradorDto> obterEmpresasColaboradorAll (Long id) {
+        List<EmpresaColaboradorEntity> empresaColaboradorEntities = this.empresaColaboradorRepository.findByEmpresaId(id);
+        return empresaColaboradorEntities.stream()
+                .map(this.empresaColaboradorMapper::modelToDTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<Map<String, Long>> obterTodasEmpresasColaboradores() {
+        List<EmpresaColaboradorEntity> todasAssociacoes = empresaColaboradorRepository.findAll();
+
+        return todasAssociacoes.stream()
+                .map(associacao -> {
+                    Map<String, Long> ids = new HashMap<>();
+                    ids.put("colaborador_id", associacao.getColaborador().getId());
+                    ids.put("empresa_id", associacao.getEmpresa().getId());
+                    ids.put("id", associacao.getId());
+                    return ids;
+                })
+                .collect(Collectors.toList());
     }
 
     public List<EmpresaColaboradorDto> findByEmpresa(Long id) {

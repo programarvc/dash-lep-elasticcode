@@ -15,4 +15,9 @@ public interface EmpresaColaboradorRepository extends JpaRepository<EmpresaColab
     List<EmpresaColaboradorEntity> findByColaborador(ColaboradorEntity colaborador);
 
     List<EmpresaColaboradorEntity> findByEmpresa(EmpresaEntity empresa);
+
+    List<EmpresaColaboradorEntity> findByEmpresaId(Long id);
+
+
+
 }
