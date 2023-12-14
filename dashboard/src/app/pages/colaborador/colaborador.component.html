@@ -11,8 +11,8 @@
                             }} {{empresa.empresa.nome}}</span>
                     </span>
                     <span class="occupation">
-                        <span *ngFor="let habilidade of currentColaborador.habilidades; let isFirst = first">{{ isFirst
-                            ? '' : '- ' }} {{habilidade.nome}}</span>
+                        <span *ngFor="let habilidade of habilidadesByColaborador; let isFirst = first">{{ isFirst
+                            ? '' : ' - ' }} {{habilidade.habilidade.nome}}</span>
                     </span>
                 </div>
             </div>
