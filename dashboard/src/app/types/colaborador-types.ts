@@ -12,6 +12,11 @@ export interface Habilidade {
   backend: boolean;
 }
 
+export interface HabilidadeByColaborador {
+  id: number;
+  habilidade: Habilidade;
+}
+
 export interface Competencia {
   id: number;
   nome: string;
@@ -20,13 +25,14 @@ export interface Competencia {
 export interface CompetenciaByColaborador {
   id: number;
   competencia: Competencia;
+  meta: number;
   progresso: number;
 }
 
 export interface Acao {
   id: number;
   nome: string;
- 
+
 }
 
 export interface AcaoByColaborador {

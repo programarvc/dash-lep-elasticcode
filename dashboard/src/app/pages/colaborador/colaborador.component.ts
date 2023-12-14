@@ -6,20 +6,22 @@ import {
   CompetenciaByColaborador,
   Empresa,
   EmpresaByColaborador,
+  HabilidadeByColaborador
 } from 'src/app/types/colaborador-types';
 import { AcaoService } from 'src/services/acao/acao.service';
 import { ColaboradorService } from 'src/services/colaborador/colaborador.service';
 import { CompetenciaService } from 'src/services/competencia/competencia.service';
 import { EmpresaService } from 'src/services/empresa/empresa.service';
+import { HabilidadeService } from 'src/services/habilidade/habilidade.service';
 
 @Component({
   selector: 'app-colaborador',
   templateUrl: './colaborador.component.html',
   styleUrls: ['./colaborador.component.sass'],
-  
+
 })
 export class ColaboradorComponent implements OnInit {
-  
+
   public colaboradores: Colaborador[] = [];
   public currentColaborador: Colaborador = {
     id: 0,
@@ -38,6 +40,7 @@ export class ColaboradorComponent implements OnInit {
   public empresasByColaborador: EmpresaByColaborador[] = [];
   public searchResultsAcoes: AcaoByColaborador[] = [];
   public searchResultsCompetencias:  CompetenciaByColaborador[] = [];
+  public habilidadesByColaborador: HabilidadeByColaborador[] = [];
 
   constructor(
     private router: Router,
@@ -45,7 +48,8 @@ export class ColaboradorComponent implements OnInit {
     private colaboradorService: ColaboradorService,
     private competenciaService: CompetenciaService,
     private acoesService: AcaoService,
-    private empresaService: EmpresaService
+    private empresaService: EmpresaService,
+    private habilidadeService: HabilidadeService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -68,6 +72,7 @@ export class ColaboradorComponent implements OnInit {
       this.currentColaborador = colaborador;
       this.getCompetencias(colaborador.id);
       this.getAcoes(colaborador.id);
+      this.getHabilidades(colaborador.id);
     }
   }
 
@@ -103,6 +108,12 @@ export class ColaboradorComponent implements OnInit {
   public getEmpresas(): void {
     this.empresaService.getEmpresas().subscribe((response) => {
       this.empresas = response;
+    });
+  }
+
+  public getHabilidades(id: number): void {
+    this.habilidadeService.getHabilidadesByColaborador(id).subscribe((response) => {
+      this.habilidadesByColaborador = response;
     });
   }
 
@@ -142,10 +153,10 @@ export class ColaboradorComponent implements OnInit {
 
   handleSearch(event: string) {
     if(event !== ''){
-      this.searchResultsAcoes =  this.acoes.filter((acao)=> 
+      this.searchResultsAcoes =  this.acoes.filter((acao)=>
       acao.acao.nome.toLowerCase().includes(event.toLowerCase()));
-  
-      this.searchResultsCompetencias =  this.competencias.filter((competencia)=> 
+
+      this.searchResultsCompetencias =  this.competencias.filter((competencia)=>
       competencia.competencia.nome.toLowerCase().includes(event.toLowerCase()));
     }
     else{
@@ -158,5 +169,5 @@ export class ColaboradorComponent implements OnInit {
 
   }
 
-  
+
 }

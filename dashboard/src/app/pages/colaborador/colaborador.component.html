@@ -11,8 +11,8 @@
                             }} {{empresa.empresa.nome}}</span>
                     </span>
                     <span class="occupation">
-                        <span *ngFor="let habilidade of currentColaborador.habilidades; let isFirst = first">{{ isFirst
-                            ? '' : '- ' }} {{habilidade.nome}}</span>
+                        <span *ngFor="let habilidade of habilidadesByColaborador; let isFirst = first">{{ isFirst
+                            ? '' : ' - ' }} {{habilidade.habilidade.nome}}</span>
                     </span>
                 </div>
             </div>
@@ -101,7 +101,7 @@
                                             <div class="progress-goal"
                                                 [ngStyle]="{'width': (competencia.progresso * 10).toString() + '%'}">
                                                 <div class="goal-value" style="left: 96.5%">
-                                                    <span>{{competencia.progresso}}</span>
+                                                    <span>{{competencia.meta}}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -111,7 +111,7 @@
                             </ng-container>
                             <ng-container *ngIf="searchResultsCompetencias.length>0">
                             <tr
-                             *ngFor="let competencia of searchResultsCompetencias"> 
+                             *ngFor="let competencia of searchResultsCompetencias">
                                 <td>{{competencia.competencia.nome}}</td>
                                 <td>
                                     <div class="progress-bar-content">
@@ -119,7 +119,7 @@
                                             <div class="progress-goal"
                                                 [ngStyle]="{'width': (competencia.progresso * 10).toString() + '%'}">
                                                 <div class="goal-value" style="left: 96.5%">
-                                                    <span>{{competencia.progresso}}</span>
+                                                    <span>{{competencia.meta}}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -185,7 +185,7 @@
                                         <div class="discipline">
                                             <!---<div class="method">
                                                 <img src="./assets/images/tv.png" alt="tv">
-                                                <b>Online</b> 
+                                                <b>Online</b>
                                             </div>-->
                                             <span>{{acao.acao.nome}}</span>
                                         </div>
@@ -207,7 +207,7 @@
                                         <div class="discipline">
                                             <!---<div class="method">
                                                 <img src="./assets/images/tv.png" alt="tv">
-                                                <b>Online</b> 
+                                                <b>Online</b>
                                             </div>-->
                                             <span>{{acao.acao.nome}}</span>
                                         </div>
