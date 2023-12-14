@@ -16,10 +16,10 @@ import { EmpresaService } from 'src/services/empresa/empresa.service';
   selector: 'app-colaborador',
   templateUrl: './colaborador.component.html',
   styleUrls: ['./colaborador.component.sass'],
-  
+
 })
 export class ColaboradorComponent implements OnInit {
-  
+
   public colaboradores: Colaborador[] = [];
   public currentColaborador: Colaborador = {
     id: 0,
@@ -142,10 +142,10 @@ export class ColaboradorComponent implements OnInit {
 
   handleSearch(event: string) {
     if(event !== ''){
-      this.searchResultsAcoes =  this.acoes.filter((acao)=> 
+      this.searchResultsAcoes =  this.acoes.filter((acao)=>
       acao.acao.nome.toLowerCase().includes(event.toLowerCase()));
-  
-      this.searchResultsCompetencias =  this.competencias.filter((competencia)=> 
+
+      this.searchResultsCompetencias =  this.competencias.filter((competencia)=>
       competencia.competencia.nome.toLowerCase().includes(event.toLowerCase()));
     }
     else{
@@ -158,5 +158,5 @@ export class ColaboradorComponent implements OnInit {
 
   }
 
-  
+
 }

@@ -21,12 +21,13 @@ export interface CompetenciaByColaborador {
   id: number;
   competencia: Competencia;
   progresso: number;
+  meta: number;
 }
 
 export interface Acao {
   id: number;
   nome: string;
- 
+
 }
 
 export interface AcaoByColaborador {
