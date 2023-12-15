@@ -1,12 +1,19 @@
 package com.br.agilize.dash.controller;
 
-import com.br.agilize.dash.service.ServiceCrudBase;
-import io.swagger.v3.oas.annotations.Operation;
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-import java.util.List;
+import com.br.agilize.dash.service.ServiceCrudBase;
+
+import io.swagger.v3.oas.annotations.Operation;
 
 public abstract class ControllerCrudBase<T> {
     private ServiceCrudBase<T> service;
