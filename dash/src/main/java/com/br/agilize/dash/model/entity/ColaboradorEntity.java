@@ -30,15 +30,12 @@ public class ColaboradorEntity {
     @Column(unique = true)
     private String github;
 
-    @Column(nullable = true)
-    private String avatar;
-
     @ManyToMany
-    @JoinTable(name = "empresa_colaborador", joinColumns = @JoinColumn(name = "colaboradorId"), inverseJoinColumns = @JoinColumn(name = "empresaId"))
+    @JoinTable(name = "empresa_colaborador", joinColumns = @JoinColumn(name = "colaborado_id"), inverseJoinColumns = @JoinColumn(name = "empresa_id"))
     private List<EmpresaEntity> empresas;
 
     @ManyToMany
-    @JoinTable(name = "colaborador_habilidade", joinColumns = @JoinColumn(name = "colaboradorId"), inverseJoinColumns = @JoinColumn(name = "habilidadeId"))
-    private List<HabilitadeEntity> habilidades;
+    @JoinTable(name = "habilidade_colaborador", joinColumns = @JoinColumn(name = "colaborador_id"), inverseJoinColumns = @JoinColumn(name = "habilidade_id"))
+    private List<HabilidadeEntity> habilidades;
 
 }

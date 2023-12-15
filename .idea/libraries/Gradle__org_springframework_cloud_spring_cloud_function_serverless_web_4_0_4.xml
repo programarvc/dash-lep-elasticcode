@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: org.springframework.cloud:spring-cloud-function-serverless-web:4.0.4" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="org.springframework.cloud" artifactId="spring-cloud-function-serverless-web" version="4.0.4" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.cloud/spring-cloud-function-serverless-web/4.0.4/784a05f4525d47dc502d8e4b319e6bacc8d3b484/spring-cloud-function-serverless-web-4.0.4.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.cloud/spring-cloud-function-serverless-web/4.0.4/d390d101c39c7d9be0bcb855984095924b3f929f/spring-cloud-function-serverless-web-4.0.4-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.cloud/spring-cloud-function-serverless-web/4.0.4/ba54ec60fb06bfa5e8c97a45d1d000f0a00ee7cb/spring-cloud-function-serverless-web-4.0.4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

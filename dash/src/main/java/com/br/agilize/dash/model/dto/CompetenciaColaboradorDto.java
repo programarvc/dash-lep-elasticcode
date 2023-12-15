@@ -8,4 +8,5 @@ public class CompetenciaColaboradorDto {
     private CompetenciaDto competencia;
     private ColaboradorDto colaborador;
     private Integer progresso;
+    private Integer meta;
 }

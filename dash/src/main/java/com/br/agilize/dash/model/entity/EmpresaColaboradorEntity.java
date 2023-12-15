@@ -15,9 +15,11 @@ public class EmpresaColaboradorEntity {
     private Long id;
 
     @ManyToOne
-    private ColaboradorEntity colaborador;
+    @JoinColumn(name = "empresa_id")
+    private EmpresaEntity empresa;
 
     @ManyToOne
-    private EmpresaEntity empresa;
+    @JoinColumn(name = "colaborador_id")
+    private ColaboradorEntity colaborador;  
 
 }

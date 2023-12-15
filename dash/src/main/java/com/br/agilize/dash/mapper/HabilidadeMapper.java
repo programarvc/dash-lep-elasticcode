@@ -1,14 +1,14 @@
 package com.br.agilize.dash.mapper;
 
-import com.br.agilize.dash.model.dto.HabilitadeDto;
-import com.br.agilize.dash.model.entity.HabilitadeEntity;
+import com.br.agilize.dash.model.dto.HabilidadeDto;
+import com.br.agilize.dash.model.entity.HabilidadeEntity;
 import org.mapstruct.Mapper;
 
 @Mapper
-public interface HabilidadeMapper extends  MapperBase<HabilitadeEntity, HabilitadeDto> {
+public interface HabilidadeMapper extends  MapperBase<HabilidadeEntity, HabilidadeDto> {
     @Override
-    HabilitadeDto modelToDTO(HabilitadeEntity entity);
+    HabilidadeDto modelToDTO(HabilidadeEntity entity);
 
     @Override
-    HabilitadeEntity dtoToModel(HabilitadeDto dto);
+    HabilidadeEntity dtoToModel(HabilidadeDto dto);
 }

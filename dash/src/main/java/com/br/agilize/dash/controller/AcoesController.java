@@ -1,6 +1,7 @@
 package com.br.agilize.dash.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -49,6 +50,14 @@ public class AcoesController extends ControllerCrudBase<AcoesDto> {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<AcoesColaboradorDto> salvarAcoesColaborado(@RequestBody AcoesColaboradorDto payload) {
         return ResponseEntity.ok( service.salvarAcaoColaborador(payload));
+    }
+
+    @Operation(summary = "Obtem todas as associações",
+            description = "Retorna uma lista de todas as associações entre empresas e colaboradores",
+            tags = {"get"})
+    @GetMapping("/colaboradores")
+    public ResponseEntity<List<Map<String, Long>>> obterTodasAcoesColaboradores() {
+        return ResponseEntity.ok(service.obterTodasAcoesColaborador());
     }
 
 }

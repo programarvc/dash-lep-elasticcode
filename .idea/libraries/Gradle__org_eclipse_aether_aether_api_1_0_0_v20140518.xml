@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: org.eclipse.aether:aether-api:1.0.0.v20140518" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="org.eclipse.aether" artifactId="aether-api" version="1.0.0.v20140518" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.aether/aether-api/1.0.0.v20140518/be68e917f454dcd841865ad7cf9b7615b26a51f7/aether-api-1.0.0.v20140518.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.aether/aether-api/1.0.0.v20140518/fd717dde6bba962c30ccb1aa9b496335896714a8/aether-api-1.0.0.v20140518-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.aether/aether-api/1.0.0.v20140518/6cc513c3253c2c5e5e2c52dca55c6cb2cdcccb9e/aether-api-1.0.0.v20140518-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
