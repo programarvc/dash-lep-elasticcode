@@ -42,13 +42,17 @@ Parameters:
     Type: String
 
 Resources:
+  Api:
+      Type: AWS::Serverless::Api
+      Properties:
+        StageName: Prod
+        Cors:
+          AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+          AllowMethods: "'OPTIONS,GET,POST,PUT,DELETE'"
+          AllowOrigin: "'*'"
   DashboardApiFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Cors:
-        AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
-        AllowMethods: "'OPTIONS,GET,POST,PUT,DELETE'"
-        AllowOrigin: "'*'"
       CodeUri: .
       Handler: com.br.agilize.dash.handler.LambdaHandler::handleRequest
       Runtime: java17
@@ -79,3 +83,4 @@ Resources:
           Properties:
             Path: /{proxy+}
             Method: ANY
+            RestApiId: !Ref Api
