@@ -27,7 +27,6 @@ export interface CompetenciaByColaborador {
   competencia: Competencia;
   meta: number;
   progresso: number;
-  meta: number;
 }
 
 export interface Acao {

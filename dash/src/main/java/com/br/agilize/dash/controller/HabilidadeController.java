@@ -47,7 +47,7 @@ public class HabilidadeController extends ControllerCrudBase<HabilidadeDto> {
             "salvar", "post" })
     @PostMapping("/colaborador")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<HabilidadeColaboradorDto> salvarHabilidadeColaborado(@RequestBody HabilidadeColaboradorDto payload) {
+    public ResponseEntity<HabilidadeColaboradorDto> salvarHabilidadeColaborador(@RequestBody HabilidadeColaboradorDto payload) {
         return ResponseEntity.ok(service.salvarHabilidadeColaborador(payload));
     }
 
