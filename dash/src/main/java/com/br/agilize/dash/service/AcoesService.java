@@ -6,8 +6,10 @@ import com.br.agilize.dash.mapper.AcoesMapper;
 import com.br.agilize.dash.mapper.ColaboradorMapper;
 import com.br.agilize.dash.model.dto.AcoesColaboradorDto;
 import com.br.agilize.dash.model.dto.AcoesDto;
+import com.br.agilize.dash.model.entity.AcoesColaboradorEntity;
 import com.br.agilize.dash.model.entity.AcoesEntity;
 import com.br.agilize.dash.model.entity.ColaboradorEntity;
+import com.br.agilize.dash.model.entity.HabilidadeColaboradorEntity;
 import com.br.agilize.dash.repository.AcoesColaboradorRepository;
 import com.br.agilize.dash.repository.AcoesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -75,5 +79,18 @@ public class AcoesService extends ServiceCrudBase<AcoesDto> {
                 .map(this.acoesColaboradorMapper::modelToDTO).collect(Collectors.toList());
 
     }
-}
 
+    public List<Map<String, Long>> obterTodasAcoesColaborador() {
+        List<AcoesColaboradorEntity> todasAssociacoes = acoesColaboradorRepository.findAll();
+
+        return todasAssociacoes.stream()
+                .map(acaoAssociacao -> {
+                    Map<String, Long> ids = new HashMap<>();
+                    ids.put("colaborador_id", acaoAssociacao.getColaborador().getId());
+                    ids.put("acao_id", acaoAssociacao.getAcao().getId());
+                    ids.put("id", acaoAssociacao.getId());
+                    return ids;
+                })
+                .collect(Collectors.toList());
+    }
+}

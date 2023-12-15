@@ -33,6 +33,7 @@ dependencies {
 	implementation 'software.amazon.awssdk:secretsmanager:2.21.15'
 	implementation 'org.postgresql:postgresql'
 	implementation 'io.github.crac.com.amazonaws:aws-lambda-java-runtime-interface-client:1.0.0'
+	implementation group: 'org.apache.maven.plugins', name: 'maven-shade-plugin', version: '3.5.1'
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'

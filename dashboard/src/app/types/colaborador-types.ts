@@ -3,7 +3,6 @@ export interface Colaborador {
   nome: string;
   email: string;
   github: string;
-  avatar: string;
   habilidades: Habilidade[];
 }
 
@@ -11,6 +10,11 @@ export interface Habilidade {
   id: number;
   nome: string;
   backend: boolean;
+}
+
+export interface HabilidadeByColaborador {
+  id: number;
+  habilidade: Habilidade;
 }
 
 export interface Competencia {
@@ -21,13 +25,14 @@ export interface Competencia {
 export interface CompetenciaByColaborador {
   id: number;
   competencia: Competencia;
+  meta: number;
   progresso: number;
 }
 
 export interface Acao {
   id: number;
   nome: string;
- 
+
 }
 
 export interface AcaoByColaborador {

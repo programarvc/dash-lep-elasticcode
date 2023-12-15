@@ -3,7 +3,11 @@
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$/dash" />
   </component>
+<<<<<<< HEAD
   <component name="ProjectRootManager" version="2" project-jdk-name="openjdk-20" project-jdk-type="JavaSDK">
+=======
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_20" project-jdk-name="17 1" project-jdk-type="JavaSDK">
+>>>>>>> origin/feature/metodosGetAllAssociacoes
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>
