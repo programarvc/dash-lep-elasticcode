@@ -43,13 +43,13 @@ Parameters:
 
 Resources:
   Api:
-      Type: AWS::Serverless::Api
-      Properties:
-        StageName: Prod
-        Cors:
-          AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
-          AllowMethods: "'OPTIONS,GET,POST,PUT,DELETE'"
-          AllowOrigin: "'*'"
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+      Cors:
+        AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+        AllowMethods: "'OPTIONS,GET,POST,PUT,DELETE'"
+        AllowOrigin: "'*'"
   DashboardApiFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -77,6 +77,7 @@ Resources:
         - AWSLambda_FullAccess
         - AmazonEC2FullAccess
         - SecretsManagerReadWrite
+        - AmazonAPIGatewayAdministrator
       Events:
         HelloWorld:
           Type: Api
