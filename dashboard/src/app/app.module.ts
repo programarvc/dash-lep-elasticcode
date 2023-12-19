@@ -13,8 +13,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { ColaboradorComponent } from './pages/colaborador/colaborador.component';
 import { FormsModule } from '@angular/forms';
+import { DashProjetoComponent } from './pages/dash-projeto/dash-projeto.component';
 @NgModule({
-  declarations: [AppComponent, SearchBarComponent, ColaboradorComponent],
+  declarations: [AppComponent, SearchBarComponent, ColaboradorComponent, DashProjetoComponent],
   imports: [HttpClientModule, BrowserModule, AppRoutingModule,FormsModule, NgbModule],
   providers: [],
   bootstrap: [AppComponent],
