@@ -1,13 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap')
 
-#secao-dash-projeto .container-fluid
-    padding-left: 0
+.dash-projeto .container-fluid
+    padding: 0
+
+.row
+    margin: 0
 
 body 
     background: #EEEFF1
 
 .dash-projeto
     display: flex
+    width: 100%
 
 .barra-esquerda
     align-items: center
@@ -16,7 +20,6 @@ body
     flex-direction: column
     gap: 24px
     justify-content: center
-    margin-right: 30px
     min-height: 100vh 
     width: 70px
 
@@ -27,10 +30,8 @@ body
     font-weight: 600
     margin: 40px 0 20px
 
-
 .botao-dash
     padding: 13px
-    
 
 .botao-um
     border-radius: 10px
@@ -41,3 +42,25 @@ body
 
 .botao-dois img
     width: 25px
+
+.dashboard-content
+    padding-left: 30px
+    width: 100%
+
+.bloco-metricas
+    display: flex
+    gap: 12px
+    text-align: center
+
+.metricas
+    display: flex
+    flex-direction: column
+    width: 50%
+
+.espaco-cards
+    display: flex
+    gap: 14px
+
+.card
+    height: 212px
+    width: 50%
