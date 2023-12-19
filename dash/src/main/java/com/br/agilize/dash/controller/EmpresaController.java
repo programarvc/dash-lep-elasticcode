@@ -56,7 +56,7 @@ public class EmpresaController extends ControllerCrudBase<EmpresaDto> {
         return ResponseEntity.ok(service.obterTodasEmpresasColaboradores());
     }
 
-    @Operation(summary = "Salva um objeto relacionando ação ao colaborador", description = "Retorna as informações do objeto que foram salvas", tags = {
+    @Operation(summary = "Salva um objeto relacionando empresa ao colaborador", description = "Retorna as informações do objeto que foram salvas", tags = {
             "salvar", "post" })
     @PostMapping("/colaborador")
     @ResponseStatus(HttpStatus.CREATED)
