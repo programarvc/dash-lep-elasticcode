@@ -14,8 +14,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { ColaboradorComponent } from './pages/colaborador/colaborador.component';
 import { FormsModule } from '@angular/forms';
 import { DashProjetoComponent } from './pages/dash-projeto/dash-projeto.component';
+import { SidebarMenuComponent } from './components/sidebar-menu/sidebar-menu.component';
 @NgModule({
-  declarations: [AppComponent, SearchBarComponent, ColaboradorComponent, DashProjetoComponent],
+  declarations: [AppComponent, SearchBarComponent, ColaboradorComponent, DashProjetoComponent, SidebarMenuComponent],
   imports: [HttpClientModule, BrowserModule, AppRoutingModule,FormsModule, NgbModule],
   providers: [],
   bootstrap: [AppComponent],
