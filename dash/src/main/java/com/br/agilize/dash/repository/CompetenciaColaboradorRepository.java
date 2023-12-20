@@ -11,4 +11,6 @@ import java.util.List;
 public interface CompetenciaColaboradorRepository extends JpaRepository<CompetenciaColaboradorEntity, Long> {
 
     List<CompetenciaColaboradorEntity> findByColaborador(ColaboradorEntity colaborador);
+
+    CompetenciaColaboradorEntity findByColaboradorIdAndCompetenciaId(Long colaboradorId, Long competenciaId);
 }

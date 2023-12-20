@@ -25,6 +25,14 @@ public class EmpresaController extends ControllerCrudBase<EmpresaDto> {
         this.service = service;
     }
 
+    @Operation(summary = "Deleta a Empresa  pelo id", description = "", tags = {
+            "id", "delete" })
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> excluirPorId(@PathVariable Long id) {
+        service.excluirPorId(id);
+        return ResponseEntity.noContent().build();
+    }
+
     @Operation(summary = "Obtem Empresa do colaborador pelo id", description = "Retorna as informações do objeto pelo do id", tags = {
             "id", "get" })
     @GetMapping("/colaborador/{id}")
@@ -39,18 +47,15 @@ public class EmpresaController extends ControllerCrudBase<EmpresaDto> {
         return ResponseEntity.ok(service.findByEmpresa(id));
     }
 
-    @Operation(summary = "Obtem todas as associações entre empresas e colaboradores para uma empresa específica",
-            description = "Retorna uma lista de associações entre empresas e colaboradores para a empresa com o id fornecido",
-            tags = {"id", "get"})
+    @Operation(summary = "Obtem todas as associações entre empresas e colaboradores para uma empresa específica", description = "Retorna uma lista de associações entre empresas e colaboradores para a empresa com o id fornecido", tags = {
+            "id", "get" })
     @GetMapping("/empresa/{id}/colaboradores")
     public ResponseEntity<List<EmpresaColaboradorDto>> obterEmpresasColaboradorAll(@PathVariable Long id) {
         return ResponseEntity.ok(service.obterEmpresasColaboradorAll(id));
     }
 
-
-    @Operation(summary = "Obtem todas as associações",
-            description = "Retorna uma lista de todas as associações entre empresas e colaboradores",
-            tags = {"get"})
+    @Operation(summary = "Obtem todas as associações", description = "Retorna uma lista de todas as associações entre empresas e colaboradores", tags = {
+            "get" })
     @GetMapping("/colaboradores")
     public ResponseEntity<List<Map<String, Long>>> obterTodasEmpresasColaboradores() {
         return ResponseEntity.ok(service.obterTodasEmpresasColaboradores());
@@ -62,6 +67,13 @@ public class EmpresaController extends ControllerCrudBase<EmpresaDto> {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<EmpresaColaboradorDto> salvarEmpresasColaborado(@RequestBody EmpresaColaboradorDto payload) {
         return ResponseEntity.ok(service.salvarEmpresasColaborador(payload));
+    }
+
+    @DeleteMapping("/colaborador/{colaboradorId}/empresa/{empresaId}")
+    public ResponseEntity<Void> apagarEmpresaColaborador(@PathVariable Long colaboradorId,
+            @PathVariable Long empresaId) {
+        service.apagarEmpresaColaborador(colaboradorId, empresaId);
+        return ResponseEntity.noContent().build();
     }
 
 }

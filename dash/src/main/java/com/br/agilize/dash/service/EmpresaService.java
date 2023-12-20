@@ -67,13 +67,19 @@ public class EmpresaService extends ServiceCrudBase<EmpresaDto> {
         this.repository.deleteById(id);
     }
 
-   
-
      public EmpresaColaboradorDto salvarEmpresasColaborador(EmpresaColaboradorDto payload) {
         return empresaColaboradorMapper.modelToDTO(
                 this.empresaColaboradorRepository.save(
                         this.empresaColaboradorMapper.dtoToModel(payload)) );
     }
+
+
+    public void apagarEmpresaColaborador(Long colaboradorId, Long empresaId) {
+        EmpresaColaboradorEntity empresaColaboradorEntity = this.empresaColaboradorRepository
+                .findByColaboradorIdAndEmpresaId(colaboradorId, empresaId);
+        this.empresaColaboradorRepository.delete(empresaColaboradorEntity);
+    }
+
 
 
     public List<EmpresaColaboradorDto> obterEmpresasColaborador(Long colaboradorId) {

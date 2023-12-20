@@ -9,6 +9,7 @@ import com.br.agilize.dash.model.dto.AcoesDto;
 import com.br.agilize.dash.model.entity.AcoesColaboradorEntity;
 import com.br.agilize.dash.model.entity.AcoesEntity;
 import com.br.agilize.dash.model.entity.ColaboradorEntity;
+import com.br.agilize.dash.model.entity.CompetenciaColaboradorEntity;
 import com.br.agilize.dash.model.entity.HabilidadeColaboradorEntity;
 import com.br.agilize.dash.repository.AcoesColaboradorRepository;
 import com.br.agilize.dash.repository.AcoesRepository;
@@ -69,6 +70,12 @@ public class AcoesService extends ServiceCrudBase<AcoesDto> {
         return acoesColaboradorMapper.modelToDTO(
                 this.acoesColaboradorRepository.save(
                         this.acoesColaboradorMapper.dtoToModel(payload)) );
+    }
+
+    public void apagarAcaoColaborador(Long colaboradorId, Long id) {
+        AcoesColaboradorEntity acoesColaboradorEntity = this.acoesColaboradorRepository
+                .findByColaboradorIdAndAcaoId(colaboradorId, id);
+        this.acoesColaboradorRepository.delete(acoesColaboradorEntity);
     }
 
 

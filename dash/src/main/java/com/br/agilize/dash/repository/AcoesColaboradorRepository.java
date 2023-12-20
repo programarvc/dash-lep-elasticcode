@@ -12,4 +12,8 @@ import com.br.agilize.dash.model.entity.ColaboradorEntity;
 public interface AcoesColaboradorRepository extends JpaRepository<AcoesColaboradorEntity, Long> {
 
     List<AcoesColaboradorEntity> findByColaborador(ColaboradorEntity colaborador);
+
+    AcoesColaboradorEntity findByColaboradorIdAndAcaoId(Long colaboradorId, Long id);
+
+    
 }
