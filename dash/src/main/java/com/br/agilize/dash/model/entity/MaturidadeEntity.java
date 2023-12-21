@@ -11,10 +11,10 @@ import lombok.ToString;
 @Entity
 public class MaturidadeEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-   @ManyToOne
+   @OneToOne
    private EsteiraDeDesenvolvimentoEntity esteira;
 
    @Column 
@@ -27,12 +27,22 @@ public class MaturidadeEntity {
     private Integer leadTime;
 
     @Column(name = "frequency_deployment")
-    private Integer FrequencyDeployment;
+    private Integer frequencyDeployment;
 
     @Column(name = "change_failurerate")
-    private Double ChangeFailureRate;
+    private Double changeFailureRate;
 
     @Column(name = "time_torecovery")
     private Integer timeToRecovery;
+
+    @PrePersist
+    public void prePersist() {
+        data = LocalDate.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        data = LocalDate.now();
+    }
 
 }

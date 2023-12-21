@@ -16,7 +16,7 @@ import lombok.ToString;
 @Entity
 public class AcoesColaboradorEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne

@@ -1,7 +1,10 @@
 package com.br.agilize.dash.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.br.agilize.dash.model.dto.EsteiraDeDesenvolvimentoDto;
@@ -13,8 +16,14 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Controller
 @RequestMapping("/esteira")
 public class EsteiraDeDesenvolvimentoController extends ControllerCrudBase<EsteiraDeDesenvolvimentoDto> {
+     
+    @Autowired 
+    EsteiraDeDesenvolvimentoService service;
 
     public EsteiraDeDesenvolvimentoController(@Autowired EsteiraDeDesenvolvimentoService service) {
         super(service);
     }
+
+
+
 }

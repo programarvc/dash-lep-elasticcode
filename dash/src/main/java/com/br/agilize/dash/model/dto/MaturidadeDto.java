@@ -19,7 +19,7 @@ public class MaturidadeDto {
 
     private Integer FrequencyDeployment;
 
-    private Double ChangeFailRate;
+    private Double ChangeFailureRate;
 
     private Integer timeToRecovery;
 }

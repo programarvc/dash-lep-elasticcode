@@ -1,6 +1,7 @@
 package com.br.agilize.dash.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,12 +38,24 @@ public class MaturidadeService extends ServiceCrudBase<MaturidadeDto> {
 
     @Override
     public MaturidadeDto salvar(MaturidadeDto payload) {
-        MaturidadeEntity MaturidadeSalvo = this.repository.save(this.mapper.dtoToModel(payload));
-        return this.mapper.modelToDTO(MaturidadeSalvo);
+        Optional<MaturidadeEntity> existente = this.repository.findTopByEsteiraIdOrderByNumeroDesc(payload.getEsteira().getId());
+        MaturidadeEntity maturidade = this.mapper.dtoToModel(payload);
+
+        if (existente.isPresent()) {
+            maturidade.setNumero(existente.get().getNumero() + 1);
+        } else {
+            maturidade.setNumero(1);
+        }
+
+        MaturidadeEntity maturidadeSalva = this.repository.save(maturidade);
+        return this.mapper.modelToDTO(maturidadeSalva);
     }
 
     @Override
     public void excluirPorId(Long id) {
         this.repository.deleteById(id);
     }
+
+   
+
 }
