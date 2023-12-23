@@ -3,7 +3,7 @@ package com.br.agilize.dash.model.enums;
 public enum TiposEnum {
 
     PLANEJAMENTO,
-    DESENVOVIMENTO,
+    DESENVOLVIMENTO,
     INTEGRACAO,
     TESTE,
     IMPLANTAÇÃO,

@@ -18,7 +18,7 @@ import lombok.ToString;
 @Entity
 public class ColaboradorEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(nullable = false)
@@ -31,7 +31,7 @@ public class ColaboradorEntity {
     private String github;
 
     @ManyToMany
-    @JoinTable(name = "empresacolaboradorentity", joinColumns = @JoinColumn(name = "colaborado_id"), inverseJoinColumns = @JoinColumn(name = "empresa_id"))
+    @JoinTable(name = "empresacolaboradorentity", joinColumns = @JoinColumn(name = "colaborador_id"), inverseJoinColumns = @JoinColumn(name = "empresa_id"))
     private List<EmpresaEntity> empresas;
 
     @ManyToMany

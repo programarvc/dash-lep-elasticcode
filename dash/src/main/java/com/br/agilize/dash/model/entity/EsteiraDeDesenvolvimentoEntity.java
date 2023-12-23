@@ -1,5 +1,7 @@
 package com.br.agilize.dash.model.entity;
 
+
+
 import com.br.agilize.dash.model.enums.TiposEnum;
 
 import jakarta.persistence.*;
@@ -11,7 +13,7 @@ import lombok.ToString;
 @Entity
 public class EsteiraDeDesenvolvimentoEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(nullable = false)

@@ -46,7 +46,6 @@ public class MaturidadeService extends ServiceCrudBase<MaturidadeDto> {
         } else {
             maturidade.setNumero(1);
         }
-
         MaturidadeEntity maturidadeSalva = this.repository.save(maturidade);
         return this.mapper.modelToDTO(maturidadeSalva);
     }
@@ -56,6 +55,28 @@ public class MaturidadeService extends ServiceCrudBase<MaturidadeDto> {
         this.repository.deleteById(id);
     }
 
-   
+    
+    public List<MaturidadeDto>obterPorEsteiraId(Long esteiraId){
+        List<MaturidadeEntity> maturidades = this.repository.findByEsteiraId(esteiraId);
+        return maturidades.stream().map(this.mapper::modelToDTO).toList();
+    }
+
+    public MaturidadeDto obterUltimaMaturidadePorEsteiraId(Long esteiraId){
+        Optional<MaturidadeEntity> maturidade = this.repository.findTopByEsteiraIdOrderByNumeroDesc(esteiraId);
+        return this.mapper.modelToDTO(maturidade.orElseThrow(DashNotFoundException::new));
+    }
+
+   /*  public MaturidadeDto salvarMaturidade(MaturidadeDto maturidadeDto) {
+        MaturidadeEntity novaMaturidade = this.mapper.dtoToModel(maturidadeDto);
+    
+        Optional<MaturidadeEntity> maturidadeExistente = this.repository.findTopByEsteiraIdOrderByNumeroDesc(novaMaturidade.getEsteira().getId());
+    
+        if (maturidadeExistente.isPresent() && novaMaturidade.getId() > maturidadeExistente.get().getId()) {
+            MaturidadeEntity maturidadeSalva = this.repository.save(novaMaturidade);
+            return this.mapper.modelToDTO(maturidadeSalva);
+        } else {
+            throw new DashNotFoundException();
+        }
+    }*/
 
 }

@@ -11,10 +11,10 @@ import lombok.ToString;
 @Entity
 public class MaturidadeEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-   @OneToOne
+   @ManyToOne
    private EsteiraDeDesenvolvimentoEntity esteira;
 
    @Column 
