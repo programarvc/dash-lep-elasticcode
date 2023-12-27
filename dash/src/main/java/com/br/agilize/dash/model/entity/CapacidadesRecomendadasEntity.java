@@ -1,9 +1,5 @@
 package com.br.agilize.dash.model.entity;
 
-
-
-import com.br.agilize.dash.model.enums.TiposEnum;
-
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,19 +9,21 @@ import lombok.ToString;
 @ToString
 @Entity
 @NoArgsConstructor
-public class EsteiraDeDesenvolvimentoEntity {
+
+public class CapacidadesRecomendadasEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(nullable = false)
-    private String nome;
+    @ManyToOne
+    @JoinColumn(name = "maturidade_id")
+    private MaturidadeEntity maturidade;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private TiposEnum tipo;
 
     @ManyToOne
-    private EmpresaEntity empresa;
+    @JoinColumn(name = "item_de_maturidade_id")
+    private ItemDeMaturidadeEntity itemDeMaturidade;
+
+
 
 }

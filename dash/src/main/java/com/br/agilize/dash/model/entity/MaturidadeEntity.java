@@ -4,11 +4,13 @@ import java.time.LocalDate;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Data
 @ToString
 @Entity
+@NoArgsConstructor
 public class MaturidadeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

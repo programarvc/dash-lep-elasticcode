@@ -1,8 +1,5 @@
 package com.br.agilize.dash.model.dto;
 
-
-import java.util.List;
-
 import com.br.agilize.dash.model.enums.TiposEnum;
 
 import lombok.Data;
