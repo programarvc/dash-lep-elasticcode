@@ -17,6 +17,7 @@ import { isInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
   templateUrl:'./dash-projeto.component.html',
   styleUrls: ['./dash-projeto.component.sass']
 })
+
 export class DashProjetoComponent implements OnInit {
   public esteiras: EsteiraDeDesenvolvimento[] = [];
   public currentEsteira: EsteiraDeDesenvolvimento = {
@@ -53,12 +54,20 @@ export class DashProjetoComponent implements OnInit {
     timeToRecovery: 0,
   }
 
-
   public empresas: Empresa[] = [];
   public maturidade: Maturidade[] = [];
   public tipo: TiposEnum[] = [];
   public maturidadeByEsteiraId: MaturidadeByEsteiraId[] = [];
-
+  public jornadaGoal: number = 95;
+  public rateSaude: number = 70;
+  public rate4key: number = 50;
+  public rateCapacidadeDora: number = 80;
+  public capacidadesRecomendadas: string[] = [
+    'Gerenciamento de dados',
+    'Desenvolvimento base',
+    'Manutenção do código'
+  ]
+  
 
   constructor(
     private router: Router,
@@ -82,7 +91,6 @@ export class DashProjetoComponent implements OnInit {
     });
   }
 
-
   public async setCurrent(id: number) {
     const maturidade= this.maturidade.find(
       (maturidade) => maturidade.esteira.id === id
@@ -95,8 +103,6 @@ console.log(this.currentMaturidade);
 console.log(this.currentEsteira);
     }
   }
-
-
 
   public async getMaturidade() {
     this.esteiraService.getEsteiras().subscribe((response) => {
@@ -137,6 +143,53 @@ console.log(this.currentEsteira);
     });
   }
 
+  getCorJornada(jornadaGoal: number, nivel: string): string {
+    if (jornadaGoal >= 0 && jornadaGoal <= 25 && nivel === 'Baixa') {
+      return '#12C3FF';
+    } else if (jornadaGoal >= 26 && jornadaGoal <= 50 && nivel === 'Média') {
+      return '#12C3FF';
+    } else if (jornadaGoal >= 51 && jornadaGoal <= 75 && nivel === 'Alta') {
+      return '#12C3FF';
+    } else if (jornadaGoal >= 76 && nivel === 'Elite') {
+      return '#12C3FF';
+    } else {
+      return '#8892A7';
+    }
+  }
 
+  getNivelSaude(rate: number): string {
+    if (rate >= 0 && rate <= 25) {
+      return 'Baixo';
+    } else if (rate >= 26 && rate <= 75) {
+      return 'Médio';
+    } else if (rate >= 76 && rate <= 100) {
+      return 'Alto';
+    } else {
+      return '';
+    }
+  }
 
+  get4Key(rate: number): string {
+    if (rate >= 0 && rate <= 25) {
+      return 'Baixo';
+    } else if (rate >= 26 && rate <= 75) {
+      return 'Médio';
+    } else if (rate >= 76 && rate <= 100) {
+      return 'Alto';
+    } else {
+      return '';
+    }
+  }
+
+  getCapacidadeDora(rate: number): string {
+    if (rate >= 0 && rate <= 25) {
+      return 'Baixo';
+    } else if (rate >= 26 && rate <= 75) {
+      return 'Médio';
+    } else if (rate >= 76 && rate <= 100) {
+      return 'Alto';
+    } else {
+      return '';
+    }
+  }
 }

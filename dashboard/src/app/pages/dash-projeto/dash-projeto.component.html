@@ -43,8 +43,91 @@
             </div>
           </div>
           <div class="col-md-6">
-            <div class="jornada">
+            <div class="bloco-jornada">
               <h2>Jornada de Transformação</h2>
+              <div class="jornada-progress">
+                <div class="jornada-level">
+                  <span [ngStyle]="{'color': getCorJornada(jornadaGoal, 'Baixa')}">Baixa</span>
+                  <span [ngStyle]="{'color': getCorJornada(jornadaGoal, 'Média')}">Média</span>
+                  <span [ngStyle]="{'color': getCorJornada(jornadaGoal, 'Alta')}">Alta</span>
+                  <span [ngStyle]="{'color': getCorJornada(jornadaGoal, 'Elite')}">Elite</span>
+                </div>
+                <div class="jornada-bar-content">
+                  <div class="jornada-bar">
+                    <div class="jornada-goal"
+                    [ngStyle]="{'width': jornadaGoal + '%'}"
+                    >
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="saude-operacao">
+                <h3>Saúde da Operação</h3>
+                <div class="saude-operacao-content">
+                  <span class="nivel-saude">
+                    {{ getNivelSaude(rateSaude)}}
+                  </span>
+                  <span class="rate-saude">
+                    {{ rateSaude }}%
+                  </span>
+                </div>
+              </div>
+              <div class="bloco-inferior">
+                <div class="jornada-cards-space">
+                  <div class="jornada-card">
+                    <h3>
+                      Métrica 4 Key
+                    </h3>
+                    <div class="rate-value-4key">
+                      <span>
+                        {{ get4Key(rate4key) }}
+                      </span>
+                      <span>
+                        {{ rate4key }}%
+                      </span>
+                    </div>
+                    <div class="jornada-card-bar-content">
+                      <div class="jornada-card-bar">
+                        <div class="jornada-card-goal"
+                        [ngStyle]="{'width': rate4key + '%'}"
+                        >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="jornada-card">
+                    <h3>
+                      Capacidade DORA
+                    </h3>
+                    <div class="rate-value-4key">
+                      <span>
+                        {{ getCapacidadeDora(rateCapacidadeDora) }}
+                      </span>
+                      <span>
+                        {{ rateCapacidadeDora }}%
+                      </span>
+                    </div>
+                    <div class="jornada-card-bar-content">
+                      <div class="jornada-card-bar">
+                        <div class="jornada-card-goal"
+                        [ngStyle]="{'width': rateCapacidadeDora + '%'}"
+                        >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="espaco-capacidades-recomendadas">
+                  <h3>Capacidades Recomendadas</h3>
+                  <div class="capacidades-recomendadas-card">
+                    <ul>
+                      <li *ngFor="let capacidade of capacidadesRecomendadas">
+                        {{ capacidade }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+            </div>
             </div>
           </div>
         </div>
