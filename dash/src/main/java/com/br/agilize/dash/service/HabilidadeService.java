@@ -80,6 +80,11 @@ public class HabilidadeService extends ServiceCrudBase<HabilidadeDto> {
                         this.habilidadeColaboradorMapper.dtoToModel(payload)) );
     }
 
+    public void apagarHabilidadeColaborador(Long colaboradorId, Long habilidadeId) {
+        HabilidadeColaboradorEntity habilidadeColaborador = this.habilidadeColaboradorRepository.findByColaboradorIdAndHabilidadeId(colaboradorId, habilidadeId);
+        this.habilidadeColaboradorRepository.delete(habilidadeColaborador);
+    }
+
     public List<HabilidadeColaboradorDto> findByHabilidade(Long id) {
         HabilidadeEntity habilidade = this.mapper.dtoToModel(this.obterPorId(id));
 

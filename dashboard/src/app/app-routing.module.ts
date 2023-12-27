@@ -8,6 +8,7 @@ import { TecnicaComponent } from './components/tecnica/tecnica.component';
 const routes: Routes = [
   { path: 'dash-projeto', title: 'Dashboard Projeto', component: DashProjetoComponent},
   { path: 'tecnica', title: 'Tecnica', component: TecnicaComponent},
+  { path: 'dashboard/:esteiraId', title: 'Dashboard Projeto', component: DashProjetoComponent},
   { path: ':colaboradorId', component: ColaboradorComponent },
   { path: '', component: ColaboradorComponent },
 ];

@@ -43,24 +43,10 @@ public class DatabaseLoadConfig {
             List<CompetenciaEntity> competenciaEntities = cargaInicialCompetencia();
             List<AcoesEntity> acoesEntities = cargaInicialAcoes();
             List<EmpresaEntity> empresaEntities = cargaInicialEmpresas();
-
-            /*
-             * ColaboradorEntity colaborador = new ColaboradorEntity();
-             * colaborador.setNome("Allyson Santana");
-             * colaborador.setEmail("allyson.Santana@gmail.com");
-             * colaborador.setGithub("allyson.Santana");
-             * colaborador.setHabilidades(habilidadeEntities);
-             * 
-             * ColaboradorEntity colaboradorSalvo = colaboradorRepository.save(colaborador);
-             * 
-             * vincularCompetencia(colaboradorSalvo, competenciaEntities);
-             * vincularAcoes(colaboradorSalvo, acoesEntities);
-             */
-
         };
     }
 
-    private void vincularCompetencia(ColaboradorEntity colaboradorSalvo, List<CompetenciaEntity> competenciaEntities) {
+     private void vincularCompetencia(ColaboradorEntity colaboradorSalvo, List<CompetenciaEntity> competenciaEntities) {
         competenciaEntities.forEach(competenciaEntity -> {
             CompetenciaColaboradorEntity competenciaColaboradorEntity = new CompetenciaColaboradorEntity();
             competenciaColaboradorEntity.setColaborador(colaboradorSalvo);

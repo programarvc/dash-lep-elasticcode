@@ -5,6 +5,8 @@ import com.br.agilize.dash.model.entity.EmpresaColaboradorEntity;
 import com.br.agilize.dash.model.entity.HabilidadeColaboradorEntity;
 
 import com.br.agilize.dash.model.entity.HabilidadeEntity;
+
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -17,5 +19,6 @@ public interface HabilidadeColaboradorRepository extends JpaRepository<Habilidad
     List<HabilidadeColaboradorEntity> findByColaborador(ColaboradorEntity colaborador);
 
     List<HabilidadeColaboradorEntity> findByHabilidadeId(Long id);
+    HabilidadeColaboradorEntity findByColaboradorIdAndHabilidadeId(Long colaboradorId, Long habilidadeId);
 
 }

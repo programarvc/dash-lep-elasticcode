@@ -17,11 +17,11 @@
                   <div class="espaco-cards">
                     <div class="card velocidade">
                       <p class="titulo-card">Lead Time for Changes</p>
-                      <p class="text-number"> <span>50</span>dias</p>
+                      <p class="text-number"> <span>{{currentMaturidade.leadTime}}</span>dias</p>
                     </div>
                     <div class="card velocidade">
                       <p class="titulo-card">Deployment Frequency</p>
-                      <p class="text-number"> <span>52</span>dias</p>
+                      <p class="text-number"> <span>{{currentMaturidade.frequencyDeployment}}</span>dias</p>
                     </div>
                   </div>
                 </div>
@@ -30,11 +30,11 @@
                   <div class="espaco-cards">
                     <div class="card estabilidade">
                       <p class="titulo-card">Change Failure Rate</p>
-                      <p class="text-porcent">15<span>,</span>2%</p>
+                      <p class="text-porcent">{{currentMaturidade.changeFailureRate}}%</p>
                     </div>
                     <div class="card estabilidade">
                       <p class="titulo-card">Mean Time to Recovery</p>
-                      <p class="text-date">Sem data</p>
+                      <p class="text-date">{{currentMaturidade.timeToRecovery}}</p>
                     </div>
                   </div>
                 </div>

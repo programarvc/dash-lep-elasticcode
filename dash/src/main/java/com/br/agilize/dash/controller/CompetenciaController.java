@@ -25,28 +25,39 @@ public class CompetenciaController extends ControllerCrudBase<CompetenciaDto> {
         this.service = service;
     }
 
-    @Operation(
-            summary = "Obtem Acoes do colaborador pelo id",
-            description = "Retorna as informações do objeto pelo do id",
-            tags = { "id", "get" })
+    @Operation(summary = "Deleta a Competencia pelo id", description = "", tags = {
+            "id", "delete" })
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> excluirPorId(@PathVariable Long id) {
+        service.excluirPorId(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "Obtem Acoes do colaborador pelo id", description = "Retorna as informações do objeto pelo do id", tags = {
+            "id", "get" })
     @GetMapping("/colaborador/{id}")
     public ResponseEntity<List<CompetenciaColaboradorDto>> obterCompetenciaColaboradorPorId(@PathVariable Long id) {
-        return ResponseEntity.ok( service.obterCompetenciaColaborador(id));
+        return ResponseEntity.ok(service.obterCompetenciaColaborador(id));
     }
 
-    @Operation(
-            summary = "Salva um objeto relacionando ação ao colaborador",
-            description = "Retorna as informações do objeto que foram salvas",
-            tags = { "salvar", "post" })
+    @Operation(summary = "Salva um objeto relacionando ação ao colaborador", description = "Retorna as informações do objeto que foram salvas", tags = {
+            "salvar", "post" })
     @PostMapping("/colaborador")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<CompetenciaColaboradorDto> salvarCompetenciaColaborado(@RequestBody CompetenciaColaboradorDto payload) {
-        return ResponseEntity.ok( service.salvarCompetenciaColaborador(payload));
+    public ResponseEntity<CompetenciaColaboradorDto> salvarCompetenciaColaborado(
+            @RequestBody CompetenciaColaboradorDto payload) {
+        return ResponseEntity.ok(service.salvarCompetenciaColaborador(payload));
     }
 
-    @Operation(summary = "Obtem todas as associações",
-            description = "Retorna uma lista de todas as associações entre empresas e colaboradores",
-            tags = {"get"})
+    @DeleteMapping("/colaborador/{colaboradorId}/competencia/{competenciaId}")
+    public ResponseEntity<Void> apagarCompetenciaColaborador(@PathVariable Long colaboradorId,
+            @PathVariable Long competenciaId) {
+        service.apagarCompetenciaColaborador(colaboradorId, competenciaId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "Obtem todas as associações", description = "Retorna uma lista de todas as associações entre empresas e colaboradores", tags = {
+            "get" })
     @GetMapping("/colaboradores")
     public ResponseEntity<List<Map<String, Long>>> obterTodasCompetenciasColaboradores() {
         return ResponseEntity.ok(service.obterTodasCompetenciasColaboradores());

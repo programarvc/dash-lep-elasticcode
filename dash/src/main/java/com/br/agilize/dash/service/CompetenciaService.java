@@ -20,6 +20,7 @@ import com.br.agilize.dash.model.dto.CompetenciaColaboradorDto;
 import com.br.agilize.dash.model.dto.CompetenciaDto;
 import com.br.agilize.dash.model.entity.ColaboradorEntity;
 import com.br.agilize.dash.model.entity.CompetenciaEntity;
+
 import com.br.agilize.dash.repository.CompetenciaColaboradorRepository;
 import com.br.agilize.dash.repository.CompetenciaRepository;
 
@@ -71,6 +72,12 @@ public class CompetenciaService extends ServiceCrudBase<CompetenciaDto> {
         return competenciaColaboradorMapper.modelToDTO(
                 this.competenciaColaboradorRepository.save(
                         this.competenciaColaboradorMapper.dtoToModel(payload)) );
+    }
+
+     public void apagarCompetenciaColaborador(Long colaboradorId, Long competenciaId) {
+        CompetenciaColaboradorEntity competenciaColaboradorEntity = this.competenciaColaboradorRepository
+                .findByColaboradorIdAndCompetenciaId(colaboradorId, competenciaId);
+        this.competenciaColaboradorRepository.delete(competenciaColaboradorEntity);
     }
 
 
