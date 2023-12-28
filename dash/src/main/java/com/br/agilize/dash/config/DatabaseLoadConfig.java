@@ -46,7 +46,7 @@ public class DatabaseLoadConfig {
         };
     }
 
-     private void vincularCompetencia(ColaboradorEntity colaboradorSalvo, List<CompetenciaEntity> competenciaEntities) {
+    private void vincularCompetencia(ColaboradorEntity colaboradorSalvo, List<CompetenciaEntity> competenciaEntities) {
         competenciaEntities.forEach(competenciaEntity -> {
             CompetenciaColaboradorEntity competenciaColaboradorEntity = new CompetenciaColaboradorEntity();
             competenciaColaboradorEntity.setColaborador(colaboradorSalvo);
