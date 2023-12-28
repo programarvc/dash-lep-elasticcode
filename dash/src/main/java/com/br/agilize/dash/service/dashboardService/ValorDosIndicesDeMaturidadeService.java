@@ -47,10 +47,6 @@ public class ValorDosIndicesDeMaturidadeService extends ServiceCrudBase<ValorDos
     public void excluirPorId(Long id) {
         this.repository.deleteById(id);
     }
-    
-    /*public Object[] getValoresAndNome(Long maturidadeId, Long itemDeMaturidadeId) {
-        return repository.findValoresAndNomeByMaturidadeIdAndItemDeMaturidadeId(maturidadeId, itemDeMaturidadeId);
-    }*/
 
     public List<Object[]> getValoresAndNome(Long itemDeMaturidadeId) {
         return repository.findValoresAndNomeByItemDeMaturidadeId(itemDeMaturidadeId);
