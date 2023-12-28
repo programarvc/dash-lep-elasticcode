@@ -1,8 +1,6 @@
-package com.br.agilize.dash.model.dto;
+package com.br.agilize.dash.model.dto.dashboardDto;
 
-
-import java.util.List;
-
+import com.br.agilize.dash.model.dto.EmpresaDto;
 import com.br.agilize.dash.model.enums.TiposEnum;
 
 import lombok.Data;

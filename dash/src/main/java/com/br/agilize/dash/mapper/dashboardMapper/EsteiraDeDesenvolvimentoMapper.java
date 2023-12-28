@@ -1,7 +1,9 @@
-package com.br.agilize.dash.mapper;
+package com.br.agilize.dash.mapper.dashboardMapper;
 
-import com.br.agilize.dash.model.dto.EsteiraDeDesenvolvimentoDto;
-import com.br.agilize.dash.model.entity.EsteiraDeDesenvolvimentoEntity;
+import com.br.agilize.dash.mapper.MapperBase;
+import com.br.agilize.dash.model.dto.dashboardDto.EsteiraDeDesenvolvimentoDto;
+import com.br.agilize.dash.model.entity.dashboardEntity.EsteiraDeDesenvolvimentoEntity;
+
 import org.mapstruct.Mapper;
 
 @Mapper

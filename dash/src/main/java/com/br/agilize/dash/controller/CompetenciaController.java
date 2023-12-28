@@ -33,14 +33,14 @@ public class CompetenciaController extends ControllerCrudBase<CompetenciaDto> {
         return ResponseEntity.noContent().build();
     }
 
-    @Operation(summary = "Obtem Acoes do colaborador pelo id", description = "Retorna as informações do objeto pelo do id", tags = {
+    @Operation(summary = "Obtem competencias do colaborador pelo id", description = "Retorna as informações do objeto pelo do id", tags = {
             "id", "get" })
     @GetMapping("/colaborador/{id}")
     public ResponseEntity<List<CompetenciaColaboradorDto>> obterCompetenciaColaboradorPorId(@PathVariable Long id) {
         return ResponseEntity.ok(service.obterCompetenciaColaborador(id));
     }
 
-    @Operation(summary = "Salva um objeto relacionando ação ao colaborador", description = "Retorna as informações do objeto que foram salvas", tags = {
+    @Operation(summary = "Salva um objeto relacionando competencia ao colaborador", description = "Retorna as informações do objeto que foram salvas", tags = {
             "salvar", "post" })
     @PostMapping("/colaborador")
     @ResponseStatus(HttpStatus.CREATED)

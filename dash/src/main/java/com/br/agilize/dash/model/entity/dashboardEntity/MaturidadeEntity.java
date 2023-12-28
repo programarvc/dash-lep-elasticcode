@@ -1,14 +1,16 @@
-package com.br.agilize.dash.model.entity;
+package com.br.agilize.dash.model.entity.dashboardEntity;
 
 import java.time.LocalDate;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Data
 @ToString
 @Entity
+@NoArgsConstructor
 public class MaturidadeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,16 +26,16 @@ public class MaturidadeEntity {
     private Integer numero;
 
     @Column(name = "lead_time")
-    private Integer leadTime;
+    private Double leadTime;
 
     @Column(name = "frequency_deployment")
-    private Integer frequencyDeployment;
+    private Double frequencyDeployment;
 
     @Column(name = "change_failurerate")
     private Double changeFailureRate;
 
     @Column(name = "time_torecovery")
-    private Integer timeToRecovery;
+    private Double timeToRecovery;
 
     @PrePersist
     public void prePersist() {

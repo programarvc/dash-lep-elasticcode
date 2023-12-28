@@ -20,7 +20,7 @@ import com.br.agilize.dash.model.dto.CompetenciaColaboradorDto;
 import com.br.agilize.dash.model.dto.CompetenciaDto;
 import com.br.agilize.dash.model.entity.ColaboradorEntity;
 import com.br.agilize.dash.model.entity.CompetenciaEntity;
-import com.br.agilize.dash.model.entity.EmpresaColaboradorEntity;
+
 import com.br.agilize.dash.repository.CompetenciaColaboradorRepository;
 import com.br.agilize.dash.repository.CompetenciaRepository;
 
