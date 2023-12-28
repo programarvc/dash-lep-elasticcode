@@ -1,4 +1,4 @@
-package com.br.agilize.dash.service;
+package com.br.agilize.dash.service.dashboardService;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,10 +9,11 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.br.agilize.dash.exception.DashNotFoundException;
-import com.br.agilize.dash.mapper.MaturidadeMapper;
-import com.br.agilize.dash.model.dto.MaturidadeDto;
-import com.br.agilize.dash.model.entity.MaturidadeEntity;
-import com.br.agilize.dash.repository.MaturidadeRepository;
+import com.br.agilize.dash.mapper.dashboardMapper.MaturidadeMapper;
+import com.br.agilize.dash.model.dto.dashboardDto.MaturidadeDto;
+import com.br.agilize.dash.model.entity.dashboardEntity.MaturidadeEntity;
+import com.br.agilize.dash.repository.dashboardRepository.MaturidadeRepository;
+import com.br.agilize.dash.service.ServiceCrudBase;
 
 @Service
 @Transactional(propagation = Propagation.REQUIRED)

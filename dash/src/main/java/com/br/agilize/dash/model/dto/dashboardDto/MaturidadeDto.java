@@ -1,4 +1,4 @@
-package com.br.agilize.dash.model.dto;
+package com.br.agilize.dash.model.dto.dashboardDto;
 
 import java.time.LocalDate;
 
@@ -15,11 +15,11 @@ public class MaturidadeDto {
 
     private Integer numero;
 
-    private Integer leadTime;
+    private Double leadTime;
 
-    private Integer FrequencyDeployment;
+    private Double FrequencyDeployment;
 
     private Double ChangeFailureRate;
 
-    private Integer timeToRecovery;
+    private Double timeToRecovery;
 }

@@ -2,6 +2,8 @@ package com.br.agilize.dash.config;
 
 import com.br.agilize.dash.model.entity.*;
 import com.br.agilize.dash.repository.*;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -35,6 +37,8 @@ public class DatabaseLoadConfig {
     @Autowired
     private AcoesColaboradorRepository acoesColaboradorRepository;
 
+    
+
     @Bean
     public CommandLineRunner loadData() {
         return (args) -> {
@@ -43,10 +47,11 @@ public class DatabaseLoadConfig {
             List<CompetenciaEntity> competenciaEntities = cargaInicialCompetencia();
             List<AcoesEntity> acoesEntities = cargaInicialAcoes();
             List<EmpresaEntity> empresaEntities = cargaInicialEmpresas();
+            
         };
     }
 
-     private void vincularCompetencia(ColaboradorEntity colaboradorSalvo, List<CompetenciaEntity> competenciaEntities) {
+    private void vincularCompetencia(ColaboradorEntity colaboradorSalvo, List<CompetenciaEntity> competenciaEntities) {
         competenciaEntities.forEach(competenciaEntity -> {
             CompetenciaColaboradorEntity competenciaColaboradorEntity = new CompetenciaColaboradorEntity();
             competenciaColaboradorEntity.setColaborador(colaboradorSalvo);
@@ -169,4 +174,6 @@ public class DatabaseLoadConfig {
             return empresasSalvos;
         }
     }
+
+     
 }

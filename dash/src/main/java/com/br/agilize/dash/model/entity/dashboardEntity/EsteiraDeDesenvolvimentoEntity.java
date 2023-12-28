@@ -1,16 +1,19 @@
-package com.br.agilize.dash.model.entity;
+package com.br.agilize.dash.model.entity.dashboardEntity;
 
 
 
+import com.br.agilize.dash.model.entity.EmpresaEntity;
 import com.br.agilize.dash.model.enums.TiposEnum;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Data
 @ToString
 @Entity
+@NoArgsConstructor
 public class EsteiraDeDesenvolvimentoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
