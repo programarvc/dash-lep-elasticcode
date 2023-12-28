@@ -11,6 +11,8 @@ import com.br.agilize.dash.exception.DashNotFoundException;
 import com.br.agilize.dash.mapper.dashboardMapper.ItemDeMaturidadeMapper;
 import com.br.agilize.dash.model.dto.dashboardDto.ItemDeMaturidadeDto;
 import com.br.agilize.dash.model.entity.dashboardEntity.ItemDeMaturidadeEntity;
+import com.br.agilize.dash.model.entity.dashboardEntity.ValorDosIndicesDeMaturidadeEntity;
+import com.br.agilize.dash.model.enums.TiposMaturidadeEnum;
 import com.br.agilize.dash.repository.dashboardRepository.ItemDeMaturidadeRepository;
 import com.br.agilize.dash.service.ServiceCrudBase;
 
@@ -45,5 +47,9 @@ public class ItemDeMaturidadeService extends ServiceCrudBase<ItemDeMaturidadeDto
     @Override
     public void excluirPorId(Long id) {
         this.repository.deleteById(id);
+    }
+
+    public List<ValorDosIndicesDeMaturidadeEntity> getByTipoMaturidade(TiposMaturidadeEnum tipoMaturidade) {
+        return null;
     }
 }
