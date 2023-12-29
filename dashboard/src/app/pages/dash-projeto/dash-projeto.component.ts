@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+
 import {
  EsteiraDeDesenvolvimento,
   TiposEnum,
@@ -7,9 +8,13 @@ import {
   Maturidade,
   MaturidadeByEsteiraId,
 } from 'src/app/types/esteira-types';
+
+import { Jornada } from 'src/app/types/jornada-types';
+
 import { EsteiraService } from 'src/services/esteira/esteira.service';
 import { EmpresaService } from 'src/services/empresa/empresa.service';
 import { MaturidadeService } from 'src/services/maturidade/maturidade.service';
+import { JornadaService } from 'src/services/jornada/jornada.service';
 import { isInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
 
 @Component({
@@ -54,10 +59,18 @@ export class DashProjetoComponent implements OnInit {
     timeToRecovery: 0,
   }
 
+  public currentJornada: Jornada = {
+    id: 0,
+    capacidade_dora: 0,
+    metricas_4: 0,
+    saude: 0,
+  };
+
   public empresas: Empresa[] = [];
   public maturidade: Maturidade[] = [];
   public tipo: TiposEnum[] = [];
   public maturidadeByEsteiraId: MaturidadeByEsteiraId[] = [];
+  public jornada: Jornada[] = [];
   public jornadaGoal: number = 95;
   public rateSaude: number = 70;
   public rate4key: number = 50;
@@ -74,7 +87,8 @@ export class DashProjetoComponent implements OnInit {
     private route: ActivatedRoute,
     private esteiraService: EsteiraService,
     private empresaService: EmpresaService,
-    private maturidadeService: MaturidadeService
+    private maturidadeService: MaturidadeService,
+    private jornadaService: JornadaService
 
   ) { }
 
@@ -141,6 +155,12 @@ console.log(this.currentEsteira);
     this.maturidadeService.getMaturidadeById(id).subscribe((data: Maturidade) => {
       this.currentMaturidade = data;
     });
+  }
+
+  getJornadaByEsteiraId(id: number) : void {
+    this.jornadaService.getJornadaByEsteiraId(id).subscribe((jornada) => {
+      this.jornadaByEsteiraId = jornada;
+    })
   }
 
   getCorJornada(jornadaGoal: number, nivel: string): string {
