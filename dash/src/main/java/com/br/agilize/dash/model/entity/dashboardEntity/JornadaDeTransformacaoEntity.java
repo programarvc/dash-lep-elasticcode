@@ -21,6 +21,10 @@ public class JornadaDeTransformacaoEntity {
     @Column(nullable = false, name = "capacidade_dora")
     private Integer capacidadeDora;
 
+    @ManyToOne
+    @JoinColumn(name = "maturidade_id")
+    private MaturidadeEntity maturidade;
+
 
 
 }
