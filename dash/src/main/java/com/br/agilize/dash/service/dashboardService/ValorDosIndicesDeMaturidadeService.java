@@ -1,6 +1,6 @@
 package com.br.agilize.dash.service.dashboardService;
 
-import java.util.List;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,11 +48,20 @@ public class ValorDosIndicesDeMaturidadeService extends ServiceCrudBase<ValorDos
         this.repository.deleteById(id);
     }
 
-    public List<Object[]> getValoresAndNome(Long itemDeMaturidadeId) {
+    public List<Object[]> getValoresAndNomeByItemId(Long itemDeMaturidadeId) {
         return repository.findValoresAndNomeByItemDeMaturidadeId(itemDeMaturidadeId);
     }
 
-    public List<Object[]> getValoresAndNome(TiposMaturidadeEnum tipoMaturidade) {
+    public List<Object[]> getValoresAndNomeBytipoMaturidade(TiposMaturidadeEnum tipoMaturidade) {
         return repository.findValoresAndNomeByTipoMaturidade(tipoMaturidade);
+    }
+
+    /*public List<ValorDosIndicesDeMaturidadeDto> getValoresByEsteiraIdAndTipoMaturidade(Long esteiraId, TiposMaturidadeEnum tipoMaturidade) {
+        List<ValorDosIndicesDeMaturidadeEntity> entities = repository.findByEsteiraIdAndTipoMaturidade(esteiraId, tipoMaturidade);
+        return entities.stream().map(this.mapper::modelToDTO).toList();
+    }*/
+
+    public List<Map<String, Object>> getValoresByEsteiraIdAndTipoMaturidade(Long esteiraId, TiposMaturidadeEnum tipoMaturidade) {
+        return repository.findByEsteiraIdAndTipoMaturidade(esteiraId, tipoMaturidade);
     }
 }
