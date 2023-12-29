@@ -36,4 +36,11 @@ export class JornadaService {
             .get<any>(url)
             .pipe(catchError(this.handleError<any>('getJornadaById')));
     }
+
+    getJornadasByEsteiraId(id : number): Observable<any> {
+        const url: string = `${environment.api}/jornada/esteira/${id}`;
+        return this.http
+            .get<any>(url)
+            .pipe(catchError(this.handleError<any>('getJornadaByEsteiraId')));
+    }
 }
