@@ -1,19 +1,16 @@
-import { Component, OnInit, ViewChild, AfterContentInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
-  AcaoByColaborador,
-  Colaborador,
-  CompetenciaByColaborador,
+  IndicesDeMaturidade,
+  TiposEnum,
   Empresa,
-  EmpresaByColaborador,
-  HabilidadeByColaborador
-} from 'src/app/types/colaborador-types';
-import { AcaoService } from 'src/services/acao/acao.service';
-import { ColaboradorService } from 'src/services/colaborador/colaborador.service';
-import { CompetenciaService } from 'src/services/competencia/competencia.service';
+  Maturidade,
+  valorDosIndicesDeMaturidadeId,
+} from 'src/app/types/tecnica-types';
+import { EsteiraService } from 'src/services/esteira/esteira.service';
 import { EmpresaService } from 'src/services/empresa/empresa.service';
-import { HabilidadeService } from 'src/services/habilidade/habilidade.service';
-
+import { MaturidadeService } from 'src/services/maturidade/maturidade.service';
+import { TecnicaService } from 'src/services/tecnica/tecnica.service';
 @Component({
   selector: 'app-tecnica',
   templateUrl: './tecnica.component.html',
@@ -21,153 +18,121 @@ import { HabilidadeService } from 'src/services/habilidade/habilidade.service';
 })
 export class TecnicaComponent implements OnInit {
 
-    public colaboradores: Colaborador[] = [];
-    public currentColaborador: Colaborador = {
+  public indices: IndicesDeMaturidade[] = [];
+  public currentIndices: IndicesDeMaturidade = {
+    id: 0,
+    
+    tipo: '' as TiposEnum,
+    empresa: {
+      id: 0,
+      
+    },
+  };
+
+
+  public currentMaturidade: Maturidade = {
+
+    esteira: {
       id: 0,
       nome: '',
-      email: '',
-      github: '',
-      habilidades: [],
-    };
-    public currentEmpresa: Empresa = {
-      id: 0,
-      nome: '',
-    };
-    public competencias: CompetenciaByColaborador[] = [];
-    public acoes: AcaoByColaborador[] = [];
-    public empresas: Empresa[] = [];
-    public empresasByColaborador: EmpresaByColaborador[] = [];
-    public searchResultsAcoes: AcaoByColaborador[] = [];
-    public searchResultsCompetencias:  CompetenciaByColaborador[] = [];
-    public habilidadesByColaborador: HabilidadeByColaborador[] = [];
-  
-    constructor(
-      private router: Router,
-      private route: ActivatedRoute,
-      private colaboradorService: ColaboradorService,
-      private competenciaService: CompetenciaService,
-      private acoesService: AcaoService,
-      private empresaService: EmpresaService,
-      private habilidadeService: HabilidadeService
-    ) {}
-  
-    async ngOnInit(): Promise<void> {
-      this.getEmpresas();
-      this.getColaboradores();
-      this.route.paramMap.subscribe((params) => {
-        const id = params.get('colaboradorId');
-        if (id) {
-          this.setCurrent(parseInt(id));
-          this.getEmpresasByColaborador(parseInt(id));
-        }
-      });
-    }
-  
-    public async setCurrent(id: number) {
-      const colaborador = this.colaboradores.find(
-        (colaborador) => colaborador.id === id
-      );
-      if (colaborador) {
-        this.currentColaborador = colaborador;
-        this.getCompetencias(colaborador.id);
-        this.getAcoes(colaborador.id);
-        this.getHabilidades(colaborador.id);
-      }
-    }
-  
-    public async getColaboradores() {
-      this.colaboradorService.getAllColaboradores().subscribe((response) => {
-        this.colaboradores = response;
-        const id = this.route.snapshot.paramMap.get('colaboradorId');
-        if (id) {
-          this.setCurrent(parseInt(id));
-        } else {
-          if (this.colaboradores.length > 0) {
-            this.setCurrent(this.colaboradores[0].id);
-            this.router.navigate([`/${this.colaboradores[0].id}`]);
-          }
-        }
-      });
-    }
-  
-    public getCompetencias(id: number) {
-      this.competenciaService
-        .getCompetenciasByColaborador(id)
-        .subscribe((response) => {
-          this.competencias = response;
-        });
-    }
-  
-    public getAcoes(id: number): void {
-      this.acoesService.getAcoesByColaborador(id).subscribe((response) => {
-        this.acoes = response;
-      });
-    }
-  
-    public getEmpresas(): void {
-      this.empresaService.getEmpresas().subscribe((response) => {
-        this.empresas = response;
-      });
-    }
-  
-    public getHabilidades(id: number): void {
-      this.habilidadeService.getHabilidadesByColaborador(id).subscribe((response) => {
-        this.habilidadesByColaborador = response;
-      });
-    }
-  
-    public selecionarEmpresa(id?: number) {
-      if (id) {
-        const empresa = this.empresas.find((empresa) => empresa.id === id);
-  
-        if (empresa) {
-          this.currentEmpresa = empresa;
-        }
-  
-        this.empresaService
-          .getColaboradoresByEmpresa(id)
-          .subscribe((response) => {
-            const colaboradores: Colaborador[] = [];
-            response.map((item: EmpresaByColaborador) => {
-              colaboradores.push(item.colaborador);
-            });
-            this.colaboradores = colaboradores;
-            if (this.colaboradores.length > 0)
-              this.router.navigate([`/${this.colaboradores[0].id}`]);
-          });
-      } else {
-        this.getColaboradores();
-        this.currentEmpresa = {
-          id: 0,
-          nome: '',
-        };
-      }
-    }
-  
-    public getEmpresasByColaborador(id: number) {
-      this.empresaService.getEmpresasByColaborador(id).subscribe((response) => {
-        this.empresasByColaborador = response;
-      });
-    }
-  
-    handleSearch(event: string) {
-      if(event !== ''){
-        this.searchResultsAcoes =  this.acoes.filter((acao)=>
-        acao.acao.nome.toLowerCase().includes(event.toLowerCase()));
-  
-        this.searchResultsCompetencias =  this.competencias.filter((competencia)=>
-        competencia.competencia.nome.toLowerCase().includes(event.toLowerCase()));
-      }
-      else{
-        this.searchResultsAcoes= [];
-        this.searchResultsCompetencias = [];
-      }
-  
-      console.log(this.searchResultsAcoes);
-  
-  
-    }
-  
-  
+      tipo: '' as TiposEnum,
+      empresa: {
+        id: 0,
+        nome: '',
+      },
+    },
+    
+    valor_atingido: 0,
+    valor_esperado: 0,
+    item_de_maturidade: 0,
+    maturidade_id: 0,
   }
-  
+
+
+  public empresas: Empresa[] = [];
+  public maturidade: Maturidade[] = [];
+  public tipo: TiposEnum[] = [];
+  public valorDosIndicesDeMaturidadeId: valorDosIndicesDeMaturidadeId[] = [];
+
+
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private esteiraService: EsteiraService,
+    private empresaService: EmpresaService,
+    private maturidadeService: MaturidadeService,
+    private TecnicaService: TecnicaService,
+    
+  ) { }
+
+  ngOnInit(): void {
+    this.getMaturidade();
+    this.route.paramMap.subscribe((params) => {
+      const id = params.get('maturidade_id');
+      if (id) {
+        this.setCurrent(parseInt(id));
+        this.getTecnicaByEsteiraId(parseInt(id));
+        this.getMaturidadeById(parseInt(id));
+        /*this.getEsteiraById(parseInt(id));*/
+      }
+    });
+  }
+
+
+  public async setCurrent(id: number) {
+    const maturidade= this.maturidade.find(
+      (maturidade) => maturidade.esteira.id === id
+    );
+    if (maturidade) {
+      this.currentMaturidade = maturidade;
+      this.currentIndices = maturidade.esteira;
+
+console.log(this.currentMaturidade);
+console.log(this.currentIndices);
+    }
+  }
+
+
+
+  public async getMaturidade() {
+    this.esteiraService.getEsteiras().subscribe((response) => {
+      this.indices = response;
+      const id = this.route.snapshot.paramMap.get('esteiraId');
+      if (id) {
+        this.setCurrent(parseInt(id));
+      } else {
+        if (this.indices.length > 0) {
+          this.setCurrent(this.indices[0].id);
+          this.router.navigate([`dashboard/${this.indices[0].id}`]);
+        }
+      }
+    });
+  }
+
+  /*getEsteiras(): void {
+    this.esteiraService.getEsteiras().subscribe((esteiras) => {
+      this.esteiras = esteiras;
+    });
+  }*/
+
+  /*getEsteiraById(id: number): void {
+    this.esteiraService.getEsteiraById(id).subscribe((esteira) => {
+      this.esteiras = esteira;
+    });
+  }*/
+
+  getTecnicaByEsteiraId(id: number): void {
+    this.TecnicaService.getTecnicaByEsteiraId(id).subscribe((maturidade) => {
+      this.valorDosIndicesDeMaturidadeId = maturidade;
+    });
+  }
+
+  getMaturidadeById(id: number): void {
+    this.maturidadeService.getMaturidadeById(id).subscribe((data: Maturidade) => {
+      this.currentMaturidade = data;
+    });
+  }
+
+
+
+}
