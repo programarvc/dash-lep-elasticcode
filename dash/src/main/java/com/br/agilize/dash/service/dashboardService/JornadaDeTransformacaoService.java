@@ -1,6 +1,6 @@
 package com.br.agilize.dash.service.dashboardService;
 
-import java.util.List;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,5 +45,9 @@ public class JornadaDeTransformacaoService extends ServiceCrudBase<JornadaDeTran
     @Override
     public void excluirPorId(Long id) {
         this.repository.deleteById(id);
+    }
+
+    public List<Map<String, Object>> getJornadasByEsteiraId(Long esteiraId) {
+        return repository.findByEsteiraId(esteiraId);
     }
 }

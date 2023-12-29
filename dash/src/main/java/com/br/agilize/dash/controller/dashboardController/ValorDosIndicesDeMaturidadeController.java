@@ -1,6 +1,6 @@
 package com.br.agilize.dash.controller.dashboardController;
 
-import java.util.List;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +24,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/indicesdematuridade")
 public class ValorDosIndicesDeMaturidadeController extends ControllerCrudBase<ValorDosIndicesDeMaturidadeDto> {
 
-    @Autowired ValorDosIndicesDeMaturidadeService service;
+    @Autowired
+    ValorDosIndicesDeMaturidadeService service;
     @Autowired
     ItemDeMaturidadeService itemDeMaturidadeService;
 
@@ -34,13 +35,29 @@ public class ValorDosIndicesDeMaturidadeController extends ControllerCrudBase<Va
 
     @GetMapping("item/{itemDeMaturidadeId}")
     public ResponseEntity<List<Object[]>> getValoresAndNome(@PathVariable Long itemDeMaturidadeId) {
-        List<Object[]> result = service.getValoresAndNome(itemDeMaturidadeId);
+        List<Object[]> result = service.getValoresAndNomeByItemId(itemDeMaturidadeId);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-    
+
     @GetMapping("tipo/{tipoMaturidade}")
-    public ResponseEntity<List<Object[]>> getValoresAndNome(@PathVariable TiposMaturidadeEnum tipoMaturidade) {
-        List<Object[]> result = service.getValoresAndNome(tipoMaturidade);
+    public ResponseEntity<List<Object[]>> getValoresAndNomeBytipoMaturidade(
+            @PathVariable TiposMaturidadeEnum tipoMaturidade) {
+        List<Object[]> result = service.getValoresAndNomeBytipoMaturidade(tipoMaturidade);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+   /*  @GetMapping("/esteira/{esteiraId}/tipo/{tipoMaturidade}")
+    public ResponseEntity<List<ValorDosIndicesDeMaturidadeDto>> getValoresByEsteiraIdAndTipoMaturidade(
+            @PathVariable Long esteiraId, @PathVariable TiposMaturidadeEnum tipoMaturidade) {
+        List<ValorDosIndicesDeMaturidadeDto> result = service.getValoresByEsteiraIdAndTipoMaturidade(esteiraId,
+                tipoMaturidade);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }*/
+
+    @GetMapping("/esteira/{esteiraId}/tipo/{tipoMaturidade}")
+    public ResponseEntity<List<Map<String, Object>>> getValoresByEsteiraIdAndTipoMaturidade(@PathVariable Long esteiraId, @PathVariable TiposMaturidadeEnum tipoMaturidade) {
+        List<Map<String, Object>> result = service.getValoresByEsteiraIdAndTipoMaturidade(esteiraId, tipoMaturidade);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
 }
