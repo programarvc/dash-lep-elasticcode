@@ -20,26 +20,26 @@ export class TecnicaService {
 
   constructor(private http: HttpClient) {}
 
-  getTecnicas(): Observable<any> {
-    const url: string = `${environment.api}/tecnica`;
+  getIndicesDeMaturidade(): Observable<any> {
+    const url: string = `${environment.api}/indicesdematuridade`;
     return this.http
       .get<any>(url)
-      .pipe(catchError(this.handleError<any>("getTecnicas")));
+      .pipe(catchError(this.handleError<any>("getIndicesDeMaturidade")));
   }
 
-  getTecnicaById(id: number): Observable<any> {
-    const url: string = `${environment.api}/tecnica/${id}`;
+  getIndicesDeMaturidadeByTipos(id: number): Observable<any> {
+    const url: string = `${environment.api}/indicesdematuridade/tipo/TECNICA`;
     return this.http
       .get<any>(url)
       .pipe(catchError(this.handleError<any>('getMaturidadeById')));
   }
-
+/* 
   getTecnicaByEsteiraId(id: number): Observable<any> {
     const url: string = `${environment.api}/tecnica/${id}`;
     return this.http
       .get<any>(url)
       .pipe(catchError(this.handleError<any>('getTecnicaByEsteiraId')));
   }
-
+*/
 
 }

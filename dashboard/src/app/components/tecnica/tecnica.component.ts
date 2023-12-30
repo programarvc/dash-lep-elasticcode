@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
-  IndicesDeMaturidade,
-  TiposEnum,
+  EsteiraDeDesenvolvimento,
+  ValorDosIndicesDeMaturidade,
   Empresa,
+  ItemDeMaturidade,
+  TiposMaturidadeEnum,
   Maturidade,
-  valorDosIndicesDeMaturidadeId,
-} from 'src/app/types/tecnica-types';
+  TiposEnum,
+} from 'src/app/types/indicesDeMaturidade-types';
 import { EsteiraService } from 'src/services/esteira/esteira.service';
 import { EmpresaService } from 'src/services/empresa/empresa.service';
 import { MaturidadeService } from 'src/services/maturidade/maturidade.service';
@@ -16,19 +18,33 @@ import { TecnicaService } from 'src/services/tecnica/tecnica.service';
   templateUrl: './tecnica.component.html',
   styleUrls: ['./tecnica.component.sass']
 })
-export class TecnicaComponent implements OnInit {
 
-  public indices: IndicesDeMaturidade[] = [];
-  public currentIndices: IndicesDeMaturidade = {
+
+
+export class TecnicaComponent implements OnInit {
+  public indiceDeMaturidade: ValorDosIndicesDeMaturidade [] = [];
+  public currentIndiceDeMaturidade: ValorDosIndicesDeMaturidade = {
     id: 0,
-    
+    maturidade:0,
+    itemDeMaturidade: 0,
+    valorEsperado: 0,
+    valorAtingido: 0,
+  };
+  public esteiras: EsteiraDeDesenvolvimento[] = [];
+  public currentEsteira: EsteiraDeDesenvolvimento = {
+    id: 0,
+    nome: '',
     tipo: '' as TiposEnum,
     empresa: {
       id: 0,
-      
+      nome: '',
     },
   };
 
+  public currentEmpresa: Empresa = {
+    id: 0,
+    nome: '',
+  };
 
   public currentMaturidade: Maturidade = {
 
@@ -41,19 +57,17 @@ export class TecnicaComponent implements OnInit {
         nome: '',
       },
     },
-    
-    valor_atingido: 0,
-    valor_esperado: 0,
-    item_de_maturidade: 0,
-    maturidade_id: 0,
+    data: '',
+    numero: 0,
+    leadTime: 0,
+    frequencyDeployment: 0,
+    changeFailureRate: 0,
+    timeToRecovery: 0,
   }
-
 
   public empresas: Empresa[] = [];
   public maturidade: Maturidade[] = [];
   public tipo: TiposEnum[] = [];
-  public valorDosIndicesDeMaturidadeId: valorDosIndicesDeMaturidadeId[] = [];
-
 
   constructor(
     private router: Router,
