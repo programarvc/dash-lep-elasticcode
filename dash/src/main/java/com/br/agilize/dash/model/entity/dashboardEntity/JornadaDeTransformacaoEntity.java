@@ -25,6 +25,9 @@ public class JornadaDeTransformacaoEntity {
     @JoinColumn(name = "maturidade_id")
     private MaturidadeEntity maturidade;
 
+    @Column(nullable = false, name = "media_de_jornada")    
+    private Double mediaDeJornada;
+
 
 
 }

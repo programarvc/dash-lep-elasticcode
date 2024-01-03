@@ -11,8 +11,8 @@ import com.br.agilize.dash.model.entity.dashboardEntity.JornadaDeTransformacaoEn
 @Repository
 public interface JornadaDeTransformacaoRepository extends JpaRepository<JornadaDeTransformacaoEntity, Long> {
 
-    @Query("SELECT new map(j.saude as saude, j.metricas4 as metricas4, j.capacidadeDora as capacidadeDora) FROM JornadaDeTransformacaoEntity j JOIN j.maturidade m WHERE m.esteira.id = :esteiraId")
-    List<Map<String, Object>> findByEsteiraId(@Param("esteiraId") Long esteiraId);
     
+    @Query("SELECT new map(j.saude as saude, j.metricas4 as metricas4, j.capacidadeDora as capacidadeDora, j.mediaDeJornada as mediaDeJornada) FROM JornadaDeTransformacaoEntity j JOIN j.maturidade m WHERE m.esteira.id = :esteiraId")
+    List<Map<String, Object>> findByEsteiraId(@Param("esteiraId") Long esteiraId);
 }
 

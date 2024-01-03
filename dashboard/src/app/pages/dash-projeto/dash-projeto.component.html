@@ -17,11 +17,11 @@
                   <div class="espaco-cards">
                     <div class="card velocidade">
                       <p class="titulo-card">Lead Time for Changes</p>
-                      <p class="text-number"> <span>{{currentMaturidade.leadTime}}</span>dias</p>
+                      <p class="text-number"> <span>{{currentMaturidade.leadTime * 100}}</span>dias</p>
                     </div>
                     <div class="card velocidade">
                       <p class="titulo-card">Deployment Frequency</p>
-                      <p class="text-number"> <span>{{currentMaturidade.frequencyDeployment}}</span>dias</p>
+                      <p class="text-number"> <span>{{currentMaturidade.frequencyDeployment * 100}}</span>dias</p>
                     </div>
                   </div>
                 </div>
@@ -30,11 +30,11 @@
                   <div class="espaco-cards">
                     <div class="card estabilidade">
                       <p class="titulo-card">Change Failure Rate</p>
-                      <p class="text-porcent">{{currentMaturidade.changeFailureRate}}%</p>
+                      <p class="text-porcent">{{currentMaturidade.changeFailureRate * 100}}%</p>
                     </div>
                     <div class="card estabilidade">
                       <p class="titulo-card">Mean Time to Recovery</p>
-                      <p class="text-date">{{currentMaturidade.timeToRecovery}}</p>
+                      <p class="text-date">{{currentMaturidade.timeToRecovery * 100}}</p>
                     </div>
                   </div>
                 </div>
@@ -43,8 +43,91 @@
             </div>
           </div>
           <div class="col-md-6">
-            <div class="jornada">
+            <div class="bloco-jornada">
               <h2>Jornada de Transformação</h2>
+              <div class="jornada-progress">
+                <div class="jornada-level">
+                  <span [ngStyle]="{'color': this.getCorJornada(currentJornada.mediaDeJornada, 'Baixa')}">Baixa</span>
+                  <span [ngStyle]="{'color': this.getCorJornada(currentJornada.mediaDeJornada, 'Média')}">Média</span>
+                  <span [ngStyle]="{'color': this.getCorJornada(currentJornada.mediaDeJornada, 'Alta')}">Alta</span>
+                  <span [ngStyle]="{'color': this.getCorJornada(currentJornada.mediaDeJornada, 'Elite')}">Elite</span>
+                </div>
+                <div class="jornada-bar-content">
+                  <div class="jornada-bar">
+                    <div class="jornada-goal"
+                    [ngStyle]="{'width': currentJornada.mediaDeJornada + '%'}"
+                    >
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="saude-operacao">
+                <h3>Saúde da Operação</h3>
+                <div class="saude-operacao-content">
+                  <span class="nivel-saude">
+                    {{this.getNivel(currentJornada.saude).toString()}}
+                  </span>
+                  <span class="rate-saude">
+                    {{currentJornada.saude.toString()}}%
+                  </span>
+                </div>
+              </div>
+              <div class="bloco-inferior">
+                <div class="jornada-cards-space">
+                  <div class="jornada-card">
+                    <h3>
+                      Métrica 4 Key
+                    </h3>
+                    <div class="rate-value-4key">
+                      <span>
+                        {{ this.getNivel(currentJornada.metricas4).toString() }}
+                      </span>
+                      <span>
+                        {{ (currentJornada.metricas4).toString() }}%
+                      </span>
+                    </div>
+                    <div class="jornada-card-bar-content">
+                      <div class="jornada-card-bar">
+                        <div class="jornada-card-goal"
+                        [ngStyle]="{'width': currentJornada.metricas4 + '%'}"
+                        >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="jornada-card">
+                    <h3>
+                      Capacidade DORA
+                    </h3>
+                    <div class="rate-value-4key">
+                      <span>
+                        {{ this.getNivel(currentJornada.capacidadeDora).toString() }}
+                      </span>
+                      <span>
+                        {{ currentJornada.capacidadeDora}}%
+                      </span>
+                    </div>
+                    <div class="jornada-card-bar-content">
+                      <div class="jornada-card-bar">
+                        <div class="jornada-card-goal"
+                        [ngStyle]="{'width': (currentJornada.capacidadeDora).toString() + '%'}"
+                        >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="espaco-capacidades-recomendadas">
+                  <h3>Capacidades Recomendadas</h3>
+                  <div class="capacidades-recomendadas-card">
+                    <ul>
+                      <li *ngFor="let capacidadeNome of capacidade">
+                        {{(capacidadeNome.itemDeMaturidade.nome).toString()}}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+            </div>
             </div>
           </div>
         </div>

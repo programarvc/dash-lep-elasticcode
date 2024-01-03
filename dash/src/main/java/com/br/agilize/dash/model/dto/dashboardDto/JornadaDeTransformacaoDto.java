@@ -13,4 +13,6 @@ public class JornadaDeTransformacaoDto {
     private Integer capacidadeDora;
 
     private MaturidadeDto maturidade;
+
+    private Double mediaDeJornada;
 }
