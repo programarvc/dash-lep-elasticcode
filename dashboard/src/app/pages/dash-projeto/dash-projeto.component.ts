@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit} from '@angular/core';
+import { ActivatedRoute, Router,  } from '@angular/router';
 
 import {
   EsteiraDeDesenvolvimento,
@@ -9,15 +9,19 @@ import {
   MaturidadeByEsteiraId
 } from 'src/app/types/esteira-types';
 
-import { 
+import {
   JornadaDeTransformacao,
-  JornadaDeTransformacaoByEsteiraId
+  JornadaDeTransformacaoByEsteiraId,
+  CapacidadesRecomendadas,
+  ItemDeMaturidade,
+  TiposMaturidadeEnum
 } from 'src/app/types/jornada-types';
 
 import { EsteiraService } from 'src/services/esteira/esteira.service';
 import { EmpresaService } from 'src/services/empresa/empresa.service';
 import { MaturidadeService } from 'src/services/maturidade/maturidade.service';
 import { JornadaService } from 'src/services/jornada/jornada.service';
+import { CapacidadeService } from 'src/services/capacidade/capacidade.service';
 import { isInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
 
 @Component({
@@ -84,38 +88,65 @@ export class DashProjetoComponent implements OnInit {
       frequencyDeployment: 0,
       changeFailureRate: 0,
       timeToRecovery: 0,
-    }
+    },
+    mediaDeJornada: 0,
+
+  };
+
+  public currentCapacidade: CapacidadesRecomendadas = {
+    maturidade: {
+      id: 0,
+      esteira: {
+        id: 0,
+        nome: '',
+        tipo: '' as TiposEnum,
+        empresa: {
+          id: 0,
+          nome: '',
+        },
+      },
+      data: '',
+      numero: 0,
+      leadTime: 0,
+      frequencyDeployment: 0,
+      changeFailureRate: 0,
+      timeToRecovery: 0,
+    },
+    itemDeMaturidade: {
+      id: 0,
+      tipoMaturidade: '' as TiposMaturidadeEnum,
+      nome: '',
+    },
+    id: 0
   };
 
   public empresas: Empresa[] = [];
   public maturidade: Maturidade[] = [];
   public tipo: TiposEnum[] = [];
+  public tiposMaturidade: TiposMaturidadeEnum[] = [];
   public maturidadeByEsteiraId: MaturidadeByEsteiraId[] = [];
   public jornada: JornadaDeTransformacao[] = [];
   public jornadaByEsteiraId: JornadaDeTransformacaoByEsteiraId[] = [];
   public jornadaGoal: number = 95;
-  public rateSaude: number = 70;
+  public rateSaude: number = 30;
   public rate4key: number = 50;
   public rateCapacidadeDora: number = 80;
-  public capacidadesRecomendadas: string[] = [
-    'Gerenciamento de dados',
-    'Desenvolvimento base',
-    'Manutenção do código'
-  ]
-  
+  public capacidade: CapacidadesRecomendadas[] = []
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private esteiraService: EsteiraService,
-    private empresaService: EmpresaService,
     private maturidadeService: MaturidadeService,
-    private jornadaService: JornadaService
+    private jornadaService: JornadaService,
+    private capacidadeService: CapacidadeService
 
   ) { }
 
   ngOnInit(): void {
     this.getMaturidade();
+    this.getJornada();
+    this.getCapacidade();
     this.route.paramMap.subscribe((params) => {
       const id = params.get('esteiraId');
       if (id) {
@@ -123,6 +154,8 @@ export class DashProjetoComponent implements OnInit {
         this.getMaturidadeByEsteiraId(parseInt(id));
         this.getMaturidadeById(parseInt(id));
         this.getJornadaByEsteiraId(parseInt(id));
+        this.getCapacidadesByEsteiraId(parseInt(id));
+        this.getCapacidadeById(parseInt(id));
         /*this.getEsteiraById(parseInt(id));*/
       }
     });
@@ -145,6 +178,17 @@ export class DashProjetoComponent implements OnInit {
       this.currentJornada = jornada;
       this.currentEsteira = jornada.maturidade.esteira;
       this.getJornadaByEsteiraId(jornada.maturidade.esteira.id);
+      console.log(this.getNivel(jornada.saude));
+    }
+
+    const capacidade = this.capacidade.find(
+      (capacidade) => capacidade.maturidade.esteira.id === id
+    );
+    if (capacidade) {
+      this.currentCapacidade = capacidade;
+      this.currentEsteira = capacidade.maturidade.esteira;
+      this.getCapacidadesByEsteiraId(capacidade.maturidade.esteira.id);
+      console.log(capacidade);
     }
   }
 
@@ -159,10 +203,41 @@ export class DashProjetoComponent implements OnInit {
           this.setCurrent(this.esteiras[0].id);
           this.router.navigate([`dashboard/${this.esteiras[0].id}`]);
         }
+
       }
+
     });
   }
 
+  public async getJornada() {
+  this.jornadaService.getJornadas().subscribe((response) => {
+    this.jornada = response;
+    const id = this.route.snapshot.paramMap.get('esteiraId');
+    if (id) {
+      this.getJornadaByEsteiraId(parseInt(id));
+    } else {
+      if (this.jornada.length > 0) {
+        this.getJornadaByEsteiraId(this.jornada[0].id);
+        this.router.navigate([`dashboard/${this.esteiras[0].id}`]);
+      }
+    }
+  });
+}
+
+public async getCapacidade() {
+  this.capacidadeService.getCapacidades().subscribe((response) => {
+    this.capacidade = response;
+    const id = this.route.snapshot.paramMap.get('esteiraId');
+    if (id) {
+      this.getCapacidadesByEsteiraId(parseInt(id));
+    } else {
+      if (this.capacidade.length > 0) {
+        this.getCapacidadesByEsteiraId(this.capacidade[0].id);
+        this.router.navigate([`dashboard/${this.esteiras[0].id}`]);
+      }
+    }
+  });
+}
   /*getEsteiras(): void {
     this.esteiraService.getEsteiras().subscribe((esteiras) => {
       this.esteiras = esteiras;
@@ -189,8 +264,20 @@ export class DashProjetoComponent implements OnInit {
 
   getJornadaByEsteiraId(id: number) : void {
     this.jornadaService.getJornadasByEsteiraId(id).subscribe((jornada) => {
-      this.getJornadaByEsteiraId = jornada;
-    })
+      this.currentJornada = jornada;
+    });
+  }
+
+  getCapacidadesByEsteiraId(id: number) : void {
+    this.capacidadeService.getCapacidadesByEsteiraId(id).subscribe((capacidade) => {
+      this.currentCapacidade = capacidade;
+    });
+  }
+
+  getCapacidadeById(id: number): void {
+    this.capacidadeService.getCapacidadeById(id).subscribe((data: CapacidadesRecomendadas) => {
+      this.currentCapacidade = data;
+    });
   }
 
   getCorJornada(jornadaGoal: number, nivel: string): string {
@@ -207,8 +294,8 @@ export class DashProjetoComponent implements OnInit {
     }
   }
 
-  getNivelSaude(rate: number): string {
-    if (rate >= 0 && rate <= 25) {
+  getNivel(rate: number): string {
+    if ( rate >= 0 && rate <= 25) {
       return 'Baixo';
     } else if (rate >= 26 && rate <= 75) {
       return 'Médio';
@@ -219,27 +306,5 @@ export class DashProjetoComponent implements OnInit {
     }
   }
 
-  get4Key(rate: number): string {
-    if (rate >= 0 && rate <= 25) {
-      return 'Baixo';
-    } else if (rate >= 26 && rate <= 75) {
-      return 'Médio';
-    } else if (rate >= 76 && rate <= 100) {
-      return 'Alto';
-    } else {
-      return '';
-    }
-  }
 
-  getCapacidadeDora(rate: number): string {
-    if (rate >= 0 && rate <= 25) {
-      return 'Baixo';
-    } else if (rate >= 26 && rate <= 75) {
-      return 'Médio';
-    } else if (rate >= 76 && rate <= 100) {
-      return 'Alto';
-    } else {
-      return '';
-    }
-  }
 }

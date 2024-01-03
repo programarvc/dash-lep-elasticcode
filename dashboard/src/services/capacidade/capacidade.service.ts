@@ -9,7 +9,10 @@ import { environment } from "src/environments/environment";
     providedIn: "root",
 })
 
-export class JornadaService {
+export class CapacidadeService {
+    getCapacidadesById() {
+        throw new Error('Method not implemented.');
+    }
     private handleError<T>(operation = "operation", result?: T) {
         return (error: any): Observable<T> => {
             console.error("Erro => " + JSON.stringify(error));
@@ -20,24 +23,24 @@ export class JornadaService {
 
     constructor(private http: HttpClient) {}
 
-    getJornadas(): Observable<any> {
-        const url: string = `${environment.api}/jornada`;
+    getCapacidades(): Observable<any> {
+        const url: string = `${environment.api}/capacidades`;
         return this.http
             .get<any>(url)
-            .pipe(catchError(this.handleError<any>("getJornadas")));
+            .pipe(catchError(this.handleError<any>("getCapacidades")));
     }
 
-    getJornadaById(id: number): Observable<any> {
-        const url: string = `${environment.api}/jornada/${id}`;
+    getCapacidadeById(id: number): Observable<any> {
+        const url: string = `${environment.api}/capacidades/${id}`;
         return this.http
             .get<any>(url)
-            .pipe(catchError(this.handleError<any>('getJornadaById')));
+            .pipe(catchError(this.handleError<any>('getCapacidadeById')));
     }
 
-    getJornadasByEsteiraId(id : number): Observable<any> {
-        const url: string = `${environment.api}/jornada/esteira/${id}`;
+    getCapacidadesByEsteiraId(id : number): Observable<any> {
+        const url: string = `${environment.api}/capacidades/esteira/${id}`;
         return this.http
             .get<any>(url)
-            .pipe(catchError(this.handleError<any>('getJornadaByEsteiraId')));
+            .pipe(catchError(this.handleError<any>('getCapacidadesByEsteiraId')));
     }
 }
