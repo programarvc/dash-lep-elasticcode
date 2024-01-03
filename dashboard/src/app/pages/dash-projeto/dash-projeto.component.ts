@@ -1,12 +1,12 @@
-import { Component, OnInit} from '@angular/core';
-import { ActivatedRoute, Router,  } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import {
   EsteiraDeDesenvolvimento,
   TiposEnum,
   Empresa,
   Maturidade,
-  MaturidadeByEsteiraId
+  MaturidadeByEsteiraId,
 } from 'src/app/types/esteira-types';
 
 import {
@@ -14,7 +14,7 @@ import {
   JornadaDeTransformacaoByEsteiraId,
   CapacidadesRecomendadas,
   ItemDeMaturidade,
-  TiposMaturidadeEnum
+  TiposMaturidadeEnum,
 } from 'src/app/types/jornada-types';
 
 import { EsteiraService } from 'src/services/esteira/esteira.service';
@@ -26,10 +26,9 @@ import { isInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
 
 @Component({
   selector: 'app-dash-projeto',
-  templateUrl:'./dash-projeto.component.html',
-  styleUrls: ['./dash-projeto.component.sass']
+  templateUrl: './dash-projeto.component.html',
+  styleUrls: ['./dash-projeto.component.sass'],
 })
-
 export class DashProjetoComponent implements OnInit {
   public esteiras: EsteiraDeDesenvolvimento[] = [];
   public currentEsteira: EsteiraDeDesenvolvimento = {
@@ -48,7 +47,6 @@ export class DashProjetoComponent implements OnInit {
   };
 
   public currentMaturidade: Maturidade = {
-
     esteira: {
       id: 0,
       nome: '',
@@ -64,7 +62,7 @@ export class DashProjetoComponent implements OnInit {
     frequencyDeployment: 0,
     changeFailureRate: 0,
     timeToRecovery: 0,
-  }
+  };
 
   public currentJornada: JornadaDeTransformacao = {
     id: 0,
@@ -90,7 +88,6 @@ export class DashProjetoComponent implements OnInit {
       timeToRecovery: 0,
     },
     mediaDeJornada: 0,
-
   };
 
   public currentCapacidade: CapacidadesRecomendadas = {
@@ -117,7 +114,7 @@ export class DashProjetoComponent implements OnInit {
       tipoMaturidade: '' as TiposMaturidadeEnum,
       nome: '',
     },
-    id: 0
+    id: 0,
   };
 
   public empresas: Empresa[] = [];
@@ -131,7 +128,7 @@ export class DashProjetoComponent implements OnInit {
   public rateSaude: number = 30;
   public rate4key: number = 50;
   public rateCapacidadeDora: number = 80;
-  public capacidade: CapacidadesRecomendadas[] = []
+  public capacidade: CapacidadesRecomendadas[] = [];
 
   constructor(
     private router: Router,
@@ -140,48 +137,51 @@ export class DashProjetoComponent implements OnInit {
     private maturidadeService: MaturidadeService,
     private jornadaService: JornadaService,
     private capacidadeService: CapacidadeService
-
-  ) { }
+  ) {}
 
   ngOnInit(): void {
+    this.getJornadas();
+    this.getCapacidades();
     this.getMaturidade();
-    this.getJornada();
-    this.getCapacidade();
     this.route.paramMap.subscribe((params) => {
       const id = params.get('esteiraId');
-      if (id) {
+      if (id && !isNaN(Number(id))) {
         this.setCurrent(parseInt(id));
         this.getMaturidadeByEsteiraId(parseInt(id));
         this.getMaturidadeById(parseInt(id));
         this.getJornadaByEsteiraId(parseInt(id));
         this.getCapacidadesByEsteiraId(parseInt(id));
         this.getCapacidadeById(parseInt(id));
-        /*this.getEsteiraById(parseInt(id));*/
+
       }
     });
   }
 
   public async setCurrent(id: number) {
-    const maturidade= this.maturidade.find(
+    console.log(this.currentMaturidade.leadTime);
+    const maturidade = this.maturidade.find(
       (maturidade) => maturidade.esteira.id === id
     );
     if (maturidade) {
       this.currentMaturidade = maturidade;
       this.currentEsteira = maturidade.esteira;
       this.getMaturidadeByEsteiraId(maturidade.esteira.id);
-    }
 
+
+    }
+    console.log(this.currentJornada.saude);
     const jornada = this.jornada.find(
       (jornada) => jornada.maturidade.esteira.id === id
     );
-    if (jornada) {
+    if (jornada && jornada.maturidade && jornada.maturidade.esteira) {
       this.currentJornada = jornada;
-      this.currentEsteira = jornada.maturidade.esteira;
+      this.currentJornada.maturidade.esteira = jornada.maturidade.esteira;
       this.getJornadaByEsteiraId(jornada.maturidade.esteira.id);
-      console.log(this.getNivel(jornada.saude));
+
+
     }
 
-    const capacidade = this.capacidade.find(
+   /* const capacidade = this.capacidade.find(
       (capacidade) => capacidade.maturidade.esteira.id === id
     );
     if (capacidade) {
@@ -189,7 +189,7 @@ export class DashProjetoComponent implements OnInit {
       this.currentEsteira = capacidade.maturidade.esteira;
       this.getCapacidadesByEsteiraId(capacidade.maturidade.esteira.id);
       console.log(capacidade);
-    }
+    }*/
   }
 
   public async getMaturidade() {
@@ -203,41 +203,10 @@ export class DashProjetoComponent implements OnInit {
           this.setCurrent(this.esteiras[0].id);
           this.router.navigate([`dashboard/${this.esteiras[0].id}`]);
         }
-
       }
-
     });
   }
 
-  public async getJornada() {
-  this.jornadaService.getJornadas().subscribe((response) => {
-    this.jornada = response;
-    const id = this.route.snapshot.paramMap.get('esteiraId');
-    if (id) {
-      this.getJornadaByEsteiraId(parseInt(id));
-    } else {
-      if (this.jornada.length > 0) {
-        this.getJornadaByEsteiraId(this.jornada[0].id);
-        this.router.navigate([`dashboard/${this.esteiras[0].id}`]);
-      }
-    }
-  });
-}
-
-public async getCapacidade() {
-  this.capacidadeService.getCapacidades().subscribe((response) => {
-    this.capacidade = response;
-    const id = this.route.snapshot.paramMap.get('esteiraId');
-    if (id) {
-      this.getCapacidadesByEsteiraId(parseInt(id));
-    } else {
-      if (this.capacidade.length > 0) {
-        this.getCapacidadesByEsteiraId(this.capacidade[0].id);
-        this.router.navigate([`dashboard/${this.esteiras[0].id}`]);
-      }
-    }
-  });
-}
   /*getEsteiras(): void {
     this.esteiraService.getEsteiras().subscribe((esteiras) => {
       this.esteiras = esteiras;
@@ -251,33 +220,54 @@ public async getCapacidade() {
   }*/
 
   getMaturidadeByEsteiraId(id: number): void {
-    this.maturidadeService.getMaturidadeByEsteiraId(id).subscribe((maturidade) => {
-      this.maturidadeByEsteiraId = maturidade;
-    });
+    this.maturidadeService
+      .getMaturidadeByEsteiraId(id)
+      .subscribe((maturidade) => {
+        this.maturidadeByEsteiraId = maturidade;
+      });
   }
 
   getMaturidadeById(id: number): void {
-    this.maturidadeService.getMaturidadeById(id).subscribe((data: Maturidade) => {
-      this.currentMaturidade = data;
-    });
+    this.maturidadeService
+      .getMaturidadeById(id)
+      .subscribe((data: Maturidade) => {
+        this.currentMaturidade = data;
+      });
   }
 
-  getJornadaByEsteiraId(id: number) : void {
+  getJornadaByEsteiraId(id: number): void {
     this.jornadaService.getJornadasByEsteiraId(id).subscribe((jornada) => {
-      this.currentJornada = jornada;
+      this.jornada = jornada;
     });
   }
 
-  getCapacidadesByEsteiraId(id: number) : void {
-    this.capacidadeService.getCapacidadesByEsteiraId(id).subscribe((capacidade) => {
-      this.currentCapacidade = capacidade;
+  public getJornadas(): void {
+    this.jornadaService.getJornadas().subscribe((response) => {
+      this.jornada = response;
     });
+  }
+
+  public getCapacidades(): void {
+    this.capacidadeService.getCapacidades().subscribe((response) => {
+      this.capacidade = response;
+    });
+  }
+
+
+  getCapacidadesByEsteiraId(id: number): void {
+    this.capacidadeService
+      .getCapacidadesByEsteiraId(id)
+      .subscribe((capacidade) => {
+        this.currentCapacidade = capacidade;
+      });
   }
 
   getCapacidadeById(id: number): void {
-    this.capacidadeService.getCapacidadeById(id).subscribe((data: CapacidadesRecomendadas) => {
-      this.currentCapacidade = data;
-    });
+    this.capacidadeService
+      .getCapacidadeById(id)
+      .subscribe((data: CapacidadesRecomendadas) => {
+        this.currentCapacidade = data;
+      });
   }
 
   getCorJornada(jornadaGoal: number, nivel: string): string {
@@ -295,7 +285,7 @@ public async getCapacidade() {
   }
 
   getNivel(rate: number): string {
-    if ( rate >= 0 && rate <= 25) {
+    if (rate >= 0 && rate <= 25) {
       return 'Baixo';
     } else if (rate >= 26 && rate <= 75) {
       return 'Médio';
@@ -305,6 +295,4 @@ public async getCapacidade() {
       return '';
     }
   }
-
-
 }

@@ -10,9 +10,6 @@ import { environment } from "src/environments/environment";
 })
 
 export class CapacidadeService {
-    getCapacidadesById() {
-        throw new Error('Method not implemented.');
-    }
     private handleError<T>(operation = "operation", result?: T) {
         return (error: any): Observable<T> => {
             console.error("Erro => " + JSON.stringify(error));
