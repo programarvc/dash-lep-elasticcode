@@ -149,76 +149,56 @@ export class DashProjetoComponent implements OnInit {
         this.setCurrent(parseInt(id));
         this.getMaturidadeByEsteiraId(parseInt(id));
         this.getMaturidadeById(parseInt(id));
-        this.getJornadaByEsteiraId(parseInt(id));
         this.getCapacidadesByEsteiraId(parseInt(id));
         this.getCapacidadeById(parseInt(id));
-
       }
     });
   }
 
   public async setCurrent(id: number) {
-    console.log(this.currentMaturidade.leadTime);
-    const maturidade = this.maturidade.find(
-      (maturidade) => maturidade.esteira.id === id
-    );
-    if (maturidade) {
-      this.currentMaturidade = maturidade;
-      this.currentEsteira = maturidade.esteira;
-      this.getMaturidadeByEsteiraId(maturidade.esteira.id);
-
-
-    }
-    console.log(this.currentJornada.saude);
-    const jornada = this.jornada.find(
-      (jornada) => jornada.maturidade.esteira.id === id
-    );
-    if (jornada && jornada.maturidade && jornada.maturidade.esteira) {
-      this.currentJornada = jornada;
-      this.currentJornada.maturidade.esteira = jornada.maturidade.esteira;
-      this.getJornadaByEsteiraId(jornada.maturidade.esteira.id);
-
-
-    }
-
-   /* const capacidade = this.capacidade.find(
-      (capacidade) => capacidade.maturidade.esteira.id === id
-    );
-    if (capacidade) {
-      this.currentCapacidade = capacidade;
-      this.currentEsteira = capacidade.maturidade.esteira;
-      this.getCapacidadesByEsteiraId(capacidade.maturidade.esteira.id);
-      console.log(capacidade);
-    }*/
+      const maturidade = this.maturidade.find(
+        (maturidade) => maturidade.esteira.id === id
+      );
+      if (maturidade) {
+        this.currentMaturidade = maturidade;
+        this.currentEsteira = maturidade.esteira;
+        this.getMaturidadeByEsteiraId(maturidade.esteira.id);
+        localStorage.setItem('currentMaturidade', JSON.stringify(this.currentMaturidade));
+      }
+      const jornada = this.jornada.find(
+        (jornada) => jornada.maturidade.esteira.id === id
+      );
+      if (jornada && jornada.maturidade && jornada.maturidade.esteira) {
+        this.currentJornada = jornada;
+        this.currentJornada.maturidade.esteira = jornada.maturidade.esteira;
+        this.getJornadaByEsteiraId(jornada.maturidade.esteira.id);
+        console.log(this.currentJornada);
+        localStorage.setItem('currentJornada', JSON.stringify(this.currentJornada));
+      }
   }
 
   public async getMaturidade() {
-    this.esteiraService.getEsteiras().subscribe((response) => {
-      this.esteiras = response;
-      const id = this.route.snapshot.paramMap.get('esteiraId');
-      if (id) {
-        this.setCurrent(parseInt(id));
-      } else {
-        if (this.esteiras.length > 0) {
-          this.setCurrent(this.esteiras[0].id);
-          this.router.navigate([`dashboard/${this.esteiras[0].id}`]);
+      this.esteiraService.getEsteiras().subscribe((response) => {
+        this.esteiras = response;
+        const id = this.route.snapshot.paramMap.get('esteiraId');
+        if (id) {
+          this.setCurrent(parseInt(id));
+        } else {
+          if (this.esteiras.length > 0) {
+            this.setCurrent(this.esteiras[0].id);
+            this.router.navigate([`dashboard/${this.esteiras[0].id}`]);
+          }
         }
-      }
-    });
+        const storedMaturidade = localStorage.getItem('currentMaturidade');
+        if (storedMaturidade) {
+          this.currentMaturidade = JSON.parse(storedMaturidade);
+        }
+        const storedJornada = localStorage.getItem('currentJornada');
+        if (storedJornada) {
+          this.currentJornada = JSON.parse(storedJornada);
+        }
+      });
   }
-
-  /*getEsteiras(): void {
-    this.esteiraService.getEsteiras().subscribe((esteiras) => {
-      this.esteiras = esteiras;
-    });
-  }*/
-
-  /*getEsteiraById(id: number): void {
-    this.esteiraService.getEsteiraById(id).subscribe((esteira) => {
-      this.esteiras = esteira;
-    });
-  }*/
-
   getMaturidadeByEsteiraId(id: number): void {
     this.maturidadeService
       .getMaturidadeByEsteiraId(id)
@@ -237,7 +217,7 @@ export class DashProjetoComponent implements OnInit {
 
   getJornadaByEsteiraId(id: number): void {
     this.jornadaService.getJornadasByEsteiraId(id).subscribe((jornada) => {
-      this.jornada = jornada;
+      this.jornadaByEsteiraId = jornada;
     });
   }
 
@@ -252,7 +232,6 @@ export class DashProjetoComponent implements OnInit {
       this.capacidade = response;
     });
   }
-
 
   getCapacidadesByEsteiraId(id: number): void {
     this.capacidadeService
