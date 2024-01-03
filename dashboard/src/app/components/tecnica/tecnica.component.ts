@@ -13,6 +13,7 @@ import { EsteiraService } from 'src/services/esteira/esteira.service';
 import { EmpresaService } from 'src/services/empresa/empresa.service';
 import { MaturidadeService } from 'src/services/maturidade/maturidade.service';
 import { TecnicaService } from 'src/services/tecnica/tecnica.service';
+
 @Component({
   selector: 'app-tecnica',
   templateUrl: './tecnica.component.html',
@@ -20,9 +21,10 @@ import { TecnicaService } from 'src/services/tecnica/tecnica.service';
 })
 
 
-
 export class TecnicaComponent implements OnInit {
   public indiceDeMaturidade: ValorDosIndicesDeMaturidade [] = [];
+  public valorDosIndicesDeMaturidadeId: ValorDosIndicesDeMaturidade [] = [];
+
   public currentIndiceDeMaturidade: ValorDosIndicesDeMaturidade = {
     id: 0,
     maturidade:0,
@@ -92,7 +94,6 @@ export class TecnicaComponent implements OnInit {
     });
   }
 
-
   public async setCurrent(id: number) {
     const maturidade= this.maturidade.find(
       (maturidade) => maturidade.esteira.id === id
@@ -106,11 +107,9 @@ console.log(this.currentIndices);
     }
   }
 
-
-
   public async getMaturidade() {
     this.esteiraService.getEsteiras().subscribe((response) => {
-      this.indices = response;
+      //this.indices = response;
       const id = this.route.snapshot.paramMap.get('esteiraId');
       if (id) {
         this.setCurrent(parseInt(id));
@@ -119,21 +118,20 @@ console.log(this.currentIndices);
           this.setCurrent(this.indices[0].id);
           this.router.navigate([`dashboard/${this.indices[0].id}`]);
         }
-      }
-    });
+      });
   }
 
-  /*getEsteiras(): void {
+  getEsteiras(): void {
     this.esteiraService.getEsteiras().subscribe((esteiras) => {
       this.esteiras = esteiras;
     });
-  }*/
+  }
 
-  /*getEsteiraById(id: number): void {
+  getEsteiraById(id: number): void {
     this.esteiraService.getEsteiraById(id).subscribe((esteira) => {
       this.esteiras = esteira;
     });
-  }*/
+  }
 
   getTecnicaByEsteiraId(id: number): void {
     this.TecnicaService.getTecnicaByEsteiraId(id).subscribe((maturidade) => {
