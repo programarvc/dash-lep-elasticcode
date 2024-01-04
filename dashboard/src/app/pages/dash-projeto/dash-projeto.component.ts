@@ -19,7 +19,7 @@ import {
 
 import {
   ValorDosIndicesDeMaturidade,
-  ValorDosIndicesDeMaturidadeByEsteiraIdAndTipo
+  ValorDosIndicesDeMaturidadeByEsteiraIdAndTecnica
 } from 'src/app/types/valorMaturidade-types';
 
 
@@ -162,7 +162,7 @@ export class DashProjetoComponent implements OnInit {
   public jornadaByEsteiraId: JornadaDeTransformacaoByEsteiraId[] = [];
   public capacidade: CapacidadesRecomendadas[] = [];
   public valorDosIndicesDeMaturidade: ValorDosIndicesDeMaturidade[] = [];
-  public valorDosIndicesDeMaturidadeByEsteiraIdAndTipo: ValorDosIndicesDeMaturidadeByEsteiraIdAndTipo[] =[];
+  public valorDosIndicesDeMaturidadeByEsteiraIdAndTecnica: ValorDosIndicesDeMaturidadeByEsteiraIdAndTecnica[] =[];
   public itemDeMaturidade: ItemDeMaturidade[] = [];
   
 
@@ -189,7 +189,7 @@ export class DashProjetoComponent implements OnInit {
         this.getMaturidadeById(parseInt(id));
         this.getCapacidadesByEsteiraId(parseInt(id));
         this.getCapacidadeById(parseInt(id));
-        this.getValorMaturidadesByEsteiraIdAndTipo(parseInt(id), String(this.tiposMaturidade));
+        this.getValorMaturidadesByEsteiraIdAndTecnica(parseInt(id));
       }
     });
   }
@@ -213,14 +213,13 @@ public async setCurrent(id: number) {
       this.getJornadaByEsteiraId(jornada.maturidade.esteira.id);
       console.log(this.currentJornada);
     }
-    const valorMaturidade = this.valorDosIndicesDeMaturidadeByEsteiraIdAndTipo.find(
-      (valorMaturidade) => valorMaturidade.maturidade.esteira.id === id && valorMaturidade.itemDeMaturidade.tipoMaturidade === String(this.tiposMaturidade)
+    const valorMaturidade = this.valorDosIndicesDeMaturidade.find(
+      (valorMaturidade) => valorMaturidade.maturidade.esteira.id === id
     );
-    if (valorMaturidade && valorMaturidade.maturidade && valorMaturidade.maturidade.esteira && valorMaturidade.itemDeMaturidade && valorMaturidade.itemDeMaturidade.tipoMaturidade) {
+    if (valorMaturidade && valorMaturidade.maturidade && valorMaturidade.maturidade.esteira) {
       this.currentValorMaturidade = valorMaturidade;
       this.currentValorMaturidade.maturidade.esteira = valorMaturidade.maturidade.esteira;
-      this.getValorMaturidadesByEsteiraIdAndTipo(valorMaturidade.maturidade.esteira.id, String(this.tiposMaturidade));
-      console.log(this.currentValorMaturidade);
+      this.getValorMaturidadesByEsteiraIdAndTecnica(valorMaturidade.maturidade.esteira.id);
     }
     
   }
@@ -297,12 +296,13 @@ public async setCurrent(id: number) {
         this.valorDosIndicesDeMaturidade = response;
       });
   }
-
-  getValorMaturidadesByEsteiraIdAndTipo(id: number, tipo: string): void {
+  
+  getValorMaturidadesByEsteiraIdAndTecnica(id: number): void {
     this.valorMaturidadeService
-      .getValorMaturidadesByEsteiraIdAndTipo(id, tipo)
-      .subscribe((data: ValorDosIndicesDeMaturidadeByEsteiraIdAndTipo) => {
+      .getValorMaturidadesByEsteiraIdAndTecnica(id)
+      .subscribe((data: ValorDosIndicesDeMaturidadeByEsteiraIdAndTecnica) => {
         this.currentValorMaturidade = data;
+        console.log(this.currentValorMaturidade);
       });
   }
 

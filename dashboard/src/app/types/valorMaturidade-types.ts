@@ -6,7 +6,7 @@ export interface ValorDosIndicesDeMaturidade {
     valorEsperado: number;
 }
 
-export interface ValorDosIndicesDeMaturidadeByEsteiraIdAndTipo {
+export interface ValorDosIndicesDeMaturidadeByEsteiraIdAndTecnica {
     id: number;
     maturidade: Maturidade;
     itemDeMaturidade: ItemDeMaturidade;

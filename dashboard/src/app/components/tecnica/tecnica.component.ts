@@ -8,11 +8,12 @@ import {
   TiposMaturidadeEnum,
   Maturidade,
   TiposEnum,
-} from 'src/app/types/indicesDeMaturidade-types';
+} from 'src/app/types/valorMaturidade-types';
 import { EsteiraService } from 'src/services/esteira/esteira.service';
 import { EmpresaService } from 'src/services/empresa/empresa.service';
 import { MaturidadeService } from 'src/services/maturidade/maturidade.service';
-import { TecnicaService } from 'src/services/tecnica/tecnica.service';
+import { valorMaturidadeService } from 'src/services/valor-maturidade/valor-maturidade.service';
+
 @Component({
   selector: 'app-tecnica',
   templateUrl: './tecnica.component.html',
@@ -77,8 +78,7 @@ export class TecnicaComponent implements OnInit {
     private route: ActivatedRoute,
     private esteiraService: EsteiraService,
     private empresaService: EmpresaService,
-    private maturidadeService: MaturidadeService,
-    private TecnicaService: TecnicaService,
+    private valorMaturidadeService: valorMaturidadeService
     
   ) { }
 

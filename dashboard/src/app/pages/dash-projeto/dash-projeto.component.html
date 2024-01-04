@@ -146,8 +146,12 @@
         <div class="culturas-textos"> 
           <div class="pontilhado-cultura"></div>
           <p class="culturas-texto">Exp. Equipe</p>
-          <div class="barra-arq1">
-            <div class="barra1"></div>
+          <div class="barra-arq1"
+          [ngStyle]="{'width': currentValorMaturidade.valorEsperado * 100 + '%'}"
+          >
+            <div class="barra1"
+            [ngStyle]="{'width': currentValorMaturidade.valorAtingido * 100 + '%'}"
+            ></div>
           </div>
           <div class="pontilhado-cultura2"></div>
           <p class="culturas-texto">Aprov Alter.</p>

@@ -48,11 +48,18 @@ export class valorMaturidadeService {
             .pipe(catchError(this.handleError<any>("getValorMaturidadesByType")));
     }
 
-    getValorMaturidadesByEsteiraIdAndTipo(id : number, tipo: string): Observable<any> {
+    /*getValorMaturidadesByEsteiraIdAndTipo(id : number, tipo: string): Observable<any> {
         const url: string = `${environment.api}/indicesdematuridade/esteira/${id}/tipo/${tipo}`;
         return this.http
             .get<any>(url)
             .pipe(catchError(this.handleError<any>("getValorMaturidadesByEsteiraIdAndType")));
-    }
+    }*/
 
+    getValorMaturidadesByEsteiraIdAndTecnica(id : number): Observable<any> {
+        const url: string = `${environment.api}/indicesdematuridade/esteira/${id}/tipo/TECNICA`;
+        return this.http
+            .get<any>(url)
+            .pipe(catchError(this.handleError<any>("getValorMaturidadesByEsteiraIdAndTecnica")));
+    }
+    
 }
