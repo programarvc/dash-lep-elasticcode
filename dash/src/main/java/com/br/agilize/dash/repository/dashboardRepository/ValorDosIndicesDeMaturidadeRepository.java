@@ -1,6 +1,8 @@
 package com.br.agilize.dash.repository.dashboardRepository;
 
-import java.util.List;
+import java.util.*;
+
+
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -18,4 +20,10 @@ public interface ValorDosIndicesDeMaturidadeRepository extends JpaRepository<Val
 
    @Query("SELECT v.valorAtingido, v.valorEsperado, i.nome FROM ValorDosIndicesDeMaturidadeEntity v INNER JOIN v.itemDeMaturidade i WHERE i.tipoMaturidade = :tipoMaturidade")
     List<Object[]> findValoresAndNomeByTipoMaturidade(@Param("tipoMaturidade") TiposMaturidadeEnum tipoMaturidade);
-}
+
+   /*  @Query("SELECT v FROM ValorDosIndicesDeMaturidadeEntity v JOIN v.maturidade m JOIN v.itemDeMaturidade i WHERE m.esteira.id = :esteiraId AND i.tipoMaturidade = :tipoMaturidade")
+    List<ValorDosIndicesDeMaturidadeEntity> findByEsteiraIdAndTipoMaturidade(@Param("esteiraId") Long esteiraId, @Param("tipoMaturidade") TiposMaturidadeEnum tipoMaturidade);*/
+
+    @Query("SELECT new map(i.nome as nome, v.valorAtingido as valorAtingido, v.valorEsperado as valorEsperado) FROM ValorDosIndicesDeMaturidadeEntity v JOIN v.maturidade m JOIN v.itemDeMaturidade i WHERE m.esteira.id = :esteiraId AND i.tipoMaturidade = :tipoMaturidade")
+    List<Map<String, Object>> findByEsteiraIdAndTipoMaturidade(@Param("esteiraId") Long esteiraId, @Param("tipoMaturidade") TiposMaturidadeEnum tipoMaturidade);
+} 

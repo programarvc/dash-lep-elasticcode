@@ -1,6 +1,6 @@
 package com.br.agilize.dash.service.dashboardService;
 
-import java.util.List;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +11,7 @@ import com.br.agilize.dash.exception.DashNotFoundException;
 import com.br.agilize.dash.mapper.dashboardMapper.CapacidadesRecomendadasMapper;
 import com.br.agilize.dash.model.dto.dashboardDto.CapacidadesRecomendadasDto;
 import com.br.agilize.dash.model.entity.dashboardEntity.CapacidadesRecomendadasEntity;
+import com.br.agilize.dash.model.enums.TiposMaturidadeEnum;
 import com.br.agilize.dash.repository.dashboardRepository.CapacidadesRecomendadasRepository;
 import com.br.agilize.dash.service.ServiceCrudBase;
 
@@ -45,5 +46,9 @@ public class CapacidadesRecomendadasService extends ServiceCrudBase<CapacidadesR
     @Override
     public void excluirPorId(Long id) {
         this.repository.deleteById(id);
+    }
+
+    public List<Map<String, Object>> getCapacidadesByEsteiraId(Long esteiraId) {
+        return repository.findByEsteiraId(esteiraId);
     }
 }

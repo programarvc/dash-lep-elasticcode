@@ -6,7 +6,7 @@ public enum TiposEnum {
     DESENVOLVIMENTO,
     INTEGRACAO,
     TESTE,
-    IMPLANTAÇÃO,
+    IMPLANTACAO,
     MONITORAMENTO;
 
 }

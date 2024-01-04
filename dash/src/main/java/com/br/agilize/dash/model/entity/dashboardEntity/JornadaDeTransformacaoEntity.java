@@ -21,6 +21,13 @@ public class JornadaDeTransformacaoEntity {
     @Column(nullable = false, name = "capacidade_dora")
     private Integer capacidadeDora;
 
+    @ManyToOne
+    @JoinColumn(name = "maturidade_id")
+    private MaturidadeEntity maturidade;
+
+    @Column(nullable = false, name = "media_de_jornada")    
+    private Double mediaDeJornada;
+
 
 
 }
