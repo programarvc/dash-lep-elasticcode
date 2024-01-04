@@ -17,12 +17,19 @@ import {
   TiposMaturidadeEnum,
 } from 'src/app/types/jornada-types';
 
+import {
+  ValorDosIndicesDeMaturidade,
+  ValorDosIndicesDeMaturidadeByEsteiraIdAndTipo
+} from 'src/app/types/valorMaturidade-types';
+
+
 import { EsteiraService } from 'src/services/esteira/esteira.service';
 import { EmpresaService } from 'src/services/empresa/empresa.service';
 import { MaturidadeService } from 'src/services/maturidade/maturidade.service';
 import { JornadaService } from 'src/services/jornada/jornada.service';
 import { CapacidadeService } from 'src/services/capacidade/capacidade.service';
 import { isInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
+import { valorMaturidadeService } from './../../../services/valor-maturidade/valor-maturidade.service';
 
 @Component({
   selector: 'app-dash-projeto',
@@ -117,6 +124,35 @@ export class DashProjetoComponent implements OnInit {
     id: 0,
   };
 
+  public currentValorMaturidade: ValorDosIndicesDeMaturidade = {
+    id: 0,
+    maturidade: {
+      id: 0,
+      esteira: {
+        id: 0,
+        nome: '',
+        tipo: '' as TiposEnum,
+        empresa: {
+          id: 0,
+          nome: '',
+        },
+      },
+      data: '',
+      numero: 0,
+      leadTime: 0,
+      frequencyDeployment: 0,
+      changeFailureRate: 0,
+      timeToRecovery: 0,
+    },
+    itemDeMaturidade: {
+      id: 0,
+      tipoMaturidade: '' as TiposMaturidadeEnum,
+      nome: '',
+    },
+    valorAtingido: 0,
+    valorEsperado: 0,
+  };
+
   public empresas: Empresa[] = [];
   public maturidade: Maturidade[] = [];
   public tipo: TiposEnum[] = [];
@@ -124,11 +160,11 @@ export class DashProjetoComponent implements OnInit {
   public maturidadeByEsteiraId: MaturidadeByEsteiraId[] = [];
   public jornada: JornadaDeTransformacao[] = [];
   public jornadaByEsteiraId: JornadaDeTransformacaoByEsteiraId[] = [];
-  public jornadaGoal: number = 95;
-  public rateSaude: number = 30;
-  public rate4key: number = 50;
-  public rateCapacidadeDora: number = 80;
   public capacidade: CapacidadesRecomendadas[] = [];
+  public valorDosIndicesDeMaturidade: ValorDosIndicesDeMaturidade[] = [];
+  public valorDosIndicesDeMaturidadeByEsteiraIdAndTipo: ValorDosIndicesDeMaturidadeByEsteiraIdAndTipo[] =[];
+  public itemDeMaturidade: ItemDeMaturidade[] = [];
+  
 
   constructor(
     private router: Router,
@@ -136,13 +172,15 @@ export class DashProjetoComponent implements OnInit {
     private esteiraService: EsteiraService,
     private maturidadeService: MaturidadeService,
     private jornadaService: JornadaService,
-    private capacidadeService: CapacidadeService
+    private capacidadeService: CapacidadeService,
+    private valorMaturidadeService: valorMaturidadeService
   ) {}
 
   ngOnInit(): void {
     this.getJornadas();
     this.getCapacidades();
     this.getMaturidade();
+    this.getValorMaturidades();
     this.route.paramMap.subscribe((params) => {
       const id = params.get('esteiraId');
       if (id && !isNaN(Number(id))) {
@@ -151,11 +189,11 @@ export class DashProjetoComponent implements OnInit {
         this.getMaturidadeById(parseInt(id));
         this.getCapacidadesByEsteiraId(parseInt(id));
         this.getCapacidadeById(parseInt(id));
+        this.getValorMaturidadesByEsteiraIdAndTipo(parseInt(id), String(this.tiposMaturidade));
       }
     });
   }
 
- 
 
 public async setCurrent(id: number) {
     const maturidade = this.maturidade.find(
@@ -175,6 +213,16 @@ public async setCurrent(id: number) {
       this.getJornadaByEsteiraId(jornada.maturidade.esteira.id);
       console.log(this.currentJornada);
     }
+    const valorMaturidade = this.valorDosIndicesDeMaturidadeByEsteiraIdAndTipo.find(
+      (valorMaturidade) => valorMaturidade.maturidade.esteira.id === id && valorMaturidade.itemDeMaturidade.tipoMaturidade === String(this.tiposMaturidade)
+    );
+    if (valorMaturidade && valorMaturidade.maturidade && valorMaturidade.maturidade.esteira && valorMaturidade.itemDeMaturidade && valorMaturidade.itemDeMaturidade.tipoMaturidade) {
+      this.currentValorMaturidade = valorMaturidade;
+      this.currentValorMaturidade.maturidade.esteira = valorMaturidade.maturidade.esteira;
+      this.getValorMaturidadesByEsteiraIdAndTipo(valorMaturidade.maturidade.esteira.id, String(this.tiposMaturidade));
+      console.log(this.currentValorMaturidade);
+    }
+    
   }
 
   public async getMaturidade() {
@@ -239,6 +287,22 @@ public async setCurrent(id: number) {
       .getCapacidadeById(id)
       .subscribe((data: CapacidadesRecomendadas) => {
         this.currentCapacidade = data;
+      });
+  }
+
+  getValorMaturidades(): void {
+    this.valorMaturidadeService
+      .getValorMaturidades()
+      .subscribe((response) => {
+        this.valorDosIndicesDeMaturidade = response;
+      });
+  }
+
+  getValorMaturidadesByEsteiraIdAndTipo(id: number, tipo: string): void {
+    this.valorMaturidadeService
+      .getValorMaturidadesByEsteiraIdAndTipo(id, tipo)
+      .subscribe((data: ValorDosIndicesDeMaturidadeByEsteiraIdAndTipo) => {
+        this.currentValorMaturidade = data;
       });
   }
 
