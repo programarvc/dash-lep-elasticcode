@@ -142,13 +142,15 @@
           <div class="ellipse-cinza"></div>
           <p class="metricas-texto-esperado">Esperado</p>
         </div>
-        
-        <div class="culturas-textos"> 
+
+        <div class="culturas-textos">
           <div class="pontilhado-cultura"></div>
-          <p class="culturas-texto">Exp. Equipe</p>
-          <div class="barra-arq1">
-            <div class="barra1"></div>
-          </div>
+          <ng-container *ngFor="let valor of valorDosIndicesDeMaturidadeByEsteiraIdAndTipo">
+            <p class="tecnicas-texto">{{ valor.itemDeMaturidade }}</p>
+            <div [ngStyle]="{'width': valor.valorEsperado + '%'}" class="barra-arq1">
+              <div class="barra1"></div>
+            </div>
+          </ng-container>
           <div class="pontilhado-cultura2"></div>
           <p class="culturas-texto">Aprov Alter.</p>
           <div class="barra-arq2">
@@ -172,7 +174,7 @@
           <div class="pontilhado-cultura10"></div>
           <div class="pontilhado-cultura11"></div>
         </div>
-        
+
         <div class="numeros">
           <p class="tecnicas-num">0</p>
           <p class="tecnicas-num">10</p>
