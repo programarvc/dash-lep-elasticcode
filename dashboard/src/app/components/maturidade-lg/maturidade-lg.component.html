@@ -1,0 +1,30 @@
+<div class="maturidade-container">
+    <div class="maturidade-header">
+        <h2>Título Maturidade</h2>
+        <div class="maturidade-accuracy">
+            <div class="maturidade-legend">
+                <span class="ranged legend"></span>
+                <span>Atingido</span>
+            </div>
+            <div class="maturidade-legend">
+                <span class="expected legend"></span>
+                <span>Esperado</span>
+            </div>
+        </div>
+    </div>
+    <div class="maturidade-table">
+        <div class="maturidade-item-space"
+        >
+            <ng-container *ngFor="let item of maturidadeItem">
+                <span class="maturidade-item">{{item}}</span>
+            </ng-container>
+        </div>
+        <div class="maturidade-table-background">
+            <div class="dashed"
+            *ngFor="let base of baseTabela"
+            >
+            <span>{{base}}</span>
+            </div>
+        </div>
+    </div>
+</div>

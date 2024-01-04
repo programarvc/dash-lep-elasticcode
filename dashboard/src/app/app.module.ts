@@ -16,8 +16,10 @@ import { FormsModule } from '@angular/forms';
 import { DashProjetoComponent } from './pages/dash-projeto/dash-projeto.component';
 import { SidebarMenuComponent } from './components/sidebar-menu/sidebar-menu.component';
 import { TecnicaComponent } from './components/tecnica/tecnica.component';
+import { MaturidadeLgComponent } from './components/maturidade-lg/maturidade-lg.component';
+import { MaturidadeSmComponent } from './components/maturidade-sm/maturidade-sm.component';
 @NgModule({
-  declarations: [AppComponent, SearchBarComponent, ColaboradorComponent, DashProjetoComponent, SidebarMenuComponent, TecnicaComponent],
+  declarations: [AppComponent, SearchBarComponent, ColaboradorComponent, DashProjetoComponent, SidebarMenuComponent, TecnicaComponent, MaturidadeLgComponent, MaturidadeSmComponent],
   imports: [HttpClientModule, BrowserModule, AppRoutingModule,FormsModule, NgbModule],
   providers: [],
   bootstrap: [AppComponent],
