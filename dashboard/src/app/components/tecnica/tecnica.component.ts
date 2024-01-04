@@ -13,7 +13,6 @@ import { EsteiraService } from 'src/services/esteira/esteira.service';
 import { EmpresaService } from 'src/services/empresa/empresa.service';
 import { MaturidadeService } from 'src/services/maturidade/maturidade.service';
 import { TecnicaService } from 'src/services/tecnica/tecnica.service';
-
 @Component({
   selector: 'app-tecnica',
   templateUrl: './tecnica.component.html',
@@ -22,15 +21,17 @@ import { TecnicaService } from 'src/services/tecnica/tecnica.service';
 
 
 export class TecnicaComponent implements OnInit {
-  public indiceDeMaturidade: ValorDosIndicesDeMaturidade [] = [];
-  public valorDosIndicesDeMaturidadeId: ValorDosIndicesDeMaturidade [] = [];
 
+  baseTabela:number[] = [0,10,20,30,40,50,60,70,80,90,100];
+  
+  /*public indiceDeMaturidade: ValorDosIndicesDeMaturidade [] = [];
   public currentIndiceDeMaturidade: ValorDosIndicesDeMaturidade = {
     id: 0,
-    maturidade:0,
-    itemDeMaturidade: 0,
+    esteira: null,
     valorEsperado: 0,
     valorAtingido: 0,
+    maturidade:0,
+    itemDeMaturidade: 0,
   };
   public esteiras: EsteiraDeDesenvolvimento[] = [];
   public currentEsteira: EsteiraDeDesenvolvimento = {
@@ -65,7 +66,7 @@ export class TecnicaComponent implements OnInit {
     frequencyDeployment: 0,
     changeFailureRate: 0,
     timeToRecovery: 0,
-  }
+  }*/
 
   public empresas: Empresa[] = [];
   public maturidade: Maturidade[] = [];
@@ -82,19 +83,21 @@ export class TecnicaComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getMaturidade();
+    /*this.getMaturidade();
     this.route.paramMap.subscribe((params) => {
       const id = params.get('maturidade_id');
       if (id) {
         this.setCurrent(parseInt(id));
         this.getTecnicaByEsteiraId(parseInt(id));
         this.getMaturidadeById(parseInt(id));
-        /*this.getEsteiraById(parseInt(id));*/
+        this.getEsteiraById(parseInt(id));
       }
-    });
+    })*/
   }
 
-  public async setCurrent(id: number) {
+
+
+  /*public async setCurrent(id: number) {
     const maturidade= this.maturidade.find(
       (maturidade) => maturidade.esteira.id === id
     );
@@ -102,14 +105,16 @@ export class TecnicaComponent implements OnInit {
       this.currentMaturidade = maturidade;
       this.currentIndices = maturidade.esteira;
 
-console.log(this.currentMaturidade);
-console.log(this.currentIndices);
+      console.log(this.currentMaturidade);
+      console.log(this.currentIndices);
     }
-  }
+  }*/
 
-  public async getMaturidade() {
+
+
+  /*public async getMaturidade() {
     this.esteiraService.getEsteiras().subscribe((response) => {
-      //this.indices = response;
+      this.indices = response;
       const id = this.route.snapshot.paramMap.get('esteiraId');
       if (id) {
         this.setCurrent(parseInt(id));
@@ -118,33 +123,35 @@ console.log(this.currentIndices);
           this.setCurrent(this.indices[0].id);
           this.router.navigate([`dashboard/${this.indices[0].id}`]);
         }
-      });
-  }
+      }
+    });
+  }*/
 
-  getEsteiras(): void {
+
+  /*getEsteiras(): void {
     this.esteiraService.getEsteiras().subscribe((esteiras) => {
       this.esteiras = esteiras;
     });
-  }
+  }*/
 
-  getEsteiraById(id: number): void {
+  /*getEsteiraById(id: number): void {
     this.esteiraService.getEsteiraById(id).subscribe((esteira) => {
       this.esteiras = esteira;
     });
-  }
+  }*/
 
-  getTecnicaByEsteiraId(id: number): void {
+
+  /*getTecnicaByEsteiraId(id: number): void {
     this.TecnicaService.getTecnicaByEsteiraId(id).subscribe((maturidade) => {
       this.valorDosIndicesDeMaturidadeId = maturidade;
     });
-  }
+  }*/
 
-  getMaturidadeById(id: number): void {
+
+  /*getMaturidadeById(id: number): void {
     this.maturidadeService.getMaturidadeById(id).subscribe((data: Maturidade) => {
       this.currentMaturidade = data;
     });
-  }
-
-
+  }*/
 
 }
