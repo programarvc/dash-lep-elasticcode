@@ -156,48 +156,38 @@ export class DashProjetoComponent implements OnInit {
   }
 
   public async setCurrent(id: number) {
-      const maturidade = this.maturidade.find(
-        (maturidade) => maturidade.esteira.id === id
-      );
-      if (maturidade) {
-        this.currentMaturidade = maturidade;
-        this.currentEsteira = maturidade.esteira;
-        this.getMaturidadeByEsteiraId(maturidade.esteira.id);
-        localStorage.setItem('currentMaturidade', JSON.stringify(this.currentMaturidade));
-      }
-      const jornada = this.jornada.find(
-        (jornada) => jornada.maturidade.esteira.id === id
-      );
-      if (jornada && jornada.maturidade && jornada.maturidade.esteira) {
-        this.currentJornada = jornada;
-        this.currentJornada.maturidade.esteira = jornada.maturidade.esteira;
-        this.getJornadaByEsteiraId(jornada.maturidade.esteira.id);
-        console.log(this.currentJornada);
-        localStorage.setItem('currentJornada', JSON.stringify(this.currentJornada));
-      }
+    const maturidade = this.maturidade.find(
+      (maturidade) => maturidade.esteira.id === id
+    );
+    if (maturidade) {
+      this.currentMaturidade = maturidade;
+      this.currentEsteira = maturidade.esteira;
+      this.getMaturidadeByEsteiraId(maturidade.esteira.id);
+    }
+    const jornada = this.jornada.find(
+      (jornada) => jornada.maturidade.esteira.id === id
+    );
+    if (jornada && jornada.maturidade && jornada.maturidade.esteira) {
+      this.currentJornada = jornada;
+      this.currentJornada.maturidade.esteira = jornada.maturidade.esteira;
+      this.getJornadaByEsteiraId(jornada.maturidade.esteira.id);
+      console.log(this.currentJornada);
+    }
   }
 
   public async getMaturidade() {
-      this.esteiraService.getEsteiras().subscribe((response) => {
-        this.esteiras = response;
-        const id = this.route.snapshot.paramMap.get('esteiraId');
-        if (id) {
-          this.setCurrent(parseInt(id));
-        } else {
-          if (this.esteiras.length > 0) {
-            this.setCurrent(this.esteiras[0].id);
-            this.router.navigate([`dashboard/${this.esteiras[0].id}`]);
-          }
+    this.esteiraService.getEsteiras().subscribe((response) => {
+      this.esteiras = response;
+      const id = this.route.snapshot.paramMap.get('esteiraId');
+      if (id) {
+        this.setCurrent(parseInt(id));
+      } else {
+        if (this.esteiras.length > 0) {
+          this.setCurrent(this.esteiras[0].id);
+          this.router.navigate([`dashboard/${this.esteiras[0].id}`]);
         }
-        const storedMaturidade = localStorage.getItem('currentMaturidade');
-        if (storedMaturidade) {
-          this.currentMaturidade = JSON.parse(storedMaturidade);
-        }
-        const storedJornada = localStorage.getItem('currentJornada');
-        if (storedJornada) {
-          this.currentJornada = JSON.parse(storedJornada);
-        }
-      });
+      }
+    });
   }
   getMaturidadeByEsteiraId(id: number): void {
     this.maturidadeService
