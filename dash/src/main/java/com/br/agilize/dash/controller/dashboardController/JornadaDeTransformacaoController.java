@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.*;
 import com.br.agilize.dash.controller.ControllerCrudBase;
 import com.br.agilize.dash.model.dto.dashboardDto.JornadaDeTransformacaoDto;
-import com.br.agilize.dash.model.entity.dashboardEntity.JornadaDeTransformacaoEntity;
 import com.br.agilize.dash.service.dashboardService.JornadaDeTransformacaoService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;

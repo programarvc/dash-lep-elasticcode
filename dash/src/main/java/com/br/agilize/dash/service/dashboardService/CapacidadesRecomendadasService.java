@@ -11,7 +11,6 @@ import com.br.agilize.dash.exception.DashNotFoundException;
 import com.br.agilize.dash.mapper.dashboardMapper.CapacidadesRecomendadasMapper;
 import com.br.agilize.dash.model.dto.dashboardDto.CapacidadesRecomendadasDto;
 import com.br.agilize.dash.model.entity.dashboardEntity.CapacidadesRecomendadasEntity;
-import com.br.agilize.dash.model.enums.TiposMaturidadeEnum;
 import com.br.agilize.dash.repository.dashboardRepository.CapacidadesRecomendadasRepository;
 import com.br.agilize.dash.service.ServiceCrudBase;
 

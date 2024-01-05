@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.br.agilize.dash.controller.ControllerCrudBase;
 import com.br.agilize.dash.model.dto.dashboardDto.ValorDosIndicesDeMaturidadeDto;
-import com.br.agilize.dash.model.entity.dashboardEntity.ValorDosIndicesDeMaturidadeEntity;
 import com.br.agilize.dash.model.enums.TiposMaturidadeEnum;
 import com.br.agilize.dash.service.dashboardService.ItemDeMaturidadeService;
 import com.br.agilize.dash.service.dashboardService.ValorDosIndicesDeMaturidadeService;

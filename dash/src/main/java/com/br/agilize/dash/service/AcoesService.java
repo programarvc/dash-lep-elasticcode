@@ -9,8 +9,6 @@ import com.br.agilize.dash.model.dto.AcoesDto;
 import com.br.agilize.dash.model.entity.AcoesColaboradorEntity;
 import com.br.agilize.dash.model.entity.AcoesEntity;
 import com.br.agilize.dash.model.entity.ColaboradorEntity;
-import com.br.agilize.dash.model.entity.CompetenciaColaboradorEntity;
-import com.br.agilize.dash.model.entity.HabilidadeColaboradorEntity;
 import com.br.agilize.dash.repository.AcoesColaboradorRepository;
 import com.br.agilize.dash.repository.AcoesRepository;
 import org.springframework.beans.factory.annotation.Autowired;

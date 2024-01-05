@@ -1,7 +1,6 @@
 package com.br.agilize.dash.repository;
 
 import com.br.agilize.dash.model.entity.ColaboradorEntity;
-import com.br.agilize.dash.model.entity.EmpresaColaboradorEntity;
 import com.br.agilize.dash.model.entity.HabilidadeColaboradorEntity;
 
 import com.br.agilize.dash.model.entity.HabilidadeEntity;
