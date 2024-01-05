@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.br.agilize.dash.model.entity.AcoesColaboradorEntity;
 import com.br.agilize.dash.model.entity.CompetenciaColaboradorEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

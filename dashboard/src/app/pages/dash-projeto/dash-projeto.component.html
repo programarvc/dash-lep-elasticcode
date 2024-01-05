@@ -57,81 +57,136 @@
                     <div class="jornada-goal"
                     [ngStyle]="{'width': currentJornada.mediaDeJornada + '%'}"
                     >
-                    </div>
                   </div>
                 </div>
               </div>
-              <div class="saude-operacao">
-                <h3>Saúde da Operação</h3>
-                <div class="saude-operacao-content">
-                  <span class="nivel-saude">
-                    {{this.getNivel(currentJornada.saude).toString()}}
-                  </span>
-                  <span class="rate-saude">
-                    {{currentJornada.saude.toString()}}%
-                  </span>
-                </div>
-              </div>
-              <div class="bloco-inferior">
-                <div class="jornada-cards-space">
-                  <div class="jornada-card">
-                    <h3>
-                      Métrica 4 Key
-                    </h3>
-                    <div class="rate-value-4key">
-                      <span>
-                        {{ this.getNivel(currentJornada.metricas4).toString() }}
-                      </span>
-                      <span>
-                        {{ (currentJornada.metricas4).toString() }}%
-                      </span>
-                    </div>
-                    <div class="jornada-card-bar-content">
-                      <div class="jornada-card-bar">
-                        <div class="jornada-card-goal"
-                        [ngStyle]="{'width': currentJornada.metricas4 + '%'}"
-                        >
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="jornada-card">
-                    <h3>
-                      Capacidade DORA
-                    </h3>
-                    <div class="rate-value-4key">
-                      <span>
-                        {{ this.getNivel(currentJornada.capacidadeDora).toString() }}
-                      </span>
-                      <span>
-                        {{ currentJornada.capacidadeDora}}%
-                      </span>
-                    </div>
-                    <div class="jornada-card-bar-content">
-                      <div class="jornada-card-bar">
-                        <div class="jornada-card-goal"
-                        [ngStyle]="{'width': (currentJornada.capacidadeDora).toString() + '%'}"
-                        >
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="espaco-capacidades-recomendadas">
-                  <h3>Capacidades Recomendadas</h3>
-                  <div class="capacidades-recomendadas-card">
-                    <ul>
-                      <li *ngFor="let capacidadeNome of capacidade">
-                        {{(capacidadeNome.itemDeMaturidade.nome).toString()}}
-                      </li>
-                    </ul>
-                  </div>
-                </div>
             </div>
+            <div class="saude-operacao">
+              <h3>Saúde da Operação</h3>
+              <div class="saude-operacao-content">
+                <span class="nivel-saude">
+                  {{this.getNivel(currentJornada.saude).toString()}}
+                </span>
+                <span class="rate-saude">
+                  {{currentJornada.saude.toString()}}%
+                </span>
+              </div>
+            </div>
+            <div class="bloco-inferior">
+              <div class="jornada-cards-space">
+                <div class="jornada-card">
+                  <h3>
+                    Métrica 4 Key
+                  </h3>
+                  <div class="rate-value-4key">
+                    <span>
+                      {{ this.getNivel(currentJornada.metricas4).toString() }}
+                    </span>
+                    <span>
+                      {{ (currentJornada.metricas4).toString() }}%
+                    </span>
+                  </div>
+                  <div class="jornada-card-bar-content">
+                    <div class="jornada-card-bar">
+                      <div class="jornada-card-goal"
+                      [ngStyle]="{'width': currentJornada.metricas4 + '%'}"
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="jornada-card">
+                <h3>
+                  Capacidade DORA
+                </h3>
+                <div class="rate-value-4key">
+                  <span>
+                    {{ this.getNivel(currentJornada.capacidadeDora).toString() }}
+                  </span>
+                  <span>
+                    {{ currentJornada.capacidadeDora}}%
+                  </span>
+                </div>
+                <div class="jornada-card-bar-content">
+                  <div class="jornada-card-bar">
+                    <div class="jornada-card-goal"
+                    [ngStyle]="{'width': (currentJornada.capacidadeDora).toString() + '%'}"
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="espaco-capacidades-recomendadas">
+            <h3>Capacidades Recomendadas</h3>
+            <div class="capacidades-recomendadas-card">
+              <ul>
+                <li *ngFor="let capacidadeNome of capacidade">
+                  {{(capacidadeNome.itemDeMaturidade.nome).toString()}}
+                </li>
+              </ul>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <app-tecnica></app-tecnica>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="bloco-cultura">
+        <h2 class="titulo-cultura">Cultura</h2>
+        <div class="metricas-maturidade">
+          <div class="ellipse-roxa"></div>
+          <p class="metricas-texto">Atingido</p>
+          <div class="ellipse-cinza"></div>
+          <p class="metricas-texto-esperado">Esperado</p>
+        </div>
+
+        <div class="culturas-textos">
+          <div class="pontilhado-cultura"></div>
+          <p class="culturas-texto1">Satisfação no Trabalho</p>
+          <p class="culturas-texto2">Cultura de Westrum</p>
+          <p class="culturas-texto3">Cultura de Aprendizado</p>
+          <p class="culturas-texto4">Liderança Transformacional</p>
+
+          <ng-container *ngFor="let item of valorMaturidadeCultura; let i = index">
+            <div class="cultura-barra{{i+1}}-meta" [ngStyle]="{'width': item.valorEsperado * 306 + '%'}">
+              <div class="cultura-barra{{i+1}}" [ngStyle]="{'width': item.valorAtingido * 100 + '%'}"></div>
+            </div>
+          </ng-container>
+          <div class="pontilhado-cultura2"></div>
+          <div class="pontilhado-cultura3"></div>
+          <div class="pontilhado-cultura4"></div>
+          <div class="pontilhado-cultura5"></div>
+          <div class="pontilhado-cultura6"></div>
+          <div class="pontilhado-cultura7"></div>
+          <div class="pontilhado-cultura8"></div>
+          <div class="pontilhado-cultura9"></div>
+          <div class="pontilhado-cultura10"></div>
+          <div class="pontilhado-cultura11"></div>
+        </div>
+
+        <div class="numeros">
+          <p class="tecnicas-num">0</p>
+          <p class="tecnicas-num">10</p>
+          <p class="tecnicas-num">20</p>
+          <p class="tecnicas-num">30</p>
+          <p class="tecnicas-num">40</p>
+          <p class="tecnicas-num">50</p>
+          <p class="tecnicas-num">60</p>
+          <p class="tecnicas-num">70</p>
+          <p class="tecnicas-num">80</p>
+          <p class="tecnicas-num">90</p>
+          <p class="tecnicas-num">100</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+</div>
+
 </section>

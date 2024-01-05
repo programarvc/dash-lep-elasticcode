@@ -1,3 +1,4 @@
+import { ValorDosIndicesDeMaturidadeByEsteiraIdAndCultura } from './../../types/valorMaturidade-types';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -17,12 +18,19 @@ import {
   TiposMaturidadeEnum,
 } from 'src/app/types/jornada-types';
 
+import {
+  ValorDosIndicesDeMaturidade,
+  ValorDosIndicesDeMaturidadeByEsteiraIdAndTecnica
+} from 'src/app/types/valorMaturidade-types';
+
+
 import { EsteiraService } from 'src/services/esteira/esteira.service';
 import { EmpresaService } from 'src/services/empresa/empresa.service';
 import { MaturidadeService } from 'src/services/maturidade/maturidade.service';
 import { JornadaService } from 'src/services/jornada/jornada.service';
 import { CapacidadeService } from 'src/services/capacidade/capacidade.service';
 import { isInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
+import { valorMaturidadeService } from './../../../services/valor-maturidade/valor-maturidade.service';
 
 @Component({
   selector: 'app-dash-projeto',
@@ -117,6 +125,37 @@ export class DashProjetoComponent implements OnInit {
     id: 0,
   };
 
+
+  public valorMaturidades: ValorDosIndicesDeMaturidade[] = [];
+  public currentValorMaturidade: ValorDosIndicesDeMaturidade = {
+    id: 0,
+    maturidade: {
+      id: 0,
+      esteira: {
+        id: 0,
+        nome: '',
+        tipo: '' as TiposEnum,
+        empresa: {
+          id: 0,
+          nome: '',
+        },
+      },
+      data: '',
+      numero: 0,
+      leadTime: 0,
+      frequencyDeployment: 0,
+      changeFailureRate: 0,
+      timeToRecovery: 0,
+    },
+    itemDeMaturidade: {
+      id: 0,
+      tipoMaturidade: '' as TiposMaturidadeEnum,
+      nome: '',
+    },
+    valorAtingido: 0,
+    valorEsperado: 0,
+  };
+
   public empresas: Empresa[] = [];
   public maturidade: Maturidade[] = [];
   public tipo: TiposEnum[] = [];
@@ -124,11 +163,11 @@ export class DashProjetoComponent implements OnInit {
   public maturidadeByEsteiraId: MaturidadeByEsteiraId[] = [];
   public jornada: JornadaDeTransformacao[] = [];
   public jornadaByEsteiraId: JornadaDeTransformacaoByEsteiraId[] = [];
-  public jornadaGoal: number = 95;
-  public rateSaude: number = 30;
-  public rate4key: number = 50;
-  public rateCapacidadeDora: number = 80;
   public capacidade: CapacidadesRecomendadas[] = [];
+  public itemDeMaturidade: ItemDeMaturidade[] = [];
+  public valorMaturidadeTecnica: ValorDosIndicesDeMaturidadeByEsteiraIdAndTecnica[] = [];
+  public valorMaturidadeCultura: ValorDosIndicesDeMaturidadeByEsteiraIdAndCultura[] = [];
+  public valorMaturidadeC:  ValorDosIndicesDeMaturidade[] = [];
 
   constructor(
     private router: Router,
@@ -136,12 +175,14 @@ export class DashProjetoComponent implements OnInit {
     private esteiraService: EsteiraService,
     private maturidadeService: MaturidadeService,
     private jornadaService: JornadaService,
-    private capacidadeService: CapacidadeService
+    private capacidadeService: CapacidadeService,
+    private valorMaturidadeService: valorMaturidadeService
   ) {}
 
   ngOnInit(): void {
     this.getJornadas();
     this.getCapacidades();
+    this.getValorMaturidades();
     this.getMaturidade();
     this.route.paramMap.subscribe((params) => {
       const id = params.get('esteiraId');
@@ -151,6 +192,10 @@ export class DashProjetoComponent implements OnInit {
         this.getMaturidadeById(parseInt(id));
         this.getCapacidadesByEsteiraId(parseInt(id));
         this.getCapacidadeById(parseInt(id));
+        this.getValorMaturidadesByEsteiraIdAndTecnica(parseInt(id));
+        this.getValorMaturidadesByEsteiraIdAndCultura(parseInt(id));
+
+
       }
     });
   }
@@ -171,8 +216,26 @@ export class DashProjetoComponent implements OnInit {
       this.currentJornada = jornada;
       this.currentJornada.maturidade.esteira = jornada.maturidade.esteira;
       this.getJornadaByEsteiraId(jornada.maturidade.esteira.id);
-      console.log(this.currentJornada);
     }
+    const valorMaturidadeTecnica = this.valorMaturidades.find(
+      (valorMaturidade) => valorMaturidade.maturidade.esteira.id === id
+    );
+    if (valorMaturidadeTecnica && valorMaturidadeTecnica.maturidade && valorMaturidadeTecnica.maturidade.esteira){
+      this.currentValorMaturidade = valorMaturidadeTecnica;
+      this.currentValorMaturidade.maturidade.esteira = valorMaturidadeTecnica.maturidade.esteira;
+      this.getValorMaturidadesByEsteiraIdAndTecnica(valorMaturidadeTecnica.maturidade.esteira.id);
+
+    }
+    const valorMaturidadeCultura = this.valorMaturidadeC.find(
+      (valorMaturidadeCultura) => valorMaturidadeCultura.maturidade.esteira.id === id
+    );
+    if (valorMaturidadeCultura&& valorMaturidadeCultura.maturidade && valorMaturidadeCultura.maturidade.esteira){
+      this.currentValorMaturidade = valorMaturidadeCultura;
+      this.currentValorMaturidade.maturidade.esteira = valorMaturidadeCultura.maturidade.esteira;
+      this.getValorMaturidadesByEsteiraIdAndCultura(valorMaturidadeCultura.maturidade.esteira.id);
+    }
+
+
   }
 
   public async getMaturidade() {
@@ -189,6 +252,9 @@ export class DashProjetoComponent implements OnInit {
       }
     });
   }
+
+
+
   getMaturidadeByEsteiraId(id: number): void {
     this.maturidadeService
       .getMaturidadeByEsteiraId(id)
@@ -223,6 +289,26 @@ export class DashProjetoComponent implements OnInit {
     });
   }
 
+  public getValorMaturidades(): void {
+    this.valorMaturidadeService.getValorMaturidades().subscribe((response) => {
+      this.valorMaturidades = response;
+    });
+  }
+
+
+  public getValorMaturidadesByEsteiraIdAndTecnica(id: number): void{
+    this.valorMaturidadeService.getValorMaturidadesByEsteiraIdAndTecnica(id).subscribe((response) =>{
+      this.valorMaturidadeTecnica = response;
+    });
+  }
+
+  public getValorMaturidadesByEsteiraIdAndCultura(id: number): void{
+    this.valorMaturidadeService.getValorMaturidadesByEsteiraIdAndCultura(id).subscribe((response) =>{
+      this.valorMaturidadeCultura = response;
+      console.log(this.valorMaturidadeCultura);
+    });
+  }
+
   getCapacidadesByEsteiraId(id: number): void {
     this.capacidadeService
       .getCapacidadesByEsteiraId(id)
@@ -238,6 +324,7 @@ export class DashProjetoComponent implements OnInit {
         this.currentCapacidade = data;
       });
   }
+
 
   getCorJornada(jornadaGoal: number, nivel: string): string {
     if (jornadaGoal >= 0 && jornadaGoal <= 25 && nivel === 'Baixa') {

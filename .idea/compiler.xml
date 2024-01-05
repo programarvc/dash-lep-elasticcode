@@ -4,10 +4,5 @@
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="dash" target="17" />
-      <module name="dash.main" target="17" />
-      <module name="dash.test" target="17" />
-    </bytecodeTargetLevel>
   </component>
 </project>

@@ -11,14 +11,11 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 @Configuration
 public class DatabaseLoadConfig {
-    @Autowired
-    private ColaboradorRepository colaboradorRepository;
-
+   
     @Autowired
     private HabilidadeRepository habilidadeRepository;
 
@@ -30,12 +27,6 @@ public class DatabaseLoadConfig {
 
     @Autowired
     private EmpresaRepository empresaRepository;
-
-    @Autowired
-    private CompetenciaColaboradorRepository competenciaColaboradorRepository;
-
-    @Autowired
-    private AcoesColaboradorRepository acoesColaboradorRepository;
 
     
 
@@ -51,25 +42,9 @@ public class DatabaseLoadConfig {
         };
     }
 
-    private void vincularCompetencia(ColaboradorEntity colaboradorSalvo, List<CompetenciaEntity> competenciaEntities) {
-        competenciaEntities.forEach(competenciaEntity -> {
-            CompetenciaColaboradorEntity competenciaColaboradorEntity = new CompetenciaColaboradorEntity();
-            competenciaColaboradorEntity.setColaborador(colaboradorSalvo);
-            competenciaColaboradorEntity.setCompetencia(competenciaEntity);
-            competenciaColaboradorEntity.setProgresso(new Random().nextInt(10) + 1);
-            competenciaColaboradorRepository.save(competenciaColaboradorEntity);
-        });
-    }
+    
 
-    private void vincularAcoes(ColaboradorEntity colaboradorSalvo, List<AcoesEntity> acoesEntities) {
-        acoesEntities.forEach(item -> {
-            AcoesColaboradorEntity acoesColaboradorEntity = new AcoesColaboradorEntity();
-            acoesColaboradorEntity.setColaborador(colaboradorSalvo);
-            acoesColaboradorEntity.setAcao(item);
-            acoesColaboradorEntity.setProgresso((new Random().nextInt(10) + 1) * 10);
-            acoesColaboradorRepository.save(acoesColaboradorEntity);
-        });
-    }
+    
 
     private List<HabilidadeEntity> cargaInicialHabilidades() {
         List<HabilidadeEntity> habilidadesSalvos = this.habilidadeRepository.findAll();
