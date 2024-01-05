@@ -145,14 +145,14 @@
 
         <div class="culturas-textos">
           <div class="pontilhado-cultura"></div>
-          <p class="culturas-texto">Satisfação no Trabalho</p>
+          <p class="culturas-texto1">Satisfação no Trabalho</p>
           <p class="culturas-texto2">Cultura de Westrum</p>
           <p class="culturas-texto3">Cultura de Aprendizado</p>
           <p class="culturas-texto4">Liderança Transformacional</p>
 
-          <ng-container *ngFor="let item of valorMaturidadeCultura">
-            <div class="barra-arq1" [ngStyle]="{'width': item.valorEsperado * 295 + '%'}">
-              <div class="barra1" [ngStyle]="{'width': item.valorAtingido * 100 + '%'}"></div>
+          <ng-container *ngFor="let item of valorMaturidadeCultura; let i = index">
+            <div class="cultura-barra{{i+1}}-meta" [ngStyle]="{'width': item.valorEsperado * 306 + '%'}">
+              <div class="cultura-barra{{i+1}}" [ngStyle]="{'width': item.valorAtingido * 100 + '%'}"></div>
             </div>
           </ng-container>
           <div class="pontilhado-cultura2"></div>
