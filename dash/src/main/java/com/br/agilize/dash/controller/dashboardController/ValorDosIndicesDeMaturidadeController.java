@@ -40,9 +40,9 @@ public class ValorDosIndicesDeMaturidadeController extends ControllerCrudBase<Va
     }
 
     @GetMapping("tipo/{tipoMaturidade}")
-    public ResponseEntity<List<Object[]>> getValoresAndNomeBytipoMaturidade(
+    public ResponseEntity<List<Map<String, Object>>> getValoresAndNomeBytipoMaturidade(
             @PathVariable TiposMaturidadeEnum tipoMaturidade) {
-        List<Object[]> result = service.getValoresAndNomeBytipoMaturidade(tipoMaturidade);
+        List<Map<String, Object>> result = service.getValoresAndNomeBytipoMaturidade(tipoMaturidade);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

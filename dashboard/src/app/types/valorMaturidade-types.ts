@@ -6,12 +6,36 @@ export interface ValorDosIndicesDeMaturidade {
     valorEsperado: number;
 }
 
-export interface ValorDosIndicesDeMaturidadeByEsteiraIdAndTipo {
+export interface ValorDosIndicesDeMaturidadeByEsteiraIdAndTecnica {
     id: number;
     maturidade: Maturidade;
     itemDeMaturidade: ItemDeMaturidade;
     valorAtingido: number;
     valorEsperado: number;
+}
+
+export interface ValorDosIndicesDeMaturidadeByEsteiraIdAndCultura {
+  id: number;
+  maturidade: Maturidade;
+  itemDeMaturidade: ItemDeMaturidade;
+  valorAtingido: number;
+  valorEsperado: number;
+}
+
+export interface ValorDosIndicesDeMaturidadeByEsteiraIdAndProcesso{
+  id: number;
+  maturidade: Maturidade;
+  itemDeMaturidade: ItemDeMaturidade;
+  valorAtingido: number;
+  valorEsperado: number;
+}
+
+export interface ValorDosIndicesDeMaturidadeByEsteiraIdAndMetrica {
+  id: number;
+  maturidade: Maturidade;
+  itemDeMaturidade: ItemDeMaturidade;
+  valorAtingido: number;
+  valorEsperado: number;
 }
 
 export interface ItemDeMaturidade {
@@ -57,4 +81,4 @@ export enum TiposEnum {
     TESTE = "TESTE",
     IMPLANTAÇÃO = "IMPLANTAÇÃO",
     MONITORAMENTO = "MONITORAMENTO",
-}  
+}

@@ -52,7 +52,7 @@ public class ValorDosIndicesDeMaturidadeService extends ServiceCrudBase<ValorDos
         return repository.findValoresAndNomeByItemDeMaturidadeId(itemDeMaturidadeId);
     }
 
-    public List<Object[]> getValoresAndNomeBytipoMaturidade(TiposMaturidadeEnum tipoMaturidade) {
+    public List<Map<String, Object>> getValoresAndNomeBytipoMaturidade(TiposMaturidadeEnum tipoMaturidade) {
         return repository.findValoresAndNomeByTipoMaturidade(tipoMaturidade);
     }
 

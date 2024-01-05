@@ -1,3 +1,4 @@
+import { ValorDosIndicesDeMaturidadeByEsteiraIdAndCultura } from './../../types/valorMaturidade-types';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -19,7 +20,7 @@ import {
 
 import {
   ValorDosIndicesDeMaturidade,
-  ValorDosIndicesDeMaturidadeByEsteiraIdAndTipo
+  ValorDosIndicesDeMaturidadeByEsteiraIdAndTecnica
 } from 'src/app/types/valorMaturidade-types';
 
 
@@ -124,6 +125,8 @@ export class DashProjetoComponent implements OnInit {
     id: 0,
   };
 
+
+  public valorMaturidades: ValorDosIndicesDeMaturidade[] = [];
   public currentValorMaturidade: ValorDosIndicesDeMaturidade = {
     id: 0,
     maturidade: {
@@ -161,10 +164,10 @@ export class DashProjetoComponent implements OnInit {
   public jornada: JornadaDeTransformacao[] = [];
   public jornadaByEsteiraId: JornadaDeTransformacaoByEsteiraId[] = [];
   public capacidade: CapacidadesRecomendadas[] = [];
-  public valorDosIndicesDeMaturidade: ValorDosIndicesDeMaturidade[] = [];
-  public valorDosIndicesDeMaturidadeByEsteiraIdAndTipo: ValorDosIndicesDeMaturidadeByEsteiraIdAndTipo[] =[];
   public itemDeMaturidade: ItemDeMaturidade[] = [];
-
+  public valorMaturidadeTecnica: ValorDosIndicesDeMaturidadeByEsteiraIdAndTecnica[] = [];
+  public valorMaturidadeCultura: ValorDosIndicesDeMaturidadeByEsteiraIdAndCultura[] = [];
+  public valorMaturidadeC:  ValorDosIndicesDeMaturidade[] = [];
 
   constructor(
     private router: Router,
@@ -189,7 +192,9 @@ export class DashProjetoComponent implements OnInit {
         this.getMaturidadeById(parseInt(id));
         this.getCapacidadesByEsteiraId(parseInt(id));
         this.getCapacidadeById(parseInt(id));
-        this.getValorMaturidadesByEsteiraIdAndTipo(parseInt(id));
+        this.getValorMaturidadesByEsteiraIdAndTecnica(parseInt(id));
+        this.getValorMaturidadesByEsteiraIdAndCultura(parseInt(id));
+
 
       }
     });
@@ -213,17 +218,24 @@ public async setCurrent(id: number) {
       this.currentJornada.maturidade.esteira = jornada.maturidade.esteira;
       this.getJornadaByEsteiraId(jornada.maturidade.esteira.id);
     }
-    const valorMaturidade = this.valorDosIndicesDeMaturidadeByEsteiraIdAndTipo.find(
+    const valorMaturidadeTecnica = this.valorMaturidades.find(
       (valorMaturidade) => valorMaturidade.maturidade.esteira.id === id
-      );
-    if (valorMaturidade && valorMaturidade.maturidade && valorMaturidade.maturidade.esteira ) {
-      this.currentValorMaturidade = valorMaturidade;
-      this.currentValorMaturidade.maturidade.esteira = valorMaturidade.maturidade.esteira;
-      this.getValorMaturidadesByEsteiraIdAndTipo(valorMaturidade.maturidade.esteira.id);
-      console.log(this.currentValorMaturidade);
-
+    );
+    if (valorMaturidadeTecnica && valorMaturidadeTecnica.maturidade && valorMaturidadeTecnica.maturidade.esteira){
+      this.currentValorMaturidade = valorMaturidadeTecnica;
+      this.currentValorMaturidade.maturidade.esteira = valorMaturidadeTecnica.maturidade.esteira;
+      this.getValorMaturidadesByEsteiraIdAndTecnica(valorMaturidadeTecnica.maturidade.esteira.id);
 
     }
+    const valorMaturidadeCultura = this.valorMaturidadeC.find(
+      (valorMaturidadeCultura) => valorMaturidadeCultura.maturidade.esteira.id === id
+    );
+    if (valorMaturidadeCultura&& valorMaturidadeCultura.maturidade && valorMaturidadeCultura.maturidade.esteira){
+      this.currentValorMaturidade = valorMaturidadeCultura;
+      this.currentValorMaturidade.maturidade.esteira = valorMaturidadeCultura.maturidade.esteira;
+      this.getValorMaturidadesByEsteiraIdAndCultura(valorMaturidadeCultura.maturidade.esteira.id);
+    }
+
 
   }
 
@@ -241,6 +253,8 @@ public async setCurrent(id: number) {
       }
     });
   }
+
+
 
   getMaturidadeByEsteiraId(id: number): void {
     this.maturidadeService
@@ -276,6 +290,26 @@ public async setCurrent(id: number) {
     });
   }
 
+  public getValorMaturidades(): void {
+    this.valorMaturidadeService.getValorMaturidades().subscribe((response) => {
+      this.valorMaturidades = response;
+    });
+  }
+
+
+  public getValorMaturidadesByEsteiraIdAndTecnica(id: number): void{
+    this.valorMaturidadeService.getValorMaturidadesByEsteiraIdAndTecnica(id).subscribe((response) =>{
+      this.valorMaturidadeTecnica = response;
+    });
+  }
+
+  public getValorMaturidadesByEsteiraIdAndCultura(id: number): void{
+    this.valorMaturidadeService.getValorMaturidadesByEsteiraIdAndCultura(id).subscribe((response) =>{
+      this.valorMaturidadeCultura = response;
+      console.log(this.valorMaturidadeCultura);
+    });
+  }
+
   getCapacidadesByEsteiraId(id: number): void {
     this.capacidadeService
       .getCapacidadesByEsteiraId(id)
@@ -292,21 +326,6 @@ public async setCurrent(id: number) {
       });
   }
 
-  getValorMaturidades(): void {
-    this.valorMaturidadeService
-      .getValorMaturidades()
-      .subscribe((response) => {
-        this.valorDosIndicesDeMaturidade = response;
-      });
-  }
-
-  getValorMaturidadesByEsteiraIdAndTipo(id: number): void {
-    this.valorMaturidadeService
-      .getValorMaturidadesByEsteiraIdAndTipo(id)
-      .subscribe((data: ValorDosIndicesDeMaturidadeByEsteiraIdAndTipo[]) => {
-        this.valorDosIndicesDeMaturidadeByEsteiraIdAndTipo = data;
-      });
-  }
 
   getCorJornada(jornadaGoal: number, nivel: string): string {
     if (jornadaGoal >= 0 && jornadaGoal <= 25 && nivel === 'Baixa') {

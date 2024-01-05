@@ -15,51 +15,27 @@
 
                             <div class="tecnicas-textos">
                                 <div class="pontilhado"></div>
-                                <ng-container *ngFor="let valor of valorDosIndicesDeMaturidadeByEsteiraIdAndTipo">
+                                <ng-container *ngFor="let valor of valorMaturidadeTecnica">
                                   <p class="tecnicas-texto">{{ valor.itemDeMaturidade.nome }}</p>
                                   <div [ngStyle]="{'width': valor.valorEsperado + '%'}" class="barra-arq1">
                                     <div class="barra1"></div>
                                   </div>
                                 </ng-container>
                                 <p class="tecnicas-texto">Arquitetura</p>
-                                <div [ngStyle]="{'width': currentValorMaturidade.valorEsperado + '%'}" class="barra-arq1">
-                                    <div class="barra1"></div>
-                                </div>
                                 <div class="pontilhado2"></div>
                                 <p class="tecnicas-texto">Ger. de Mudança</p>
-                                <div class="barra-arq2">
-                                    <div class="barra2"></div>
-                                </div>
                                 <div class="pontilhado3"></div>
                                 <p class="tecnicas-texto">Auto. de Implantação</p>
-                                <div class="barra-arq3">
-                                    <div class="barra3"></div>
-                                </div>
                                 <div class="pontilhado4"></div>
                                 <p class="tecnicas-texto">Geren. de teste</p>
-                                <div class="barra-arq4">
-                                    <div class="barra4"></div>
-                                </div>
                                 <div class="pontilhado5"></div>
                                 <p class="tecnicas-texto">Integração contínua</p>
-                                <div class="barra-arq5">
-                                    <div class="barra5"></div>
-                                </div>
                                 <div class="pontilhado6"></div>
                                 <p class="tecnicas-texto">Ferramenta de times</p>
-                                <div class="barra-arq6">
-                                    <div class="barra6"></div>
-                                </div>
                                 <div class="pontilhado7"></div>
                                 <p class="tecnicas-texto">Controle de versão</p>
-                                <div class="barra-arq7">
-                                    <div class="barra7"></div>
-                                </div>
                                 <div class="pontilhado8"></div>
                                 <p class="tecnicas-texto">Manut. de código</p>
-                                <div class="barra-arq8">
-                                    <div class="barra8"></div>
-                                </div>
                                 <div class="pontilhado9"></div>
                                 <div class="pontilhado10"></div>
                                 <div class="pontilhado11"></div>
@@ -94,33 +70,19 @@
                         </div>
                         <div class="processos-textos">
                             <div class="tracejado"></div>
+                            <ng-container *ngFor="let valor of valorMaturidadeProcesso">
+                              <p class="tecnicas-texto">{{ valor.itemDeMaturidade.nome }}</p>
+                              <div [ngStyle]="{'width': valor.valorEsperado + '%'}" class="barra-arq1">
+                                <div class="barra1"></div>
+                              </div>
+                            </ng-container>
                             <p class="processos-texto">Exp. Equipe</p>
-                            <div class="processo-barra1-meta">
-                                <div class="processo-barra1"></div>
-                            </div>
-                            <span class="percent-metrica">80%</span>
-
                             <div class="tracejado2"></div>
                             <p class="processos-texto">Aprov Alter.</p>
-                            <div class="processo-barra2-meta">
-                                <div class="processo-barra2"></div>
-                            </div>
-                            <span class="percent-metrica2">52%</span>
-
                             <div class="tracejado3"></div>
                             <p class="processos-texto">Feedback</p>
-                            <div class="processo-barra3-meta">
-                                <div class="processo-barra3"></div>
-                            </div>
-                            <span class="percent-metrica3">93%</span>
-
                             <div class="tracejado4"></div>
                             <p class="processos-texto">Tran. Lote</p>
-                            <div class="processo-barra4-meta">
-                                <div class="processo-barra4"></div>
-                            </div>
-                            <span class="percent-metrica4">96%</span>
-
                             <div class="tracejado5"></div>
                             <div class="tracejado6"></div>
                             <div class="tracejado7"></div>
@@ -142,33 +104,19 @@
                         </div>
                         <div class="processos-textos">
                             <div class="tracejado"></div>
+                            <ng-container *ngFor="let valor of valorMaturidadeMetrica">
+                              <p class="tecnicas-texto">{{ valor.itemDeMaturidade.nome }}</p>
+                              <div [ngStyle]="{'width': valor.valorEsperado + '%'}" class="barra-arq1">
+                                <div class="barra1"></div>
+                              </div>
+                            </ng-container>
                             <p class="processos-texto">Exp. Equipe</p>
-                            <div class="processo-barra1-meta">
-                                <div class="processo-barra1"></div>
-                            </div>
-                            <span class="percent-metrica">80%</span>
-
                             <div class="tracejado2"></div>
                             <p class="processos-texto">Aprov Alter.</p>
-                            <div class="processo-barra2-meta">
-                                <div class="processo-barra2"></div>
-                            </div>
-                            <span class="percent-metrica2">52%</span>
-
                             <div class="tracejado3"></div>
                             <p class="processos-texto">Feedback</p>
-                            <div class="processo-barra3-meta">
-                                <div class="processo-barra3"></div>
-                            </div>
-                            <span class="percent-metrica3">93%</span>
-
                             <div class="tracejado4"></div>
                             <p class="processos-texto">Tran. Lote</p>
-                            <div class="processo-barra4-meta">
-                                <div class="processo-barra4"></div>
-                            </div>
-                            <span class="percent-metrica4">96%</span>
-
                             <div class="tracejado5"></div>
                             <div class="tracejado6"></div>
                             <div class="tracejado7"></div>

@@ -7,13 +7,13 @@ import {
   EsteiraDeDesenvolvimento,
   ItemDeMaturidade,
   TiposMaturidadeEnum,
+  ValorDosIndicesDeMaturidadeByEsteiraIdAndTecnica,
   ValorDosIndicesDeMaturidade,
-  ValorDosIndicesDeMaturidadeByEsteiraIdAndTipo
 } from 'src/app/types/valorMaturidade-types';
 import { EsteiraService } from 'src/services/esteira/esteira.service';
 import { EmpresaService } from 'src/services/empresa/empresa.service';
 import { MaturidadeService } from 'src/services/maturidade/maturidade.service';
-import { valorMaturidadeService } from './../../../services/valor-maturidade/valor-maturidade.service';
+import { valorMaturidadeService } from 'src/services/valor-maturidade/valor-maturidade.service';
 @Component({
   selector: 'app-tecnica',
   templateUrl: './tecnica.component.html',
@@ -25,6 +25,7 @@ export class TecnicaComponent implements OnInit {
 
   baseTabela:number[] = [0,10,20,30,40,50,60,70,80,90,100];
 
+  public valorMaturidades: ValorDosIndicesDeMaturidade[] = [];
   public currentValorMaturidade: ValorDosIndicesDeMaturidade = {
     id: 0,
     maturidade: {
@@ -54,22 +55,25 @@ export class TecnicaComponent implements OnInit {
     valorEsperado: 0,
   };
 
-  
+
 
   public empresas: Empresa[] = [];
   public maturidade: Maturidade[] = [];
   public tipo: TiposEnum[] = [];
   public tiposMaturidade: TiposMaturidadeEnum[] = [];
   public valorDosIndicesDeMaturidade: ValorDosIndicesDeMaturidade[] = [];
-  public valorDosIndicesDeMaturidadeByEsteiraIdAndTipo: ValorDosIndicesDeMaturidadeByEsteiraIdAndTipo[] =[];
+  public valorMaturidadeTecnica: ValorDosIndicesDeMaturidadeByEsteiraIdAndTecnica[] = [];
+  public valorMaturidadeProcesso:  ValorDosIndicesDeMaturidadeByEsteiraIdAndTecnica[] =[];
+  public valorMaturidadeMetrica:  ValorDosIndicesDeMaturidadeByEsteiraIdAndTecnica[] =[];
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private esteiraService: EsteiraService,
     private empresaService: EmpresaService,
-    private maturidadeService: MaturidadeService,
-    private valorMaturidadeService: valorMaturidadeService,
+    private valorMaturidadeService: valorMaturidadeService
+
+
   ) { }
 
   ngOnInit(): void {
@@ -78,7 +82,9 @@ export class TecnicaComponent implements OnInit {
       const id = params.get('esteiraId');
       if (id) {
         this.setCurrent(parseInt(id));
-        this.getValorMaturidadesByEsteiraIdAndTipo(parseInt(id));
+        this.getValorMaturidadesByEsteiraIdAndTecnica(parseInt(id));
+        this.getValorMaturidadesByEsteiraIdAndProcesso(parseInt(id));
+        this.getValorMaturidadesByEsteiraIdAndMetrica(parseInt(id));
 
       }
     });
@@ -87,31 +93,44 @@ export class TecnicaComponent implements OnInit {
 
 
   public async setCurrent(id: number) {
-    const valorMaturidade = this.valorDosIndicesDeMaturidadeByEsteiraIdAndTipo.find(
-      (valorMaturidade) => valorMaturidade.maturidade.esteira.id === id && valorMaturidade.itemDeMaturidade.tipoMaturidade === String(this.tiposMaturidade)
+    const valorMaturidade = this.valorDosIndicesDeMaturidade.find(
+      (valorMaturidade) => valorMaturidade.maturidade.esteira.id === id
     );
-    if (valorMaturidade && valorMaturidade.maturidade && valorMaturidade.maturidade.esteira && valorMaturidade.itemDeMaturidade && valorMaturidade.itemDeMaturidade.tipoMaturidade) {
+    if (valorMaturidade && valorMaturidade.maturidade && valorMaturidade.maturidade.esteira) {
       this.currentValorMaturidade = valorMaturidade;
       this.currentValorMaturidade.maturidade.esteira = valorMaturidade.maturidade.esteira;
-      this.getValorMaturidadesByEsteiraIdAndTipo(valorMaturidade.maturidade.esteira.id);
-      console.log(this.currentValorMaturidade);
+      this.getValorMaturidadesByEsteiraIdAndTecnica(valorMaturidade.maturidade.esteira.id);
+      this.getValorMaturidadesByEsteiraIdAndProcesso(valorMaturidade.maturidade.esteira.id);
+      this.getValorMaturidadesByEsteiraIdAndMetrica(valorMaturidade.maturidade.esteira.id);
     }
   }
 
 
-  getValorMaturidades(): void {
-    this.valorMaturidadeService
-      .getValorMaturidades()
-      .subscribe((response) => {
-        this.valorDosIndicesDeMaturidade = response;
-      });
+  public getValorMaturidades(): void {
+    this.valorMaturidadeService.getValorMaturidades().subscribe((response) => {
+      this.valorMaturidades = response;
+    });
   }
 
-  getValorMaturidadesByEsteiraIdAndTipo(id: number): void {
-    this.valorMaturidadeService
-      .getValorMaturidadesByEsteiraIdAndTipo(id)
-      .subscribe((data: ValorDosIndicesDeMaturidadeByEsteiraIdAndTipo) => {
-        this.currentValorMaturidade = data;
-      });
+
+  public getValorMaturidadesByEsteiraIdAndTecnica(id: number): void{
+    this.valorMaturidadeService.getValorMaturidadesByEsteiraIdAndTecnica(id).subscribe((response) =>{
+      this.valorMaturidadeTecnica = response;
+    });
   }
+
+  public getValorMaturidadesByEsteiraIdAndProcesso(id: number): void{
+    this.valorMaturidadeService.getValorMaturidadesByEsteiraIdAndProcesso(id).subscribe((response) =>{
+      this.valorMaturidadeProcesso = response;
+    });
+  }
+
+  public getValorMaturidadesByEsteiraIdAndMetrica(id: number): void{
+    this.valorMaturidadeService.getValorMaturidadesByEsteiraIdAndMetrica(id).subscribe((response) =>{
+      this.valorMaturidadeMetrica = response;
+    });
+  }
+
+
+
 }
