@@ -161,7 +161,7 @@ export class DashProjetoComponent implements OnInit {
   public tipo: TiposEnum[] = [];
   public tiposMaturidade: TiposMaturidadeEnum[] = [];
   public maturidadeByEsteiraId: MaturidadeByEsteiraId[] = [];
-  public jornada: JornadaDeTransformacao[] = [];
+  public jornadas: JornadaDeTransformacao[] = [];
   public jornadaByEsteiraId: JornadaDeTransformacaoByEsteiraId[] = [];
   public capacidade: CapacidadesRecomendadas[] = [];
   public itemDeMaturidade: ItemDeMaturidade[] = [];
@@ -191,7 +191,7 @@ export class DashProjetoComponent implements OnInit {
         this.getMaturidadeByEsteiraId(parseInt(id));
         this.getMaturidadeById(parseInt(id));
         this.getCapacidadesByEsteiraId(parseInt(id));
-        this.getCapacidadeById(parseInt(id));
+        this.getJornadaByEsteiraId(parseInt(id));
         this.getValorMaturidadesByEsteiraIdAndTecnica(parseInt(id));
         this.getValorMaturidadesByEsteiraIdAndCultura(parseInt(id));
 
@@ -209,14 +209,11 @@ export class DashProjetoComponent implements OnInit {
       this.currentEsteira = maturidade.esteira;
       this.getMaturidadeByEsteiraId(maturidade.esteira.id);
     }
-    const jornada = this.jornada.find(
-      (jornada) => jornada.maturidade.esteira.id === id
-    );
-    if (jornada && jornada.maturidade && jornada.maturidade.esteira) {
-      this.currentJornada = jornada;
-      this.currentJornada.maturidade.esteira = jornada.maturidade.esteira;
-      this.getJornadaByEsteiraId(jornada.maturidade.esteira.id);
-    }
+
+      this.getJornadaByEsteiraId(id);
+      console.log(this.currentJornada);
+
+
     const valorMaturidadeTecnica = this.valorMaturidades.find(
       (valorMaturidade) => valorMaturidade.maturidade.esteira.id === id
     );
@@ -273,13 +270,15 @@ export class DashProjetoComponent implements OnInit {
 
   getJornadaByEsteiraId(id: number): void {
     this.jornadaService.getJornadasByEsteiraId(id).subscribe((jornada) => {
-      this.jornadaByEsteiraId = jornada;
+      this.currentJornada = jornada;
+      console.log(this.currentJornada);
+
     });
   }
 
   public getJornadas(): void {
     this.jornadaService.getJornadas().subscribe((response) => {
-      this.jornada = response;
+      this.jornadas = response;
     });
   }
 

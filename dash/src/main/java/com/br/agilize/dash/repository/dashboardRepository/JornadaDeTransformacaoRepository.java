@@ -13,6 +13,6 @@ public interface JornadaDeTransformacaoRepository extends JpaRepository<JornadaD
 
     
     @Query("SELECT new map(j.saude as saude, j.metricas4 as metricas4, j.capacidadeDora as capacidadeDora, j.mediaDeJornada as mediaDeJornada) FROM JornadaDeTransformacaoEntity j JOIN j.maturidade m WHERE m.esteira.id = :esteiraId")
-    List<Map<String, Object>> findByEsteiraId(@Param("esteiraId") Long esteiraId);
+    Map<String, Object> findByEsteiraId(@Param("esteiraId") Long esteiraId);
 }
 

@@ -26,8 +26,8 @@ public class JornadaDeTransformacaoController extends ControllerCrudBase<Jornada
     }
 
     @GetMapping("/esteira/{esteiraId}")
-    public ResponseEntity<List<Map<String, Object>>> getJornadasByEsteiraId(@PathVariable Long esteiraId) {
-        List<Map<String, Object>> result = service.getJornadasByEsteiraId(esteiraId);
+    public ResponseEntity<Map<String, Object>> getJornadasByEsteiraId(@PathVariable Long esteiraId) {
+        Map<String, Object>result = service.getJornadasByEsteiraId(esteiraId);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
