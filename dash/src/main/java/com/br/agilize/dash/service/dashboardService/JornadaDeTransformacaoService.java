@@ -47,7 +47,7 @@ public class JornadaDeTransformacaoService extends ServiceCrudBase<JornadaDeTran
         this.repository.deleteById(id);
     }
 
-    public List<Map<String, Object>> getJornadasByEsteiraId(Long esteiraId) {
+    public Map<String, Object> getJornadasByEsteiraId(Long esteiraId) {
         return repository.findByEsteiraId(esteiraId);
     }
 }

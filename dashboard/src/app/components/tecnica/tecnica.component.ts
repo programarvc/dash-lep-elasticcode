@@ -1,18 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
-  EsteiraDeDesenvolvimento,
-  ValorDosIndicesDeMaturidade,
   Empresa,
+  TiposEnum,
+  Maturidade,
+  EsteiraDeDesenvolvimento,
   ItemDeMaturidade,
   TiposMaturidadeEnum,
-  Maturidade,
-  TiposEnum,
-} from 'src/app/types/indicesDeMaturidade-types';
+  ValorDosIndicesDeMaturidadeByEsteiraIdAndTecnica,
+  ValorDosIndicesDeMaturidade,
+} from 'src/app/types/valorMaturidade-types';
 import { EsteiraService } from 'src/services/esteira/esteira.service';
 import { EmpresaService } from 'src/services/empresa/empresa.service';
 import { MaturidadeService } from 'src/services/maturidade/maturidade.service';
-import { TecnicaService } from 'src/services/tecnica/tecnica.service';
+import { valorMaturidadeService } from 'src/services/valor-maturidade/valor-maturidade.service';
 @Component({
   selector: 'app-tecnica',
   templateUrl: './tecnica.component.html',
@@ -23,135 +24,113 @@ import { TecnicaService } from 'src/services/tecnica/tecnica.service';
 export class TecnicaComponent implements OnInit {
 
   baseTabela:number[] = [0,10,20,30,40,50,60,70,80,90,100];
-  
-  /*public indiceDeMaturidade: ValorDosIndicesDeMaturidade [] = [];
-  public currentIndiceDeMaturidade: ValorDosIndicesDeMaturidade = {
+
+  public valorMaturidades: ValorDosIndicesDeMaturidade[] = [];
+  public currentValorMaturidade: ValorDosIndicesDeMaturidade = {
     id: 0,
-    esteira: null,
-    valorEsperado: 0,
-    valorAtingido: 0,
-    maturidade:0,
-    itemDeMaturidade: 0,
-  };
-  public esteiras: EsteiraDeDesenvolvimento[] = [];
-  public currentEsteira: EsteiraDeDesenvolvimento = {
-    id: 0,
-    nome: '',
-    tipo: '' as TiposEnum,
-    empresa: {
+    maturidade: {
       id: 0,
-      nome: '',
-    },
-  };
-
-  public currentEmpresa: Empresa = {
-    id: 0,
-    nome: '',
-  };
-
-  public currentMaturidade: Maturidade = {
-
-    esteira: {
-      id: 0,
-      nome: '',
-      tipo: '' as TiposEnum,
-      empresa: {
+      esteira: {
         id: 0,
         nome: '',
+        tipo: '' as TiposEnum,
+        empresa: {
+          id: 0,
+          nome: '',
+        },
       },
+      data: '',
+      numero: 0,
+      leadTime: 0,
+      frequencyDeployment: 0,
+      changeFailureRate: 0,
+      timeToRecovery: 0,
     },
-    data: '',
-    numero: 0,
-    leadTime: 0,
-    frequencyDeployment: 0,
-    changeFailureRate: 0,
-    timeToRecovery: 0,
-  }*/
+    itemDeMaturidade: {
+      id: 0,
+      tipoMaturidade: '' as TiposMaturidadeEnum,
+      nome: '',
+    },
+    valorAtingido: 0,
+    valorEsperado: 0,
+  };
+
+
 
   public empresas: Empresa[] = [];
   public maturidade: Maturidade[] = [];
   public tipo: TiposEnum[] = [];
+  public tiposMaturidade: TiposMaturidadeEnum[] = [];
+  public valorDosIndicesDeMaturidade: ValorDosIndicesDeMaturidade[] = [];
+  public valorMaturidadeTecnica: ValorDosIndicesDeMaturidadeByEsteiraIdAndTecnica[] = [];
+  public valorMaturidadeProcesso:  ValorDosIndicesDeMaturidadeByEsteiraIdAndTecnica[] =[];
+  public valorMaturidadeMetrica:  ValorDosIndicesDeMaturidadeByEsteiraIdAndTecnica[] =[];
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private esteiraService: EsteiraService,
     private empresaService: EmpresaService,
-    private maturidadeService: MaturidadeService,
-    private TecnicaService: TecnicaService,
-    
+    private valorMaturidadeService: valorMaturidadeService
+
+
   ) { }
 
   ngOnInit(): void {
-    /*this.getMaturidade();
+    this.getValorMaturidades();
     this.route.paramMap.subscribe((params) => {
-      const id = params.get('maturidade_id');
+      const id = params.get('esteiraId');
       if (id) {
         this.setCurrent(parseInt(id));
-        this.getTecnicaByEsteiraId(parseInt(id));
-        this.getMaturidadeById(parseInt(id));
-        this.getEsteiraById(parseInt(id));
+        this.getValorMaturidadesByEsteiraIdAndTecnica(parseInt(id));
+        this.getValorMaturidadesByEsteiraIdAndProcesso(parseInt(id));
+        this.getValorMaturidadesByEsteiraIdAndMetrica(parseInt(id));
+
       }
-    })*/
+    });
   }
 
 
 
-  /*public async setCurrent(id: number) {
-    const maturidade= this.maturidade.find(
-      (maturidade) => maturidade.esteira.id === id
+  public async setCurrent(id: number) {
+    const valorMaturidade = this.valorDosIndicesDeMaturidade.find(
+      (valorMaturidade) => valorMaturidade.maturidade.esteira.id === id
     );
-    if (maturidade) {
-      this.currentMaturidade = maturidade;
-      this.currentIndices = maturidade.esteira;
-
-      console.log(this.currentMaturidade);
-      console.log(this.currentIndices);
+    if (valorMaturidade && valorMaturidade.maturidade && valorMaturidade.maturidade.esteira) {
+      this.currentValorMaturidade = valorMaturidade;
+      this.currentValorMaturidade.maturidade.esteira = valorMaturidade.maturidade.esteira;
+      this.getValorMaturidadesByEsteiraIdAndTecnica(valorMaturidade.maturidade.esteira.id);
+      this.getValorMaturidadesByEsteiraIdAndProcesso(valorMaturidade.maturidade.esteira.id);
+      this.getValorMaturidadesByEsteiraIdAndMetrica(valorMaturidade.maturidade.esteira.id);
     }
-  }*/
+  }
 
 
-
-  /*public async getMaturidade() {
-    this.esteiraService.getEsteiras().subscribe((response) => {
-      this.indices = response;
-      const id = this.route.snapshot.paramMap.get('esteiraId');
-      if (id) {
-        this.setCurrent(parseInt(id));
-      } else {
-        if (this.indices.length > 0) {
-          this.setCurrent(this.indices[0].id);
-          this.router.navigate([`dashboard/${this.indices[0].id}`]);
-        }
-      }
+  public getValorMaturidades(): void {
+    this.valorMaturidadeService.getValorMaturidades().subscribe((response) => {
+      this.valorMaturidades = response;
     });
-  }*/
+  }
 
 
-  /*getEsteiras(): void {
-    this.esteiraService.getEsteiras().subscribe((esteiras) => {
-      this.esteiras = esteiras;
+  public getValorMaturidadesByEsteiraIdAndTecnica(id: number): void{
+    this.valorMaturidadeService.getValorMaturidadesByEsteiraIdAndTecnica(id).subscribe((response) =>{
+      this.valorMaturidadeTecnica = response;
     });
-  }*/
+  }
 
-  /*getEsteiraById(id: number): void {
-    this.esteiraService.getEsteiraById(id).subscribe((esteira) => {
-      this.esteiras = esteira;
+  public getValorMaturidadesByEsteiraIdAndProcesso(id: number): void{
+    this.valorMaturidadeService.getValorMaturidadesByEsteiraIdAndProcesso(id).subscribe((response) =>{
+      this.valorMaturidadeProcesso = response;
     });
-  }*/
+  }
 
-
-  /*getTecnicaByEsteiraId(id: number): void {
-    this.TecnicaService.getTecnicaByEsteiraId(id).subscribe((maturidade) => {
-      this.valorDosIndicesDeMaturidadeId = maturidade;
+  public getValorMaturidadesByEsteiraIdAndMetrica(id: number): void{
+    this.valorMaturidadeService.getValorMaturidadesByEsteiraIdAndMetrica(id).subscribe((response) =>{
+      this.valorMaturidadeMetrica = response;
     });
-  }*/
+  }
 
 
-  /*getMaturidadeById(id: number): void {
-    this.maturidadeService.getMaturidadeById(id).subscribe((data: Maturidade) => {
-      this.currentMaturidade = data;
-    });
-  }*/
 
 }

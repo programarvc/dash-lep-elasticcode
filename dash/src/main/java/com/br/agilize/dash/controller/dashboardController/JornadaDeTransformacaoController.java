@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.*;
 import com.br.agilize.dash.controller.ControllerCrudBase;
 import com.br.agilize.dash.model.dto.dashboardDto.JornadaDeTransformacaoDto;
-import com.br.agilize.dash.model.entity.dashboardEntity.JornadaDeTransformacaoEntity;
 import com.br.agilize.dash.service.dashboardService.JornadaDeTransformacaoService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -27,8 +26,8 @@ public class JornadaDeTransformacaoController extends ControllerCrudBase<Jornada
     }
 
     @GetMapping("/esteira/{esteiraId}")
-    public ResponseEntity<List<Map<String, Object>>> getJornadasByEsteiraId(@PathVariable Long esteiraId) {
-        List<Map<String, Object>> result = service.getJornadasByEsteiraId(esteiraId);
+    public ResponseEntity<Map<String, Object>> getJornadasByEsteiraId(@PathVariable Long esteiraId) {
+        Map<String, Object>result = service.getJornadasByEsteiraId(esteiraId);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

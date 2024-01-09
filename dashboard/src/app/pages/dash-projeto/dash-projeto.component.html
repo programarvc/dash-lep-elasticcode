@@ -142,28 +142,22 @@
           <div class="ellipse-cinza"></div>
           <p class="metricas-texto-esperado">Esperado</p>
         </div>
-        
-        <div class="culturas-textos"> 
+
+        <div class="culturas-textos">
           <div class="pontilhado-cultura"></div>
-          <p class="culturas-texto">Exp. Equipe</p>
-          <div class="barra-arq1">
-            <div class="barra1"></div>
-          </div>
+          <p class="culturas-texto1">Satisfação no Trabalho</p>
+          <p class="culturas-texto2">Cultura de Westrum</p>
+          <p class="culturas-texto3">Cultura de Aprendizado</p>
+          <p class="culturas-texto4">Liderança Transformacional</p>
+
+          <ng-container *ngFor="let item of valorMaturidadeCultura; let i = index">
+            <div class="cultura-barra{{i+1}}-meta" [ngStyle]="{'width': item.valorEsperado * 306 + '%'}">
+              <div class="cultura-barra{{i+1}}" [ngStyle]="{'width': item.valorAtingido * 100 + '%'}"></div>
+            </div>
+          </ng-container>
           <div class="pontilhado-cultura2"></div>
-          <p class="culturas-texto">Aprov Alter.</p>
-          <div class="barra-arq2">
-            <div class="barra2"></div>
-          </div>
           <div class="pontilhado-cultura3"></div>
-          <p class="culturas-texto">Feedback</p>
-          <div class="barra-arq3">
-            <div class="barra3"></div>
-          </div>
           <div class="pontilhado-cultura4"></div>
-          <p class="culturas-texto">Tran. Lote</p>
-          <div class="barra-arq4">
-            <div class="barra4"></div>
-          </div>
           <div class="pontilhado-cultura5"></div>
           <div class="pontilhado-cultura6"></div>
           <div class="pontilhado-cultura7"></div>
@@ -172,7 +166,7 @@
           <div class="pontilhado-cultura10"></div>
           <div class="pontilhado-cultura11"></div>
         </div>
-        
+
         <div class="numeros">
           <p class="tecnicas-num">0</p>
           <p class="tecnicas-num">10</p>

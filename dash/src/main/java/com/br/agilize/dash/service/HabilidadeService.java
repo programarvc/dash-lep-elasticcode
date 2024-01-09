@@ -10,7 +10,6 @@ import com.br.agilize.dash.model.dto.HabilidadeColaboradorDto;
 import com.br.agilize.dash.model.dto.HabilidadeDto;
 import com.br.agilize.dash.model.entity.ColaboradorEntity;
 
-import com.br.agilize.dash.model.entity.EmpresaColaboradorEntity;
 import com.br.agilize.dash.model.entity.HabilidadeColaboradorEntity;
 import com.br.agilize.dash.model.entity.HabilidadeEntity;
 import com.br.agilize.dash.repository.HabilidadeColaboradorRepository;
