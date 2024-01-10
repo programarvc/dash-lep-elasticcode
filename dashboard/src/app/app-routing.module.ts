@@ -3,14 +3,15 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { ColaboradorComponent } from './pages/colaborador/colaborador.component';
 import { DashProjetoComponent } from './pages/dash-projeto/dash-projeto.component';
-import { TecnicaComponent } from './components/tecnica/tecnica.component';
+import { LoginComponent } from './pages/login/login.component';
+import { AuthGuard } from './auth.guard';
+
 
 const routes: Routes = [
+  { path: '', component: LoginComponent },
   { path: 'dash-projeto', title: 'Dashboard Projeto', component: DashProjetoComponent},
-  { path: 'tecnica', title: 'Tecnica', component: TecnicaComponent},
   { path: 'dashboard/:esteiraId', title: 'Dashboard Projeto', component: DashProjetoComponent},
   { path: ':colaboradorId', component: ColaboradorComponent },
-  { path: '', component: ColaboradorComponent },
 ];
 
 @NgModule({

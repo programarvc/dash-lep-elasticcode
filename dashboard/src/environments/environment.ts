@@ -7,6 +7,12 @@ export const environment = {
   api: '/api'
 };
 
+export const awsAuthConfig = {
+  production: false,
+  userPoolId: 'us-west-2_XeTLAls5y',
+  userPoolWebClientId: '6f7m3psici5vpeo66am7ujh6pg',
+};
+
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
