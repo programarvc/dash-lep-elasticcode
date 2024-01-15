@@ -1,17 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './auth.guard';
 
 import { ColaboradorComponent } from './pages/colaborador/colaborador.component';
 import { DashProjetoComponent } from './pages/dash-projeto/dash-projeto.component';
-import { LoginComponent } from './pages/login/login.component';
-import { AuthGuard } from './auth.guard';
+import { SignInComponent } from './pages/sign-in/sign-in.component';
+import { ConfirmSignupComponent } from './pages/confirm-signup/confirm-signup.component';
+
 
 
 const routes: Routes = [
-  { path: '', component: LoginComponent },
-  { path: 'dash-projeto', title: 'Dashboard Projeto', component: DashProjetoComponent},
-  { path: 'dashboard/:esteiraId', title: 'Dashboard Projeto', component: DashProjetoComponent},
-  { path: ':colaboradorId', component: ColaboradorComponent },
+  { path: '', redirectTo: 'login', pathMatch: 'full'},
+  { path: 'login', component: SignInComponent },
+  { path: 'signup', component: ConfirmSignupComponent },
+  { path: 'dashboard/:esteiraId', title: 'Dashboard Projeto', component: DashProjetoComponent, canActivate: [AuthGuard]},
+  { path: ':colaboradorId', component: ColaboradorComponent, canActivate: [AuthGuard] },
+  { path: '**', redirectTo: 'login'}
 ];
 
 @NgModule({

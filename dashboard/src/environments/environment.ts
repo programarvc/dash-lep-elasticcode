@@ -7,7 +7,7 @@ export const environment = {
   api: '/api'
 };
 
-export const awsAuthConfig = {
+export const cognito = {
   production: false,
   userPoolId: 'us-west-2_XeTLAls5y',
   userPoolWebClientId: '6f7m3psici5vpeo66am7ujh6pg',
