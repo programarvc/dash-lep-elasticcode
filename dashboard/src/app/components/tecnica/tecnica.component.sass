@@ -1,5 +1,3 @@
-.bloco-geral
-    margin-top: 30px
 
 
 .bloco-tecnica
@@ -8,7 +6,9 @@
     box-shadow: 0px 3.352px 3.352px 0px rgba(0, 0, 0, 0.05)
     width: 100%
     height: 500px
-    display:flex
+    display: flex
+    flex-direction: column
+    margin-top: 30px
 
 .titulo-tecnica
     color: #141414
@@ -19,179 +19,122 @@
     line-height: normal
     padding: 35px 39px
 
-.metricas
-    position: relative
-    bottom:55px
+.tituloLegenda
+    display: flex
+    width: 100%
 
+.titulo-tecnica1
+    width: 30%
 
-.tecnicas-texto1
+.tecnicas-texto
     color: #141414
     font-family: Poppins
     font-size: 14px
     font-weight: 400
-    margin-bottom:10px
-    position: relative
-    bottom: 150px
-
-.tecnicas-texto2
-    color: #141414
-    font-family: Poppins
-    font-size: 14px
-    font-weight: 400
-    margin-bottom:10px
-    position: relative
-    bottom: 147px
-
-.tecnicas-texto3
-    color: #141414
-    font-family: Poppins
-    font-size: 14px
-    font-weight: 400
-    margin-bottom:10px
-    position: relative
-    bottom: 139px
-
-.tecnicas-texto4
-    color: #141414
-    font-family: Poppins
-    font-size: 14px
-    font-weight: 400
-    margin-bottom:10px
-    position: relative
-    bottom: 130px
-
-.tecnicas-texto5
-    color: #141414
-    font-family: Poppins
-    font-size: 14px
-    font-weight: 400
-    margin-bottom:10px
-    position: relative
-    bottom: 116px
-
-.tecnicas-texto6
-    color: #141414
-    font-family: Poppins
-    font-size: 14px
-    font-weight: 400
-    margin-bottom:10px
-    position: relative
-    bottom: 104px
-
-.tecnicas-texto7
-    color: #141414
-    font-family: Poppins
-    font-size: 14px
-    font-weight: 400
-    margin-bottom:10px
-    position: relative
-    bottom: 95px
-
-.tecnicas-texto8
-    color: #141414
-    font-family: Poppins
-    font-size: 14px
-    font-weight: 400
-    margin-bottom:10px
-    position: relative
-    bottom: 83px
-
+    margin-bottom: 17px
 
 .tecnicas-textos
     text-align: right
-    max-width: 260px
-    position: relative
-    bottom:100px
-    right:70px
+    width: 25%
+
+.barras
+    padding: 0 15px
+    z-index: 2
+    position: absolute
+    top: 0
+    width: 100%
+
+.pontilhados2
+    display: flex
+
+.processos-geral
+    width: 100%
+    display: flex
+    flex-direction: row
+
+.pontilhados
+    margin-left: 15px
+
 
 
 .pontilhado
-    position: absolute
+
+    height: 280px
     z-index: 0
-    border-right: 1px dashed #d2d2d2
-    height: 310px
-    left: 275px
-    top:20px
+    border: 1px dashed #d2d2d2
+    width: 50px
+    border-top-color: transparent
+    border-bottom-color: transparent
+
+
+
 
 .pontilhado2
-    position: absolute
+
     z-index: 0
     border-right: 1px dashed #d2d2d2
-    height: 310px
-    left: 327px
-    top:20px
+
 
 .pontilhado3
-    position: absolute
+
     z-index: 0
     border-right: 1px dashed #d2d2d2
-    height: 310px
-    left: 379px
-    top:20px
+
+
 
 .pontilhado4
-    position: absolute
+
     z-index: 0
     border-right: 1px dashed #d2d2d2
-    height: 310px
-    left: 431px
-    top:20px
+
+
 
 .pontilhado5
-    position: absolute
+
     z-index: 0
     border-right: 1px dashed #d2d2d2
-    height: 310px
-    left: 483px
-    top:20px
+
 
 .pontilhado6
-    position: absolute
+
     z-index: 0
     border-right: 1px dashed #d2d2d2
-    height: 310px
-    left: 535px
-    top:20px
+
 
 .pontilhado7
-    position: absolute
+
     z-index: 0
     border-right: 1px dashed #d2d2d2
-    height: 310px
-    left: 587px
-    top:20px
+
+
 
 .pontilhado8
-    position: absolute
+
     z-index: 0
     border-right: 1px dashed #d2d2d2
-    height: 310px
-    left: 639px
-    top:20px
+
+
 
 .pontilhado9
-    position: absolute
+
     z-index: 0
     border-right: 1px dashed #d2d2d2
-    height: 310px
-    left: 691px
-    top:20px
+
+
 
 .pontilhado10
-    position: absolute
+
     z-index: 0
     border-right: 1px dashed #d2d2d2
-    height: 310px
-    left: 743px
-    top:20px
+
+
 
 .pontilhado11
-    position: absolute
+
     z-index: 0
     border-right: 1px dashed #d2d2d2
-    height: 325px
-    left: 795px
-    top:5px
+
+
 
 .texto-boostrap
     text-align: right
@@ -202,27 +145,31 @@
     height: 15px
     border-radius:50%
     background-color: #6A5FFF
-    position: relative
-    left: 373px
+    margin-right: 20px
 
+.metricas
+    display: flex
+    width: 70%
+    justify-content: center
+    align-items: center
+
+
+    
 .metricas-texto
     color: #141414
     font-family: Poppins
     font-size: 14px
     font-style: normal
     font-weight: 400
-    position: relative
-    left: 410px
-    bottom:18px
+    margin-bottom: 0px
+    margin-right: 40px
 
 .ellipse-cinza
     width: 15px
     height: 15px
     border-radius:50%
     background-color: #D9D9D9
-    position: relative
-    left: 493px
-    bottom:50px
+    margin-right: 20px
 
 .metricas-texto-esperado
     color: #141414
@@ -230,100 +177,78 @@
     font-size: 14px
     font-style: normal
     font-weight: 400
+    margin-bottom: 0px
+    margin-right: 40px
+
+.processo
     position: relative
-    left: 530px
-    bottom:68px
 
 .numeros
     display: flex
     flex-direction: row
-    position: relative
-    bottom:200px
-    left:181px
+    z-index: 1
 
 .barra-arq1
     height: 21px
     border-radius: 100px
     background: #ABABAB
-    position: relative
-    left:275px
-    top: 17px
-    z-index:1
+    margin-bottom: 17px
+
+
+    
 
 .barra-arq2
     height: 21px
     border-radius: 100px
     background: #ABABAB
-    position: relative
-    left:275px
-    top: 32px
-    z-index:1
+    margin-bottom: 17px
+
 
 .barra-arq3
     height: 21px
     border-radius: 100px
     background: #ABABAB
-    position: relative
-    left:275px
-    top: 50px
-    z-index:1
+    margin-bottom: 17px
+
 
 .barra-arq4
     height: 21px
     border-radius: 100px
     background: #ABABAB
-    position: relative
-    left:275px
-    top: 70px
-    z-index:1
-
+    margin-bottom: 17px
+    z-index: 1
 .barra-arq5
     height: 21px
     border-radius: 100px
     background: #ABABAB
-    position: relative
-    left:275px
-    top: 91px
-    z-index:1
-
+    margin-bottom: 17px
+    z-index: 1
 .barra-arq6
     height: 21px
     border-radius: 100px
     background: #ABABAB
-    position: relative
-    left:275px
-    top: 115px
-    z-index:1
+    margin-bottom: 17px
+    z-index: 1
 
 .barra-arq7
     height: 21px
     border-radius: 100px
     background: #ABABAB
-    position: relative
-    left:275px
-    top: 135px
-    z-index:1
-
+    margin-bottom: 17px
+    z-index: 1
 .barra-arq8
     height: 21px
     border-radius: 100px
     background: #ABABAB
-    position: relative
-    left:275px
-    top: 155px
-    z-index:1
-
+    margin-bottom: 17px
+    z-index: 1
 .barra1
     height: 21px
     flex-shrink: 0
     border-radius: 100px
     background: #6A5FFF
+    z-index: 1
 
-.barra1-1
-    height: 21px
-    flex-shrink: 0
-    border-radius: 100px
-    background: #6A5FFF
 
 .barra2
     width: 233px
@@ -331,13 +256,7 @@
     flex-shrink: 0
     border-radius: 100px
     background: #6A5FFF
-
-.barra2-2
-    width: 233px
-    height: 21px
-    flex-shrink: 0
-    border-radius: 100px
-    background: #6A5FFF
+    z-index: 1
 
 
 .barra3
@@ -346,42 +265,42 @@
     flex-shrink: 0
     border-radius: 100px
     background: #6A5FFF
-
+    z-index: 1
 .barra4
     width: 271px
     height: 21px
     flex-shrink: 0
     border-radius: 100px
     background: #6A5FFF
-
+    z-index: 1
 .barra5
     width: 406px
     height: 21px
     flex-shrink: 0
     border-radius: 100px
     background: #6A5FFF
-
+    z-index: 1
 .barra6
     width: 102px
     height: 21px
     flex-shrink: 0
     border-radius: 100px
     background: #6A5FFF
-
+    z-index: 1
 .barra7
     width: 260px
     height: 21px
     flex-shrink: 0
     border-radius: 100px
     background: #6A5FFF
-
+    z-index: 1
 .barra8
     width: 108px
     height: 21px
     flex-shrink: 0
     border-radius: 100px
     background: #6A5FFF
-
+    z-index: 1
 .tecnicas-num
     margin:18px
     color: #141414
@@ -391,6 +310,7 @@
     font-style: normal
     font-weight: 400
     line-height: normal
+    z-index: 1
 
 
 .progress-bar-content
