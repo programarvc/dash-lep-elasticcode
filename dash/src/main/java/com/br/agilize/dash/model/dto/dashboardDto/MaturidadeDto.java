@@ -1,6 +1,6 @@
 package com.br.agilize.dash.model.dto.dashboardDto;
 
-import java.time.LocalDate;
+import java.time.*;
 
 import lombok.Data;
 
@@ -11,7 +11,7 @@ public class MaturidadeDto {
 
     private EsteiraDeDesenvolvimentoDto esteira;
 
-    private LocalDate data;
+    private LocalDateTime dataHora;
 
     private Integer numero;
 
@@ -22,4 +22,12 @@ public class MaturidadeDto {
     private Double ChangeFailureRate;
 
     private Double timeToRecovery;
+
+    private Double mediaDeJornada;
+
+    private Double saude;
+
+    private Double metricas4;
+
+    private Double capacidadeDora;
 }
