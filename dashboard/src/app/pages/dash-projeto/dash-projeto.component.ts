@@ -146,12 +146,6 @@ export class DashProjetoComponent implements OnInit {
   public tipo: TiposEnum[] = [];
   public tiposMaturidade: TiposMaturidadeEnum[] = [];
   public maturidadeByEsteiraId: MaturidadeByEsteiraId[] = [];
-<<<<<<< HEAD
-  public jornadas: JornadaDeTransformacao[] = [];
-  public jornadaByEsteiraId: JornadaDeTransformacaoByEsteiraId[] = [];
-  public capacidade: CapacidadesRecomendadas[] = [];
-=======
->>>>>>> feature/maturidadeTecnica
   public itemDeMaturidade: ItemDeMaturidade[] = [];
   public valorMaturidadeTecnica: ValorDosIndicesDeMaturidadeByEsteiraIdAndTecnica[] = [];
   public valorMaturidadeCultura: ValorDosIndicesDeMaturidadeByEsteiraIdAndCultura[] = [];
@@ -174,15 +168,8 @@ export class DashProjetoComponent implements OnInit {
       const id = params.get('esteiraId');
       if (id && !isNaN(Number(id))) {
         this.setCurrent(parseInt(id));
-<<<<<<< HEAD
-        this.getMaturidadeByEsteiraId(parseInt(id));
-        this.getMaturidadeById(parseInt(id));
-        this.getCapacidadesByEsteiraId(parseInt(id));
-        this.getJornadaByEsteiraId(parseInt(id));
-=======
         this.getLatestMaturidadeByEsteiraId(parseInt(id));
         this.getLatestCapacidadesByEsteiraId(parseInt(id));
->>>>>>> feature/maturidadeTecnica
         this.getValorMaturidadesByEsteiraIdAndTecnica(parseInt(id));
         this.getValorMaturidadesByEsteiraIdAndCultura(parseInt(id));
 
@@ -191,26 +178,10 @@ export class DashProjetoComponent implements OnInit {
     });
   }
 
-<<<<<<< HEAD
-  public async setCurrent(id: number) {
-    const maturidade = this.maturidade.find(
-      (maturidade) => maturidade.esteira.id === id
-    );
-    if (maturidade) {
-      this.currentMaturidade = maturidade;
-      this.currentEsteira = maturidade.esteira;
-      this.getMaturidadeByEsteiraId(maturidade.esteira.id);
-    }
-
-      this.getJornadaByEsteiraId(id);
-      console.log(this.currentJornada);
-
-=======
 
 public async setCurrent(id: number) {
   this.getLatestMaturidadeByEsteiraId(id);
   this.getLatestCapacidadesByEsteiraId(id);
->>>>>>> feature/maturidadeTecnica
 
     const valorMaturidadeTecnica = this.valorMaturidades.find(
       (valorMaturidade) => valorMaturidade.maturidade.esteira.id === id
@@ -256,31 +227,6 @@ public async setCurrent(id: number) {
       });
   }
 
-<<<<<<< HEAD
-  getMaturidadeById(id: number): void {
-    this.maturidadeService
-      .getMaturidadeById(id)
-      .subscribe((data: Maturidade) => {
-        this.currentMaturidade = data;
-      });
-  }
-
-  getJornadaByEsteiraId(id: number): void {
-    this.jornadaService.getJornadasByEsteiraId(id).subscribe((jornada) => {
-      this.currentJornada = jornada;
-      console.log(this.currentJornada);
-
-    });
-  }
-
-  public getJornadas(): void {
-    this.jornadaService.getJornadas().subscribe((response) => {
-      this.jornadas = response;
-    });
-  }
-
-=======
->>>>>>> feature/maturidadeTecnica
   public getCapacidades(): void {
     this.capacidadeService.getCapacidades().subscribe((response) => {
       this.capacidade = response;
