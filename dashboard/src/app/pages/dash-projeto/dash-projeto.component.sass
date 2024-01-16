@@ -256,7 +256,7 @@ body
     display: flex
     flex-direction: column
     gap: 10px
-    width: 40%
+    width: 50%
 
 .espaco-capacidades-recomendadas h3
     bottom: 25px
@@ -302,19 +302,12 @@ body
     border-radius: 15px
     background: #F6F8FF
     box-shadow: 0px 3.352px 3.352px 0px rgba(0, 0, 0, 0.05)
-    height: 350px
-    margin: 30px 31px 30px 0
-    padding: 0 50px 55px 35px
+    height: 290px
+    width: 100%
+    display: flex
+    flex-direction: column
+    margin-top: 30px
 
-
-.titulo-cultura
-    color: #141414
-    font-family: Poppins
-    font-size: 18px
-    font-style: normal
-    font-weight: 600
-    line-height: normal
-    padding: 35px 39px
 
 .metricas-maturidade
     position: relative
@@ -364,13 +357,6 @@ body
     right: 70px
 
 
-.pontilhado-cultura
-    position: absolute
-    z-index: 0
-    border-right: 1px dashed #d2d2d2
-    height: 139px
-    left: 275px
-    top: 20px
 
 .pontilhado-cultura2
     position: absolute
@@ -461,79 +447,64 @@ body
     height: 15px
     border-radius:50%
     background-color: #6A5FFF
-    position: relative
-    left: 373px
+    margin-right: 20px
 
-.metricas-texto
+
+.metricas-texto-cultura
     color: #141414
     font-family: Poppins
     font-size: 14px
     font-style: normal
     font-weight: 400
-    position: relative
-    left: 410px
-    bottom:18px
+    margin-bottom: 0px
+    margin-right: 40px
 
 .ellipse-cinza
     width: 15px
     height: 15px
     border-radius:50%
     background-color: #D9D9D9
-    position: relative
-    left: 493px
-    bottom:50px
+    margin-right: 20px
 
-.metricas-texto-esperado
+.metricas-texto-esperado-cultura
     color: #141414
     font-family: Poppins
     font-size: 14px
     font-style: normal
     font-weight: 400
-    position: relative
-    left: 530px
-    bottom:68px
+    margin-bottom: 0px
+    margin-right: 40px
 
-.numeros
+.numeros-cultura
     display: flex
     flex-direction: row
-    position: relative
-    bottom: 130px
-    left: 171px
+    z-index: 1
+    margin-left: 19px
 
 .cultura-barra1-meta
     height: 21px
     border-radius: 100px
     background: #ABABAB
-    position: relative
-    left:275px
-    bottom: 90px
-    z-index:1
+    margin-bottom: 17px
 
 .cultura-barra2-meta
     height: 21px
     border-radius: 100px
     background: #ABABAB
-    position: relative
-    left: 275px
-    bottom: 70px
-    z-index: 1
+    margin-bottom: 17px
 
 .cultura-barra3-meta
     height: 21px
+    height: 21px
     border-radius: 100px
     background: #ABABAB
-    position: relative
-    left:275px
-    bottom: 47px
-    z-index:1
+    margin-bottom: 17px
 
 .cultura-barra4-meta
     height: 21px
     border-radius: 100px
     background: #ABABAB
-    position: relative
-    left: 275px
-    bottom: 23px
+    margin-bottom: 17px
     z-index: 1
 
 .cultura-barra1
@@ -541,13 +512,15 @@ body
     flex-shrink: 0
     border-radius: 100px
     background: #6A5FFF
+    z-index: 1
 
 .cultura-barra2
-    width: 400px
+    width: 233px
     height: 21px
     flex-shrink: 0
     border-radius: 100px
     background: #6A5FFF
+    z-index: 1
 
 .cultura-barra3
     width: 136px
@@ -555,20 +528,34 @@ body
     flex-shrink: 0
     border-radius: 100px
     background: #6A5FFF
+    z-index: 1
 
 .cultura-barra4
-    width: 505px
+    width: 271px
     height: 21px
     flex-shrink: 0
     border-radius: 100px
     background: #6A5FFF
+    z-index: 1
 
 .tecnicas-num
-    margin: 30px
+    margin: 21px
+    margin-top: 10px
+    color: #141414
+    text-align: center
+    font-family: Poppins
+    font-size: 14px
     font-style: normal
     font-weight: 400
     line-height: normal
+    z-index: 1
 
+.barras
+    padding: 0 40px 0 15px
+    z-index: 2
+    position: absolute
+    top: 0
+    width: 100%
 
 .progress-bar-content
     position: relative
@@ -616,3 +603,64 @@ body
     font-size: 12px
     font-weight: 700
     color: #fff
+
+.cultura-geral
+    width: 100%
+    display: flex
+    flex-direction: row
+    overflow: auto
+
+.cultura-geral::-webkit-scrollbar
+    display: none
+
+.cultura-textos    
+    text-align: right
+    width: 25%
+
+.cultura-texto
+    color: #141414
+    font-family: Poppins
+    font-size: 14px
+    font-weight: 400
+    margin-bottom: 17px
+
+.tituloLegendaCultura
+    display: flex
+    width: 100%
+
+.tituloLegendaCultura1
+    width: 30%
+
+.titulo-cultura
+    color: #141414
+    font-family: Poppins
+    font-size: 18px
+    font-style: normal
+    font-weight: 600
+    line-height: normal
+    padding: 35px 39px
+
+.metricas-cultura
+    display: flex
+    width: 70%
+    justify-content: center
+    align-items: center
+
+.processo-cultura
+    position: relative
+
+.pontilhados-cultura
+    margin-left: 15px    
+
+.pontilhados-cultura2
+    display: flex
+    margin-left: 20px     
+
+
+.pontilhado-cultura
+    height: 150px
+    z-index: 0
+    border: 1px dashed #d2d2d2
+    width: 60px
+    border-top-color: transparent
+    border-bottom-color: transparent

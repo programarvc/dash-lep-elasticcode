@@ -44,17 +44,41 @@
     top: 0
     width: 100%
 
+.barras-metricas
+    padding: 0 15px
+    z-index: 2
+    position: absolute
+    top: 0
+    width: 100%
+
 .pontilhados2
     display: flex
+    
 
 .processos-geral
     width: 100%
     display: flex
     flex-direction: row
+    margin-top: 15px
+    overflow: auto
+
+.processos-geral::-webkit-scrollbar
+    display: none
+
+.metricas-geral
+    width: 100%
+    display: flex
+    flex-direction: row
+    margin-top: 8px
+    overflow: auto
+
+.metricas-geral::-webkit-scrollbar
+    display: none
+
 
 .pontilhados
     margin-left: 15px
-
+    
 
 
 .pontilhado
@@ -301,6 +325,7 @@
     border-radius: 100px
     background: #6A5FFF
     z-index: 1
+
 .tecnicas-num
     margin:18px
     color: #141414
@@ -412,68 +437,68 @@
 
 .processos-textos
     text-align: right
-    position: relative
-    bottom: 0
-    right: 0
-    overflow: auto
+    width: 35%
+
+.metricas-textos1
+    text-align: right
+    width: 50%
+    color: #000
+    font-family: Poppins
+    font-size: 14px
+    font-style: normal
+    font-weight: 400
+    line-height: normal
 
 .processos-textos::-webkit-scrollbar
     display: none
 
-.processos-texto1
+.processos-texto
     color: #141414
     font-family: Poppins
     font-size: 14px
     font-weight: 400
-    margin-bottom:10px
-    position: relative
-    bottom: 61px
-    right: 253px
+    margin-bottom: 10px
 
-.processos-texto2
+.processos-texto-metricas
     color: #141414
     font-family: Poppins
     font-size: 14px
     font-weight: 400
-    margin-bottom:10px
-    position: relative
-    bottom: 52px
-    right: 253px
+    margin-bottom: 10px
 
-.processos-texto3
-    color: #141414
-    font-family: Poppins
-    font-size: 14px
-    font-weight: 400
-    margin-bottom:10px
-    position: relative
-    bottom: 46px
-    right: 253px
 
-.processos-texto4
-    color: #141414
-    font-family: Poppins
-    font-size: 14px
-    font-weight: 400
-    margin-bottom:10px
-    position: relative
-    bottom: 41px
-    right: 253px
+.pontilhados-processo
+    height: 90%
+
+.pontilhados-processo2
+   display: flex 
+   height: 100%
+
+.pontilhados-metrica
+    margin-left: 15px
+    height: 100%
+
+.pontilhados-metrica2
+    display: flex 
+    height: 100%
 
 .processo-barra1-meta
     height: 15px
     border-radius: 100px
     background: #ABABAB
-    position: relative
-    left: 100px
-    top: 3px
-    z-index: 1
+    margin-bottom: 17px
+
+.quadro-metricas-textos
+    text-align: right
+    width: 30%
+
 
 .processo-barra1
     height: 15px
     flex-shrink: 0
     border-radius: 100px
     background: #5182FF
+    z-index: 1
 
 .percent-metrica
     color: #000
@@ -491,16 +516,14 @@
     height: 15px
     border-radius: 100px
     background: #ABABAB
-    position: relative
-    left: 100px
-    top: 27px
-    z-index: 1
+    margin-bottom: 17px
 
 .processo-barra2
     height: 15px
     flex-shrink: 0
     border-radius: 100px
     background: #5182FF
+    z-index: 1
 
 .percent-metrica2
     color: #000
@@ -518,16 +541,14 @@
     height: 15px
     border-radius: 100px
     background: #ABABAB
-    position: relative
-    left: 100px
-    top: 50px
-    z-index: 1
+    margin-bottom: 17px
 
 .processo-barra3
     height: 15px
     flex-shrink: 0
     border-radius: 100px
     background: #5182FF
+    z-index: 1
 
 .percent-metrica3
     color: #000
@@ -545,16 +566,14 @@
     height: 15px
     border-radius: 100px
     background: #ABABAB
-    position: relative
-    left: 100px
-    top: 70px
-    z-index: 1
+    margin-bottom: 17px
 
 .processo-barra4
     height: 15px
     flex-shrink: 0
     border-radius: 100px
     background: #5182FF
+    
 
 .percent-metrica4
     color: #000
@@ -568,89 +587,100 @@
     left: 320px
     bottom: 8px
 
+.processo-progresso
+    position: relative
+    width: 100%
+    margin-left: 25px
+
+.metrica-progresso
+    position: relative
+    width: 70%
+
+
+
+
 .tracejado
-    position: absolute
+    border: 1px dashed #d2d2d2
     z-index: 0
-    border-right: 1px dashed #d2d2d2
-    height: 136px
-    left: 100px
+    height: 120px
+    width: 30px
+    border-top-color: transparent
+    border-bottom-color: transparent
+
+.barras-processo
+    z-index: 2
+    position: absolute
     top: 0
+    width: 100%
+
+
 
 .tracejado2
-    position: absolute
-    z-index: 0
-    border-right: 1px dashed #d2d2d2
+
+    border: 1px dashed #d2d2d2
     height: 136px
     left: 120px
     top: 0
 
 .tracejado3
-    position: absolute
-    z-index: 0
+
+
     border-right: 1px dashed #d2d2d2
     height: 136px
     left: 140px
     top: 0
 
 .tracejado4
-    position: absolute
-    z-index: 0
+
     border-right: 1px dashed #d2d2d2
     height: 136px
     left: 160px
     top: 0
 
 .tracejado5
-    position: absolute
-    z-index: 0
+
     border-right: 1px dashed #d2d2d2
     height: 136px
     left: 180px
     top: 0
 
 .tracejado6
-    position: absolute
-    z-index: 0
+
     border-right: 1px dashed #d2d2d2
     height: 136px
     left: 200px
     top: 0
 
 .tracejado7
-    position: absolute
-    z-index: 0
+
     border-right: 1px dashed #d2d2d2
     height: 136px
     left: 220px
     top: 0
 
 .tracejado8
-    position: absolute
-    z-index: 0
+
     border-right: 1px dashed #d2d2d2
     height: 136px
     left: 240px
     top: 0
 
 .tracejado9
-    position: absolute
-    z-index: 0
+
     border-right: 1px dashed #d2d2d2
     height: 136px
     left: 260px
     top: 0
 
 .tracejado10
-    position: absolute
-    z-index: 0
+
     border-right: 1px dashed #d2d2d2
     height: 136px
     left: 280px
     top: 0
 
 .tracejado11
-    position: absolute
-    z-index: 0
+
     border-right: 1px dashed #d2d2d2
     height: 136px
     left: 300px
@@ -720,9 +750,9 @@
     border-radius: 100px
     background: #ABABAB
     position: relative
-    left: 100px
     top: 1px
     z-index: 1
+
 
 .metrica-barra1
     height: 15px
@@ -735,9 +765,9 @@
     border-radius: 100px
     background: #ABABAB
     position: relative
-    left: 100px
     top: 17px
     z-index: 1
+
 
 .metrica-barra2
     height: 15px
@@ -750,9 +780,9 @@
     border-radius: 100px
     background: #ABABAB
     position: relative
-    left: 100px
     top: 32px
     z-index: 1
+
 
 .metrica-barra3
     height: 15px
@@ -765,7 +795,6 @@
     border-radius: 100px
     background: #ABABAB
     position: relative
-    left: 100px
     top: 47px
     z-index: 1
 
@@ -780,12 +809,20 @@
     border-radius: 100px
     background: #ABABAB
     position: relative
-    left: 100px
     top: 63px
     z-index: 1
+
 
 .metrica-barra5
     height: 15px
     flex-shrink: 0
     border-radius: 100px
     background: #5182FF
+
+.quadroTeste
+    width: 640px
+    height: 357px
+    flex-shrink: 0
+    border-radius: 15px
+    background: #F6F8FF
+    box-shadow: 0px 3.352px 3.352px 0px rgba(0, 0, 0, 0.05)   
