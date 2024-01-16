@@ -20,13 +20,11 @@ import { ColaboradorComponent } from './pages/colaborador/colaborador.component'
 import { DashProjetoComponent } from './pages/dash-projeto/dash-projeto.component';
 import { LoginComponent } from './pages/login/login.component';
 import { SignInComponent } from './pages/sign-in/sign-in.component';
-import { ConfirmSignupComponent } from './pages/confirm-signup/confirm-signup.component';
-
 
 Amplify.configure(awsconfig);
 
 @NgModule({
-  declarations: [AppComponent, SearchBarComponent, ColaboradorComponent, DashProjetoComponent, SidebarMenuComponent, TecnicaComponent, LoginComponent, SignInComponent, ConfirmSignupComponent],
+  declarations: [AppComponent, SearchBarComponent, ColaboradorComponent, DashProjetoComponent, SidebarMenuComponent, TecnicaComponent, LoginComponent, SignInComponent],
   imports: [HttpClientModule, BrowserModule, AppRoutingModule,FormsModule, NgbModule, FormsModule],
   providers: [],
   bootstrap: [AppComponent],
