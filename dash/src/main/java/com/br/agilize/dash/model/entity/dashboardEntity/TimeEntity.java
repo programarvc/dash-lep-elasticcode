@@ -1,9 +1,5 @@
 package com.br.agilize.dash.model.entity.dashboardEntity;
 
-import java.util.List;
-
-
-
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;

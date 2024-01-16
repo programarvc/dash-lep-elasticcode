@@ -35,6 +35,9 @@ public class JpaConfiguration {
 
   @Bean
   public JpaTransactionManager transactionManager(EntityManagerFactory emf) {
+    if (emf == null) {
+      throw new IllegalArgumentException("EntityManagerFactory cannot be null");
+    }
     return new JpaTransactionManager(emf);
   }
 
@@ -50,7 +53,11 @@ public class JpaConfiguration {
   @Bean
   public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
     LocalContainerEntityManagerFactoryBean lemfb = new LocalContainerEntityManagerFactoryBean();
-    lemfb.setDataSource(dataSource());
+    DataSource dataSource = dataSource();
+    if (dataSource == null) {
+      throw new IllegalArgumentException("DataSource cannot be null");
+    }
+    lemfb.setDataSource(dataSource);
     lemfb.setJpaVendorAdapter(jpaVendorAdapter());
     lemfb.setPackagesToScan("com.br.agilize.dash");
     return lemfb;

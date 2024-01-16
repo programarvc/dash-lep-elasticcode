@@ -40,7 +40,11 @@ public class ItemDeMaturidadeService extends ServiceCrudBase<ItemDeMaturidadeDto
 
     @Override
     public ItemDeMaturidadeDto salvar(ItemDeMaturidadeDto payload) {
-        ItemDeMaturidadeEntity ItemDeMaturidadeSalvo = this.repository.save(this.mapper.dtoToModel(payload));
+        ItemDeMaturidadeEntity entity = this.mapper.dtoToModel(payload);
+        if (entity.getId() == null) {
+            throw new IllegalArgumentException("Id cannot be null");
+        }
+        ItemDeMaturidadeEntity ItemDeMaturidadeSalvo = this.repository.save(entity);
         return this.mapper.modelToDTO(ItemDeMaturidadeSalvo);
     }
 

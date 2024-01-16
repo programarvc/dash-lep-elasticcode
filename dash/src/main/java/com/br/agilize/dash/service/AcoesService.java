@@ -55,24 +55,32 @@ public class AcoesService extends ServiceCrudBase<AcoesDto> {
 
     @Override
     public AcoesDto salvar(AcoesDto payload) {
-        AcoesEntity salvo = this.repository.save(this.mapper.dtoToModel(payload));
+        AcoesEntity entity = this.mapper.dtoToModel(payload);
+        if (entity == null) {
+            throw new IllegalArgumentException("AcoesEntity cannot be null");
+        }
+        AcoesEntity salvo = this.repository.save(entity);
         return this.mapper.modelToDTO(salvo);
     }
-
     @Override
     public void excluirPorId(Long id) {
         this.repository.deleteById(id);
     }
 
     public AcoesColaboradorDto salvarAcaoColaborador(AcoesColaboradorDto payload) {
-        return acoesColaboradorMapper.modelToDTO(
-                this.acoesColaboradorRepository.save(
-                        this.acoesColaboradorMapper.dtoToModel(payload)) );
+        AcoesColaboradorEntity entity = this.acoesColaboradorMapper.dtoToModel(payload);
+        if (entity.getId() == null) {
+            throw new IllegalArgumentException("Id cannot be null");
+        }
+        return acoesColaboradorMapper.modelToDTO(this.acoesColaboradorRepository.save(entity));
     }
 
     public void apagarAcaoColaborador(Long colaboradorId, Long id) {
         AcoesColaboradorEntity acoesColaboradorEntity = this.acoesColaboradorRepository
                 .findByColaboradorIdAndAcaoId(colaboradorId, id);
+        if (acoesColaboradorEntity == null) {
+            throw new IllegalArgumentException("AcoesColaboradorEntity cannot be null");
+        }
         this.acoesColaboradorRepository.delete(acoesColaboradorEntity);
     }
 

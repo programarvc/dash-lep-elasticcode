@@ -40,7 +40,11 @@ public class EsteiraDeDesenvolvimentoService extends ServiceCrudBase<EsteiraDeDe
 
     @Override
     public EsteiraDeDesenvolvimentoDto salvar(EsteiraDeDesenvolvimentoDto payload) {
-        EsteiraDeDesenvolvimentoEntity EsteiraDeDesenvolvimentoSalvo = this.repository.save(this.mapper.dtoToModel(payload));
+        EsteiraDeDesenvolvimentoEntity entity = this.mapper.dtoToModel(payload);
+        if (entity.getId() == null) {
+            throw new IllegalArgumentException("Id cannot be null");
+        }
+        EsteiraDeDesenvolvimentoEntity EsteiraDeDesenvolvimentoSalvo = this.repository.save(entity);
         return this.mapper.modelToDTO(EsteiraDeDesenvolvimentoSalvo);
     }
 

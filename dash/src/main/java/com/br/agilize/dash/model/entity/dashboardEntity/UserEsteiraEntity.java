@@ -1,7 +1,5 @@
 package com.br.agilize.dash.model.entity.dashboardEntity;
 
-import com.br.agilize.dash.model.entity.ColaboradorEntity;
-
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;

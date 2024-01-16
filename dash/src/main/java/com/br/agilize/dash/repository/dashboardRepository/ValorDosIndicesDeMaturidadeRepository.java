@@ -3,7 +3,6 @@ package com.br.agilize.dash.repository.dashboardRepository;
 import java.util.*;
 import java.time.LocalDateTime;
 
-import java.util.stream.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
