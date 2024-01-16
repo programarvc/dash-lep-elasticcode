@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { signIn, signOut, getCurrentUser} from 'aws-amplify/auth';
+import { CognitoUser, AuthenticationDetails, CognitoUserPool } from 'amazon-cognito-identity-js';
+import { Router } from '@angular/router';
+import { cognito } from 'src/environments/environment';
+import { resetPassword } from '@aws-amplify/auth';
 
 
 export interface IUser {
@@ -11,6 +15,13 @@ export interface IUser {
   name: string;
 }
 
+const poolData = {
+  UserPoolId: cognito.UserPoolId,
+  ClientId: cognito.userPoolWebClientId,
+};
+
+const userPool = new CognitoUserPool(poolData);
+
 @Injectable({
   providedIn: 'root'
 })
@@ -18,11 +29,11 @@ export class CognitoService {
 
   private authenticationSubject: BehaviorSubject<any>;
 
-  constructor() { 
+  constructor(private router: Router) { 
     this.authenticationSubject = new BehaviorSubject<boolean>(false);
-  }
+  }  
 
-  public async singIn(user: IUser): Promise<any> {
+  public async signIn(user: IUser): Promise<any> {
 
     await this.signOut();
 

@@ -26,7 +26,7 @@ export class SignInComponent {
 
   public signIn(): void {
     this.loading = true;
-    this.cognitoService.singIn(this.user)
+    this.cognitoService.signIn(this.user)
       .then(() => {
         this.router.navigate(['/dashboard/1']);
       })

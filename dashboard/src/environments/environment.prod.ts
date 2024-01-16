@@ -5,6 +5,6 @@ export const environment = {
 
 export const cognito = {
   production: true,
-  userPoolId: 'us-west-2_XeTLAls5y',
+  UserPoolId: 'us-west-2_XeTLAls5y',
   userPoolWebClientId: '6f7m3psici5vpeo66am7ujh6pg',
 };
