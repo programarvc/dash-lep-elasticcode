@@ -13,4 +13,7 @@ public interface CapacidadesRecomendadasRepository extends JpaRepository<Capacid
 
     @Query("SELECT new map(i.nome as nome) FROM CapacidadesRecomendadasEntity c JOIN c.maturidade m JOIN c.itemDeMaturidade i WHERE m.esteira.id = :esteiraId")
     List<Map<String, Object>> findByEsteiraId(@Param("esteiraId") Long esteiraId);
+
+    @Query("SELECT new map(i.nome as nome) FROM CapacidadesRecomendadasEntity c JOIN c.maturidade m JOIN c.itemDeMaturidade i WHERE m.esteira.id = :esteiraId AND m.dataHora = (SELECT MAX(m.dataHora) FROM MaturidadeEntity m WHERE m.esteira.id = :esteiraId)")
+    List<Map<String, Object>> findLatestByEsteiraId(@Param("esteiraId") Long esteiraId);
 }

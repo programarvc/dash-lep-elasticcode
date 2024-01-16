@@ -2,6 +2,9 @@ package com.br.agilize.dash.service.dashboardService;
 
 import java.sql.*;
 
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
@@ -10,8 +13,11 @@ import software.amazon.awssdk.services.cognitoidentityprovider.model.CognitoIden
 import software.amazon.awssdk.services.cognitoidentityprovider.model.ListUsersRequest;
 import software.amazon.awssdk.services.cognitoidentityprovider.model.ListUsersResponse;
 
-public class CognitoUserMigrationService {
-    public static void main(String[] args) {
+@Component
+public class CognitoUserMigrationService implements CommandLineRunner {
+    
+    @Override
+    public void run(String... args) throws Exception{
         String userPoolId = "us-west-2_XeTLAls5y";
         CognitoIdentityProviderClient cognitoClient = CognitoIdentityProviderClient.builder()
                 .region(Region.US_WEST_2)
@@ -23,19 +29,13 @@ public class CognitoUserMigrationService {
     }
 
     public static void listAllUsers(CognitoIdentityProviderClient cognitoClient, String userPoolId ) {
-        String url = "jdbc:postgresql://localhost:5432/elastic-ops";
+        String url = "jdbc:postgresql://localhost:5432/dash-teste";
         String userdb = "postgres";
-        String password = "159753";
+        String password = "liga4265*";
 
         try (Connection conn = DriverManager.getConnection(url, userdb, password)) {
-            String SQL_CREATE_TABLE = "CREATE TABLE IF NOT EXISTS users (username VARCHAR(255))";
-            try (Statement statement = conn.createStatement()) {
-                statement.execute(SQL_CREATE_TABLE);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-
-            String SQL_INSERT = "INSERT INTO users(username) VALUES(?)";
+           
+            String SQL_INSERT = "INSERT INTO userentity(username) VALUES(?)";
 
             ListUsersRequest usersRequest = ListUsersRequest.builder()
                     .userPoolId(userPoolId)

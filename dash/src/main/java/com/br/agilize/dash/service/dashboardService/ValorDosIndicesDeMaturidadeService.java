@@ -1,7 +1,7 @@
 package com.br.agilize.dash.service.dashboardService;
 
 import java.util.*;
-
+import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -48,20 +48,23 @@ public class ValorDosIndicesDeMaturidadeService extends ServiceCrudBase<ValorDos
         this.repository.deleteById(id);
     }
 
-    public List<Object[]> getValoresAndNomeByItemId(Long itemDeMaturidadeId) {
-        return repository.findValoresAndNomeByItemDeMaturidadeId(itemDeMaturidadeId);
-    }
 
-    public List<Map<String, Object>> getValoresAndNomeBytipoMaturidade(TiposMaturidadeEnum tipoMaturidade) {
-        return repository.findValoresAndNomeByTipoMaturidade(tipoMaturidade);
-    }
-
-    /*public List<ValorDosIndicesDeMaturidadeDto> getValoresByEsteiraIdAndTipoMaturidade(Long esteiraId, TiposMaturidadeEnum tipoMaturidade) {
-        List<ValorDosIndicesDeMaturidadeEntity> entities = repository.findByEsteiraIdAndTipoMaturidade(esteiraId, tipoMaturidade);
-        return entities.stream().map(this.mapper::modelToDTO).toList();
-    }*/
-
+   
     public List<Map<String, Object>> getValoresByEsteiraIdAndTipoMaturidade(Long esteiraId, TiposMaturidadeEnum tipoMaturidade) {
         return repository.findByEsteiraIdAndTipoMaturidade(esteiraId, tipoMaturidade);
     }
+
+    /*public String getLatestItemDeMaturidadeByEsteiraId(Long esteiraId) {
+        return repository.findLatestItemDeMaturidadeByEsteiraId(esteiraId).findFirst().orElse(null);
+    }*/
+
+    public List<String> getLatestItemDeMaturidadeByEsteiraId(Long esteiraId) {
+        LocalDateTime latestDataHora = repository.findLatestDataHoraByEsteiraId(esteiraId).orElse(null);
+        if (latestDataHora != null) {
+            return repository.findItemDeMaturidadeByEsteiraIdAndDataHora(esteiraId, latestDataHora);
+        } else {
+            return new ArrayList<>();
+        }
+    }
+    
 }
