@@ -1,7 +1,6 @@
 package com.br.agilize.dash.service.dashboardService;
 
 import java.util.*;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;

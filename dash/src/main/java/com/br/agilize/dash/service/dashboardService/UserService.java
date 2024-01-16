@@ -69,6 +69,8 @@ public class UserService extends ServiceCrudBase<UserDto> {
         return this.userEsteiraRepository.findUserAndNamesByEsteiraId(esteiraId);
     }
 
-
+    public List<Map<String, Object>> getEsteiraIdAndUsername() {
+        return userEsteiraRepository.findEsteiraIdAndUsername();
+    }
 
 }

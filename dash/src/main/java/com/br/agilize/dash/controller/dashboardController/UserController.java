@@ -40,4 +40,13 @@ public class UserController extends ControllerCrudBase<UserDto> {
         List<Map<String, String>> nomesDosUsers = this.service.buscarNomesDosUsersPorEsteiraId(esteiraId);
         return ResponseEntity.ok(nomesDosUsers);
     }
+
+    
+
+    @GetMapping("/useresteira")
+    public ResponseEntity<List<Map<String, Object>>> getEsteiraIdAndUsername() {
+        List<Map<String, Object>> result = this.service.getEsteiraIdAndUsername();
+        return ResponseEntity.ok(result);
+    }
+
 }

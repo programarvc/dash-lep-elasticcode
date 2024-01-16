@@ -1,6 +1,5 @@
 package com.br.agilize.dash.model.entity.dashboardEntity;
 
-import java.util.List;
 import com.br.agilize.dash.model.entity.EmpresaEntity;
 import com.br.agilize.dash.model.enums.TiposEnum;
 
