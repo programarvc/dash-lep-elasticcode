@@ -1,15 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { CognitoService } from 'src/app/cognito.service';
+
 
 @Component({
   selector: 'app-sidebar-menu',
   templateUrl: './sidebar-menu.component.html',
   styleUrls: ['./sidebar-menu.component.sass']
 })
-export class SidebarMenuComponent implements OnInit {
+export class SidebarMenuComponent {
 
-  constructor() { }
+  constructor(private cognitoService: CognitoService) { }
 
-  ngOnInit(): void {
+  public signOut(){
+    this.cognitoService.signOut()
+      .then(() => {
+        window.location.reload();
+      })
   }
-
 }

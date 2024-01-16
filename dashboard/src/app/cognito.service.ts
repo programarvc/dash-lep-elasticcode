@@ -62,4 +62,17 @@ export class CognitoService {
         }
       })
   }
+
+  public getLoggedInUsername(): Promise<string | null> {
+    return new Promise((resolve, reject) => {
+      const currentUser = userPool.getCurrentUser();
+
+      if(currentUser){
+        resolve(currentUser.getUsername());
+      } else {
+        resolve(null);
+      }
+    })
+  }
+
 }
