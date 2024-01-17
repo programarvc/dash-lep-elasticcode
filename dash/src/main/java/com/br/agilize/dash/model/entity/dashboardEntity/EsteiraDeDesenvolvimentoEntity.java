@@ -1,7 +1,5 @@
 package com.br.agilize.dash.model.entity.dashboardEntity;
 
-
-
 import com.br.agilize.dash.model.entity.EmpresaEntity;
 import com.br.agilize.dash.model.enums.TiposEnum;
 
@@ -28,5 +26,6 @@ public class EsteiraDeDesenvolvimentoEntity {
 
     @ManyToOne
     private EmpresaEntity empresa;
+
 
 }

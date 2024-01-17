@@ -1,8 +1,9 @@
 package com.br.agilize.dash.controller.dashboardController;
 
-import java.util.List;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +14,6 @@ import com.br.agilize.dash.controller.ControllerCrudBase;
 import com.br.agilize.dash.model.dto.dashboardDto.MaturidadeDto;
 import com.br.agilize.dash.service.dashboardService.MaturidadeService;
 
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "MaturidadeController", description = "Api para gerenciar os Maturidades")
@@ -28,11 +28,17 @@ public class MaturidadeController extends ControllerCrudBase<MaturidadeDto> {
         super(service);
     }
 
-    @Operation(summary = "Obtem maturidades por id da esteira", description = "Retorna as informações do objeto pelo do id", tags = {
-            "id", "get" })
-    @GetMapping("/esteira/{esteiraId}")
-    public ResponseEntity<List<MaturidadeDto>> obterMaturidadePorEsteiraId(@PathVariable Long esteiraId) {
-        return ResponseEntity.ok(((MaturidadeService) service).obterPorEsteiraId(esteiraId));
+    /*@GetMapping("/esteira/{esteiraId}")
+    public ResponseEntity<Map<String, Object>> getMaturidadeByEsteiraId(@PathVariable Long esteiraId) {
+        Map<String, Object> maturidade = service.getMaturidadeByEsteiraId(esteiraId);
+        return new ResponseEntity<>(maturidade, HttpStatus.OK);
+    }*/
+
+   @GetMapping("/latest/esteira/{esteiraId}")
+    public ResponseEntity<Map<String, Object>> getLatestMaturidadeByEsteiraId(@PathVariable Long esteiraId) {
+        Map<String, Object> maturidade = service.getLatestMaturidadeByEsteiraId(esteiraId);
+        return new ResponseEntity<>(maturidade, HttpStatus.OK);
     }
 
 }
+

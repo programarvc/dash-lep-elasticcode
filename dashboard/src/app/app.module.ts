@@ -23,6 +23,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { SignInComponent } from './pages/sign-in/sign-in.component';
 import { AmplifyUiLoginComponent } from './pages/amplify-ui-login/amplify-ui-login.component';
 
+
 Amplify.configure(awsconfig);
 
 @NgModule({

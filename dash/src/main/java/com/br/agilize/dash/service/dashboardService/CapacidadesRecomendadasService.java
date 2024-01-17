@@ -38,7 +38,11 @@ public class CapacidadesRecomendadasService extends ServiceCrudBase<CapacidadesR
 
     @Override
     public CapacidadesRecomendadasDto salvar(CapacidadesRecomendadasDto payload) {
-        CapacidadesRecomendadasEntity CapacidadesRecomendadasSalvo = this.repository.save(this.mapper.dtoToModel(payload));
+        CapacidadesRecomendadasEntity entity = this.mapper.dtoToModel(payload);
+        if (entity == null) {
+            throw new IllegalArgumentException("CapacidadesRecomendadasEntity cannot be null");
+        }
+        CapacidadesRecomendadasEntity CapacidadesRecomendadasSalvo = this.repository.save(entity);
         return this.mapper.modelToDTO(CapacidadesRecomendadasSalvo);
     }
 
@@ -49,5 +53,9 @@ public class CapacidadesRecomendadasService extends ServiceCrudBase<CapacidadesR
 
     public List<Map<String, Object>> getCapacidadesByEsteiraId(Long esteiraId) {
         return repository.findByEsteiraId(esteiraId);
+    }
+
+    public List<Map<String, Object>> getLatestCapacidadesByEsteiraId(Long esteiraId) {
+        return repository.findLatestByEsteiraId(esteiraId);
     }
 }

@@ -41,5 +41,13 @@ export class MaturidadeService {
       .pipe(catchError(this.handleError<any>('getMaturidadeByEsteiraId')));
   }
 
+  getLatestMaturidadeByEsteiraId(id: number): Observable<any> {
+    const url: string = `${environment.api}/maturidade/latest/esteira/${id}`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>('getLatestMaturidadeByEsteiraId')));
+  }
+
+
 
 }

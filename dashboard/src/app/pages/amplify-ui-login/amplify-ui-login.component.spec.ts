@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { AmplifyUiLoginComponent } from './amplify-ui-login.component';
 
 describe('AmplifyUiLoginComponent', () => {
