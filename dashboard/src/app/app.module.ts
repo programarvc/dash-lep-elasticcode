@@ -20,14 +20,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { ColaboradorComponent } from './pages/colaborador/colaborador.component';
 import { DashProjetoComponent } from './pages/dash-projeto/dash-projeto.component';
 import { LoginComponent } from './pages/login/login.component';
-import { SignInComponent } from './pages/sign-in/sign-in.component';
+
 import { AmplifyUiLoginComponent } from './pages/amplify-ui-login/amplify-ui-login.component';
 
 
 Amplify.configure(awsconfig);
 
 @NgModule({
-  declarations: [AppComponent, SearchBarComponent, ColaboradorComponent, DashProjetoComponent, SidebarMenuComponent, TecnicaComponent, LoginComponent, SignInComponent, AmplifyUiLoginComponent],
+  declarations: [AppComponent, SearchBarComponent, ColaboradorComponent, DashProjetoComponent, SidebarMenuComponent, TecnicaComponent, LoginComponent, AmplifyUiLoginComponent],
   imports: [HttpClientModule, BrowserModule, AmplifyAuthenticatorModule, AppRoutingModule,FormsModule, NgbModule, FormsModule],
   providers: [],
   bootstrap: [AppComponent],

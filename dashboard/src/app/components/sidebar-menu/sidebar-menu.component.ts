@@ -26,7 +26,7 @@ export class SidebarMenuComponent {
   public signOut(){
     this.cognitoService.signOut()
       .then(() => {
-        window.location.reload();
+        this.router.navigate(['/login']);
       })
   }
 

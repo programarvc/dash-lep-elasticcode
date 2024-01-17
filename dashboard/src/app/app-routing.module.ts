@@ -4,7 +4,6 @@ import { AuthGuard } from './auth.guard';
 
 import { ColaboradorComponent } from './pages/colaborador/colaborador.component';
 import { DashProjetoComponent } from './pages/dash-projeto/dash-projeto.component';
-import { SignInComponent } from './pages/sign-in/sign-in.component';
 import { AmplifyUiLoginComponent } from './pages/amplify-ui-login/amplify-ui-login.component';
 
 
