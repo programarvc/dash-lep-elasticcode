@@ -37,13 +37,10 @@ public class ColaboradorService extends ServiceCrudBase<ColaboradorDto> {
 
     @Override
     public ColaboradorDto salvar(ColaboradorDto payload) {
-        ColaboradorEntity entity = this.mapper.dtoToModel(payload);
-        if (entity == null) {
-            throw new IllegalArgumentException("ColaboradorEntity cannot be null");
-        }
-        ColaboradorEntity colaboradorSalvo = this.repository.save(entity);
+        ColaboradorEntity colaboradorSalvo = this.repository.save(this.mapper.dtoToModel(payload));
         return this.mapper.modelToDTO(colaboradorSalvo);
     }
+
 
     @Override
     public void excluirPorId(Long id) {

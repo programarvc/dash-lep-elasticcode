@@ -55,11 +55,7 @@ public class HabilidadeService extends ServiceCrudBase<HabilidadeDto> {
 
     @Override
     public HabilidadeDto salvar(HabilidadeDto payload) {
-        HabilidadeEntity entity = this.mapper.dtoToModel(payload);
-        if (entity == null) {
-            throw new IllegalArgumentException("HabilidadeEntity cannot be null");
-        }
-        HabilidadeEntity colaboradorSalvo = this.repository.save(entity);
+        HabilidadeEntity colaboradorSalvo = this.repository.save(this.mapper.dtoToModel(payload));
         return this.mapper.modelToDTO(colaboradorSalvo);
     }
     

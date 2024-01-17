@@ -68,19 +68,14 @@ public class AcoesService extends ServiceCrudBase<AcoesDto> {
     }
 
     public AcoesColaboradorDto salvarAcaoColaborador(AcoesColaboradorDto payload) {
-        AcoesColaboradorEntity entity = this.acoesColaboradorMapper.dtoToModel(payload);
-        if (entity.getId() == null) {
-            throw new IllegalArgumentException("Id cannot be null");
-        }
-        return acoesColaboradorMapper.modelToDTO(this.acoesColaboradorRepository.save(entity));
+        return acoesColaboradorMapper.modelToDTO(
+                this.acoesColaboradorRepository.save(
+                        this.acoesColaboradorMapper.dtoToModel(payload)) );
     }
 
     public void apagarAcaoColaborador(Long colaboradorId, Long id) {
         AcoesColaboradorEntity acoesColaboradorEntity = this.acoesColaboradorRepository
                 .findByColaboradorIdAndAcaoId(colaboradorId, id);
-        if (acoesColaboradorEntity == null) {
-            throw new IllegalArgumentException("AcoesColaboradorEntity cannot be null");
-        }
         this.acoesColaboradorRepository.delete(acoesColaboradorEntity);
     }
 
