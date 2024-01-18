@@ -1,7 +1,6 @@
 package com.br.agilize.dash.service.dashboardService;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,15 +56,12 @@ public class MaturidadeService extends ServiceCrudBase<MaturidadeDto> {
     }
 
     
-    public List<MaturidadeDto>obterPorEsteiraId(Long esteiraId){
-        List<MaturidadeEntity> maturidades = this.repository.findByEsteiraId(esteiraId);
-        return maturidades.stream().map(this.mapper::modelToDTO).toList();
+
+    public Map<String, Object> getLatestMaturidadeByEsteiraId(Long esteiraId) {
+        return repository.findTopByEsteiraIdOrderByDataHoraDesc(esteiraId).findFirst().orElse(null);
     }
 
-    public MaturidadeDto obterUltimaMaturidadePorEsteiraId(Long esteiraId){
-        Optional<MaturidadeEntity> maturidade = this.repository.findTopByEsteiraIdOrderByNumeroDesc(esteiraId);
-        return this.mapper.modelToDTO(maturidade.orElseThrow(DashNotFoundException::new));
-    }
+    
 
    /*  public MaturidadeDto salvarMaturidade(MaturidadeDto maturidadeDto) {
         MaturidadeEntity novaMaturidade = this.mapper.dtoToModel(maturidadeDto);

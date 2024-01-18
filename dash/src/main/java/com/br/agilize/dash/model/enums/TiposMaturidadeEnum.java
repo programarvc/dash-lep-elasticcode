@@ -6,6 +6,4 @@ public enum TiposMaturidadeEnum {
     PROCESSO,
     METRICA,
     CULTURA;
-
-   
 }

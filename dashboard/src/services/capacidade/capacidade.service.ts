@@ -40,4 +40,11 @@ export class CapacidadeService {
             .get<any>(url)
             .pipe(catchError(this.handleError<any>('getCapacidadesByEsteiraId')));
     }
+
+    getLatestCapacidadesByEsteiraId(id : number): Observable<any> {
+        const url: string = `${environment.api}/capacidades/latest/esteira/${id}`;
+        return this.http
+            .get<any>(url)
+            .pipe(catchError(this.handleError<any>('getLatestCapacidadesByEsteiraId')));
+    }
 }

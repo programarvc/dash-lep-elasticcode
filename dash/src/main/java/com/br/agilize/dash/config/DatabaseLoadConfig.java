@@ -42,10 +42,6 @@ public class DatabaseLoadConfig {
         };
     }
 
-    
-
-    
-
     private List<HabilidadeEntity> cargaInicialHabilidades() {
         List<HabilidadeEntity> habilidadesSalvos = this.habilidadeRepository.findAll();
         if (habilidadesSalvos == null ||  habilidadesSalvos.isEmpty()) {
@@ -150,5 +146,4 @@ public class DatabaseLoadConfig {
         }
     }
 
-     
 }

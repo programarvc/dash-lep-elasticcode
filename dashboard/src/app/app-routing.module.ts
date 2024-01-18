@@ -1,16 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './auth.guard';
 
 import { ColaboradorComponent } from './pages/colaborador/colaborador.component';
 import { DashProjetoComponent } from './pages/dash-projeto/dash-projeto.component';
-import { TecnicaComponent } from './components/tecnica/tecnica.component';
+import { AmplifyUiLoginComponent } from './pages/amplify-ui-login/amplify-ui-login.component';
+
+
 
 const routes: Routes = [
-  { path: 'dash-projeto', title: 'Dashboard Projeto', component: DashProjetoComponent},
-  { path: 'tecnica', title: 'Tecnica', component: TecnicaComponent},
-  { path: 'dashboard/:esteiraId', title: 'Dashboard Projeto', component: DashProjetoComponent},
-  { path: ':colaboradorId', component: ColaboradorComponent },
-  { path: '', component: ColaboradorComponent },
+  { path: 'login', component: AmplifyUiLoginComponent },
+  { path: '', redirectTo: 'login', pathMatch: 'full'},
+  { path: 'dashboard/:esteiraId', title: 'Dashboard Projeto', component: DashProjetoComponent, canActivate: [AuthGuard]},
+  { path: ':colaboradorId', component: ColaboradorComponent, canActivate: [AuthGuard] },
+  { path: '**', redirectTo: 'login'}
 ];
 
 @NgModule({

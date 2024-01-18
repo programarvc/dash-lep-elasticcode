@@ -58,7 +58,7 @@ public class HabilidadeService extends ServiceCrudBase<HabilidadeDto> {
         HabilidadeEntity colaboradorSalvo = this.repository.save(this.mapper.dtoToModel(payload));
         return this.mapper.modelToDTO(colaboradorSalvo);
     }
-
+    
     @Override
     public void excluirPorId(Long id) {
         this.repository.deleteById(id);

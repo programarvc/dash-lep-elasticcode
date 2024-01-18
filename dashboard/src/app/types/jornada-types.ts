@@ -20,11 +20,17 @@ export interface Maturidade {
   id: number;
   esteira: EsteiraDeDesenvolvimento;
   data: string;
+  hora: string;
   numero: number;
   leadTime: number;
   frequencyDeployment: number;
   changeFailureRate: number;
   timeToRecovery: number;
+
+  saude: number;
+  metricas4: number;
+  capacidadeDora: number;
+  mediaDeJornada: number;
 }
 
 export interface EsteiraDeDesenvolvimento {
