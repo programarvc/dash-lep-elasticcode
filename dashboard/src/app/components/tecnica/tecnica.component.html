@@ -20,14 +20,12 @@
                
                             <div class="processos-geral">
                                 <div class="tecnicas-textos">
-                                    <p class="tecnicas-texto">Arquitetura</p>
-                                    <p class="tecnicas-texto">Ger. de Mudança</p>
-                                    <p class="tecnicas-texto">Auto. de Implantação</p>
-                                    <p class="tecnicas-texto">Geren. de teste</p>
-                                    <p class="tecnicas-texto">Integração contínua</p>
-                                    <p class="tecnicas-texto">Ferramenta de times</p>
-                                    <p class="tecnicas-texto">Controle de versão</p>
-                                    <p class="tecnicas-texto">Manut. de código</p>
+                                    <p class="tecnicas-texto" *ngFor="let valor of valorMaturidades">
+                                        <ng-container *ngIf="valor.itemDeMaturidade.tipoMaturidade === 'TECNICA'">
+                                            {{valor.itemDeMaturidade.nome}}
+                                        </ng-container>
+                                    </p>
+                                  
                                 </div>
 
                                 <div class="processo">
@@ -62,8 +60,8 @@
                                     <div class="barras">
                                     
                                         <ng-container *ngFor="let valor of valorMaturidadeTecnica; let i = index">
-                                            <div [ngStyle]="{'width': valor.valorEsperado * 100 + '%'}" class="barra-arq{{i+1}}">
-                                                <div class="barra{{i+1}}" [ngStyle]="{'width': valor.valorAtingido * 100 + '%'}"></div>
+                                            <div [ngStyle]="{'width': valor.valorEsperado * 100 + '%'}" class="barra-arq">
+                                                <div class="barra" [ngStyle]="{'width': valor.valorAtingido * 100 + '%'}"></div>
                                             </div>
                                         </ng-container>
                                     </div>
@@ -84,34 +82,37 @@
                                 <p class="cabecalho-texto">Esperado</p>
                             </div>
                         </div>
+                        <div class="pontilhados-processo">
+                            <div class="pontilhados-processo2">
+                                <div class="tracejado"></div>
+                                <div class="tracejado"></div>
+                                <div class="tracejado"></div>
+                                <div class="tracejado"></div>
+                                <div class="tracejado"></div>
+                                <div class="tracejado"></div>
+                                <div class="tracejado"></div>
+                                <div class="tracejado"></div>
+
+                            </div>
+                        </div>
                         <div class="processos-geral">
                             <div class="processos-textos">
-                                <p class="processos-texto">Exp. Equipe</p>
-                                <p class="processos-texto">Aprov Alter.</p>
-                                <p class="processos-texto">Feedback</p>
-                                <p class="processos-texto">Tran. Lote</p>
+                                <p class="tecnicas-texto" *ngFor="let valor of valorMaturidades">
+                                    <ng-container *ngIf="valor.itemDeMaturidade.tipoMaturidade === 'PROCESSO'">
+                                        {{valor.itemDeMaturidade.nome}}
+                                    </ng-container>
+                                </p>
+                                
                             </div>
 
                         <div class="processo-progresso">  
-                                <div class="pontilhados-processo">
-                                    <div class="pontilhados-processo2">
-                                        <div class="tracejado"></div>
-                                        <div class="tracejado"></div>
-                                        <div class="tracejado"></div>
-                                        <div class="tracejado"></div>
-                                        <div class="tracejado"></div>
-                                        <div class="tracejado"></div>
-                                        <div class="tracejado"></div>
-                                        <div class="tracejado"></div>
-
-                                    </div>
-                                </div>
+                                
 
                             <div class="barras-processo">
 
-                                <ng-container *ngFor="let valor of valorMaturidadeProcesso; let i = index">
-                                    <div [ngStyle]="{'width': valor.valorEsperado * 58 + '%'}" class="processo-barra{{i+1}}-meta">
-                                    <div class="processo-barra{{i+1}}" [ngStyle]="{'width': valor.valorAtingido * 100 + '%'}"></div>
+                                <ng-container *ngFor="let valor of valorMaturidadeProcesso">
+                                    <div [ngStyle]="{'width': valor.valorEsperado * 100 + '%'}" class="processo-barra-meta">
+                                    <div class="processo-barra" [ngStyle]="{'width': valor.valorAtingido * 100 + '%'}"></div>
                                     </div>
                                 </ng-container>
 
@@ -133,50 +134,37 @@
                                     <p class="cabecalho-texto">Esperado</p>
                                 </div>
                             </div>
+                            <div>
+                                <div class="pontilhados-metrica">
+                                    <div class="pontilhados-metrica2">
+                                        <div class="tracejado"></div>
+                                        <div class="tracejado"></div>
+                                        <div class="tracejado"></div>
+                                        <div class="tracejado"></div>
+                                        <div class="tracejado"></div>
+                                        <div class="tracejado"></div>
+                                        <div class="tracejado"></div>
+                                        <div class="tracejado"></div>
+                                    </div>
+                                </div>
+                            </div>
+                           
                         <div class="metricas-geral">
                             <div class="quadro-metricas-textos">
-                                <p class="processos-texto-metricas">Moni. Decisão</p>
-                                <p class="processos-texto-metricas">Geren. Visual</p>
-                                <p class="processos-texto-metricas">Mon e Observ</p>
-                                <p class="processos-texto-metricas">Not. Falha</p>
-                                <p class="processos-texto-metricas">Lim. Progesso</p>
+                                <p class="tecnicas-texto" *ngFor="let valor of valorMaturidades">
+                                    <ng-container *ngIf="valor.itemDeMaturidade.tipoMaturidade === 'METRICA'">
+                                        {{valor.itemDeMaturidade.nome}}
+                                    </ng-container>
+                                </p>
                             </div>
 
                              <div class="metrica-progresso">  
-                                        <div class="pontilhados-metrica">
-                                            <div class="pontilhados-metrica2">
-                                                <div class="tracejado"></div>
-                                                <div class="tracejado"></div>
-                                                <div class="tracejado"></div>
-                                                <div class="tracejado"></div>
-                                                <div class="tracejado"></div>
-                                                <div class="tracejado"></div>
-                                                <div class="tracejado"></div>
-                                                <div class="tracejado"></div>
-                                            </div>
-                                        </div>
-                                                                <!--  
-                                                        <div class="processo">
-                                                            <div class="pontilhados">
-                                                                <div class="pontilhados2">
-                                                                    <div class="pontilhado"></div>
-                                                                    <div class="pontilhado"></div>
-                                                                    <div class="pontilhado"></div>
-                                                                    <div class="pontilhado"></div>
-                                                                    <div class="pontilhado"></div>
-                                                                    <div class="pontilhado"></div>
-                                                                    <div class="pontilhado"></div>
-                                                                    <div class="pontilhado"></div>
-                                                                    <div class="pontilhado"></div>
-                                                                    <div class="pontilhado"></div>
-                                                                    <div class="pontilhado"></div>
-                                                                </div>-->
-
+                                     
                                     <div class="barras-metricas">
-
+                                        
                                         <ng-container *ngFor="let valor of valorMaturidadeMetrica; let i = index">
-                                            <div [ngStyle]="{'width': valor.valorEsperado * 100 + '%'}" class="metrica-barra{{i+1}}-meta">
-                                            <div class="metrica-barra{{i+1}}" [ngStyle]="{'width': valor.valorAtingido * 100 + '%'}"></div>
+                                            <div [ngStyle]="{'width': valor.valorEsperado * 100 + '%'}" class="metrica-barra-meta">
+                                            <div class="metrica-barra" [ngStyle]="{'width': valor.valorAtingido * 100 + '%'}"></div>
                                         </div>
                                         </ng-container>
 

@@ -48,7 +48,7 @@
     padding: 0 15px
     z-index: 2
     position: absolute
-    top: 0
+    top: 20px
     width: 100%
 
 .pontilhados2
@@ -71,6 +71,7 @@
     flex-direction: row
     margin-top: 8px
     overflow: auto
+    
 
 .metricas-geral::-webkit-scrollbar
     display: none
@@ -89,74 +90,6 @@
     width: 50px
     border-top-color: transparent
     border-bottom-color: transparent
-
-
-
-
-.pontilhado2
-
-    z-index: 0
-    border-right: 1px dashed #d2d2d2
-
-
-.pontilhado3
-
-    z-index: 0
-    border-right: 1px dashed #d2d2d2
-
-
-
-.pontilhado4
-
-    z-index: 0
-    border-right: 1px dashed #d2d2d2
-
-
-
-.pontilhado5
-
-    z-index: 0
-    border-right: 1px dashed #d2d2d2
-
-
-.pontilhado6
-
-    z-index: 0
-    border-right: 1px dashed #d2d2d2
-
-
-.pontilhado7
-
-    z-index: 0
-    border-right: 1px dashed #d2d2d2
-
-
-
-.pontilhado8
-
-    z-index: 0
-    border-right: 1px dashed #d2d2d2
-
-
-
-.pontilhado9
-
-    z-index: 0
-    border-right: 1px dashed #d2d2d2
-
-
-
-.pontilhado10
-
-    z-index: 0
-    border-right: 1px dashed #d2d2d2
-
-
-
-.pontilhado11
-
-    z-index: 0
-    border-right: 1px dashed #d2d2d2
 
 
 
@@ -219,6 +152,11 @@
     margin-bottom: 17px
 
 
+.barra-arq
+    height: 21px
+    border-radius: 100px
+    background: #ABABAB
+    margin-bottom: 17px
     
 
 .barra-arq2
@@ -266,6 +204,7 @@
     background: #ABABAB
     margin-bottom: 17px
     z-index: 1
+
 .barra1
     height: 21px
     flex-shrink: 0
@@ -273,6 +212,12 @@
     background: #6A5FFF
     z-index: 1
 
+.barra
+    height: 21px
+    flex-shrink: 0
+    border-radius: 100px
+    background: #6A5FFF
+    z-index: 1
 
 .barra2
     width: 233px
@@ -468,30 +413,51 @@
 
 
 .pontilhados-processo
-    height: 90%
+    height: 100%
+    position: absolute
+    margin-left: 110px
+    margin-top: 75px
 
 .pontilhados-processo2
    display: flex 
-   height: 100%
+   height: 100px
+
 
 .pontilhados-metrica
-    margin-left: 15px
-    height: 100%
+    margin-left: 120px
+    height: 100px
+    position: absolute
+    
+
 
 .pontilhados-metrica2
     display: flex 
     height: 100%
+    margin-top: 29px
 
 .processo-barra1-meta
     height: 15px
     border-radius: 100px
     background: #ABABAB
-    margin-bottom: 17px
+    margin-bottom: 22px
+
+.processo-barra-meta
+    height: 15px
+    border-radius: 100px
+    background: #ABABAB
+    margin-bottom: 22px
+
 
 .quadro-metricas-textos
     text-align: right
     width: 30%
 
+.processo-barra
+    height: 15px
+    flex-shrink: 0
+    border-radius: 100px
+    background: #5182FF
+    z-index: 1
 
 .processo-barra1
     height: 15px
@@ -516,7 +482,7 @@
     height: 15px
     border-radius: 100px
     background: #ABABAB
-    margin-bottom: 17px
+    margin-bottom: 22px
 
 .processo-barra2
     height: 15px
@@ -541,7 +507,7 @@
     height: 15px
     border-radius: 100px
     background: #ABABAB
-    margin-bottom: 17px
+    margin-bottom: 22px
 
 .processo-barra3
     height: 15px
@@ -566,7 +532,7 @@
     height: 15px
     border-radius: 100px
     background: #ABABAB
-    margin-bottom: 17px
+    margin-bottom: 25px
 
 .processo-barra4
     height: 15px
@@ -595,6 +561,7 @@
 .metrica-progresso
     position: relative
     width: 70%
+    height: 100%
 
 
 
@@ -602,7 +569,7 @@
 .tracejado
     border: 1px dashed #d2d2d2
     z-index: 0
-    height: 120px
+    height: 100%
     width: 30px
     border-top-color: transparent
     border-bottom-color: transparent
@@ -610,7 +577,7 @@
 .barras-processo
     z-index: 2
     position: absolute
-    top: 0
+    top: 20px
     width: 100%
 
 
@@ -752,9 +719,24 @@
     position: relative
     top: 1px
     z-index: 1
+    margin-bottom: 5px
 
+.metrica-barra-meta
+    height: 15px
+    border-radius: 100px
+    background: #ABABAB
+    position: relative
+    top: 1px
+    z-index: 1
+    margin-bottom: 22px
 
 .metrica-barra1
+    height: 15px
+    flex-shrink: 0
+    border-radius: 100px
+    background: #5182FF
+
+.metrica-barra
     height: 15px
     flex-shrink: 0
     border-radius: 100px
@@ -767,6 +749,7 @@
     position: relative
     top: 17px
     z-index: 1
+    margin-bottom: 8px
 
 
 .metrica-barra2
@@ -782,6 +765,7 @@
     position: relative
     top: 32px
     z-index: 1
+    margin-bottom: 10px
 
 
 .metrica-barra3
@@ -797,6 +781,7 @@
     position: relative
     top: 47px
     z-index: 1
+    margin-bottom: 5px
 
 .metrica-barra4
     height: 15px
@@ -811,6 +796,7 @@
     position: relative
     top: 63px
     z-index: 1
+    margin-bottom: 24px
 
 
 .metrica-barra5

@@ -61,7 +61,6 @@ export class TecnicaComponent implements OnInit {
   public maturidade: Maturidade[] = [];
   public tipo: TiposEnum[] = [];
   public tiposMaturidade: TiposMaturidadeEnum[] = [];
-  public valorDosIndicesDeMaturidade: ValorDosIndicesDeMaturidade[] = [];
   public valorMaturidadeTecnica: ValorDosIndicesDeMaturidadeByEsteiraIdAndTecnica[] = [];
   public valorMaturidadeProcesso:  ValorDosIndicesDeMaturidadeByEsteiraIdAndTecnica[] =[];
   public valorMaturidadeMetrica:  ValorDosIndicesDeMaturidadeByEsteiraIdAndTecnica[] =[];
@@ -93,7 +92,8 @@ export class TecnicaComponent implements OnInit {
 
 
   public async setCurrent(id: number) {
-    const valorMaturidade = this.valorDosIndicesDeMaturidade.find(
+    this.getValorMaturidadesByEsteiraIdAndTecnica(id);
+   /* const valorMaturidade = this.valorDosIndicesDeMaturidade.find(
       (valorMaturidade) => valorMaturidade.maturidade.esteira.id === id
     );
     if (valorMaturidade && valorMaturidade.maturidade && valorMaturidade.maturidade.esteira) {
@@ -102,7 +102,7 @@ export class TecnicaComponent implements OnInit {
       this.getValorMaturidadesByEsteiraIdAndTecnica(valorMaturidade.maturidade.esteira.id);
       this.getValorMaturidadesByEsteiraIdAndProcesso(valorMaturidade.maturidade.esteira.id);
       this.getValorMaturidadesByEsteiraIdAndMetrica(valorMaturidade.maturidade.esteira.id);
-    }
+    }*/
   }
 
 
@@ -116,6 +116,7 @@ export class TecnicaComponent implements OnInit {
   public getValorMaturidadesByEsteiraIdAndTecnica(id: number): void{
     this.valorMaturidadeService.getValorMaturidadesByEsteiraIdAndTecnica(id).subscribe((response) =>{
       this.valorMaturidadeTecnica = response;
+      console.log(this.currentValorMaturidade)
     });
   }
 

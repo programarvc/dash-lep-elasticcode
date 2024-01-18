@@ -124,8 +124,13 @@
                 <li *ngFor="let capacidadeNome of capacidade">
                   {{(capacidadeNome.itemDeMaturidade.nome).toString()}}
                 </li>
+
               </ul>
             </div>
+            <!-- Teste -->
+
+
+            <!-- Fim do Teste -->
           </div>
         </div>
       </div>
@@ -150,10 +155,16 @@
 
         <div class="cultura-geral">
           <div class="cultura-textos">
+            <p class="tecnicas-texto" *ngFor="let valor of valorMaturidades">
+              <ng-container *ngIf="valor.itemDeMaturidade.tipoMaturidade === 'CULTURA'">
+                  {{valor.itemDeMaturidade.nome}}
+              </ng-container>
+          </p>
+            <!-- 
             <p class="cultura-texto">Satisfação no Trabalho</p>
             <p class="cultura-texto">Cultura de Westrum</p>
             <p class="cultura-texto">Cultura de Aprendizado</p>
-            <p class="cultura-texto">Liderança Transformacional</p>
+            <p class="cultura-texto">Liderança Transformacional</p>-->
           </div>
 
           <div class="processo-cultura">
@@ -173,8 +184,8 @@
 
               <div class="barras">
                 <ng-container *ngFor="let item of valorMaturidadeCultura; let i = index">
-                  <div class="cultura-barra{{i+1}}-meta" [ngStyle]="{'width': item.valorEsperado * 100 + '%'}">
-                    <div class="cultura-barra{{i+1}}" [ngStyle]="{'width': item.valorAtingido * 100 + '%'}"></div>
+                  <div class="cultura-barra-meta" [ngStyle]="{'width': item.valorEsperado * 100 + '%'}">
+                    <div class="cultura-barra" [ngStyle]="{'width': item.valorAtingido * 100 + '%'}"></div>
                   </div>
                 </ng-container>
               </div>
