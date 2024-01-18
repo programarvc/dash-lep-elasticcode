@@ -182,25 +182,8 @@ export class DashProjetoComponent implements OnInit {
 public async setCurrent(id: number) {
   this.getLatestMaturidadeByEsteiraId(id);
   this.getLatestCapacidadesByEsteiraId(id);
-
-    const valorMaturidadeTecnica = this.valorMaturidades.find(
-      (valorMaturidade) => valorMaturidade.maturidade.esteira.id === id
-    );
-    if (valorMaturidadeTecnica && valorMaturidadeTecnica.maturidade && valorMaturidadeTecnica.maturidade.esteira){
-      this.currentValorMaturidade = valorMaturidadeTecnica;
-      this.currentValorMaturidade.maturidade.esteira = valorMaturidadeTecnica.maturidade.esteira;
-      this.getValorMaturidadesByEsteiraIdAndTecnica(valorMaturidadeTecnica.maturidade.esteira.id);
-
-    }
-    const valorMaturidadeCultura = this.valorMaturidadeC.find(
-      (valorMaturidadeCultura) => valorMaturidadeCultura.maturidade.esteira.id === id
-    );
-    if (valorMaturidadeCultura&& valorMaturidadeCultura.maturidade && valorMaturidadeCultura.maturidade.esteira){
-      this.currentValorMaturidade = valorMaturidadeCultura;
-      this.currentValorMaturidade.maturidade.esteira = valorMaturidadeCultura.maturidade.esteira;
-      this.getValorMaturidadesByEsteiraIdAndCultura(valorMaturidadeCultura.maturidade.esteira.id);
-    }
-
+  this.getValorMaturidadesByEsteiraIdAndTecnica(id);
+  this.getValorMaturidadesByEsteiraIdAndCultura(id);
 
   }
 
@@ -240,13 +223,13 @@ public async setCurrent(id: number) {
   }
 
   public getValorMaturidadesByEsteiraIdAndTecnica(id: number): void{
-    this.valorMaturidadeService.getValorMaturidadesByEsteiraIdAndTecnica(id).subscribe((response) =>{
+    this.valorMaturidadeService.getValoresByEsteiraIdAndTipoMaturidadeTecnicaLatest(id).subscribe((response) =>{
       this.valorMaturidadeTecnica = response;
     });
   }
 
   public getValorMaturidadesByEsteiraIdAndCultura(id: number): void{
-    this.valorMaturidadeService.getValorMaturidadesByEsteiraIdAndCultura(id).subscribe((response) =>{
+    this.valorMaturidadeService.getValorMaturidadesByEsteiraIdAndCulturaLatest(id).subscribe((response) =>{
       this.valorMaturidadeCultura = response;
       console.log(this.valorMaturidadeCultura);
     });

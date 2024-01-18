@@ -2,6 +2,7 @@ package com.br.agilize.dash.service.dashboardService;
 
 import java.util.*;
 import java.time.LocalDateTime;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -39,8 +40,11 @@ public class ValorDosIndicesDeMaturidadeService extends ServiceCrudBase<ValorDos
 
     @Override
     public ValorDosIndicesDeMaturidadeDto salvar(ValorDosIndicesDeMaturidadeDto payload) {
-        ValorDosIndicesDeMaturidadeEntity ValorDosIndicesDeMaturidadeSalvo = this.repository.save(this.mapper.dtoToModel(payload));
-        return this.mapper.modelToDTO(ValorDosIndicesDeMaturidadeSalvo);
+        ValorDosIndicesDeMaturidadeEntity entity = mapper.dtoToModel(payload);
+        entity.setId(null); // This will ensure a new entity is created
+
+        ValorDosIndicesDeMaturidadeEntity savedEntity = repository.save(entity);
+        return mapper.modelToDTO(savedEntity);
     }
 
     @Override
@@ -53,6 +57,19 @@ public class ValorDosIndicesDeMaturidadeService extends ServiceCrudBase<ValorDos
     public List<Map<String, Object>> getValoresByEsteiraIdAndTipoMaturidade(Long esteiraId, TiposMaturidadeEnum tipoMaturidade) {
         return repository.findByEsteiraIdAndTipoMaturidade(esteiraId, tipoMaturidade);
     }
+    
+    public List<ValorDosIndicesDeMaturidadeDto> buscarDadosAtualizados(Long esteiraId, TiposMaturidadeEnum tipoMaturidade) {
+        List<ValorDosIndicesDeMaturidadeEntity> entities = repository.findLatestByEsteiraIdAndTipoMaturidade(esteiraId, tipoMaturidade);
+        Map<Long, ValorDosIndicesDeMaturidadeEntity> latestEntities = new HashMap<>();
+        for (ValorDosIndicesDeMaturidadeEntity entity : entities) {
+            Long itemId = entity.getItemDeMaturidade().getId();
+            if (!latestEntities.containsKey(itemId) || entity.getDataHoraValor().isAfter(latestEntities.get(itemId).getDataHoraValor())) {
+                latestEntities.put(itemId, entity);
+            }
+        }
+        return latestEntities.values().stream().map(mapper::modelToDTO).collect(Collectors.toList());
+    }
+
 
     /*public String getLatestItemDeMaturidadeByEsteiraId(Long esteiraId) {
         return repository.findLatestItemDeMaturidadeByEsteiraId(esteiraId).findFirst().orElse(null);

@@ -48,54 +48,50 @@ export class valorMaturidadeService {
       .pipe(catchError(this.handleError<any>('getValorMaturidadesByType')));
   }
 
-  /*getValorMaturidadesByEsteiraIdAndTipo(id : number, tipo: string): Observable<any> {
-        const url: string = `${environment.api}/indicesdematuridade/esteira/${id}/tipo/${tipo}`;
-        return this.http
-            .get<any>(url)
-            .pipe(catchError(this.handleError<any>("getValorMaturidadesByEsteiraIdAndType")));
-    }*/
-
-  getValorMaturidadesByEsteiraIdAndTecnica(id: number): Observable<any> {
-    const url: string = `${environment.api}/indicesdematuridade/esteira/${id}/tipo/TECNICA`;
+  getValoresByEsteiraIdAndTipoMaturidadeTecnicaLatest(id: number): Observable<any> {
+    const url: string = `${environment.api}/indicesdematuridade/esteira/${id}/tipo/TECNICA/latest`;
     return this.http
       .get<any>(url)
       .pipe(
         catchError(
-          this.handleError<any>('getValorMaturidadesByEsteiraIdAndTecnica')
+          this.handleError<any>(
+            'getValoresByEsteiraIdAndTipoMaturidadeLatest'
+          )
         )
       );
   }
 
-  getValorMaturidadesByEsteiraIdAndCultura(id: number): Observable<any> {
-    const url: string = `${environment.api}/indicesdematuridade/esteira/${id}/tipo/CULTURA`;
+  getValorMaturidadesByEsteiraIdAndCulturaLatest(id: number): Observable<any> {
+    const url: string = `${environment.api}/indicesdematuridade/esteira/${id}/tipo/CULTURA/latest`;
     return this.http
       .get<any>(url)
       .pipe(
         catchError(
-          this.handleError<any>('getValorMaturidadesByEsteiraIdAndCultura')
+          this.handleError<any>('getValorMaturidadesByEsteiraIdAndCulturaLatest')
         )
       );
   }
 
-  getValorMaturidadesByEsteiraIdAndProcesso(id: number): Observable<any> {
-    const url: string = `${environment.api}/indicesdematuridade/esteira/${id}/tipo/PROCESSO`;
+  getValorMaturidadesByEsteiraIdAndProcessoLatest(id: number): Observable<any> {
+    const url: string = `${environment.api}/indicesdematuridade/esteira/${id}/tipo/PROCESSO/latest`;
     return this.http
       .get<any>(url)
       .pipe(
         catchError(
-          this.handleError<any>('getValorMaturidadesByEsteiraIdAndProcesso')
+          this.handleError<any>('getValorMaturidadesByEsteiraIdAndProcessoLatest')
         )
       );
   }
 
-  getValorMaturidadesByEsteiraIdAndMetrica(id: number): Observable<any> {
-    const url: string = `${environment.api}/indicesdematuridade/esteira/${id}/tipo/METRICA`;
+  getValorMaturidadesByEsteiraIdAndMetricaLatest(id: number): Observable<any> {
+    const url: string = `${environment.api}/indicesdematuridade/esteira/${id}/tipo/METRICA/latest`;
     return this.http
       .get<any>(url)
       .pipe(
         catchError(
-          this.handleError<any>('getValorMaturidadesByEsteiraIdAndMetrica')
+          this.handleError<any>('getValorMaturidadesByEsteiraIdAndMetricaLatest')
         )
       );
   }
+
 }
