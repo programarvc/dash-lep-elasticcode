@@ -10,6 +10,8 @@
                       <span *ngFor="let empresa of empresasByColaborador let isFirst = first">{{ isFirst ? '' : ', '
                           }} {{empresa.empresa.nome}}</span>
                   </span>
+                  
+                  
                   <span class="occupation">
                       <span *ngFor="let habilidade of habilidadesByColaborador; let isFirst = first">{{ isFirst
                           ? '' : ' - ' }} {{habilidade.habilidade.nome}}</span>

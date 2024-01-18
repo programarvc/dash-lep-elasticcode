@@ -59,7 +59,6 @@ export class TecnicaComponent implements OnInit {
   public maturidade: Maturidade[] = [];
   public tipo: TiposEnum[] = [];
   public tiposMaturidade: TiposMaturidadeEnum[] = [];
-  public valorDosIndicesDeMaturidade: ValorDosIndicesDeMaturidade[] = [];
   public valorMaturidadeTecnica: ValorDosIndicesDeMaturidadeByEsteiraIdAndTecnica[] = [];
   public valorMaturidadeProcesso:  ValorDosIndicesDeMaturidadeByEsteiraIdAndTecnica[] =[];
   public valorMaturidadeMetrica:  ValorDosIndicesDeMaturidadeByEsteiraIdAndTecnica[] =[];
@@ -80,43 +79,40 @@ export class TecnicaComponent implements OnInit {
       const id = params.get('esteiraId');
       if (id) {
         this.setCurrent(parseInt(id));
-        this.getValoresByEsteiraIdAndTipoMaturidadeTecnicaLatest(parseInt(id));
-        this.getValorMaturidadesByEsteiraIdAndProcessoLatest(parseInt(id));
-        this.getValorMaturidadesByEsteiraIdAndMetricaLatest(parseInt(id));
+        this.getValoresByEsteiraIdAndTipoMaturidadeTecnica(parseInt(id));
+        this.getValorMaturidadesByEsteiraIdAndProcesso(parseInt(id));
+        this.getValorMaturidadesByEsteiraIdAndMetrica(parseInt(id));
 
       }
     });
   }
 
-
-
   public async setCurrent(id: number) {
-   this.getValoresByEsteiraIdAndTipoMaturidadeTecnicaLatest(id);
-    this.getValorMaturidadesByEsteiraIdAndProcessoLatest(id);
-    this.getValorMaturidadesByEsteiraIdAndMetricaLatest(id);
-
+   this.getValoresByEsteiraIdAndTipoMaturidadeTecnica(id);
+    this.getValorMaturidadesByEsteiraIdAndProcesso(id);
+    this.getValorMaturidadesByEsteiraIdAndMetrica(id);
 
   }
-
 
   public getValorMaturidades(): void {
     this.valorMaturidadeService.getValorMaturidades().subscribe((response) => {
       this.valorMaturidades = response;
     });
   }
-  public getValorMaturidadesByEsteiraIdAndProcessoLatest(id: number): void{
+
+  public getValorMaturidadesByEsteiraIdAndProcesso(id: number): void{
     this.valorMaturidadeService.getValorMaturidadesByEsteiraIdAndProcessoLatest(id).subscribe((response) =>{
       this.valorMaturidadeProcesso = response;
     });
   }
 
-  public getValorMaturidadesByEsteiraIdAndMetricaLatest(id: number): void{
+  public getValorMaturidadesByEsteiraIdAndMetrica(id: number): void{
     this.valorMaturidadeService.getValorMaturidadesByEsteiraIdAndMetricaLatest(id).subscribe((response) =>{
       this.valorMaturidadeMetrica = response;
     });
   }
 
-  getValoresByEsteiraIdAndTipoMaturidadeTecnicaLatest(id: number): void{
+  getValoresByEsteiraIdAndTipoMaturidadeTecnica(id: number): void{
     this.valorMaturidadeService.getValoresByEsteiraIdAndTipoMaturidadeTecnicaLatest(id).subscribe((response) =>{
       this.valorMaturidadeTecnica = response;
     });

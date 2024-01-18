@@ -13,22 +13,21 @@ import awsconfig from 'aws-exports';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { SidebarMenuComponent } from './components/sidebar-menu/sidebar-menu.component';
 import { TecnicaComponent } from './components/tecnica/tecnica.component';
+import { MaturidadeLgComponent } from './components/maturidade-lg/maturidade-lg.component';
+import { MaturidadeSmComponent } from './components/maturidade-sm/maturidade-sm.component';
 
 //Pages
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { ColaboradorComponent } from './pages/colaborador/colaborador.component';
 import { DashProjetoComponent } from './pages/dash-projeto/dash-projeto.component';
-import { LoginComponent } from './pages/login/login.component';
-
 import { AmplifyUiLoginComponent } from './pages/amplify-ui-login/amplify-ui-login.component';
-
 
 Amplify.configure(awsconfig);
 
 @NgModule({
-  declarations: [AppComponent, SearchBarComponent, ColaboradorComponent, DashProjetoComponent, SidebarMenuComponent, TecnicaComponent, LoginComponent, AmplifyUiLoginComponent],
-  imports: [HttpClientModule, BrowserModule, AmplifyAuthenticatorModule, AppRoutingModule,FormsModule, NgbModule, FormsModule],
+  declarations: [AppComponent, SearchBarComponent, ColaboradorComponent, DashProjetoComponent, SidebarMenuComponent, TecnicaComponent, MaturidadeLgComponent, MaturidadeSmComponent, AmplifyUiLoginComponent],
+  imports: [HttpClientModule, BrowserModule, AppRoutingModule,FormsModule, NgbModule, AmplifyAuthenticatorModule],
   providers: [],
   bootstrap: [AppComponent],
 })
