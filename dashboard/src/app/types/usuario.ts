@@ -1,7 +1,6 @@
 export interface UserEsteira {
   id: number;
   username: string;
-  esteiraId: number;
   esteira: EsteiraDeDesenvolvimento;
 }
 
