@@ -54,12 +54,12 @@ public class HabilidadeService extends ServiceCrudBase<HabilidadeDto> {
         return salvos.stream().map(this.mapper::modelToDTO).toList();
     }
 
+    // No seu serviço HabilidadeService.java
     @Override
     public HabilidadeDto salvar(HabilidadeDto payload) {
-        String nomeTrimmed = payload.getNome().trim().toLowerCase();
-        Optional<HabilidadeEntity> existingHabilidade = this.repository.findByNome(nomeTrimmed);
+        Optional<HabilidadeEntity> existingHabilidade = this.repository.findByNome(payload.getNome());
         if (existingHabilidade.isPresent()) {
-            throw new RuntimeException("Habilidade já existe");
+            throw new RuntimeException("Habilidade ja existe");
         }
         HabilidadeEntity habilidadeSalva = this.repository.save(this.mapper.dtoToModel(payload));
         return this.mapper.modelToDTO(habilidadeSalva);
