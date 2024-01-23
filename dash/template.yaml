@@ -15,6 +15,9 @@ Globals:
         SECURITY_GROUP_ID: !Ref SecurityGroupId
         SUBNET_1_ID: !Ref Subnet1Id
         SUBNET_2_ID: !Ref Subnet2Id
+        USER_POOL_ID: !Ref UserPoolId
+        ACESS_KEY_ID: !Ref AcessKeyId
+        SECRET_ACESS_KEY: !Ref SecretAcessKey
 
 Parameters:
   SecurityGroupId:
@@ -35,6 +38,12 @@ Parameters:
   DBPassword:
     Type: String
   DBName:
+    Type: String
+  UserPoolId:
+    Type: String
+  AcessKeyId:
+    Type: String
+  SecretAcessKey:
     Type: String
 
 Resources:
