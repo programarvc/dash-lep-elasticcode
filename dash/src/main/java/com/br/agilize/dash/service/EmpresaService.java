@@ -3,6 +3,7 @@ package com.br.agilize.dash.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.br.agilize.dash.model.entity.EmpresaColaboradorEntity;
@@ -56,10 +57,15 @@ public class EmpresaService extends ServiceCrudBase<EmpresaDto> {
         return salvos.stream().map(this.mapper::modelToDTO).toList();
     }
 
+    // No seu serviço
     @Override
     public EmpresaDto salvar(EmpresaDto payload) {
-        EmpresaEntity colaboradorSalvo = this.repository.save(this.mapper.dtoToModel(payload));
-        return this.mapper.modelToDTO(colaboradorSalvo);
+        Optional<EmpresaEntity> existingEmpresa = this.repository.findByNome(payload.getNome());
+        if (existingEmpresa.isPresent()) {
+            throw new RuntimeException("Empresa ja existe");
+        }
+        EmpresaEntity empresaSalva = this.repository.save(this.mapper.dtoToModel(payload));
+        return this.mapper.modelToDTO(empresaSalva);
     }
 
     @Override

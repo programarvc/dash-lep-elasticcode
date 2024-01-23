@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -55,9 +56,16 @@ public class HabilidadeService extends ServiceCrudBase<HabilidadeDto> {
 
     @Override
     public HabilidadeDto salvar(HabilidadeDto payload) {
-        HabilidadeEntity colaboradorSalvo = this.repository.save(this.mapper.dtoToModel(payload));
-        return this.mapper.modelToDTO(colaboradorSalvo);
+        String nomeTrimmed = payload.getNome().trim().toLowerCase();
+        Optional<HabilidadeEntity> existingHabilidade = this.repository.findByNome(nomeTrimmed);
+        if (existingHabilidade.isPresent()) {
+            throw new RuntimeException("Habilidade já existe");
+        }
+        HabilidadeEntity habilidadeSalva = this.repository.save(this.mapper.dtoToModel(payload));
+        return this.mapper.modelToDTO(habilidadeSalva);
     }
+
+    
     
     @Override
     public void excluirPorId(Long id) {

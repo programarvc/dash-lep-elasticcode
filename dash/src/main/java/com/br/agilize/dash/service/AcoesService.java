@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -53,15 +54,17 @@ public class AcoesService extends ServiceCrudBase<AcoesDto> {
         return salvos.stream().map(this.mapper::modelToDTO).toList();
     }
 
+    
     @Override
     public AcoesDto salvar(AcoesDto payload) {
-        AcoesEntity entity = this.mapper.dtoToModel(payload);
-        if (entity == null) {
-            throw new IllegalArgumentException("AcoesEntity cannot be null");
+        Optional<AcoesEntity> existingAcao = this.repository.findByNome(payload.getNome());
+        if (existingAcao.isPresent()) {
+            throw new RuntimeException("Ação ja existe");
         }
-        AcoesEntity salvo = this.repository.save(entity);
-        return this.mapper.modelToDTO(salvo);
+        AcoesEntity acaoSalva = this.repository.save(this.mapper.dtoToModel(payload));
+        return this.mapper.modelToDTO(acaoSalva);
     }
+
     @Override
     public void excluirPorId(Long id) {
         this.repository.deleteById(id);
