@@ -9,7 +9,7 @@ import { environment } from "src/environments/environment";
     providedIn: "root",
 })
 
-export class UserService {
+export class TimeService {
   getUserById() {
     throw new Error('Method not implemented.');
   }

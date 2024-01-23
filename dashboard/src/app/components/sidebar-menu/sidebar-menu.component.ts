@@ -8,8 +8,16 @@ import {
   TiposEnum
 } from './../../types/usuario';
 
-import { UserService } from 'src/services/usuario/usuario.service';
+import {
+  TimeEsteira,
+  Time,
+  Colaborador,
+  Habilidade,
+  Empresa
+} from './../../types/time-types';
 
+import { UserService } from 'src/services/usuario/usuario.service';
+import { TimeService } from 'src/services/time/time.service';
 
 @Component({
   selector: 'app-sidebar-menu',
@@ -20,14 +28,41 @@ export class SidebarMenuComponent {
   public cognitoUser: UserEsteira[] = [];
   public esteiras: EsteiraDeDesenvolvimento[] = [];
   public tipo: TiposEnum[] = [];
+  public timeEsteira: TimeEsteira[] = [];
+  public time: Time[] = [];
+  public colaborador: Colaborador[] = [];
+  public habilidades: Habilidade[] = [];
+  public empresa: Empresa[] = [];
 
-  constructor(private cognitoService: CognitoService, private userService: UserService, private router: Router) { }
+  constructor(
+    private cognitoService: CognitoService, 
+    private userService: UserService, 
+    private router: Router,
+    private timeService: TimeService
+  ) { }
 
   public signOut(){
     this.cognitoService.signOut()
       .then(() => {
         this.router.navigate(['/login']);
       })
+  }
+
+  public async devDash() {
+    const username = await this.cognitoService.getLoggedInUsername();
+
+    this.userService.getEsteiraIdAndUsername().subscribe((response) => {
+      this.cognitoUser = response;
+
+      const user = this.cognitoUser.find(user => user.username === username);
+
+      if(user) {
+        const esteiraId = user.esteiraId || (user.esteira && user.esteira.id);
+        if(esteiraId) {
+          this.router.navigate(['/1']);
+        }
+      }
+    })
   }
 
   public async getEsteiraIdAndUsername(){
@@ -39,12 +74,10 @@ export class SidebarMenuComponent {
       const user = this.cognitoUser.find(user => user.username === username);
 
       if(user) {
-        console.log(user);
         const esteiraId = user.esteiraId || (user.esteira && user.esteira.id);
         if(esteiraId) {
           this.router.navigate([`/dashboard/${esteiraId}`]);
         }
-        
       }
     })
   }
