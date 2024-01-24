@@ -74,6 +74,7 @@ export class ColaboradorComponent implements OnInit {
       this.getAcoes(colaborador.id);
       this.getHabilidades(colaborador.id);
     }
+    
   }
 
   public async getColaboradores() {

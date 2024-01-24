@@ -37,6 +37,13 @@ export class TimeService {
       .pipe(catchError(this.handleError<any>('getTimeEsteiraById')));
   }
 
+  getColaboradoresByTimeId(id: number): Observable<any> {
+    const url: string = `${environment.api}/time/colaboradores/${id}`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>("getColaboradoresByTimeId")));
+  }
+
 
 
 

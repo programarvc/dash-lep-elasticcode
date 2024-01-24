@@ -1,5 +1,11 @@
+
 export interface TimeEsteira {
     id: number;
+    time: Time;
+    colaborador: Colaborador;
+    esteira: EsteiraDeDesenvolvimento;
+}
+export interface TimeByEsteiraId{
     time: Time;
     colaborador: Colaborador;
     esteira: EsteiraDeDesenvolvimento;
