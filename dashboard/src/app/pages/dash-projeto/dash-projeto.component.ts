@@ -38,6 +38,8 @@ import { valorMaturidadeService } from './../../../services/valor-maturidade/val
   styleUrls: ['./dash-projeto.component.sass'],
 })
 export class DashProjetoComponent implements OnInit {
+  public uniqueTiposMaturidade: Set<string> = new Set();
+  
   public esteiras: EsteiraDeDesenvolvimento[] = [];
   public currentEsteira: EsteiraDeDesenvolvimento = {
     id: 0,
@@ -48,7 +50,17 @@ export class DashProjetoComponent implements OnInit {
       nome: '',
     },
   };
+  private updateUniqueTiposMaturidade(): void {
+    // Limpe o conjunto antes de atualizar
+    this.uniqueTiposMaturidade.clear();
 
+    // Preencha o conjunto com valores únicos
+    this.valorMaturidades.forEach((valor) => {
+        if (valor.itemDeMaturidade.tipoMaturidade) {
+            this.uniqueTiposMaturidade.add(valor.itemDeMaturidade.tipoMaturidade);
+        }
+    });
+}
   public currentEmpresa: Empresa = {
     id: 0,
     nome: '',
@@ -201,6 +213,7 @@ export class DashProjetoComponent implements OnInit {
   }
 
   public async setCurrent(id: number) {
+    this.uniqueTiposMaturidade = new Set(this.valorMaturidades.map(valor => valor.itemDeMaturidade.tipoMaturidade));
     const maturidade = this.maturidade.find(
       (maturidade) => maturidade.esteira.id === id
     );
@@ -289,6 +302,7 @@ export class DashProjetoComponent implements OnInit {
   }
 
   public getValorMaturidades(): void {
+    this.updateUniqueTiposMaturidade();
     this.valorMaturidadeService.getValorMaturidades().subscribe((response) => {
       this.valorMaturidades = response;
     });

@@ -127,10 +127,6 @@
 
               </ul>
             </div>
-            <!-- Teste -->
-
-
-            <!-- Fim do Teste -->
           </div>
         </div>
       </div>
@@ -143,7 +139,6 @@
         <div class="tituloLegendaCultura">
           <div class="tituloLegendaCultura1">
             <h2 class="titulo-cultura">Cultura</h2>
-            
           </div>
           <div class="metricas-cultura">
             <div class="ellipse-roxa"></div>
@@ -152,36 +147,29 @@
             <p class="metricas-texto-esperado-cultura">Esperado</p>
           </div>
       </div>
-
+      <div class="pontilhados-cultura">
+        <div class="pontilhados-cultura2">
+          <div class="pontilhado-cultura"></div>
+          <div class="pontilhado-cultura"></div>
+          <div class="pontilhado-cultura"></div>
+          <div class="pontilhado-cultura"></div>
+          <div class="pontilhado-cultura"></div>
+          <div class="pontilhado-cultura"></div>
+          <div class="pontilhado-cultura"></div>
+          <div class="pontilhado-cultura"></div>
+          <div class="pontilhado-cultura"></div>
+          <div class="pontilhado-cultura"></div>
+        </div>
+      </div>
         <div class="cultura-geral">
           <div class="cultura-textos">
             <p class="tecnicas-texto" *ngFor="let valor of valorMaturidades">
               <ng-container *ngIf="valor.itemDeMaturidade.tipoMaturidade === 'CULTURA'">
                   {{valor.itemDeMaturidade.nome}}
               </ng-container>
-          </p>
-            <!-- 
-            <p class="cultura-texto">Satisfação no Trabalho</p>
-            <p class="cultura-texto">Cultura de Westrum</p>
-            <p class="cultura-texto">Cultura de Aprendizado</p>
-            <p class="cultura-texto">Liderança Transformacional</p>-->
+            </p>
           </div>
-
           <div class="processo-cultura">
-            <div class="pontilhados-cultura">
-              <div class="pontilhados-cultura2">
-                <div class="pontilhado-cultura"></div>
-                <div class="pontilhado-cultura"></div>
-                <div class="pontilhado-cultura"></div>
-                <div class="pontilhado-cultura"></div>
-                <div class="pontilhado-cultura"></div>
-                <div class="pontilhado-cultura"></div>
-                <div class="pontilhado-cultura"></div>
-                <div class="pontilhado-cultura"></div>
-                <div class="pontilhado-cultura"></div>
-                <div class="pontilhado-cultura"></div>
-              </div>
-
               <div class="barras">
                 <ng-container *ngFor="let item of valorMaturidadeCultura; let i = index">
                   <div class="cultura-barra-meta" [ngStyle]="{'width': item.valorEsperado * 100 + '%'}">
@@ -189,20 +177,19 @@
                   </div>
                 </ng-container>
               </div>
-            </div>
-            <div class="numeros-cultura">
-              <p class="tecnicas-num">0</p>
-              <p class="tecnicas-num">10</p>
-              <p class="tecnicas-num">20</p>
-              <p class="tecnicas-num">30</p>
-              <p class="tecnicas-num">40</p>
-              <p class="tecnicas-num">50</p>
-              <p class="tecnicas-num">60</p>
-              <p class="tecnicas-num">70</p>
-              <p class="tecnicas-num">80</p>
-              <p class="tecnicas-num">90</p>
-              <p class="tecnicas-num">100</p>
-            </div>
+          </div>
+          <div class="numeros-cultura">
+            <p class="cultura-num">0</p>
+            <p class="cultura-num">10</p>
+            <p class="cultura-num">20</p>
+            <p class="cultura-num">30</p>
+            <p class="cultura-num">40</p>
+            <p class="cultura-num">50</p>
+            <p class="cultura-num">60</p>
+            <p class="cultura-num">70</p>
+            <p class="cultura-num">80</p>
+            <p class="cultura-num">90</p>
+            <p class="cultura-num">100</p>
           </div>
         </div>
       </div>
@@ -214,9 +201,6 @@
     </div>
   </div>
 </div>
-
 </div>
-
 </div>
-
 </section>

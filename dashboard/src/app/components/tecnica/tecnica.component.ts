@@ -23,6 +23,29 @@ import { valorMaturidadeService } from 'src/services/valor-maturidade/valor-matu
 
 export class TecnicaComponent implements OnInit {
 
+
+    // Adicione esta propriedade ao seu componente
+    public uniqueTiposMaturidade: Set<string> = new Set();
+
+    // ...
+
+    
+
+    private updateUniqueTiposMaturidade(): void {
+        // Limpe o conjunto antes de atualizar
+        this.uniqueTiposMaturidade.clear();
+
+        // Preencha o conjunto com valores únicos
+        this.valorMaturidades.forEach((valor) => {
+            if (valor.itemDeMaturidade.tipoMaturidade) {
+                this.uniqueTiposMaturidade.add(valor.itemDeMaturidade.tipoMaturidade);
+            }
+        });
+    }
+
+    // ...
+
+
   baseTabela:number[] = [0,10,20,30,40,50,60,70,80,90,100];
 
   public valorMaturidades: ValorDosIndicesDeMaturidade[] = [];
@@ -93,6 +116,7 @@ export class TecnicaComponent implements OnInit {
 
   public async setCurrent(id: number) {
     this.getValorMaturidadesByEsteiraIdAndTecnica(id);
+     this.uniqueTiposMaturidade = new Set(this.valorMaturidades.map(valor => valor.itemDeMaturidade.tipoMaturidade));
    /* const valorMaturidade = this.valorDosIndicesDeMaturidade.find(
       (valorMaturidade) => valorMaturidade.maturidade.esteira.id === id
     );
@@ -109,6 +133,9 @@ export class TecnicaComponent implements OnInit {
   public getValorMaturidades(): void {
     this.valorMaturidadeService.getValorMaturidades().subscribe((response) => {
       this.valorMaturidades = response;
+        // Atualize o conjunto de tiposMaturidade
+        this.updateUniqueTiposMaturidade();
+      
     });
   }
 
@@ -132,6 +159,11 @@ export class TecnicaComponent implements OnInit {
     });
   }
 
-
+  calculateWidth(): number {
+    // Substitua isso pela lógica real de cálculo da largura
+    // Exemplo: largura base + (número de barras * largura de cada barra)
+    return 200 + (this.valorMaturidadeTecnica.length * 30);
+  }
+  
 
 }
