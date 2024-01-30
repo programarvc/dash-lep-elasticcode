@@ -87,15 +87,6 @@ public class EmpresaService extends ServiceCrudBase<EmpresaDto> {
     }
 
 
-
-    public List<EmpresaColaboradorDto> obterEmpresasColaborador(Long colaboradorId) {
-        ColaboradorEntity colaborador = colaboradorMapper.dtoToModel(colaboradorService.obterPorId(colaboradorId));
-        return this.empresaColaboradorRepository
-                .findByColaborador(colaborador).stream()
-                .map(this.empresaColaboradorMapper::modelToDTO).collect(Collectors.toList());
-
-    }
-
     public List<EmpresaColaboradorDto> obterEmpresasColaboradorAll (Long id) {
         List<EmpresaColaboradorEntity> empresaColaboradorEntities = this.empresaColaboradorRepository.findByEmpresaId(id);
         return empresaColaboradorEntities.stream()
@@ -115,6 +106,14 @@ public class EmpresaService extends ServiceCrudBase<EmpresaDto> {
                     return ids;
                 })
                 .collect(Collectors.toList());
+    }
+
+    public List<EmpresaColaboradorDto> obterEmpresasColaborador(Long colaboradorId) {
+        ColaboradorEntity colaborador = colaboradorMapper.dtoToModel(colaboradorService.obterPorId(colaboradorId));
+        return this.empresaColaboradorRepository
+                .findByColaborador(colaborador).stream()
+                .map(this.empresaColaboradorMapper::modelToDTO).collect(Collectors.toList());
+
     }
 
     public List<EmpresaColaboradorDto> findByEmpresa(Long id) {

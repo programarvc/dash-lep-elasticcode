@@ -13,7 +13,7 @@ public class HabilidadeColaboradorEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
+    
     @ManyToOne
     private HabilidadeEntity habilidade;
 

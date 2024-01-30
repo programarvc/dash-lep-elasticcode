@@ -1,7 +1,9 @@
 package com.br.agilize.dash.model.entity.dashboardEntity;
 
-import com.br.agilize.dash.model.entity.ColaboradorEntity;
 
+
+import com.br.agilize.dash.model.entity.ColaboradorEntity;
+import java.util.*;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,7 +13,7 @@ import lombok.ToString;
 @Data
 @ToString
 @Entity
-public class TimeEsteiraEntity {
+public class TimeColaboradorEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -23,9 +25,5 @@ public class TimeEsteiraEntity {
     @ManyToOne
     @JoinColumn(name = "colaborador_id")
     private ColaboradorEntity colaborador;  
-
-    @ManyToOne
-    @JoinColumn(name = "esteira_id")
-    private EsteiraDeDesenvolvimentoEntity esteira;  
 
 }

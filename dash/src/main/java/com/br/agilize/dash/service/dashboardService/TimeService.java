@@ -1,6 +1,7 @@
 package com.br.agilize.dash.service.dashboardService;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -8,14 +9,21 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.br.agilize.dash.exception.DashNotFoundException;
-import com.br.agilize.dash.mapper.dashboardMapper.TimeEsteiraMapper;
+import com.br.agilize.dash.mapper.ColaboradorMapper;
+import com.br.agilize.dash.mapper.dashboardMapper.EsteiraDeDesenvolvimentoMapper;
+import com.br.agilize.dash.mapper.dashboardMapper.TimeColaboradorMapper;
 import com.br.agilize.dash.mapper.dashboardMapper.TimeMapper;
+import com.br.agilize.dash.model.dto.ColaboradorDto;
+import com.br.agilize.dash.model.dto.dashboardDto.TimeColaboradorDto;
 import com.br.agilize.dash.model.dto.dashboardDto.TimeDto;
-import com.br.agilize.dash.model.dto.dashboardDto.TimeEsteiraDto;
+import com.br.agilize.dash.model.entity.ColaboradorEntity;
+import com.br.agilize.dash.model.entity.dashboardEntity.EsteiraDeDesenvolvimentoEntity;
+import com.br.agilize.dash.model.entity.dashboardEntity.TimeColaboradorEntity;
 import com.br.agilize.dash.model.entity.dashboardEntity.TimeEntity;
-import com.br.agilize.dash.model.entity.dashboardEntity.TimeEsteiraEntity;
-import com.br.agilize.dash.repository.dashboardRepository.TimeEsteiraRepository;
+import com.br.agilize.dash.repository.ColaboradorRepository;
+import com.br.agilize.dash.repository.dashboardRepository.TimeColaboradorRepository;
 import com.br.agilize.dash.repository.dashboardRepository.TimeRepository;
+import com.br.agilize.dash.service.ColaboradorService;
 import com.br.agilize.dash.service.ServiceCrudBase;
 
 
@@ -29,11 +37,27 @@ public class TimeService extends ServiceCrudBase<TimeDto> {
     private TimeMapper mapper;
 
     @Autowired
-    private TimeEsteiraMapper timeEsteiraMapper;
+    private TimeColaboradorMapper timeColaboradorMapper;
+
+    @Autowired
+    private EsteiraDeDesenvolvimentoMapper esteiraMapper;
+
+    @Autowired
+    private ColaboradorMapper colaboradorMapper;
 
 
     @Autowired 
-    private TimeEsteiraRepository timeEsteiraRepository;
+    private TimeColaboradorRepository timeColaboradorRepository;
+
+    @Autowired
+    private ColaboradorRepository colaboradorRepositor;
+
+    @Autowired
+    private EsteiraDeDesenvolvimentoService esteiraService;
+
+    @Autowired
+    private ColaboradorService colaboradorService;
+
 
 
     @Override
@@ -51,9 +75,6 @@ public class TimeService extends ServiceCrudBase<TimeDto> {
 
     @Override
     public TimeDto salvar(TimeDto payload) {
-        if (repository.existsByNome(payload.getNome())) {
-            throw new DataIntegrityViolationException("Time com name " + payload.getNome() + " já existe");
-        }
         TimeEntity TimeSalvo = this.repository.save(this.mapper.dtoToModel(payload));
         return this.mapper.modelToDTO(TimeSalvo);
     }
@@ -65,16 +86,54 @@ public class TimeService extends ServiceCrudBase<TimeDto> {
 
    
 
-    public TimeEsteiraDto salvarTimeEsteira(TimeEsteiraDto payload) {
-        TimeEsteiraEntity entity = this.timeEsteiraMapper.dtoToModel(payload);
+    public TimeColaboradorDto salvarTimeColaborador(TimeColaboradorDto payload) {
+        TimeColaboradorEntity entity = this.timeColaboradorMapper.dtoToModel(payload);
         if (entity == null) {
             throw new IllegalArgumentException("Payload cannot be mapped to entity");
         }
-        return timeEsteiraMapper.modelToDTO(this.timeEsteiraRepository.save(entity));
+        return timeColaboradorMapper.modelToDTO(this.timeColaboradorRepository.save(entity));
     }
 
-    public List<Map<String, String>> buscarNomesDosTimesEDosColaboradoresPorEsteiraId(Long esteiraId) {
-        return this.timeEsteiraRepository.findTimeAndColaboradorNamesByEsteiraId(esteiraId);
+    /*public List<TimeColaboradorDto> findTimeAndColaboradorByEsteiraId(Long esteiraId) {
+        List<TimeColaboradorEntity> timeAndColaboradores = this.timeColaboradorRepository.findTimeAndColaboradorByEsteiraId(esteiraId);
+        return timeAndColaboradores.stream().map(this.timeColaboradorMapper::modelToDTO).collect(Collectors.toList());
     }
+    
+    public List<ColaboradorDto> findColaboradoresByEsteiraIdAndNomeTime(Long esteiraId, String nomeTime) {
+        List<ColaboradorEntity> colaboradores = this.timeColaboradorRepository.findColaboradoresByEsteiraIdAndNomeTime(esteiraId, nomeTime);
+        return colaboradores.stream().map(this.ColaboradorMapper::modelToDTO).collect(Collectors.toList());
+    }
+    
+    public List<TimeColaboradorDto> findTimesByEsteiraIdAndColaboradorId(Long esteiraId, Long colaboradorId) {
+        List<TimeColaboradorEntity> times = this.repository.findTimesByEsteiraIdAndColaboradorId(esteiraId, colaboradorId);
+        return times.stream().map(this.mapper::modelToDTO).collect(Collectors.toList());
+    
+        }*/
+
+        public List<TimeDto> findTimesByEsteiraIdAndColaboradorId(Long esteiraId, Long colaboradorId) {
+            List <TimeEntity> times = this.timeColaboradorRepository.findTimesByEsteiraIdAndColaboradorId(esteiraId, colaboradorId);
+            return times.stream().map(this.mapper::modelToDTO).collect(Collectors.toList());
+          
+        }
+
+public List<ColaboradorDto> findColaboradoresByEsteiraIdAndTimeId(Long esteiraId, Long timeId) {
+    List<ColaboradorEntity> colaboradores = this.timeColaboradorRepository.findColaboradoresByEsteiraIdAndTimeId(esteiraId, timeId);
+    return colaboradores.stream().map(this.colaboradorMapper::modelToDTO).collect(Collectors.toList());
+}
+
+public List<ColaboradorDto> getColaboradoresByEsteiraId(Long esteiraId) {
+    List<ColaboradorEntity> colaboradores = this.timeColaboradorRepository.findColaboradoresByEsteiraId(esteiraId);
+    return colaboradores.stream().map(this.colaboradorMapper::modelToDTO).collect(Collectors.toList());
+}
+
+public List<Object[]> getTimesByEsteiraId(Long esteiraId) {
+    List<Object[]> times = this.timeColaboradorRepository.findTimesByEsteiraId(esteiraId);
+    return times;
+}
+
+public List<Object[]> findColaboradoresByTimeId(Long timeId) {
+    List<Object[]> colaboradores = this.timeColaboradorRepository.findColaboradoresByTimeId(timeId);
+    return colaboradores;
+}
    
 }

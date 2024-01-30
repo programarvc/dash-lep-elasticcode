@@ -38,4 +38,6 @@ public class ColaboradorEntity {
     @JoinTable(name = "habilidadecolaboradorentity", joinColumns = @JoinColumn(name = "colaborador_id"), inverseJoinColumns = @JoinColumn(name = "habilidade_id"))
     private List<HabilidadeEntity> habilidades;
 
+    
+
 }

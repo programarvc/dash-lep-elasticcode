@@ -1,6 +1,7 @@
 package com.br.agilize.dash.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,4 +47,14 @@ public class ColaboradorService extends ServiceCrudBase<ColaboradorDto> {
     public void excluirPorId(Long id) {
         this.repository.deleteById(id);
     }
+
+    public List<ColaboradorDto> getColaboradoresByEsteiraId(Long esteiraId) {
+        List <ColaboradorEntity> colaboradores = this.repository.findColaboradoresByEsteiraId(esteiraId);
+        return colaboradores.stream().map(this.mapper::modelToDTO).collect(Collectors.toList());
+    }
+
+   /* public List<ColaboradorDto> getColaboradoresByEsteiraId(Long esteiraId) {
+        List<ColaboradorEntity> colaboradores = this.repository.getColaboradoresByEsteiraId(esteiraId);
+        return colaboradores.stream().map(this.mapper::modelToDTO).collect(Collectors.toList());
+    }*/
 }
