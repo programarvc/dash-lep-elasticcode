@@ -2,18 +2,19 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CognitoService } from 'src/app/cognito.service';
 
-import { 
+import {
   UserEsteira,
   EsteiraDeDesenvolvimento,
   TiposEnum
 } from './../../types/usuario';
 
 import {
-  TimeEsteira,
-  Time,
+  ColaboradorAndTimeEsteiraId,
+  TimeByEsteiraId,
+  TimeColaborador,
   Colaborador,
   Habilidade,
-  Empresa
+  Empresa,
 } from './../../types/time-types';
 
 import { UserService } from 'src/services/usuario/usuario.service';
@@ -28,15 +29,14 @@ export class SidebarMenuComponent {
   public cognitoUser: UserEsteira[] = [];
   public esteiras: EsteiraDeDesenvolvimento[] = [];
   public tipo: TiposEnum[] = [];
-  public timeEsteira: TimeEsteira[] = [];
-  public time: Time[] = [];
+  public timesColaborador: TimeColaborador[] = [];
   public colaborador: Colaborador[] = [];
   public habilidades: Habilidade[] = [];
   public empresa: Empresa[] = [];
 
   constructor(
-    private cognitoService: CognitoService, 
-    private userService: UserService, 
+    private cognitoService: CognitoService,
+    private userService: UserService,
     private router: Router,
     private timeService: TimeService
   ) { }

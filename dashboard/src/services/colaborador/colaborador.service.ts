@@ -25,4 +25,11 @@ export class ColaboradorService {
       .get<any>(url)
       .pipe(catchError(this.handleError<any>('getAllColaboradores')));
   }
+
+  getColaboradoresByEsteiraId(id: number): Observable<any> {
+    const url: string = `${environment.api}/colaborador/esteira/${id}`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>('getColaboradoresByEsteiraId')));
+  }
 }

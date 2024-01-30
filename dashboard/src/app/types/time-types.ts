@@ -1,19 +1,37 @@
-
-export interface TimeEsteira {
-    id: number;
-    time: Time;
-    colaborador: Colaborador;
-    esteira: EsteiraDeDesenvolvimento;
-}
-export interface TimeByEsteiraId{
-    time: Time;
-    colaborador: Colaborador;
-    esteira: EsteiraDeDesenvolvimento;
-}
-
 export interface Time {
     id: number;
-    nome: string;
+    nomeTime: string;
+    esteira: EsteiraDeDesenvolvimento;
+}
+
+export interface TimeColaborador {
+    id: number;
+    time: Time;
+    colaborador: Colaborador;
+
+}
+export interface TimeByEsteiraId{
+  id: number;
+  time: Time;
+  colaborador: Colaborador;
+}
+
+export interface ColaboradorByTimeId{
+  id: number;
+  time: Time;
+  colaborador: Colaborador;
+}
+
+export interface ColaboradorByEsteiraId{
+  id: number;
+  time: Time;
+  colaborador: Colaborador;
+}
+
+export interface ColaboradorAndTimeEsteiraId{
+  id: number;
+  time: Time;
+  colaborador: Colaborador;
 }
 
 export interface Colaborador {

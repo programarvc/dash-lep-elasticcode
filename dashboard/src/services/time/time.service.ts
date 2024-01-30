@@ -30,21 +30,42 @@ export class TimeService {
       .pipe(catchError(this.handleError<any>("getTimes")));
   }
 
-  getTimeEsteiraById(id: number): Observable<any> {
-    const url: string = `${environment.api}/time/esteira/${id}`;
-    return this.http
-      .get<any>(url)
-      .pipe(catchError(this.handleError<any>('getTimeEsteiraById')));
+  getColaboradoresByEsteiraIdAndTimeId(esteiraId: number, timeId: number): Observable<any> {
+      const url: string = `${environment.api}/time/esteira/${esteiraId}/time/${timeId}`;
+      return this.http
+        .get<any>(url)
+        .pipe(catchError(this.handleError<any>('getTimeAndColaboradorByEsteiraIdAndNomeTime')));
   }
 
-  getColaboradoresByTimeId(id: number): Observable<any> {
-    const url: string = `${environment.api}/time/colaboradores/${id}`;
+
+  getTimesByEsteiraIdAndColaboradorId(esteiraId: number, colaboradorId: number ): Observable<any> {
+    const url: string = `${environment.api}/time/esteira/${esteiraId}/colaborador/${colaboradorId}`;
     return this.http
       .get<any>(url)
       .pipe(catchError(this.handleError<any>("getColaboradoresByTimeId")));
   }
 
+  getColaboradoresByEsteiraId(esteiraId: number): Observable<any> {
+    const url: string = `${environment.api}/time/esteira/${esteiraId}`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>("getColaboradoresByTimeId")));
+  }
 
+  getTimesByEsteiraId(esteiraId: number): Observable<any> {
+    const url: string = `${environment.api}/time/esteira/${esteiraId}/times`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>("getTimesByEsteiraId")));
+
+  }
+
+  getColaboradoresByTimeId(timeId: number){
+    const url: string = `${environment.api}/time/${timeId}/colaboradores`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>("getColaboradoresByTimeId")));
+  }
 
 
 }

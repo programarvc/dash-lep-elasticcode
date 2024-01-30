@@ -13,8 +13,9 @@ const routes: Routes = [
   { path: 'login', component: AmplifyUiLoginComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full'},
   { path: 'dashboard/:esteiraId', title: 'Dashboard Projeto', component: DashProjetoComponent, canActivate: [AuthGuard]},
-  { path: 'time/:colaboradorId', title:'Time', component: TimeComponent, canActivate: [AuthGuard] },
-  { path: ':colaboradorId', component: ColaboradorComponent, canActivate: [AuthGuard] },
+  { path: ':colaboradorId', pathMatch: 'full',component: ColaboradorComponent, canActivate: [AuthGuard] },
+  { path: 'time', title:'Dashboard Time', pathMatch:'full', component: TimeComponent, canActivate: [AuthGuard] },
+  { path: 'time/:esteiraId', title:'Dashboard Time', pathMatch:'full', component: TimeComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: 'login'}
 ];
 
