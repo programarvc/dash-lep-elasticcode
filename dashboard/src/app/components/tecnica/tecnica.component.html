@@ -3,7 +3,7 @@
          <div class="row">
              <div class="col-md-8">
                  <div class="bloco-tecnica">
-                     
+
                          <div class="tituloLegenda">
                              <div class="titulo-tecnica1">
                                  <h2 class="titulo-tecnica">Técnica</h2>
@@ -34,10 +34,10 @@
                                  <div class="pontilhado"></div>
                                  <div class="pontilhado"></div>
                              </div>
-                         </div> 
+                         </div>
                          <div class="processos-geral">
                              <div class="tecnicas-textos">
-                                 <p class="tecnicas-texto" *ngFor="let valor of valorMaturidades">
+                                 <p class="tecnicas-texto" *ngFor="let valor of valorMaturidadeTecnica">
                                      <ng-container *ngIf="valor.itemDeMaturidade.tipoMaturidade === 'TECNICA'">
                                          {{valor.itemDeMaturidade.nome}}
                                      </ng-container>
@@ -66,9 +66,9 @@
                              <p class="tecnicas-num">90</p>
                              <p class="tecnicas-num">100</p>
                          </div>
-                 </div> 
+                 </div>
              </div>
-             <!--Bloco PROCESSO-->                
+             <!--Bloco PROCESSO-->
              <div class="col-md-4">
                  <div class="bloco-pequeno">
                      <div class="cabecalho-quadro">
@@ -99,13 +99,13 @@
                      </div>
                      <div class="processos-geral">
                          <div class="processos-textos">
-                             <p class="tecnicas-texto" *ngFor="let valor of valorMaturidades">
+                             <p class="tecnicas-texto" *ngFor="let valor of valorMaturidadeProcesso">
                                  <ng-container *ngIf="valor.itemDeMaturidade.tipoMaturidade === 'PROCESSO'">
                                      {{valor.itemDeMaturidade.nome}}
                                  </ng-container>
                              </p>
                          </div>
-                     <div class="processo-progresso">  
+                     <div class="processo-progresso">
                          <div class="barras-processo">
                              <ng-container *ngFor="let valor of valorMaturidadeProcesso">
                                  <div [ngStyle]="{'width': valor.valorEsperado * 100 + '%'}" class="processo-barra-meta">
@@ -117,7 +117,7 @@
                      </div>
                 </div>
                  <!--Bloco METRICA-->
-              
+
                      <div class="bloco-pequeno">
                          <div class="cabecalho-quadro">
                              <h2 class="titulo-processo col-md-4">Métricas</h2>
@@ -125,8 +125,8 @@
                                  <p class="titulo-processo col-md-4" *ngIf="i === 3">
                                    {{ valor }}
                                  </p>
-                                </ng-container> --> 
-                           
+                                </ng-container> -->
+
                              <div class="metricas-legenda col-md-8">
                                  <div class="ellipse-azul-processo"></div>
                                  <p class="cabecalho-texto">Atingido</p>
@@ -150,13 +150,13 @@
                          </div>
                          <div class="metricas-geral">
                              <div class="quadro-metricas-textos">
-                                 <p class="tecnicas-texto" *ngFor="let valor of valorMaturidades">
+                                 <p class="tecnicas-texto" *ngFor="let valor of valorMaturidadeMetrica">
                                      <ng-container *ngIf="valor.itemDeMaturidade.tipoMaturidade === 'METRICA'">
                                          {{valor.itemDeMaturidade.nome}}
                                      </ng-container>
                                  </p>
                              </div>
-                             <div class="metrica-progresso">    
+                             <div class="metrica-progresso">
                                  <div class="barras-metricas">
                                      <ng-container *ngFor="let valor of valorMaturidadeMetrica; let i = index">
                                          <div [ngStyle]="{'width': valor.valorEsperado * 100 + '%'}" class="metrica-barra-meta">
@@ -164,11 +164,11 @@
                                          </div>
                                      </ng-container>
                                 </div>
-                             </div>  
+                             </div>
                          </div>
                     </div>
-                
+
              </div>
-         </div>      
+         </div>
     </div>
  </section>

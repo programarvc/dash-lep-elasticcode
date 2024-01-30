@@ -29,7 +29,7 @@ export class TecnicaComponent implements OnInit {
 
     // ...
 
-    
+
 
     private updateUniqueTiposMaturidade(): void {
         // Limpe o conjunto antes de atualizar
@@ -39,6 +39,7 @@ export class TecnicaComponent implements OnInit {
         this.valorMaturidades.forEach((valor) => {
             if (valor.itemDeMaturidade.tipoMaturidade) {
                 this.uniqueTiposMaturidade.add(valor.itemDeMaturidade.tipoMaturidade);
+                
             }
         });
     }
@@ -116,14 +117,14 @@ export class TecnicaComponent implements OnInit {
      this.getValorMaturidadesByEsteiraIdAndProcesso(id);
      this.getValorMaturidadesByEsteiraIdAndMetrica(id);
   }
-  
+
 
   public getValorMaturidades(): void {
     this.valorMaturidadeService.getValorMaturidades().subscribe((response) => {
       this.valorMaturidades = response;
         // Atualize o conjunto de tiposMaturidade
         this.updateUniqueTiposMaturidade();
-      
+
     });
   }
 
@@ -145,7 +146,7 @@ export class TecnicaComponent implements OnInit {
     // Exemplo: largura base + (número de barras * largura de cada barra)
     return 200 + (this.valorMaturidadeTecnica.length * 30);
   }
-  
+
 
   getValoresByEsteiraIdAndTipoMaturidadeTecnica(id: number): void{
     this.valorMaturidadeService.getValoresByEsteiraIdAndTipoMaturidadeTecnicaLatest(id).subscribe((response) =>{
