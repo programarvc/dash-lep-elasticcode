@@ -50,4 +50,8 @@ public class CapacidadesRecomendadasService extends ServiceCrudBase<CapacidadesR
     public List<Map<String, Object>> getCapacidadesByEsteiraId(Long esteiraId) {
         return repository.findByEsteiraId(esteiraId);
     }
+
+    public List<Map<String, Object>> getLatestCapacidadesByEsteiraId(Long esteiraId) {
+        return repository.findLatestByEsteiraId(esteiraId);
+    }
 }

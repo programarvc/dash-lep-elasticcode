@@ -4,4 +4,4 @@ phases:
     commands:
       - cd dash
       - sam build
-      - sam deploy --stack-name elasticcode-dashboard --region us-west-2 --resolve-s3 --s3-prefix elasticcode-dashboard --capabilities CAPABILITY_IAM --no-confirm-changeset --no-fail-on-empty-changeset --parameter-overrides "SecurityGroupId=$SECURITY_GROUP_ID Subnet1Id=$SUBNET_1_ID Subnet2Id=$SUBNET_2_ID DBHost=$DB_HOST DBPort=$DB_PORT DBUser=$DB_USER DBPassword=$DB_PASSWORD DBName=$DB_NAME"
+      - sam deploy --stack-name elasticcode-dashboard --region us-west-2 --resolve-s3 --s3-prefix elasticcode-dashboard --capabilities CAPABILITY_IAM --no-confirm-changeset --no-fail-on-empty-changeset --parameter-overrides "SecurityGroupId=$SECURITY_GROUP_ID Subnet1Id=$SUBNET_1_ID Subnet2Id=$SUBNET_2_ID DBHost=$DB_HOST DBPort=$DB_PORT DBUser=$DB_USER DBPassword=$DB_PASSWORD DBName=$DB_NAME SecretAcessKey=$SECRET_ACESS_KEY AcessKeyId=$ACESS_KEY_ID UserPoolId=$USER_POOL_ID"

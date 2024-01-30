@@ -78,8 +78,6 @@ export class TecnicaComponent implements OnInit {
     valorEsperado: 0,
   };
 
-
-
   public empresas: Empresa[] = [];
   public maturidade: Maturidade[] = [];
   public tipo: TiposEnum[] = [];
@@ -104,7 +102,7 @@ export class TecnicaComponent implements OnInit {
       const id = params.get('esteiraId');
       if (id) {
         this.setCurrent(parseInt(id));
-        this.getValorMaturidadesByEsteiraIdAndTecnica(parseInt(id));
+        this.getValoresByEsteiraIdAndTipoMaturidadeTecnica(parseInt(id));
         this.getValorMaturidadesByEsteiraIdAndProcesso(parseInt(id));
         this.getValorMaturidadesByEsteiraIdAndMetrica(parseInt(id));
 
@@ -112,23 +110,13 @@ export class TecnicaComponent implements OnInit {
     });
   }
 
-
-
   public async setCurrent(id: number) {
-    this.getValorMaturidadesByEsteiraIdAndTecnica(id);
      this.uniqueTiposMaturidade = new Set(this.valorMaturidades.map(valor => valor.itemDeMaturidade.tipoMaturidade));
-   /* const valorMaturidade = this.valorDosIndicesDeMaturidade.find(
-      (valorMaturidade) => valorMaturidade.maturidade.esteira.id === id
-    );
-    if (valorMaturidade && valorMaturidade.maturidade && valorMaturidade.maturidade.esteira) {
-      this.currentValorMaturidade = valorMaturidade;
-      this.currentValorMaturidade.maturidade.esteira = valorMaturidade.maturidade.esteira;
-      this.getValorMaturidadesByEsteiraIdAndTecnica(valorMaturidade.maturidade.esteira.id);
-      this.getValorMaturidadesByEsteiraIdAndProcesso(valorMaturidade.maturidade.esteira.id);
-      this.getValorMaturidadesByEsteiraIdAndMetrica(valorMaturidade.maturidade.esteira.id);
-    }*/
+     this.getValoresByEsteiraIdAndTipoMaturidadeTecnica(id);
+     this.getValorMaturidadesByEsteiraIdAndProcesso(id);
+     this.getValorMaturidadesByEsteiraIdAndMetrica(id);
   }
-
+  
 
   public getValorMaturidades(): void {
     this.valorMaturidadeService.getValorMaturidades().subscribe((response) => {
@@ -139,25 +127,18 @@ export class TecnicaComponent implements OnInit {
     });
   }
 
-
-  public getValorMaturidadesByEsteiraIdAndTecnica(id: number): void{
-    this.valorMaturidadeService.getValorMaturidadesByEsteiraIdAndTecnica(id).subscribe((response) =>{
-      this.valorMaturidadeTecnica = response;
-      console.log(this.currentValorMaturidade)
-    });
-  }
-
   public getValorMaturidadesByEsteiraIdAndProcesso(id: number): void{
-    this.valorMaturidadeService.getValorMaturidadesByEsteiraIdAndProcesso(id).subscribe((response) =>{
+    this.valorMaturidadeService.getValorMaturidadesByEsteiraIdAndProcessoLatest(id).subscribe((response) =>{
       this.valorMaturidadeProcesso = response;
     });
   }
 
   public getValorMaturidadesByEsteiraIdAndMetrica(id: number): void{
-    this.valorMaturidadeService.getValorMaturidadesByEsteiraIdAndMetrica(id).subscribe((response) =>{
+    this.valorMaturidadeService.getValorMaturidadesByEsteiraIdAndMetricaLatest(id).subscribe((response) =>{
       this.valorMaturidadeMetrica = response;
     });
   }
+
 
   calculateWidth(): number {
     // Substitua isso pela lógica real de cálculo da largura
@@ -165,5 +146,13 @@ export class TecnicaComponent implements OnInit {
     return 200 + (this.valorMaturidadeTecnica.length * 30);
   }
   
+
+  getValoresByEsteiraIdAndTipoMaturidadeTecnica(id: number): void{
+    this.valorMaturidadeService.getValoresByEsteiraIdAndTipoMaturidadeTecnicaLatest(id).subscribe((response) =>{
+      this.valorMaturidadeTecnica = response;
+    });
+
+  }
+
 
 }

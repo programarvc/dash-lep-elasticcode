@@ -47,15 +47,15 @@
               <h2>Jornada de Transformação</h2>
               <div class="jornada-progress">
                 <div class="jornada-level">
-                  <span [ngStyle]="{'color': this.getCorJornada(currentJornada.mediaDeJornada, 'Baixa')}">Baixa</span>
-                  <span [ngStyle]="{'color': this.getCorJornada(currentJornada.mediaDeJornada, 'Média')}">Média</span>
-                  <span [ngStyle]="{'color': this.getCorJornada(currentJornada.mediaDeJornada, 'Alta')}">Alta</span>
-                  <span [ngStyle]="{'color': this.getCorJornada(currentJornada.mediaDeJornada, 'Elite')}">Elite</span>
+                  <span [ngStyle]="{'color': this.getCorJornada(currentMaturidade.mediaDeJornada, 'Baixa')}">Baixa</span>
+                  <span [ngStyle]="{'color': this.getCorJornada(currentMaturidade.mediaDeJornada, 'Média')}">Média</span>
+                  <span [ngStyle]="{'color': this.getCorJornada(currentMaturidade.mediaDeJornada, 'Alta')}">Alta</span>
+                  <span [ngStyle]="{'color': this.getCorJornada(currentMaturidade.mediaDeJornada, 'Elite')}">Elite</span>
                 </div>
                 <div class="jornada-bar-content">
                   <div class="jornada-bar">
                     <div class="jornada-goal"
-                    [ngStyle]="{'width': currentJornada.mediaDeJornada + '%'}"
+                    [ngStyle]="{'width': currentMaturidade.mediaDeJornada + '%'}"
                     >
                   </div>
                 </div>
@@ -65,10 +65,10 @@
               <h3>Saúde da Operação</h3>
               <div class="saude-operacao-content">
                 <span class="nivel-saude">
-                  {{this.getNivel(currentJornada.saude).toString()}}
+                  {{this.getNivel(currentMaturidade.saude).toString()}}
                 </span>
                 <span class="rate-saude">
-                  {{currentJornada.saude.toString()}}%
+                  {{currentMaturidade.saude.toString()}}%
                 </span>
               </div>
             </div>
@@ -80,16 +80,16 @@
                   </h3>
                   <div class="rate-value-4key">
                     <span>
-                      {{ this.getNivel(currentJornada.metricas4).toString() }}
+                      {{ this.getNivel(currentMaturidade.metricas4).toString() }}
                     </span>
                     <span>
-                      {{ (currentJornada.metricas4).toString() }}%
+                      {{ (currentMaturidade.metricas4).toString() }}%
                     </span>
                   </div>
                   <div class="jornada-card-bar-content">
                     <div class="jornada-card-bar">
                       <div class="jornada-card-goal"
-                      [ngStyle]="{'width': currentJornada.metricas4 + '%'}"
+                      [ngStyle]="{'width': currentMaturidade.metricas4 + '%'}"
                       >
                     </div>
                   </div>
@@ -101,16 +101,16 @@
                 </h3>
                 <div class="rate-value-4key">
                   <span>
-                    {{ this.getNivel(currentJornada.capacidadeDora).toString() }}
+                    {{ this.getNivel(currentMaturidade.capacidadeDora).toString() }}
                   </span>
                   <span>
-                    {{ currentJornada.capacidadeDora}}%
+                    {{ currentMaturidade.capacidadeDora}}%
                   </span>
                 </div>
                 <div class="jornada-card-bar-content">
                   <div class="jornada-card-bar">
                     <div class="jornada-card-goal"
-                    [ngStyle]="{'width': (currentJornada.capacidadeDora).toString() + '%'}"
+                    [ngStyle]="{'width': (currentMaturidade.capacidadeDora).toString() + '%'}"
                     >
                   </div>
                 </div>
@@ -139,6 +139,10 @@
         <div class="tituloLegendaCultura">
           <div class="tituloLegendaCultura1">
             <h2 class="titulo-cultura">Cultura</h2>
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
           </div>
           <div class="metricas-cultura">
             <div class="ellipse-roxa"></div>
@@ -163,7 +167,7 @@
       </div>
         <div class="cultura-geral">
           <div class="cultura-textos">
-            <p class="tecnicas-texto" *ngFor="let valor of valorMaturidades">
+            <p class="tecnicas-texto" *ngFor="let valor of valorMaturidadeCultura">
               <ng-container *ngIf="valor.itemDeMaturidade.tipoMaturidade === 'CULTURA'">
                   {{valor.itemDeMaturidade.nome}}
               </ng-container>

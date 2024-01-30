@@ -27,7 +27,6 @@ import {
 import { EsteiraService } from 'src/services/esteira/esteira.service';
 import { EmpresaService } from 'src/services/empresa/empresa.service';
 import { MaturidadeService } from 'src/services/maturidade/maturidade.service';
-import { JornadaService } from 'src/services/jornada/jornada.service';
 import { CapacidadeService } from 'src/services/capacidade/capacidade.service';
 import { isInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
 import { valorMaturidadeService } from './../../../services/valor-maturidade/valor-maturidade.service';
@@ -38,8 +37,6 @@ import { valorMaturidadeService } from './../../../services/valor-maturidade/val
   styleUrls: ['./dash-projeto.component.sass'],
 })
 export class DashProjetoComponent implements OnInit {
-  public uniqueTiposMaturidade: Set<string> = new Set();
-  
   public esteiras: EsteiraDeDesenvolvimento[] = [];
   public currentEsteira: EsteiraDeDesenvolvimento = {
     id: 0,
@@ -50,17 +47,7 @@ export class DashProjetoComponent implements OnInit {
       nome: '',
     },
   };
-  private updateUniqueTiposMaturidade(): void {
-    // Limpe o conjunto antes de atualizar
-    this.uniqueTiposMaturidade.clear();
 
-    // Preencha o conjunto com valores únicos
-    this.valorMaturidades.forEach((valor) => {
-        if (valor.itemDeMaturidade.tipoMaturidade) {
-            this.uniqueTiposMaturidade.add(valor.itemDeMaturidade.tipoMaturidade);
-        }
-    });
-}
   public currentEmpresa: Empresa = {
     id: 0,
     nome: '',
@@ -77,66 +64,17 @@ export class DashProjetoComponent implements OnInit {
       },
     },
     data: '',
+    hora: '',
     numero: 0,
     leadTime: 0,
     frequencyDeployment: 0,
     changeFailureRate: 0,
     timeToRecovery: 0,
-  };
-
-  public currentJornada: JornadaDeTransformacao = {
-    id: 0,
-    capacidadeDora: 0,
-    metricas4: 0,
     saude: 0,
-    maturidade: {
-      id: 0,
-      esteira: {
-        id: 0,
-        nome: '',
-        tipo: '' as TiposEnum,
-        empresa: {
-          id: 0,
-          nome: '',
-        },
-      },
-      data: '',
-      numero: 0,
-      leadTime: 0,
-      frequencyDeployment: 0,
-      changeFailureRate: 0,
-      timeToRecovery: 0,
-    },
-    mediaDeJornada: 0,
+    metricas4: 0,
+    capacidadeDora: 0,
+    mediaDeJornada: 0
   };
-
-  public currentCapacidade: CapacidadesRecomendadas = {
-    maturidade: {
-      id: 0,
-      esteira: {
-        id: 0,
-        nome: '',
-        tipo: '' as TiposEnum,
-        empresa: {
-          id: 0,
-          nome: '',
-        },
-      },
-      data: '',
-      numero: 0,
-      leadTime: 0,
-      frequencyDeployment: 0,
-      changeFailureRate: 0,
-      timeToRecovery: 0,
-    },
-    itemDeMaturidade: {
-      id: 0,
-      tipoMaturidade: '' as TiposMaturidadeEnum,
-      nome: '',
-    },
-    id: 0,
-  };
-
 
   public valorMaturidades: ValorDosIndicesDeMaturidade[] = [];
   public currentValorMaturidade: ValorDosIndicesDeMaturidade = {
@@ -168,14 +106,46 @@ export class DashProjetoComponent implements OnInit {
     valorEsperado: 0,
   };
 
+  public currentCapacidade: CapacidadesRecomendadas = {
+    maturidade: {
+      id: 0,
+      esteira: {
+        id: 0,
+        nome: '',
+        tipo: '' as TiposEnum,
+        empresa: {
+          id: 0,
+          nome: '',
+        },
+      },
+      data: '',
+      hora: '',
+    numero: 0,
+    leadTime: 0,
+    frequencyDeployment: 0,
+    changeFailureRate: 0,
+    timeToRecovery: 0,
+
+    saude: 0,
+    metricas4: 0,
+    capacidadeDora: 0,
+    mediaDeJornada: 0
+    },
+
+    itemDeMaturidade: {
+      id: 0,
+      tipoMaturidade: '' as TiposMaturidadeEnum,
+      nome: '',
+    },
+    id: 0,
+  };
+
   public empresas: Empresa[] = [];
   public maturidade: Maturidade[] = [];
+  public capacidade: CapacidadesRecomendadas[] = [];
   public tipo: TiposEnum[] = [];
   public tiposMaturidade: TiposMaturidadeEnum[] = [];
   public maturidadeByEsteiraId: MaturidadeByEsteiraId[] = [];
-  public jornadas: JornadaDeTransformacao[] = [];
-  public jornadaByEsteiraId: JornadaDeTransformacaoByEsteiraId[] = [];
-  public capacidade: CapacidadesRecomendadas[] = [];
   public itemDeMaturidade: ItemDeMaturidade[] = [];
   public valorMaturidadeTecnica: ValorDosIndicesDeMaturidadeByEsteiraIdAndTecnica[] = [];
   public valorMaturidadeCultura: ValorDosIndicesDeMaturidadeByEsteiraIdAndCultura[] = [];
@@ -186,13 +156,11 @@ export class DashProjetoComponent implements OnInit {
     private route: ActivatedRoute,
     private esteiraService: EsteiraService,
     private maturidadeService: MaturidadeService,
-    private jornadaService: JornadaService,
     private capacidadeService: CapacidadeService,
     private valorMaturidadeService: valorMaturidadeService
   ) {}
 
   ngOnInit(): void {
-    this.getJornadas();
     this.getCapacidades();
     this.getValorMaturidades();
     this.getMaturidade();
@@ -200,10 +168,8 @@ export class DashProjetoComponent implements OnInit {
       const id = params.get('esteiraId');
       if (id && !isNaN(Number(id))) {
         this.setCurrent(parseInt(id));
-        this.getMaturidadeByEsteiraId(parseInt(id));
-        this.getMaturidadeById(parseInt(id));
-        this.getCapacidadesByEsteiraId(parseInt(id));
-        this.getJornadaByEsteiraId(parseInt(id));
+        this.getLatestMaturidadeByEsteiraId(parseInt(id));
+        this.getLatestCapacidadesByEsteiraId(parseInt(id));
         this.getValorMaturidadesByEsteiraIdAndTecnica(parseInt(id));
         this.getValorMaturidadesByEsteiraIdAndCultura(parseInt(id));
 
@@ -212,39 +178,12 @@ export class DashProjetoComponent implements OnInit {
     });
   }
 
-  public async setCurrent(id: number) {
-    this.uniqueTiposMaturidade = new Set(this.valorMaturidades.map(valor => valor.itemDeMaturidade.tipoMaturidade));
-    const maturidade = this.maturidade.find(
-      (maturidade) => maturidade.esteira.id === id
-    );
-    if (maturidade) {
-      this.currentMaturidade = maturidade;
-      this.currentEsteira = maturidade.esteira;
-      this.getMaturidadeByEsteiraId(maturidade.esteira.id);
-    }
 
-      this.getJornadaByEsteiraId(id);
-      console.log(this.currentJornada);
-
-
-    const valorMaturidadeTecnica = this.valorMaturidades.find(
-      (valorMaturidade) => valorMaturidade.maturidade.esteira.id === id
-    );
-    if (valorMaturidadeTecnica && valorMaturidadeTecnica.maturidade && valorMaturidadeTecnica.maturidade.esteira){
-      this.currentValorMaturidade = valorMaturidadeTecnica;
-      this.currentValorMaturidade.maturidade.esteira = valorMaturidadeTecnica.maturidade.esteira;
-      this.getValorMaturidadesByEsteiraIdAndTecnica(valorMaturidadeTecnica.maturidade.esteira.id);
-
-    }
-    const valorMaturidadeCultura = this.valorMaturidadeC.find(
-      (valorMaturidadeCultura) => valorMaturidadeCultura.maturidade.esteira.id === id
-    );
-    if (valorMaturidadeCultura&& valorMaturidadeCultura.maturidade && valorMaturidadeCultura.maturidade.esteira){
-      this.currentValorMaturidade = valorMaturidadeCultura;
-      this.currentValorMaturidade.maturidade.esteira = valorMaturidadeCultura.maturidade.esteira;
-      this.getValorMaturidadesByEsteiraIdAndCultura(valorMaturidadeCultura.maturidade.esteira.id);
-    }
-
+public async setCurrent(id: number) {
+  this.getLatestMaturidadeByEsteiraId(id);
+  this.getLatestCapacidadesByEsteiraId(id);
+  this.getValorMaturidadesByEsteiraIdAndTecnica(id);
+  this.getValorMaturidadesByEsteiraIdAndCultura(id);
 
   }
 
@@ -263,36 +202,12 @@ export class DashProjetoComponent implements OnInit {
     });
   }
 
-
-
-  getMaturidadeByEsteiraId(id: number): void {
+  getLatestMaturidadeByEsteiraId(id: number): void {
     this.maturidadeService
-      .getMaturidadeByEsteiraId(id)
+      .getLatestMaturidadeByEsteiraId(id)
       .subscribe((maturidade) => {
-        this.maturidadeByEsteiraId = maturidade;
+        this.currentMaturidade = maturidade;
       });
-  }
-
-  getMaturidadeById(id: number): void {
-    this.maturidadeService
-      .getMaturidadeById(id)
-      .subscribe((data: Maturidade) => {
-        this.currentMaturidade = data;
-      });
-  }
-
-  getJornadaByEsteiraId(id: number): void {
-    this.jornadaService.getJornadasByEsteiraId(id).subscribe((jornada) => {
-      this.currentJornada = jornada;
-      console.log(this.currentJornada);
-
-    });
-  }
-
-  public getJornadas(): void {
-    this.jornadaService.getJornadas().subscribe((response) => {
-      this.jornadas = response;
-    });
   }
 
   public getCapacidades(): void {
@@ -302,21 +217,19 @@ export class DashProjetoComponent implements OnInit {
   }
 
   public getValorMaturidades(): void {
-    this.updateUniqueTiposMaturidade();
     this.valorMaturidadeService.getValorMaturidades().subscribe((response) => {
       this.valorMaturidades = response;
     });
   }
 
-
   public getValorMaturidadesByEsteiraIdAndTecnica(id: number): void{
-    this.valorMaturidadeService.getValorMaturidadesByEsteiraIdAndTecnica(id).subscribe((response) =>{
+    this.valorMaturidadeService.getValoresByEsteiraIdAndTipoMaturidadeTecnicaLatest(id).subscribe((response) =>{
       this.valorMaturidadeTecnica = response;
     });
   }
 
   public getValorMaturidadesByEsteiraIdAndCultura(id: number): void{
-    this.valorMaturidadeService.getValorMaturidadesByEsteiraIdAndCultura(id).subscribe((response) =>{
+    this.valorMaturidadeService.getValorMaturidadesByEsteiraIdAndCulturaLatest(id).subscribe((response) =>{
       this.valorMaturidadeCultura = response;
       console.log(this.valorMaturidadeCultura);
     });
@@ -330,14 +243,13 @@ export class DashProjetoComponent implements OnInit {
       });
   }
 
-  getCapacidadeById(id: number): void {
+  getLatestCapacidadesByEsteiraId(id : number): void{
     this.capacidadeService
-      .getCapacidadeById(id)
-      .subscribe((data: CapacidadesRecomendadas) => {
-        this.currentCapacidade = data;
-      });
+      .getLatestCapacidadesByEsteiraId(id)
+      .subscribe((capacidade) =>{
+      this.currentCapacidade = capacidade;
+    });
   }
-
 
   getCorJornada(jornadaGoal: number, nivel: string): string {
     if (jornadaGoal >= 0 && jornadaGoal <= 25 && nivel === 'Baixa') {

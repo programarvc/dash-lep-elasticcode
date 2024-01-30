@@ -28,7 +28,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.sass"
+              "src/styles.sass",
+              "node_modules/@aws-amplify/ui-angular/theme.css"
             ],
             "scripts": []
           },

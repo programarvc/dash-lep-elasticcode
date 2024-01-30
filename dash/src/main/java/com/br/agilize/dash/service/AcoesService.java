@@ -55,10 +55,13 @@ public class AcoesService extends ServiceCrudBase<AcoesDto> {
 
     @Override
     public AcoesDto salvar(AcoesDto payload) {
-        AcoesEntity salvo = this.repository.save(this.mapper.dtoToModel(payload));
+        AcoesEntity entity = this.mapper.dtoToModel(payload);
+        if (entity == null) {
+            throw new IllegalArgumentException("AcoesEntity cannot be null");
+        }
+        AcoesEntity salvo = this.repository.save(entity);
         return this.mapper.modelToDTO(salvo);
     }
-
     @Override
     public void excluirPorId(Long id) {
         this.repository.deleteById(id);

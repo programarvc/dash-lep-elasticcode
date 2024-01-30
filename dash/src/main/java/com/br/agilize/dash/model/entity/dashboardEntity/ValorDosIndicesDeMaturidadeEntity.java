@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import java.time.LocalDateTime;
 
 @Data
 @ToString
@@ -14,6 +15,9 @@ public class ValorDosIndicesDeMaturidadeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Column(name = "data_hora")
+    private LocalDateTime dataHoraValor;
 
     @ManyToOne
     @JoinColumn(name = "maturidade_id")
@@ -28,5 +32,16 @@ public class ValorDosIndicesDeMaturidadeEntity {
 
     @Column(name = "valor_esperado")
     private Double valorEsperado;
+
+    @PrePersist
+    public void prePersist() {
+       dataHoraValor = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        dataHoraValor = LocalDateTime.now();
+        
+    }
 
 }

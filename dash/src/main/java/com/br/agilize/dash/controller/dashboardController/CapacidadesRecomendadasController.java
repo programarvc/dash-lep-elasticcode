@@ -32,4 +32,10 @@ public class CapacidadesRecomendadasController extends ControllerCrudBase<Capaci
         List<Map<String, Object>> result = service.getCapacidadesByEsteiraId(esteiraId);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    @GetMapping("/latest/esteira/{esteiraId}")
+    public ResponseEntity<List<Map<String, Object>>> getLatestCapacidadesByEsteiraId(@PathVariable Long esteiraId) {
+        List<Map<String, Object>> capacidades = service.getLatestCapacidadesByEsteiraId(esteiraId);
+        return new ResponseEntity<>(capacidades, HttpStatus.OK);
+    }
 }

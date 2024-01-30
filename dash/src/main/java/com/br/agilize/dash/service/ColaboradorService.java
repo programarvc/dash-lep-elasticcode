@@ -41,6 +41,7 @@ public class ColaboradorService extends ServiceCrudBase<ColaboradorDto> {
         return this.mapper.modelToDTO(colaboradorSalvo);
     }
 
+
     @Override
     public void excluirPorId(Long id) {
         this.repository.deleteById(id);
