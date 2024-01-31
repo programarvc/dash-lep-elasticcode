@@ -9,9 +9,9 @@ public class ValorDosIndicesDeMaturidadeDto {
     
     private LocalDateTime dataHoraValor;
 
-   private MaturidadeDto maturidade;
+    private MaturidadeDto maturidade;
 
-   private ItemDeMaturidadeDto itemDeMaturidade;
+    private ItemDeMaturidadeDto itemDeMaturidade;
 
     private Double valorAtingido;
 

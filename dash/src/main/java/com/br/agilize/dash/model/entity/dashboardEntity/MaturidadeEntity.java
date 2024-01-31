@@ -19,7 +19,7 @@ public class MaturidadeEntity {
     @ManyToOne
     private EsteiraDeDesenvolvimentoEntity esteira;
 
-    @Column(name = "data_hora")
+    @Column(nullable = false, name = "data_hora")
     private LocalDateTime dataHora;
 
     @Column
@@ -37,16 +37,16 @@ public class MaturidadeEntity {
     @Column(name = "time_torecovery")
     private Double timeToRecovery;
 
-    @Column(nullable = false, name = "media_de_jornada")
+    @Column(name = "media_de_jornada")
     private Double mediaDeJornada;
 
-    @Column(nullable = false)
+    @Column
     private Double saude;
 
-    @Column(nullable = false, name = "metricas_4")
+    @Column(name = "metricas_4")
     private Double metricas4;
 
-    @Column(nullable = false, name = "capacidade_dora")
+    @Column(name = "capacidade_dora")
     private Double capacidadeDora;
 
     @PrePersist

@@ -41,7 +41,11 @@ public class ValorDosIndicesDeMaturidadeService extends ServiceCrudBase<ValorDos
     @Override
     public ValorDosIndicesDeMaturidadeDto salvar(ValorDosIndicesDeMaturidadeDto payload) {
         ValorDosIndicesDeMaturidadeEntity entity = mapper.dtoToModel(payload);
-        entity.setId(null); // This will ensure a new entity is created
+        entity.setId(null); //Garante que uma nova entidade seja criada quando o método
+
+        //Multiplica os valores por 100
+        entity.setValorAtingido(multiplicarPor100(entity.getValorAtingido()));
+        entity.setValorEsperado(multiplicarPor100(entity.getValorEsperado()));
 
         ValorDosIndicesDeMaturidadeEntity savedEntity = repository.save(entity);
         return mapper.modelToDTO(savedEntity);
@@ -52,6 +56,14 @@ public class ValorDosIndicesDeMaturidadeService extends ServiceCrudBase<ValorDos
         this.repository.deleteById(id);
     }
 
+    // metodo privado para multiplicar valores por 100
+    private Double multiplicarPor100(Double valor){
+        if(valor != null) {
+            return valor * 100;
+        }
+        return null;
+       
+    }
 
    
     public List<Map<String, Object>> getValoresByEsteiraIdAndTipoMaturidade(Long esteiraId, TiposMaturidadeEnum tipoMaturidade) {

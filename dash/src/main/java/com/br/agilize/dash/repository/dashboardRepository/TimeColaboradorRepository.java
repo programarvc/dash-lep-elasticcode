@@ -27,9 +27,9 @@ List<ColaboradorEntity> findColaboradoresByEsteiraIdAndTimeId(@Param("esteiraId"
 @Query("SELECT tc.colaborador FROM TimeColaboradorEntity tc WHERE tc.time.esteira.id = :esteiraId")
 List<ColaboradorEntity> findColaboradoresByEsteiraId(@Param("esteiraId") Long esteiraId);
 
-@Query(value = "SELECT * FROM timeentity WHERE esteira_id = :esteiraId", nativeQuery = true)
+@Query(value = "SELECT t.*, tc.colaborador_id FROM timeentity t INNER JOIN timecolaboradorentity tc ON t.id = tc.time_id INNER JOIN colaboradorentity c ON tc.colaborador_id = c.id WHERE t.esteira_id = :esteiraId", nativeQuery = true)
 List<Object[]> findTimesByEsteiraId(@Param("esteiraId") Long esteiraId);
 
-@Query(value = "SELECT tc.*, c.nome FROM timecolaboradorentity as tc INNER JOIN colaboradorentity as c ON c.id = tc.colaborador_id WHERE tc.time_id = :timeId", nativeQuery = true)
+@Query(value = "SELECT tc.*, c.nome, t.esteira_id FROM timecolaboradorentity as tc INNER JOIN colaboradorentity as c ON c.id = tc.colaborador_id INNER JOIN timeentity as t ON tc.time_id = t.id WHERE tc.time_id = :timeId", nativeQuery = true)
 List<Object[]> findColaboradoresByTimeId(@Param("timeId") Long timeId);
 }
