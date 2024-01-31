@@ -221,7 +221,6 @@ export class TimeComponent implements OnInit {
       const times = this.times.find((times) => times.id === id);
       if (times) {
         this.currentTimes = times;
-
       }
       this.timeService
         .getColaboradoresByTimeId(id)
@@ -232,23 +231,25 @@ export class TimeComponent implements OnInit {
             colaboradoresTime.push(item);
           });
           this.colaboradores = colaboradoresTime;
-          if (this.colaboradores.length > 0)
-            this.router.navigate([`/time/${this.esteiras[0].id}`]);
+          if (this.colaboradores.length > 0) {
+            // Navega para a rota do primeiro colaborador
+            this.router.navigate([`/time/${this.currentEsteira.id}`]);
+          }
         });
     } else {
       this.getTimes(this.currentEsteira.id);
       this.currentTimes = {
         id: 0,
-    nomeTime: '',
-    esteira: {
-      id: 0,
-      nome: '',
-      tipo: '' as TiposEnum,
-      empresa: {
-        id: 0,
-        nome: '',
-      },
-    },
+        nomeTime: '',
+        esteira: {
+          id: 0,
+          nome: '',
+          tipo: '' as TiposEnum,
+          empresa: {
+            id: 0,
+            nome: '',
+          },
+        },
       };
     }
   }

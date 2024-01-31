@@ -16,6 +16,7 @@ const routes: Routes = [
   { path: ':colaboradorId', pathMatch: 'full',component: ColaboradorComponent, canActivate: [AuthGuard] },
   { path: 'time', title:'Dashboard Time', pathMatch:'full', component: TimeComponent, canActivate: [AuthGuard] },
   { path: 'time/:esteiraId', title:'Dashboard Time', pathMatch:'full', component: TimeComponent, canActivate: [AuthGuard] },
+  { path: 'time/:esteiraId/:colaboradorId', title:'Dashboard Time', pathMatch:'full', component: TimeComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: 'login'}
 ];
 

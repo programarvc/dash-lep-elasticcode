@@ -46,8 +46,8 @@
                              <div class="processo">
                                  <div class="barras">
                                      <ng-container *ngFor="let valor of valorMaturidadeTecnica; let i = index">
-                                         <div [ngStyle]="{'width': valor.valorEsperado * 100 + '%'}" class="barra-arq">
-                                             <div class="barra" [ngStyle]="{'width': valor.valorAtingido * 100 + '%'}"></div>
+                                         <div [ngStyle]="{'width': valor.valorEsperado  + '%'}" class="barra-arq">
+                                             <div class="barra" [ngStyle]="{'width': valor.valorAtingido  + '%'}"></div>
                                          </div>
                                      </ng-container>
                                  </div>
@@ -108,8 +108,8 @@
                      <div class="processo-progresso">
                          <div class="barras-processo">
                              <ng-container *ngFor="let valor of valorMaturidadeProcesso">
-                                 <div [ngStyle]="{'width': valor.valorEsperado * 100 + '%'}" class="processo-barra-meta">
-                                 <div class="processo-barra" [ngStyle]="{'width': valor.valorAtingido * 100 + '%'}"></div>
+                                 <div [ngStyle]="{'width': valor.valorEsperado + '%'}" class="processo-barra-meta">
+                                 <div class="processo-barra" [ngStyle]="{'width': valor.valorAtingido + '%'}"></div>
                                  </div>
                              </ng-container>
                          </div>
@@ -159,8 +159,8 @@
                              <div class="metrica-progresso">
                                  <div class="barras-metricas">
                                      <ng-container *ngFor="let valor of valorMaturidadeMetrica; let i = index">
-                                         <div [ngStyle]="{'width': valor.valorEsperado * 100 + '%'}" class="metrica-barra-meta">
-                                             <div class="metrica-barra" [ngStyle]="{'width': valor.valorAtingido * 100 + '%'}"></div>
+                                         <div [ngStyle]="{'width': valor.valorEsperado  + '%'}" class="metrica-barra-meta">
+                                             <div class="metrica-barra" [ngStyle]="{'width': valor.valorAtingido+ '%'}"></div>
                                          </div>
                                      </ng-container>
                                 </div>

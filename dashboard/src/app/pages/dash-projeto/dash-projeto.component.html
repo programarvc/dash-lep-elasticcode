@@ -17,11 +17,21 @@
                   <div class="espaco-cards">
                     <div class="card velocidade">
                       <p class="titulo-card">Lead Time for Changes</p>
-                      <p class="text-number"> <span>{{currentMaturidade.leadTime }}</span>dias</p>
+                      <p class="text-number">
+                        <span [ngStyle]="{'font-size': currentMaturidade.leadTime === null ? '25px' : '40px'}">
+                          {{currentMaturidade.leadTime !== null ? currentMaturidade.leadTime : 'sem dado'}}
+                        </span>
+                        {{currentMaturidade.leadTime !== null ? 'dias' : ''}}
+                      </p>
                     </div>
                     <div class="card velocidade">
                       <p class="titulo-card">Deployment Frequency</p>
-                      <p class="text-number"> <span>{{currentMaturidade.frequencyDeployment}}</span>dias</p>
+                      <p class="text-number">
+                        <span [ngStyle]="{'font-size': currentMaturidade.frequencyDeployment === null ? '25px' : '40px'}">
+                          {{currentMaturidade.frequencyDeployment !== null ? currentMaturidade.frequencyDeployment : 'sem dado'}}
+                        </span>
+                        {{currentMaturidade.frequencyDeployment !== null ? 'dias' : ''}}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -30,11 +40,13 @@
                   <div class="espaco-cards">
                     <div class="card estabilidade">
                       <p class="titulo-card">Change Failure Rate</p>
-                      <p class="text-porcent">{{currentMaturidade.changeFailureRate}}%</p>
+                      <p class="text-porcent" [ngStyle]="{'font-size': currentMaturidade.changeFailureRate=== null ? '25px' : '39px'}">
+                        {{currentMaturidade.changeFailureRate !== null ?  currentMaturidade.changeFailureRate + "%" : 'sem dado' }}
+                      </p>
                     </div>
                     <div class="card estabilidade">
                       <p class="titulo-card">Mean Time to Recovery</p>
-                      <p class="text-date">{{currentMaturidade.timeToRecovery }}</p>
+                      <p class="text-date" [ngStyle]="{'font-size': currentMaturidade.timeToRecovery === null ? '25px' : '40px' }">{{currentMaturidade.timeToRecovery ?? 'sem dado' }}</p>
                     </div>
                   </div>
                 </div>
@@ -65,10 +77,11 @@
               <h3>Saúde da Operação</h3>
               <div class="saude-operacao-content">
                 <span class="nivel-saude">
-                  {{this.getNivel(currentMaturidade.saude).toString()}}
+                  {{this.getNivel(currentMaturidade.saude)}}
                 </span>
-                <span class="rate-saude">
-                  {{currentMaturidade.saude.toString()}}%
+                <span class="rate-saude" [ngStyle]="{'font-size': currentMaturidade.saude === null ? '25px' : '16px'}">
+                  {{currentMaturidade.saude !== null ? currentMaturidade.saude : ''}}
+                  {{currentMaturidade.saude !== null ? '%' : ''}}
                 </span>
               </div>
             </div>
@@ -80,10 +93,11 @@
                   </h3>
                   <div class="rate-value-4key">
                     <span>
-                      {{ this.getNivel(currentMaturidade.metricas4).toString() }}
+                      {{ this.getNivel(currentMaturidade.metricas4)}}
                     </span>
-                    <span>
-                      {{ (currentMaturidade.metricas4).toString() }}%
+                    <span class="rate-saude" [ngStyle]="{'font-size': currentMaturidade.metricas4 === null ? '14px' : '12px'}">
+                      {{currentMaturidade.metricas4 !== null ? currentMaturidade.metricas4 : ''}}
+                      {{currentMaturidade.metricas4 !== null ? '%' : ''}}
                     </span>
                   </div>
                   <div class="jornada-card-bar-content">
@@ -101,16 +115,17 @@
                 </h3>
                 <div class="rate-value-4key">
                   <span>
-                    {{ this.getNivel(currentMaturidade.capacidadeDora).toString() }}
+                    {{ this.getNivel(currentMaturidade.capacidadeDora)}}
                   </span>
-                  <span>
-                    {{ currentMaturidade.capacidadeDora}}%
+                  <span class="rate-saude" [ngStyle]="{'font-size': currentMaturidade.capacidadeDora === null ? '14px' : '16px'}">
+                    {{currentMaturidade.capacidadeDora !== null ? currentMaturidade.capacidadeDora : ''}}
+                    {{currentMaturidade.capacidadeDora !== null ? '%' : ''}}
                   </span>
                 </div>
                 <div class="jornada-card-bar-content">
                   <div class="jornada-card-bar">
                     <div class="jornada-card-goal"
-                    [ngStyle]="{'width': (currentMaturidade.capacidadeDora).toString() + '%'}"
+                    [ngStyle]="{'width': currentMaturidade.capacidadeDora + '%'}"
                     >
                   </div>
                 </div>
@@ -171,9 +186,9 @@
           </div>
           <div class="processo-cultura">
               <div class="barras">
-                <ng-container *ngFor="let item of valorMaturidadeCultura; let i = index">
-                  <div class="cultura-barra-meta" [ngStyle]="{'width': item.valorEsperado * 100 + '%'}">
-                    <div class="cultura-barra" [ngStyle]="{'width': item.valorAtingido * 100 + '%'}"></div>
+                <ng-container *ngFor="let item of valorMaturidadeCultura">
+                  <div class="cultura-barra-meta" [ngStyle]="{'width': item.valorEsperado  + '%'}">
+                    <div class="cultura-barra" [ngStyle]="{'width': item.valorAtingido  + '%'}"></div>
                   </div>
                 </ng-container>
               </div>

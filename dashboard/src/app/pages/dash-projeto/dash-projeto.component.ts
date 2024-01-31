@@ -63,8 +63,7 @@ export class DashProjetoComponent implements OnInit {
         nome: '',
       },
     },
-    data: '',
-    hora: '',
+    dataHora: '',
     numero: 0,
     leadTime: 0,
     frequencyDeployment: 0,
@@ -210,6 +209,15 @@ public async setCurrent(id: number) {
       });
   }
 
+  getMaturidadeByEsteiraId(id: number): void {
+    this.maturidadeService
+      .getMaturidadeByEsteiraId(id)
+      .subscribe((maturidade) => {
+        this.maturidadeByEsteiraId = maturidade;
+        console.log(this.maturidadeByEsteiraId);
+      });
+  }
+
   public getCapacidades(): void {
     this.capacidadeService.getCapacidades().subscribe((response) => {
       this.capacidade = response;
@@ -251,6 +259,8 @@ public async setCurrent(id: number) {
     });
   }
 
+
+
   getCorJornada(jornadaGoal: number, nivel: string): string {
     if (jornadaGoal >= 0 && jornadaGoal <= 25 && nivel === 'Baixa') {
       return '#12C3FF';
@@ -265,15 +275,17 @@ public async setCurrent(id: number) {
     }
   }
 
-  getNivel(rate: number): string {
-    if (rate >= 0 && rate <= 25) {
+  getNivel(rate: number): string | undefined {
+    if (rate === null){
+      return 'sem dado';
+    } else if (rate >= 0 && rate <= 25) {
       return 'Baixo';
     } else if (rate >= 26 && rate <= 75) {
       return 'Médio';
     } else if (rate >= 76 && rate <= 100) {
       return 'Alto';
     } else {
-      return '';
+      return undefined;
     }
   }
 }
