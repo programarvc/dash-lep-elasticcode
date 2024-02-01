@@ -5,7 +5,14 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-md-12">
-            <h1>Dashboard</h1>
+            <div class="campo-data-metrica">
+              <h1>Dashboard</h1>
+              <select  id="data" name="data ">
+                <option *ngFor="let maturidadeData of maturidade">
+                  {{maturidadeData.dataHora| date: 'dd/MM/yyyy'}}
+                </option>
+              </select>
+            </div>
           </div>
         </div>
         <div class="row">

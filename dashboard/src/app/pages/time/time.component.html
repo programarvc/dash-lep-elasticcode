@@ -6,10 +6,10 @@
                   <img src="{{'https://github.com/' + currentColaborador.github + '.png'}}" alt="foto do colaborador">
               </div>
               <div class="personal-data">
-                  <span class="name">{{currentColaborador.nome}} -
-                      <span *ngFor="let time of timeByEsteiraId let isFirst = first">{{ isFirst ? '' : ', '
+                  <!--<span class="name">{{currentColaborador.nome}} -
+                      <span *ngFor="let time of timesColaborador let isFirst = first">{{ isFirst ? '' : ', '
                           }} {{time.time.nomeTime}}</span>
-                  </span>
+                  </span>-->
 
 
                   <span class="occupation">
@@ -27,14 +27,14 @@
                           <button type="button" id="dropdownEmpresa" ngbDropdownToggle>
                               {{ currentTimes.nomeTime ? currentTimes.nomeTime : 'Times'}}
                           </button>
-                          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                              <button ngbDropdownItem (click)="selecionarTime()">
+                         <!-- <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                              <button ngbDropdownItem (click)="selecionarTimesPorEsteiraId(currentEsteira.id)">
                                   Todas
                               </button>
                               <button ngbDropdownItem *ngFor="let time of times"
-                                  (click)="selecionarTime(time.id)">
+                                  (click)="selecionarTimesPorEsteiraId(time.esteira.id)">
                                   {{time.nomeTime}}
-                              </button>
+                              </button>-->
                           </div>
                       </div>
                   </div>
@@ -43,19 +43,19 @@
                           <button type="button" id="dropdownBasic1" ngbDropdownToggle>
                               {{ currentColaborador.nome ? currentColaborador.nome : 'Devs'}}
                           </button>
-                          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                              <button ngbDropdownItem *ngFor="let colaborador of colaboradores" >
-                                  <a *ngIf="colaborador.id" routerLink="{{'/time/' + colaborador.id}}" [routerLinkActive]="['active']"
-                                      [routerLinkActiveOptions]="{exact:true}">{{colaborador.nome}}</a>
-                              </button>
+                         <!-- <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                              <button ngbDropdownItem *ngFor="let colaborador of timesColaborador" >
+                                  <a *ngIf="colaborador.colaborador.id" routerLink="{{'/time/' + colaborador.time.esteira.id}}" [routerLinkActive]="['active']"
+                                      [routerLinkActiveOptions]="{exact:true}">{{colaborador.colaborador.nome}}</a>
+                              </button>-->
                           </div>
                       </div>
                   </div>
               </div>
               <app-search-bar (TextoPesquisa)="handleSearch($event)"></app-search-bar>
           </div>
-      </div>
-  </div>
+     <!--- </div>
+  </div>-->
 </header>
 <main>
   <div class="row">
