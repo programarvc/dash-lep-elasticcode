@@ -64,6 +64,7 @@ export class TecnicaComponent implements OnInit {
         },
       },
       data: '',
+      dataHora: [],
       numero: 0,
       leadTime: 0,
       frequencyDeployment: 0,
