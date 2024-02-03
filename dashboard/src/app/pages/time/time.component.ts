@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {  ColaboradorByTimeId,
+import {
           Time,
           TimeColaborador,
           EsteiraDeDesenvolvimento,
           TiposEnum,
-          TimeByEsteiraId,
           Colaborador,
-          ColaboradorByEsteiraId,
+
          } from 'src/app/types/time-types';
 import { TimeService } from 'src/services/time/time.service';
 import {  Habilidade,
@@ -31,8 +30,8 @@ import { HabilidadeService } from 'src/services/habilidade/habilidade.service';
   styleUrls: ['./time.component.sass']
 })
 export class TimeComponent implements OnInit {
-
   public times: TimeColaborador[] = [];
+  public timesColaborador: TimeColaborador[] = [];
   public currentTimeColaborador: TimeColaborador = {
     id: 0,
     time: {
@@ -57,6 +56,8 @@ export class TimeComponent implements OnInit {
     },
   };
 
+  public timeC: Time[] = [];
+  public time: Time[] = [];
   public currentTimes: Time = {
     id: 0,
     nomeTime: '',
@@ -74,7 +75,7 @@ export class TimeComponent implements OnInit {
     id: 0,
     nome: '',
   };
-
+  public colaboradoresByTime: Colaborador[] = [];
   public colaboradores: Colaborador[] = [];
   public currentColaborador: Colaborador = {
     id: 0,
@@ -118,24 +119,80 @@ export class TimeComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       const esteiraId = params.get('esteiraId');
       if (esteiraId) {
+        this.currentEsteira.id = parseInt(esteiraId);
         this.getTimesByEsteira(parseInt(esteiraId));
         this.getColaboradoresByEsteira(parseInt(esteiraId));
+
       }
+      const colaboradorId = params.get('colaboradorId');
+      if (colaboradorId) {
+
+        this.getTimesAcoesHabilidades(parseInt(colaboradorId));
+      }
+
     });
   }
 
   getColaboradoresByEsteira(esteiraId: number) {
-    this.colaboradorService.getColaboradoresByEsteiraId(esteiraId).subscribe((response) => {
+    this.timeService.getColaboradoresByEsteiraId(esteiraId).subscribe((response) => {
       this.colaboradores = response;
-      console.log(this.colaboradores);
     });
   }
 
   getTimesByEsteira(esteiraId: number) {
       this.timeService.getTimesByEsteiraId(esteiraId).subscribe((response) => {
-        this.times = response;
-        console.log(this.times);
+        this.time = response;
+        console.log(this.currentEsteira);
       });
+  }
+
+  getTimeAndColaboradorByEsteiraId(esteiraId: number) {
+    this.timeService.getTimeAndColaboradorByEsteiraId(esteiraId).subscribe((response) => {
+      this.timesColaborador = response;
+      console.log(this.timesColaborador);
+
+    });
+  }
+
+  getColaboradoresByTime(timeId: number) {
+    this.timeService.getColaboradoresByTimeId(timeId).subscribe(colaboradores => {
+      this.colaboradores = colaboradores;
+      console.log(this.colaboradores);
+    });
+  }
+
+  getTimesByColaboradorId(colaboradorId: number){
+    this.timeService.getTimesAndEsteiraByColaboradorId(colaboradorId).subscribe(response => {
+      this.time = response;
+    });
+  }
+
+  public getCompetencias(id: number) {
+    this.competenciaService
+      .getCompetenciasByColaborador(id)
+      .subscribe((response) => {
+        this.competencias = response;
+      });
+  }
+
+  public getAcoes(id: number): void {
+    this.acoesService.getAcoesByColaborador(id).subscribe((response) => {
+      this.acoes = response;
+    });
+  }
+
+  public getHabilidades(id: number): void {
+    this.habilidadeService.getHabilidadesByColaborador(id).subscribe((response) => {
+      this.habilidadesByColaborador = response;
+    });
+  }
+
+  async getTimesAcoesHabilidades(colaboradorId: number) {
+    this.getTimesByColaboradorId(colaboradorId);
+    this.getAcoes(colaboradorId);
+    this.getHabilidades(colaboradorId);
+    this.getCompetencias(colaboradorId);
+
   }
 
   handleSearch(event: string) {
@@ -150,5 +207,13 @@ export class TimeComponent implements OnInit {
       this.searchResultsAcoes= [];
       this.searchResultsCompetencias = [];
     }
+}
+
+updateColaboradoresByTime(timeId: number) {
+  this.getColaboradoresByTime(timeId);
+}
+
+updateTimesByColaborador(colaboradorId: number) {
+  this.getTimesByColaboradorId(colaboradorId);
 }
 }

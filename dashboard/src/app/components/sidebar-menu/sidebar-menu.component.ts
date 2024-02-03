@@ -9,8 +9,6 @@ import {
 } from './../../types/usuario';
 
 import {
-  ColaboradorAndTimeEsteiraId,
-  TimeByEsteiraId,
   TimeColaborador,
   Colaborador,
   Habilidade,

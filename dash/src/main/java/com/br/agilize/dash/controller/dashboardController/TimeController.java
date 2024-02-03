@@ -47,17 +47,11 @@ public class TimeController extends ControllerCrudBase<TimeDto> {
     }
 
 
-  @GetMapping("/esteira/{esteiraId}/colaborador/{colaboradorId}")
-    public ResponseEntity<List<TimeDto>> getTimesByEsteiraIdAndColaboradorId(@PathVariable Long esteiraId, @PathVariable Long colaboradorId) {
-        List<TimeDto> times = service.findTimesByEsteiraIdAndColaboradorId(esteiraId, colaboradorId);
-        return ResponseEntity.ok(times);
-    }
-
-    @GetMapping("/esteira/{esteiraId}/time/{timeId}")
-    public ResponseEntity<List<ColaboradorDto>> getColaboradoresByEsteiraIdAndTimeId(@PathVariable Long esteiraId, @PathVariable Long timeId) {
-        List<ColaboradorDto> colaboradores = service.findColaboradoresByEsteiraIdAndTimeId(esteiraId, timeId);
-        return ResponseEntity.ok(colaboradores);
-    }
+@GetMapping("/colaborador/esteira/{esteiraId}")
+public ResponseEntity<List<TimeColaboradorDto>> getTimeAndColaboradorByEsteiraId(@PathVariable Long esteiraId) {
+    List<TimeColaboradorDto> timeColaborador = service.getTimeAndColaboradorByEsteiraId(esteiraId);
+    return ResponseEntity.ok(timeColaborador);
+}
 
 
     @GetMapping("/esteira/{esteiraId}")
@@ -67,15 +61,21 @@ public class TimeController extends ControllerCrudBase<TimeDto> {
     }
 
     @GetMapping("/esteira/{esteiraId}/times")
-    public ResponseEntity<List<Object[]>> getTimesByEsteiraId(@PathVariable Long esteiraId) {
-        List<Object[]> times = service.getTimesByEsteiraId(esteiraId);
-        return new ResponseEntity<>(times, HttpStatus.OK);
+    public ResponseEntity<List<TimeDto>> getTimesByEsteiraId(@PathVariable Long esteiraId) {
+        List<TimeDto> times = service.getTimesByEsteiraId(esteiraId);
+        return ResponseEntity.ok(times);
     }
 
     @GetMapping("/{timeId}/colaboradores")
-    public ResponseEntity<List<Object[]>> getColaboradoresByTimeId(@PathVariable Long timeId) {
-        List<Object[]> colaboradores = service.findColaboradoresByTimeId(timeId);
-        return new ResponseEntity<>(colaboradores, HttpStatus.OK);
+    public ResponseEntity<List<ColaboradorDto>> getColaboradoresByTimeId(@PathVariable Long timeId) {
+        List<ColaboradorDto> colaboradores = service.findColaboradoresByTimeId(timeId);
+        return ResponseEntity.ok(colaboradores);
+    }
+
+    @GetMapping("/colaboradorId/{colaboradorId}")
+    public ResponseEntity<List<TimeDto>> getTimesAndEsteiraByColaboradorId(@PathVariable Long colaboradorId) {
+        List<TimeDto> timeColaborador = service.getTimesByColaboradorId(colaboradorId);
+        return ResponseEntity.ok(timeColaborador);
     }
 
 }
