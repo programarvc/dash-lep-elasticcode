@@ -44,7 +44,7 @@
                       </button>
                       <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
                         <button ngbDropdownItem *ngFor="let colaborador of colaboradores"
-                          (click)="getTimesAcoesHabilidades(colaborador.id); updateTimesByColaborador(colaborador.id)">
+                          (click)="updateCurrentColaborador(colaborador); updateTimesByColaborador(colaborador.id)">
                           <a *ngIf="colaborador.id" [routerLinkActive]="['active']"
                             [routerLinkActiveOptions]="{exact:true}">{{colaborador.nome}}</a>
                         </button>

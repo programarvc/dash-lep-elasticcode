@@ -126,7 +126,7 @@ export class TimeComponent implements OnInit {
       }
       const colaboradorId = params.get('colaboradorId');
       if (colaboradorId) {
-        this.currentColaborador.id = parseInt(colaboradorId);
+
         this.getTimesAcoesHabilidades(parseInt(colaboradorId));
       }
 
@@ -196,6 +196,7 @@ export class TimeComponent implements OnInit {
 
   }
 
+
   handleSearch(event: string) {
     if(event !== ''){
       this.searchResultsAcoes =  this.acoes.filter((acao)=>
@@ -216,5 +217,10 @@ updateColaboradoresByTime(timeId: number) {
 
 updateTimesByColaborador(colaboradorId: number) {
   this.getTimesByColaboradorId(colaboradorId);
+}
+
+updateCurrentColaborador(colaborador: Colaborador) {
+  this.currentColaborador = colaborador;
+  this.getTimesAcoesHabilidades(colaborador.id);
 }
 }
