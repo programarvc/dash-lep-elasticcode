@@ -126,7 +126,7 @@ export class TimeComponent implements OnInit {
       }
       const colaboradorId = params.get('colaboradorId');
       if (colaboradorId) {
-
+        this.currentColaborador.id = parseInt(colaboradorId);
         this.getTimesAcoesHabilidades(parseInt(colaboradorId));
       }
 
@@ -136,6 +136,7 @@ export class TimeComponent implements OnInit {
   getColaboradoresByEsteira(esteiraId: number) {
     this.timeService.getColaboradoresByEsteiraId(esteiraId).subscribe((response) => {
       this.colaboradores = response;
+      console.log(this.currentColaborador);
     });
   }
 

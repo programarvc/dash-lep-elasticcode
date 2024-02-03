@@ -7,7 +7,7 @@
               </div>
               <div class="personal-data">
                 <span class="name">{{currentColaborador.nome}} -
-                  <span *ngFor="let time of time; let isFirst = first" (click)="getColaboradoresByTime(time.id)">
+                  <span *ngFor="let time of time; let isFirst = first" >
                     {{ isFirst ? '' : ', ' }} {{time.nomeTime}}
                   </span>
                 </span>
