@@ -21,7 +21,7 @@ export interface Empresa {
 
 export interface Maturidade {
   esteira: EsteiraDeDesenvolvimento;
-  dataHora: string;
+  dataHora: number[];
   numero: number;
   leadTime: number;
   frequencyDeployment: number;
