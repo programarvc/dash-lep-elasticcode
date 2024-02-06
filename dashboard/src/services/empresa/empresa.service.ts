@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { numBytes } from 'aws-sdk/clients/finspace';
 
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -39,4 +40,5 @@ export class EmpresaService {
       .get<any>(url)
       .pipe(catchError(this.handleError<any>('getColaboradoresByEmpresa')));
   }
+  
 }

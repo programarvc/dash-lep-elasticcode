@@ -28,11 +28,11 @@ public class MaturidadeController extends ControllerCrudBase<MaturidadeDto> {
         super(service);
     }
 
-    /*@GetMapping("/esteira/{esteiraId}")
-    public ResponseEntity<Map<String, Object>> getMaturidadeByEsteiraId(@PathVariable Long esteiraId) {
-        Map<String, Object> maturidade = service.getMaturidadeByEsteiraId(esteiraId);
-        return new ResponseEntity<>(maturidade, HttpStatus.OK);
-    }*/
+    @GetMapping("/esteira/{esteiraId}")
+    public ResponseEntity<List<MaturidadeDto>> getMaturidadeByEsteiraId(@PathVariable Long esteiraId) {
+        List<MaturidadeDto> maturidades = service.getMaturidadeByEsteiraId(esteiraId);
+        return new ResponseEntity<>(maturidades, HttpStatus.OK);
+    }
 
    @GetMapping("/latest/esteira/{esteiraId}")
     public ResponseEntity<Map<String, Object>> getLatestMaturidadeByEsteiraId(@PathVariable Long esteiraId) {

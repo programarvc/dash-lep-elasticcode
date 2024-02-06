@@ -55,6 +55,7 @@ export interface Maturidade {
     id: number;
     esteira: EsteiraDeDesenvolvimento;
     data: string;
+    dataHora: number[],
     numero: number;
     leadTime: number;
     frequencyDeployment: number;
@@ -79,6 +80,6 @@ export enum TiposEnum {
     DESENVOVIMENTO = "DESENVOVIMENTO",
     INTEGRACAO = "INTEGRACAO",
     TESTE = "TESTE",
-    IMPLANTAÇÃO = "IMPLANTAÇÃO",
+    IMPLANTACAO = "IMPLANTACAO",
     MONITORAMENTO = "MONITORAMENTO",
 }

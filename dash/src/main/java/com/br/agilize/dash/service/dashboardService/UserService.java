@@ -47,10 +47,14 @@ public class UserService extends ServiceCrudBase<UserDto> {
     }
 
     @Override
-    public UserDto salvar(UserDto payload) {
-        UserEntity UserSalvo = this.repository.save(this.mapper.dtoToModel(payload));
-        return this.mapper.modelToDTO(UserSalvo);
+public UserDto salvar(UserDto payload) {
+    Optional<UserEntity> existingUser = this.repository.findByNome(payload.getNome());
+    if (existingUser.isPresent()) {
+        throw new RuntimeException("Usuário já existe");
     }
+    UserEntity UserSalvo = this.repository.save(this.mapper.dtoToModel(payload));
+    return this.mapper.modelToDTO(UserSalvo);
+}
 
     @Override
     public void excluirPorId(Long id) {

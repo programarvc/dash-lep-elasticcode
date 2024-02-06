@@ -74,6 +74,7 @@ export class ColaboradorComponent implements OnInit {
       this.getAcoes(colaborador.id);
       this.getHabilidades(colaborador.id);
     }
+
   }
 
   public async getColaboradores() {
@@ -118,6 +119,7 @@ export class ColaboradorComponent implements OnInit {
   }
 
   public selecionarEmpresa(id?: number) {
+
     if (id) {
       const empresa = this.empresas.find((empresa) => empresa.id === id);
 
@@ -148,6 +150,7 @@ export class ColaboradorComponent implements OnInit {
   public getEmpresasByColaborador(id: number) {
     this.empresaService.getEmpresasByColaborador(id).subscribe((response) => {
       this.empresasByColaborador = response;
+      console.log(this.empresasByColaborador);
     });
   }
 

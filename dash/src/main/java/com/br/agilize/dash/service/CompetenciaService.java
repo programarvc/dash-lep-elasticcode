@@ -3,6 +3,7 @@ package com.br.agilize.dash.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.br.agilize.dash.model.entity.CompetenciaColaboradorEntity;
@@ -58,6 +59,11 @@ public class CompetenciaService extends ServiceCrudBase<CompetenciaDto> {
 
     @Override
     public CompetenciaDto salvar(CompetenciaDto payload) {
+        String nomeTrimmed = payload.getNome().trim();
+        Optional<CompetenciaEntity> existingCompetencia = this.repository.findByNome(nomeTrimmed);
+        if(existingCompetencia.isPresent()) {
+            throw new RuntimeException("Competencia ja existe");
+        }
         CompetenciaEntity salvo = this.repository.save(this.mapper.dtoToModel(payload));
         return this.mapper.modelToDTO(salvo);
     }

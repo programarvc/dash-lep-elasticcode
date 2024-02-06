@@ -10,7 +10,7 @@ export enum TiposEnum {
   DESENVOVIMENTO = "DESENVOVIMENTO",
   INTEGRACAO = "INTEGRACAO",
   TESTE = "TESTE",
-  IMPLANTAÇÃO = "IMPLANTAÇÃO",
+  IMPLANTACAO = "IMPLANTACAO",
   MONITORAMENTO = "MONITORAMENTO",
 }
 
@@ -21,8 +21,7 @@ export interface Empresa {
 
 export interface Maturidade {
   esteira: EsteiraDeDesenvolvimento;
-  data: string;
-  hora: string;
+  dataHora: number[];
   numero: number;
   leadTime: number;
   frequencyDeployment: number;
@@ -35,17 +34,17 @@ export interface Maturidade {
   mediaDeJornada: number;
 }
 
+
 export interface MaturidadeByEsteiraId{
   id: number;
   esteira: EsteiraDeDesenvolvimento;
-  data: string;
-  hora: string;
+  dataHora: string;
   numero: number;
   leadTime: number;
   frequencyDeployment: number;
   changeFailureRate: number;
   timeToRecovery: number;
-  
+
   saude: number;
   metricas4: number;
   capacidadeDora: number;

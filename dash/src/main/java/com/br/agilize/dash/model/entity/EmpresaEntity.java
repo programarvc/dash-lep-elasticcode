@@ -12,7 +12,7 @@ public class EmpresaEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "nome", nullable = false, unique = true)
     private String nome;
 
     

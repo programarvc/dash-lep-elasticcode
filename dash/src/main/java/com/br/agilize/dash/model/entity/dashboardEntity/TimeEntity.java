@@ -12,6 +12,10 @@ public class TimeEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(nullable = false)
-    private String nome;
+    @Column(nullable = false, name = "nome_time")
+    private String nomeTime;
+
+    @ManyToOne
+    @JoinColumn(name = "esteira_id")
+    private EsteiraDeDesenvolvimentoEntity esteira;  
 }

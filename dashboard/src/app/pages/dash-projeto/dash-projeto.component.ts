@@ -63,8 +63,7 @@ export class DashProjetoComponent implements OnInit {
         nome: '',
       },
     },
-    data: '',
-    hora: '',
+    dataHora: [],
     numero: 0,
     leadTime: 0,
     frequencyDeployment: 0,
@@ -91,6 +90,7 @@ export class DashProjetoComponent implements OnInit {
         },
       },
       data: '',
+      dataHora: [],
       numero: 0,
       leadTime: 0,
       frequencyDeployment: 0,
@@ -150,6 +150,8 @@ export class DashProjetoComponent implements OnInit {
   public valorMaturidadeTecnica: ValorDosIndicesDeMaturidadeByEsteiraIdAndTecnica[] = [];
   public valorMaturidadeCultura: ValorDosIndicesDeMaturidadeByEsteiraIdAndCultura[] = [];
   public valorMaturidadeC:  ValorDosIndicesDeMaturidade[] = [];
+  public selectedOption: number;
+
 
   constructor(
     private router: Router,
@@ -158,7 +160,9 @@ export class DashProjetoComponent implements OnInit {
     private maturidadeService: MaturidadeService,
     private capacidadeService: CapacidadeService,
     private valorMaturidadeService: valorMaturidadeService
-  ) {}
+  ) {
+    this.selectedOption = 0;
+  }
 
   ngOnInit(): void {
     this.getCapacidades();
@@ -172,7 +176,7 @@ export class DashProjetoComponent implements OnInit {
         this.getLatestCapacidadesByEsteiraId(parseInt(id));
         this.getValorMaturidadesByEsteiraIdAndTecnica(parseInt(id));
         this.getValorMaturidadesByEsteiraIdAndCultura(parseInt(id));
-
+        this.getMaturidadeByEsteiraId(parseInt(id));
 
       }
     });
@@ -184,8 +188,11 @@ public async setCurrent(id: number) {
   this.getLatestCapacidadesByEsteiraId(id);
   this.getValorMaturidadesByEsteiraIdAndTecnica(id);
   this.getValorMaturidadesByEsteiraIdAndCultura(id);
+  this.getMaturidadeByEsteiraId(id);
 
   }
+
+
 
   public async getMaturidade() {
     this.esteiraService.getEsteiras().subscribe((response) => {
@@ -210,6 +217,21 @@ public async setCurrent(id: number) {
       });
   }
 
+  getMaturidadeByEsteiraId(id: number): void {
+    this.maturidadeService
+      .getMaturidadeByEsteiraId(id)
+      .subscribe((maturidadeArray: MaturidadeByEsteiraId[]) => {
+        maturidadeArray.forEach((maturidadeData: MaturidadeByEsteiraId) => {
+          let dateParts = maturidadeData.dataHora;
+          let milliseconds = Number(dateParts[6]) / 1000000; // Convert nanoseconds to milliseconds
+          let date = new Date(Number(dateParts[0]), Number(dateParts[1]) - 1, Number(dateParts[2]), Number(dateParts[3]), Number(dateParts[4]), Number(dateParts[5]), milliseconds);
+          maturidadeData.dataHora = date.toISOString();
+        });
+        this.maturidadeByEsteiraId = maturidadeArray;
+        console.log(this.maturidadeByEsteiraId);
+      });
+  }
+
   public getCapacidades(): void {
     this.capacidadeService.getCapacidades().subscribe((response) => {
       this.capacidade = response;
@@ -231,7 +253,6 @@ public async setCurrent(id: number) {
   public getValorMaturidadesByEsteiraIdAndCultura(id: number): void{
     this.valorMaturidadeService.getValorMaturidadesByEsteiraIdAndCulturaLatest(id).subscribe((response) =>{
       this.valorMaturidadeCultura = response;
-      console.log(this.valorMaturidadeCultura);
     });
   }
 
@@ -251,6 +272,8 @@ public async setCurrent(id: number) {
     });
   }
 
+
+
   getCorJornada(jornadaGoal: number, nivel: string): string {
     if (jornadaGoal >= 0 && jornadaGoal <= 25 && nivel === 'Baixa') {
       return '#12C3FF';
@@ -265,15 +288,25 @@ public async setCurrent(id: number) {
     }
   }
 
-  getNivel(rate: number): string {
-    if (rate >= 0 && rate <= 25) {
+  getNivel(rate: number): string | undefined {
+    if (rate === null){
+      return 'sem dado';
+    } else if (rate >= 0 && rate <= 25) {
       return 'Baixo';
     } else if (rate >= 26 && rate <= 75) {
       return 'Médio';
     } else if (rate >= 76 && rate <= 100) {
       return 'Alto';
     } else {
-      return '';
+      return undefined;
     }
   }
+
+  onOptionChange(event: Event) {
+    let selectElement = event.target as HTMLSelectElement;
+    this.selectedOption = Number(selectElement.value);
+    console.log("Selected option: " + this.selectedOption);
+    console.log(this.maturidadeByEsteiraId[this.selectedOption].capacidadeDora)
+  }
+
 }

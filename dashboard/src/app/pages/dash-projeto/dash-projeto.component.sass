@@ -22,7 +22,17 @@ body
 
 .dashboard-content
     padding-left: 30px
+    padding-right: 20px
     width: 100%
+
+.campo-data-metrica
+  display: flex
+  justify-content: flex-start
+  align-items: center
+
+  #data
+    margin-left: 20px
+    margin-top: 18px
 
 .bloco-metricas
     text-align: center
@@ -126,7 +136,6 @@ body
     border-radius: 15px
     box-shadow: 0px 3.352px 3.352px 0px rgba(0, 0, 0, 0.05)
     height: 357px
-    margin-right: 31px
     padding: 0 30px 32px
 
 .bloco-jornada h2
@@ -307,6 +316,7 @@ body
     display: flex
     flex-direction: column
     margin-top: 30px
+    margin-bottom: 104px
 
 
 .metricas-maturidade
@@ -358,86 +368,6 @@ body
 
 
 
-.pontilhado-cultura2
-    position: absolute
-    z-index: 0
-    border-right: 1px dashed #d2d2d2
-    height: 139px
-    left: 347px
-    top: 20px
-
-.pontilhado-cultura3
-    position: absolute
-    z-index: 0
-    border-right: 1px dashed #d2d2d2
-    height: 139px
-    left: 428px
-    top: 20px
-
-.pontilhado-cultura4
-    position: absolute
-    z-index: 0
-    border-right: 1px dashed #d2d2d2
-    height: 139px
-    left: 508px
-    top: 20px
-
-.pontilhado-cultura5
-    position: absolute
-    z-index: 0
-    border-right: 1px dashed #d2d2d2
-    height: 139px
-    left: 588px
-    top: 20px
-
-.pontilhado-cultura6
-    position: absolute
-    z-index: 0
-    border-right: 1px dashed #d2d2d2
-    height: 139px
-    left: 668px
-    top: 20px
-
-.pontilhado-cultura7
-    position: absolute
-    z-index: 0
-    border-right: 1px dashed #d2d2d2
-    height: 139px
-    left: 748px
-    top: 20px
-
-.pontilhado-cultura8
-    position: absolute
-    z-index: 0
-    border-right: 1px dashed #d2d2d2
-    height: 139px
-    left: 828px
-    top: 20px
-
-.pontilhado-cultura9
-    position: absolute
-    z-index: 0
-    border-right: 1px dashed #d2d2d2
-    height: 139px
-    left: 908px
-    top: 20px
-
-.pontilhado-cultura10
-    position: absolute
-    z-index: 0
-    border-right: 1px dashed #d2d2d2
-    height: 139px
-    left: 988px
-    top: 20px
-
-.pontilhado-cultura11
-    position: absolute
-    z-index: 0
-    border-right: 1px dashed #d2d2d2
-    height: 139px
-    left: 1070px
-    top: 20px
-
 .texto-boostrap
     text-align: right
     max-width: 290px
@@ -478,8 +408,11 @@ body
 .numeros-cultura
     display: flex
     flex-direction: row
-    z-index: 1
-    margin-left: 19px
+    z-index: 2
+    position: absolute
+    margin-top: 130px
+    margin-right: 18px
+
 
 .cultura-barra-meta
     height: 21px
@@ -494,9 +427,10 @@ body
     background: #6A5FFF
     z-index: 1
 
+
+
 .tecnicas-num
-    margin: 21px
-    margin-top: 10px
+
     color: #141414
     text-align: center
     font-family: Poppins
@@ -507,11 +441,11 @@ body
     z-index: 1
 
 .barras
-    padding: 0 40px 0 15px
+    padding: 0 4px 0px 19px
     z-index: 2
     position: absolute
     top: 0
-    width: 100%
+    width: 75%
 
 .progress-bar-content
     position: relative
@@ -566,11 +500,14 @@ body
     flex-direction: row
     overflow: auto
     justify-content: center
+    height: 120px
+
 .cultura-geral::-webkit-scrollbar
     display: none
 
 .cultura-textos
     text-align: right
+    margin-top: 15px
 
 
 .cultura-texto
@@ -596,27 +533,108 @@ body
     font-weight: 600
     line-height: normal
     padding: 35px 39px
+    text-transform: capitalize
 
 .metricas-cultura
     display: flex
     width: 70%
     justify-content: center
     align-items: center
+
 .processo-cultura
     position: relative
+    width: 70%
+    top: 20px
 
 .pontilhados-cultura
-    margin-left: 15px
+    position: absolute
+    left: 415px
+    margin-top: 116px
 
 .pontilhados-cultura2
     display: flex
-    margin-left: 20px
+    height: 100px
 
 
 .pontilhado-cultura
-    height: 150px
+    height: 100%
     z-index: 0
     border: 1px dashed #d2d2d2
     width: 60px
     border-top-color: transparent
     border-bottom-color: transparent
+
+.cultura-num
+    margin-left: 40px
+
+@media(min-width: 1400px)
+    .pontilhado-cultura
+        width: 100%
+
+    .pontilhados-cultura
+        left: 425px
+        width: 45%
+
+    .pontilhados-cultura2
+        width: 100%
+
+    .numeros-cultura
+        margin-right: 36%
+
+    .cultura-num
+        margin-left: 20%
+
+    .capacidades-recomendadas-card
+        width: 17%
+
+@media(min-width: 1600px)
+    .pontilhados-cultura
+        left: 28.5%
+        width: 45%
+
+    .numeros-cultura
+        margin-right: 41%
+
+    .cultura-num
+        margin-left: 24%
+
+    .capacidades-recomendadas-card
+        width: 17.2%
+
+@media(min-width: 1920px)
+    .pontilhados
+        margin-left: 17.5%
+        width: 42%
+
+    .numeros
+        margin-left: 23%
+
+    .tecnicas-num
+        margin-left: 7%
+
+    .pontilhados-cultura
+        left: 26.3%
+        width: 47%
+
+    .numeros-cultura
+        margin-right: 48%
+
+    .cultura-num
+        margin-left: 32%
+
+    .capacidades-recomendadas-card
+        width: 18%
+
+@media(min-width: 2560px)
+    .pontilhados-cultura
+        left: 23.3%
+        width: 48.7%
+
+    .numeros-cultura
+        margin-right: 56%
+
+    .cultura-num
+        margin-left: 47.5%
+
+    .capacidades-recomendadas-card
+        width: 19%

@@ -5,5 +5,6 @@ import lombok.Data;
 @Data
 public class TimeDto {
     private Long id;
-    private String nome;
+    private String nomeTime;
+    private EsteiraDeDesenvolvimentoDto esteira;
 }
