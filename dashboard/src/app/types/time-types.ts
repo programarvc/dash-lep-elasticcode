@@ -10,29 +10,6 @@ export interface TimeColaborador {
     colaborador: Colaborador;
 
 }
-export interface TimeByEsteiraId{
-  id: number;
-  time: Time;
-  colaborador: Colaborador;
-}
-
-export interface ColaboradorByTimeId{
-  id: number;
-  time: Time;
-  colaborador: Colaborador;
-}
-
-export interface ColaboradorByEsteiraId{
-  id: number;
-  time: Time;
-  colaborador: Colaborador;
-}
-
-export interface ColaboradorAndTimeEsteiraId{
-  id: number;
-  time: Time;
-  colaborador: Colaborador;
-}
 
 export interface Colaborador {
     id: number;
@@ -40,6 +17,7 @@ export interface Colaborador {
     email: string;
     github: string;
     habilidades: Habilidade[];
+
   }
 
 export interface Habilidade {

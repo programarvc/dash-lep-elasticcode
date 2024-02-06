@@ -9,8 +9,6 @@ import {
 } from './../../types/usuario';
 
 import {
-  ColaboradorAndTimeEsteiraId,
-  TimeByEsteiraId,
   TimeColaborador,
   Colaborador,
   Habilidade,
@@ -59,7 +57,7 @@ export class SidebarMenuComponent {
       if(user) {
         const esteiraId = user.esteiraId || (user.esteira && user.esteira.id);
         if(esteiraId) {
-          this.router.navigate(['/1']);
+          this.router.navigate([`/time/${esteiraId}`]);
         }
       }
     })

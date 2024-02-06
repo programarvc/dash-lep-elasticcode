@@ -6,16 +6,15 @@
                   <img src="{{'https://github.com/' + currentColaborador.github + '.png'}}" alt="foto do colaborador">
               </div>
               <div class="personal-data">
-                  <!--<span class="name">{{currentColaborador.nome}} -
-                      <span *ngFor="let time of timesColaborador let isFirst = first">{{ isFirst ? '' : ', '
-                          }} {{time.time.nomeTime}}</span>
-                  </span>-->
-
-
-                  <span class="occupation">
-                      <span *ngFor="let habilidade of habilidadesByColaborador; let isFirst = first">{{ isFirst
-                          ? '' : ' - ' }} {{habilidade.habilidade.nome}}</span>
+                <span class="name">{{currentColaborador.nome}} -
+                  <span *ngFor="let time of time; let isFirst = first" >
+                    {{ isFirst ? '' : ', ' }} {{time.nomeTime}}
                   </span>
+                </span>
+
+                <span class="occupation">
+                  <span *ngFor="let habilidade of habilidadesByColaborador; let isFirst = first">{{ isFirst ? '' : ' - ' }} {{habilidade.habilidade.nome}}</span>
+                </span>
               </div>
           </div>
       </div>
@@ -23,39 +22,40 @@
           <div class="search">
               <div class="filters-display">
                   <div class="filter">
-                      <div ngbDropdown>
-                          <button type="button" id="dropdownEmpresa" ngbDropdownToggle>
-                              {{ currentTimes.nomeTime ? currentTimes.nomeTime : 'Times'}}
-                          </button>
-                         <!-- <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                              <button ngbDropdownItem (click)="selecionarTimesPorEsteiraId(currentEsteira.id)">
-                                  Todas
-                              </button>
-                              <button ngbDropdownItem *ngFor="let time of times"
-                                  (click)="selecionarTimesPorEsteiraId(time.esteira.id)">
-                                  {{time.nomeTime}}
-                              </button>-->
-                          </div>
+                    <div ngbDropdown>
+                      <button type="button" id="dropdownEmpresa" ngbDropdownToggle>
+                        {{ currentTimes.nomeTime ? currentTimes.nomeTime : 'Times'}}
+                      </button>
+                      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                        <button ngbDropdownItem (click)="getTimesByEsteira(currentEsteira.id); getColaboradoresByEsteira(currentEsteira.id); currentTimes.nomeTime = 'Times'">
+                          Todos
+                        </button>
+                        <button ngbDropdownItem *ngFor="let time of time"
+                          (click)="getTimesByEsteira(time.esteira.id);  updateColaboradoresByTime(time.id); currentColaborador = colaboradores[0]">
+                          {{time.nomeTime}}
+                        </button>
                       </div>
+                    </div>
                   </div>
                   <div class="filter">
-                      <div ngbDropdown>
-                          <button type="button" id="dropdownBasic1" ngbDropdownToggle>
-                              {{ currentColaborador.nome ? currentColaborador.nome : 'Devs'}}
-                          </button>
-                         <!-- <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                              <button ngbDropdownItem *ngFor="let colaborador of timesColaborador" >
-                                  <a *ngIf="colaborador.colaborador.id" routerLink="{{'/time/' + colaborador.time.esteira.id}}" [routerLinkActive]="['active']"
-                                      [routerLinkActiveOptions]="{exact:true}">{{colaborador.colaborador.nome}}</a>
-                              </button>-->
-                          </div>
+                    <div ngbDropdown>
+                      <button type="button" id="dropdownBasic1" ngbDropdownToggle >
+                        {{ currentColaborador.nome ? currentColaborador.nome : 'Devs'}}
+                      </button>
+                      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                        <button ngbDropdownItem *ngFor="let colaborador of colaboradores"
+                          (click)="updateCurrentColaborador(colaborador); updateTimesByColaborador(colaborador.id)">
+                          <a *ngIf="colaborador.id" [routerLinkActive]="['active']"
+                            [routerLinkActiveOptions]="{exact:true}">{{colaborador.nome}}</a>
+                        </button>
                       </div>
+                    </div>
                   </div>
               </div>
               <app-search-bar (TextoPesquisa)="handleSearch($event)"></app-search-bar>
           </div>
-     <!--- </div>
-  </div>-->
+     </div>
+  </div>
 </header>
 <main>
   <div class="row">

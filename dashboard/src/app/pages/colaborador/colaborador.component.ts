@@ -147,11 +147,10 @@ export class ColaboradorComponent implements OnInit {
     }
   }
 
-  
-
   public getEmpresasByColaborador(id: number) {
     this.empresaService.getEmpresasByColaborador(id).subscribe((response) => {
       this.empresasByColaborador = response;
+      console.log(this.empresasByColaborador);
     });
   }
 

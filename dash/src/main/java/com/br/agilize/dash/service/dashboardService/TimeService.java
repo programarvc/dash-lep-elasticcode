@@ -110,15 +110,9 @@ public class TimeService extends ServiceCrudBase<TimeDto> {
     
         }*/
 
-        public List<TimeDto> findTimesByEsteiraIdAndColaboradorId(Long esteiraId, Long colaboradorId) {
-            List <TimeEntity> times = this.timeColaboradorRepository.findTimesByEsteiraIdAndColaboradorId(esteiraId, colaboradorId);
-            return times.stream().map(this.mapper::modelToDTO).collect(Collectors.toList());
-          
-        }
-
-public List<ColaboradorDto> findColaboradoresByEsteiraIdAndTimeId(Long esteiraId, Long timeId) {
-    List<ColaboradorEntity> colaboradores = this.timeColaboradorRepository.findColaboradoresByEsteiraIdAndTimeId(esteiraId, timeId);
-    return colaboradores.stream().map(this.colaboradorMapper::modelToDTO).collect(Collectors.toList());
+public List<TimeColaboradorDto> getTimeAndColaboradorByEsteiraId(Long esteiraId) {
+    List<TimeColaboradorEntity> timeAndColaboradores = this.timeColaboradorRepository.findTimeAndColaboradorByEsteiraId(esteiraId);
+    return timeAndColaboradores.stream().map(this.timeColaboradorMapper::modelToDTO).collect(Collectors.toList());
 }
 
 public List<ColaboradorDto> getColaboradoresByEsteiraId(Long esteiraId) {
@@ -126,14 +120,20 @@ public List<ColaboradorDto> getColaboradoresByEsteiraId(Long esteiraId) {
     return colaboradores.stream().map(this.colaboradorMapper::modelToDTO).collect(Collectors.toList());
 }
 
-public List<Object[]> getTimesByEsteiraId(Long esteiraId) {
-    List<Object[]> times = this.timeColaboradorRepository.findTimesByEsteiraId(esteiraId);
-    return times;
+public List<TimeDto> getTimesByEsteiraId(Long esteiraId) {
+    List<TimeEntity> times = this.timeColaboradorRepository.findTimesByEsteiraId(esteiraId);
+    return times.stream().map(this.mapper::modelToDTO).collect(Collectors.toList());
 }
 
-public List<Object[]> findColaboradoresByTimeId(Long timeId) {
-    List<Object[]> colaboradores = this.timeColaboradorRepository.findColaboradoresByTimeId(timeId);
-    return colaboradores;
+public List<TimeDto> getTimesByColaboradorId(Long colaboradorId) {
+    List<TimeEntity> timesAndEsteira = this.timeColaboradorRepository.findTimesAndEsteiraByColaboradorId(colaboradorId);
+    return timesAndEsteira.stream().map(this.mapper::modelToDTO).collect(Collectors.toList());
+}
+
+public List<ColaboradorDto> findColaboradoresByTimeId(Long timeId) {
+    List<ColaboradorEntity> colaboradores = this.timeColaboradorRepository.findColaboradoresByTimeId(timeId);
+    return colaboradores.stream().map(this.colaboradorMapper::modelToDTO).collect(Collectors.toList());
+    
 }
    
 }
