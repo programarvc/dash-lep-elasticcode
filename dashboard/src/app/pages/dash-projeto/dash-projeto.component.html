@@ -8,7 +8,7 @@
             <div class="campo-data-metrica">
               <h1>Dashboard</h1>
               <select [(ngModel)]="selectedOption" (change)="onOptionChange($event)" id="data" name="data ">
-                <option *ngFor="let maturidadeData of maturidadeByEsteiraId; let i = index" [value]="i">
+                <option *ngFor="let maturidadeData of (maturidadeByEsteiraId | slice:0).reverse(); let i = index" [value]="i">
                   {{maturidadeData.dataHora | date: 'dd/MM/yyyy HH:mm'}}
                 </option>
               </select>

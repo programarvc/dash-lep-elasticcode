@@ -30,6 +30,13 @@ export class TimeService {
       .pipe(catchError(this.handleError<any>("getTimes")));
   }
 
+  getTimeById(timeId: number): Observable<any> {
+    const url: string = `${environment.api}/time/${timeId}`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>("getTimeById")));
+  }
+
   getColaboradoresByEsteiraId(esteiraId: number): Observable<any> {
     const url: string = `${environment.api}/time/esteira/${esteiraId}`;
     return this.http

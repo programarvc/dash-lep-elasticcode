@@ -75,7 +75,7 @@ export class TimeComponent implements OnInit {
     id: 0,
     nome: '',
   };
-  public colaboradoresByTime: Colaborador[] = [];
+  public colaboradoresByEsteira: Colaborador[] = [];
   public colaboradores: Colaborador[] = [];
   public currentColaborador: Colaborador = {
     id: 0,
@@ -111,12 +111,15 @@ export class TimeComponent implements OnInit {
     private acoesService: AcaoService,
     private esteiraService: EsteiraService,
     private habilidadeService: HabilidadeService,
-    private timeService: TimeService
+    private timeService: TimeService,
+
 
   ) { }
 
   async ngOnInit(): Promise<void> {
+
     this.route.paramMap.subscribe((params) => {
+
       const esteiraId = params.get('esteiraId');
       if (esteiraId) {
         this.currentEsteira.id = parseInt(esteiraId);
@@ -126,24 +129,25 @@ export class TimeComponent implements OnInit {
       }
       const colaboradorId = params.get('colaboradorId');
       if (colaboradorId) {
-
         this.getTimesAcoesHabilidades(parseInt(colaboradorId));
       }
 
     });
   }
 
-  getColaboradoresByEsteira(esteiraId: number) {
-    this.timeService.getColaboradoresByEsteiraId(esteiraId).subscribe((response) => {
-      this.colaboradores = response;
-      console.log(this.currentColaborador);
-    });
-  }
+   getColaboradoresByEsteira(esteiraId: number) {
+  this.timeService.getColaboradoresByEsteiraId(esteiraId).subscribe((response) => {
+    // Aqui está o ajuste, usando [0] para pegar o primeiro colaborador da lista
+    this.currentColaborador = response[0];
+    this.colaboradores = response;
+    console.log(this.currentColaborador);
+  });
+}
 
   getTimesByEsteira(esteiraId: number) {
       this.timeService.getTimesByEsteiraId(esteiraId).subscribe((response) => {
         this.time = response;
-        console.log(this.currentEsteira);
+        console.log(this.time);
       });
   }
 
@@ -159,12 +163,14 @@ export class TimeComponent implements OnInit {
     this.timeService.getColaboradoresByTimeId(timeId).subscribe(colaboradores => {
       this.colaboradores = colaboradores;
       console.log(this.colaboradores);
+
     });
   }
 
   getTimesByColaboradorId(colaboradorId: number){
     this.timeService.getTimesAndEsteiraByColaboradorId(colaboradorId).subscribe(response => {
-      this.time = response;
+      this.time = response.filter((time: { esteira: { id: any; }; }) => time.esteira.id === this.currentEsteira.id);
+      console.log(this.time);
     });
   }
 
@@ -188,11 +194,19 @@ export class TimeComponent implements OnInit {
     });
   }
 
-  async getTimesAcoesHabilidades(colaboradorId: number) {
-    this.getTimesByColaboradorId(colaboradorId);
-    this.getAcoes(colaboradorId);
-    this.getHabilidades(colaboradorId);
-    this.getCompetencias(colaboradorId);
+  public async getTimesAcoesHabilidades(colaboradorId: number) {
+    const colaborador = this.colaboradores.find(
+      (colaborador) => colaborador.id === colaboradorId
+    );
+    if (colaborador) {
+      this.currentColaborador = colaborador;
+      this.getCompetencias(colaborador.id);
+      this.getAcoes(colaborador.id);
+      this.getHabilidades(colaborador.id);
+      this.getTimesByColaboradorId(colaborador.id);
+    }
+
+    console.log(this.currentColaborador);
 
   }
 
@@ -212,15 +226,24 @@ export class TimeComponent implements OnInit {
 }
 
 updateColaboradoresByTime(timeId: number) {
-  this.getColaboradoresByTime(timeId);
+  this.timeService.getTimeById(timeId).subscribe((time) => {
+    this.currentTimes = time; // atualiza o time atual
+    this.getColaboradoresByTime(timeId);
+  });
 }
 
 updateTimesByColaborador(colaboradorId: number) {
+
   this.getTimesByColaboradorId(colaboradorId);
 }
 
 updateCurrentColaborador(colaborador: Colaborador) {
-  this.currentColaborador = colaborador;
-  this.getTimesAcoesHabilidades(colaborador.id);
+
+    this.currentColaborador = colaborador;
+    this.getTimesAcoesHabilidades(colaborador.id);
+    this.getTimesByColaboradorId(colaborador.id);
 }
+
+
 }
+
