@@ -20,7 +20,8 @@ import {
 
 import {
   ValorDosIndicesDeMaturidade,
-  ValorDosIndicesDeMaturidadeByEsteiraIdAndTecnica
+  ValorDosIndicesDeMaturidadeByEsteiraIdAndTecnica,
+  ValorDosIndicesDeMaturidadeFilter
 } from 'src/app/types/valorMaturidade-types';
 
 
@@ -96,6 +97,11 @@ export class DashProjetoComponent implements OnInit {
       frequencyDeployment: 0,
       changeFailureRate: 0,
       timeToRecovery: 0,
+
+      saude: 0,
+      metricas4: 0,
+      capacidadeDora: 0,
+      mediaDeJornada: 0
     },
     itemDeMaturidade: {
       id: 0,
@@ -140,6 +146,45 @@ export class DashProjetoComponent implements OnInit {
     id: 0,
   };
 
+  public currentFilterValorMaturidade: ValorDosIndicesDeMaturidadeFilter = {
+    id: 0,
+    maturidade: {
+      id: 0,
+      esteira: {
+        id: 0,
+        nome: '',
+        tipo: '' as TiposEnum,
+        empresa: {
+          id: 0,
+          nome: '',
+        },
+      },
+      data: '',
+      dataHora: [],
+      numero: 0,
+      leadTime: 0,
+      frequencyDeployment: 0,
+      changeFailureRate: 0,
+      timeToRecovery: 0,
+      saude: 0,
+      metricas4: 0,
+      capacidadeDora: 0,
+      mediaDeJornada: 0
+    },
+    itemDeMaturidade: {
+      id: 0,
+      tipoMaturidade: '' as TiposMaturidadeEnum,
+      nome: '',
+    },
+    valorAtingido: 0,
+    valorEsperado: 0,
+    tipoMaturidade: '',
+    nome: '',
+    dataHora: []
+  }
+
+
+
   public empresas: Empresa[] = [];
   public maturidade: Maturidade[] = [];
   public capacidade: CapacidadesRecomendadas[] = [];
@@ -151,6 +196,7 @@ export class DashProjetoComponent implements OnInit {
   public valorMaturidadeCultura: ValorDosIndicesDeMaturidadeByEsteiraIdAndCultura[] = [];
   public valorMaturidadeC:  ValorDosIndicesDeMaturidade[] = [];
   public selectedOption: number;
+  public FilterValorMaturidade: ValorDosIndicesDeMaturidadeFilter[] = [];
 
 
   constructor(
@@ -179,6 +225,10 @@ export class DashProjetoComponent implements OnInit {
         this.getMaturidadeByEsteiraId(parseInt(id));
 
       }
+      const maturidadeId = params.get('maturidadeId');
+      if (maturidadeId ) {
+        this.getMaturidadeFilterById(parseInt(maturidadeId));
+      } 
     });
   }
 
@@ -215,6 +265,13 @@ public async setCurrent(id: number) {
       .subscribe((maturidade) => {
         this.currentMaturidade = maturidade;
       });
+  }
+
+  getMaturidadeFilterById(maturidadeId: number): void {
+    this.valorMaturidadeService.getMaturidadeFilterById(maturidadeId).subscribe((response) => {
+      this.FilterValorMaturidade = response;
+      console.log(this.FilterValorMaturidade);
+    });
   }
 
   getMaturidadeByEsteiraId(id: number): void {
@@ -339,8 +396,7 @@ public async setCurrent(id: number) {
   onOptionChange(event: Event) {
     let selectElement = event.target as HTMLSelectElement;
     this.selectedOption = Number(selectElement.value);
-    console.log("Selected option: " + this.selectedOption);
-    console.log(this.maturidadeByEsteiraId[this.selectedOption].capacidadeDora)
+  
   }
 
 }

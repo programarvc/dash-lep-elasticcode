@@ -70,6 +70,11 @@ export class TecnicaComponent implements OnInit {
       frequencyDeployment: 0,
       changeFailureRate: 0,
       timeToRecovery: 0,
+
+      saude: 0,
+      metricas4: 0,
+      capacidadeDora: 0,
+      mediaDeJornada: 0
     },
     itemDeMaturidade: {
       id: 0,
