@@ -247,12 +247,32 @@ updateTimesByColaborador(colaboradorId: number) {
 }
 
 updateCurrentColaborador(colaborador: Colaborador) {
+  this.currentColaborador = colaborador;
+  this.getTimesAcoesHabilidades(colaborador.id);
+  this.getTimesByColaboradorId(colaborador.id);
 
-    this.currentColaborador = colaborador;
-    this.getTimesAcoesHabilidades(colaborador.id);
-    this.getTimesByColaboradorId(colaborador.id);
+  // Recupera todos os times da esteira
+  this.getColaboradorEsteiraId(this.currentEsteira.id);
+  this.getTimesByEsteira(this.currentEsteira.id);
 }
 
+getAllTimesAndDevs() {
+  this.getTimesByEsteira(this.currentEsteira.id);
+  this.getColaboradoresByEsteira(this.currentEsteira.id);
+  this.currentTimes.nomeTime = 'Todos';
+
+  // Atualiza o colaborador atual para o primeiro da lista, se existir
+  if (this.colaboradores.length > 0) {
+    this.currentColaborador = this.colaboradores[0];
+  }
+}
+
+selectTime(time: Time) {
+  this.getTimesByEsteira(time.esteira.id);
+  this.updateColaboradoresByTime(time.id);
+  this.getColaboradorEsteiraId(this.currentEsteira.id);
+  this.currentColaborador = this.colaboradores[0];
+}
 
 }
 
