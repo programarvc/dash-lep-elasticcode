@@ -79,9 +79,10 @@ public class ValorDosIndicesDeMaturidadeService extends ServiceCrudBase<ValorDos
         return entities;  
     }
     //retorna os dados de acordo com a data de maturidade id em ordem cresente
-    public List<ValorDosIndicesDeMaturidadeDto> findByEsteiraId(Long esteiraId) {
-        List<ValorDosIndicesDeMaturidadeEntity> entities = repository.findByEsteiraId(esteiraId);
-        return entities.stream().map(mapper::modelToDTO).collect(Collectors.toList());
+    public List<Object[]> findByMaturidadeId(Long maturidadeId) {
+        List<Object[]> entities = repository.findByMaturidadeId(maturidadeId);
+        return entities;
+        
     }
 
 

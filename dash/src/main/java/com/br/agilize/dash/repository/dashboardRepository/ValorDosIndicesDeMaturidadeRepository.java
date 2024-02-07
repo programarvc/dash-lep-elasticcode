@@ -33,8 +33,8 @@ public interface ValorDosIndicesDeMaturidadeRepository extends JpaRepository<Val
     List<Object[]> findLatestByEsteiraIdAndTipoMaturidade(@Param("maturidadeId") Long maturidadeId);
    
     //retorna os dados de acordo com a data de maturidade id em ordem cresente
-    @Query(value = "SELECT * FROM valordosindicesdematuridadeentity vim INNER JOIN maturidadeentity m ON m.id = vim.maturidade_id WHERE m.esteira_id = :esteiraId ORDER BY m.data_hora DESC", nativeQuery = true)
-    List<ValorDosIndicesDeMaturidadeEntity> findByEsteiraId(@Param("esteiraId") Long esteiraId);
+    @Query(value = "SELECT im.tipo_maturidade, im.nome, m.data_hora, vim.id, vim.valor_atingido as valorAtingido, vim.valor_esperado, vim.item_de_maturidade_id, vim.maturidade_id as maturidade_id FROM valordosindicesdematuridadeentity vim INNER JOIN maturidadeentity m ON m.id = vim.maturidade_id INNER JOIN itemdematuridadeentity im ON im.id = vim.item_de_maturidade_id WHERE m.id = :maturidadeId ORDER BY m.data_hora DESC", nativeQuery = true)
+    List<Object[]> findByMaturidadeId(@Param("maturidadeId") Long maturidadeId);
 
    
 
