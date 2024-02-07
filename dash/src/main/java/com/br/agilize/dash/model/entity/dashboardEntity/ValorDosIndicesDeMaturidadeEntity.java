@@ -16,9 +16,6 @@ public class ValorDosIndicesDeMaturidadeEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "data_hora")
-    private LocalDateTime dataHoraValor;
-
     @ManyToOne
     @JoinColumn(name = "maturidade_id")
     private MaturidadeEntity maturidade;
@@ -32,16 +29,5 @@ public class ValorDosIndicesDeMaturidadeEntity {
 
     @Column(name = "valor_esperado")
     private Double valorEsperado;
-
-    @PrePersist
-    public void prePersist() {
-       dataHoraValor = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    public void preUpdate() {
-        dataHoraValor = LocalDateTime.now();
-        
-    }
 
 }

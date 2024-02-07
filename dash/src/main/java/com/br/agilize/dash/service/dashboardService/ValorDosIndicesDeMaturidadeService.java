@@ -41,8 +41,7 @@ public class ValorDosIndicesDeMaturidadeService extends ServiceCrudBase<ValorDos
     @Override
     public ValorDosIndicesDeMaturidadeDto salvar(ValorDosIndicesDeMaturidadeDto payload) {
         ValorDosIndicesDeMaturidadeEntity entity = mapper.dtoToModel(payload);
-        entity.setId(null); //Garante que uma nova entidade seja criada quando o método
-
+    
         //Multiplica os valores por 100
         entity.setValorAtingido(multiplicarPor100(entity.getValorAtingido()));
         entity.setValorEsperado(multiplicarPor100(entity.getValorEsperado()));
@@ -71,15 +70,13 @@ public class ValorDosIndicesDeMaturidadeService extends ServiceCrudBase<ValorDos
     }
     
     public List<ValorDosIndicesDeMaturidadeDto> buscarDadosAtualizados(Long esteiraId, TiposMaturidadeEnum tipoMaturidade) {
-        List<ValorDosIndicesDeMaturidadeEntity> entities = repository.findLatestByEsteiraIdAndTipoMaturidade(esteiraId, tipoMaturidade);
-        Map<Long, ValorDosIndicesDeMaturidadeEntity> latestEntities = new HashMap<>();
-        for (ValorDosIndicesDeMaturidadeEntity entity : entities) {
-            Long itemId = entity.getItemDeMaturidade().getId();
-            if (!latestEntities.containsKey(itemId) || entity.getDataHoraValor().isAfter(latestEntities.get(itemId).getDataHoraValor())) {
-                latestEntities.put(itemId, entity);
-            }
-        }
-        return latestEntities.values().stream().map(mapper::modelToDTO).collect(Collectors.toList());
+        List<ValorDosIndicesDeMaturidadeEntity> entities = repository.findLatestByEsteiraIdAndTipoMaturidade(esteiraId, tipoMaturidade);     
+        return entities.stream().map(mapper::modelToDTO).collect(Collectors.toList());
+    }
+
+    public List<Object[]> findLatestByEsteiraIdAndTipoMaturidade(Long maturidadeId) {
+        List<Object[]> entities = repository.findLatestByEsteiraIdAndTipoMaturidade(maturidadeId);
+        return entities;  
     }
 
 

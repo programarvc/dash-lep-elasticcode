@@ -13,7 +13,7 @@ import com.br.agilize.dash.model.entity.dashboardEntity.MaturidadeEntity;
 @Repository
 public interface MaturidadeRepository extends JpaRepository<MaturidadeEntity, Long> {
 
-    @Query(value = "SELECT m FROM MaturidadeEntity m WHERE m.esteira.id = :esteiraId", nativeQuery = false)
+    @Query(value = "SELECT m FROM MaturidadeEntity m WHERE m.esteira.id = :esteiraId ORDER BY m.id DESC", nativeQuery = false)
     List<MaturidadeEntity> findMaturidadeByEsteiraId(@Param("esteiraId") Long esteiraId);
 
     @Query("SELECT new map(m.leadTime as leadTime, m.timeToRecovery as timeToRecovery, m.changeFailureRate as changeFailureRate, m.frequencyDeployment as frequencyDeployment, m.saude as saude, m.metricas4 as metricas4, m.capacidadeDora as capacidadeDora, m.mediaDeJornada as mediaDeJornada) FROM MaturidadeEntity m WHERE m.esteira.id = :esteiraId ORDER BY m.dataHora DESC")

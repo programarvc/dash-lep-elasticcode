@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.br.agilize.dash.controller.ControllerCrudBase;
 import com.br.agilize.dash.model.dto.dashboardDto.ValorDosIndicesDeMaturidadeDto;
+import com.br.agilize.dash.model.entity.dashboardEntity.ValorDosIndicesDeMaturidadeEntity;
 import com.br.agilize.dash.model.enums.TiposMaturidadeEnum;
 import com.br.agilize.dash.service.dashboardService.ItemDeMaturidadeService;
 import com.br.agilize.dash.service.dashboardService.ValorDosIndicesDeMaturidadeService;
@@ -44,6 +45,12 @@ public ResponseEntity<List<ValorDosIndicesDeMaturidadeDto>> getValoresByEsteiraI
     List<ValorDosIndicesDeMaturidadeDto> result = service.buscarDadosAtualizados(esteiraId, tipoMaturidade);
     return new ResponseEntity<>(result, HttpStatus.OK);
 }
+
+ @GetMapping("/maturidade/{maturidadeId}")
+    public ResponseEntity<List<Object[]>> getMaturidade(@PathVariable Long maturidadeId) {
+        List<Object[]> entities = service.findLatestByEsteiraIdAndTipoMaturidade(maturidadeId);
+        return ResponseEntity.ok(entities);
+    }
 
     /*@GetMapping("/itemdematuridade/latest/esteira/{esteiraId}")
     public ResponseEntity<String> getLatestItemDeMaturidadeByEsteiraId(@PathVariable Long esteiraId) {

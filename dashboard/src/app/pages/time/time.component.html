@@ -27,11 +27,11 @@
                         {{ currentTimes.nomeTime ? currentTimes.nomeTime : 'Times'}}
                       </button>
                       <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                        <button ngbDropdownItem (click)="getTimesByEsteira(currentEsteira.id); getColaboradoresByEsteira(currentEsteira.id); currentTimes.nomeTime = 'Times'">
+                        <button ngbDropdownItem (click)="getTimesByEsteira(currentEsteira.id);  getTimeAndColaboradorByEsteiraId(currentEsteira.id); getColaboradorEsteiraId(currentEsteira.id); currentTimes.nomeTime = 'Todos'; ">
                           Todos
                         </button>
                         <button ngbDropdownItem *ngFor="let time of time"
-                          (click)="getTimesByEsteira(time.esteira.id);  updateColaboradoresByTime(time.id); currentColaborador = colaboradores[0]">
+                          (click)="getTimesByEsteira(time.esteira.id); updateColaboradoresByTime(time.id); getColaboradorEsteiraId(currentEsteira.id);  currentColaborador = colaboradores[0]">
                           {{time.nomeTime}}
                         </button>
                       </div>
