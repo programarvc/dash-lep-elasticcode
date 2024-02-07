@@ -27,7 +27,7 @@
                         {{ currentTimes.nomeTime ? currentTimes.nomeTime : 'Times'}}
                       </button>
                       <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                        <button ngbDropdownItem (click)="getAllTimesAndDevs(); getTimesByEsteira(currentEsteira.id)">
+                        <button ngbDropdownItem (click)="getAllTimesAndDevs();">
                           Todos
                         </button>
                         <button ngbDropdownItem *ngFor="let time of time"
