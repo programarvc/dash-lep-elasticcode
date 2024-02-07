@@ -274,8 +274,10 @@ public async setCurrent(id: number) {
 
 
 
-  getCorJornada(jornadaGoal: number, nivel: string): string {
-    if (jornadaGoal >= 0 && jornadaGoal <= 25 && nivel === 'Baixa') {
+  getCorJornada(jornadaGoal: number | undefined, nivel: string): string | undefined {
+    if (jornadaGoal === null || jornadaGoal === undefined) {
+      return '#8892A7';
+    } else if (jornadaGoal >= 0 && jornadaGoal <= 25 && nivel === 'Baixa') {
       return '#12C3FF';
     } else if (jornadaGoal >= 26 && jornadaGoal <= 50 && nivel === 'Média') {
       return '#12C3FF';
@@ -284,12 +286,12 @@ public async setCurrent(id: number) {
     } else if (jornadaGoal >= 76 && nivel === 'Elite') {
       return '#12C3FF';
     } else {
-      return '#8892A7';
+      return undefined;
     }
   }
 
-  getNivel(rate: number): string | undefined {
-    if (rate === null){
+  getNivel(rate: number | undefined): string | undefined {
+    if (rate === null || rate === undefined){
       return 'sem dado';
     } else if (rate >= 0 && rate <= 25) {
       return 'Baixo';
@@ -299,6 +301,38 @@ public async setCurrent(id: number) {
       return 'Alto';
     } else {
       return undefined;
+    }
+  }
+
+  getFontSize (size: number | undefined): string | undefined {
+    if (size === null || size === undefined){
+      return '25px';
+    } else {
+      return '40px';
+    }
+  } 
+
+  getFontSizeFailureRate (size: number | undefined): string | undefined {
+    if (size === null || size === undefined){
+      return '25px';
+    } else {
+      return '39px';
+    }
+  }
+
+  getFontSizeSaude (size: number | undefined): string | undefined {
+    if (size === null || size === undefined){
+      return '25px';
+    } else {
+      return '16px';
+    }
+  } 
+
+  getFontSizeMetricas (size: number | undefined): string | undefined {
+    if (size === null || size === undefined){
+      return '14px';
+    } else {
+      return '12px';
     }
   }
 
