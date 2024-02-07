@@ -125,6 +125,7 @@ export class TimeComponent implements OnInit {
         this.currentEsteira.id = parseInt(esteiraId);
         this.getTimesByEsteira(parseInt(esteiraId));
         this.getColaboradoresByEsteira(parseInt(esteiraId));
+        this.getTimeAndColaboradorByEsteiraId(parseInt(esteiraId));
 
       }
       const colaboradorId = params.get('colaboradorId');
@@ -140,7 +141,15 @@ export class TimeComponent implements OnInit {
     // Aqui está o ajuste, usando [0] para pegar o primeiro colaborador da lista
     this.currentColaborador = response[0];
     this.colaboradores = response;
+    this.getTimesAcoesHabilidades(this.currentColaborador.id);
     console.log(this.currentColaborador);
+  });
+}
+
+getColaboradorEsteiraId(esteiraId: number) {
+  this.colaboradorService.getColaboradoresByEsteiraId(esteiraId).subscribe((response) => {
+    this.colaboradoresByEsteira = response;
+    console.log(this.colaboradoresByEsteira);
   });
 }
 
@@ -170,7 +179,7 @@ export class TimeComponent implements OnInit {
   getTimesByColaboradorId(colaboradorId: number){
     this.timeService.getTimesAndEsteiraByColaboradorId(colaboradorId).subscribe(response => {
       this.time = response.filter((time: { esteira: { id: any; }; }) => time.esteira.id === this.currentEsteira.id);
-      console.log(this.time);
+
     });
   }
 
@@ -206,8 +215,6 @@ export class TimeComponent implements OnInit {
       this.getTimesByColaboradorId(colaborador.id);
     }
 
-    console.log(this.currentColaborador);
-
   }
 
 
@@ -235,15 +242,37 @@ updateColaboradoresByTime(timeId: number) {
 updateTimesByColaborador(colaboradorId: number) {
 
   this.getTimesByColaboradorId(colaboradorId);
+  this.getTimesByEsteira(this.currentEsteira.id);
+  this.getColaboradorEsteiraId(this.currentEsteira.id);
 }
 
 updateCurrentColaborador(colaborador: Colaborador) {
+  this.currentColaborador = colaborador;
+  this.getTimesAcoesHabilidades(colaborador.id);
+  this.getTimesByColaboradorId(colaborador.id);
 
-    this.currentColaborador = colaborador;
-    this.getTimesAcoesHabilidades(colaborador.id);
-    this.getTimesByColaboradorId(colaborador.id);
+  // Recupera todos os times da esteira
+  this.getColaboradorEsteiraId(this.currentEsteira.id);
+  this.getTimesByEsteira(this.currentEsteira.id);
 }
 
+getAllTimesAndDevs() {
+  this.getTimesByEsteira(this.currentEsteira.id);
+  this.getColaboradoresByEsteira(this.currentEsteira.id);
+  this.currentTimes.nomeTime = 'Todos';
+
+  // Atualiza o colaborador atual para o primeiro da lista, se existir
+  if (this.colaboradores.length > 0) {
+    this.currentColaborador = this.colaboradores[0];
+  }
+}
+
+selectTime(time: Time) {
+  this.getTimesByEsteira(time.esteira.id);
+  this.updateColaboradoresByTime(time.id);
+  this.getColaboradorEsteiraId(this.currentEsteira.id);
+  this.currentColaborador = this.colaboradores[0];
+}
 
 }
 
