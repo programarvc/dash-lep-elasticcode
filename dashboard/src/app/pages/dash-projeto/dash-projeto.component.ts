@@ -198,6 +198,7 @@ export class DashProjetoComponent implements OnInit {
   public selectedOption: number;
   public filterValorMaturidade: ValorDosIndicesDeMaturidadeFilter[] = [];
   public valorMaturidadeDate: Date;
+  public formattedDate: string | null = null;
 
 
 
@@ -258,9 +259,6 @@ public async setCurrentMaturidade (id: number) {
 
 }
 
-
-
-
   public async getMaturidade() {
     this.esteiraService.getEsteiras().subscribe((response) => {
       this.esteiras = response;
@@ -296,6 +294,9 @@ public async setCurrentMaturidade (id: number) {
           maturidadeData.dataHora = date.toISOString();
         });
         this.maturidadeByEsteiraId = maturidadeArray;
+        if(this.maturidadeByEsteiraId.length > 0) {
+          this.selecionarMaturidade(this.maturidadeByEsteiraId[0].id);
+        }
         console.log(this.maturidadeByEsteiraId);
       });
   }
@@ -413,10 +414,45 @@ public async setCurrentMaturidade (id: number) {
     }
   }
 
-  onOptionChange(index: number) {
-    this.selectedOption = index;
-    let maturidadeId = this.maturidadeByEsteiraId[this.selectedOption].id;
-    this.getValorDoIndicesByMaturidadeId(maturidadeId);
-  }
+  public selecionarMaturidade (id?: number) {
+    console.log("Maturidade: ", this.maturidadeByEsteiraId);
+    if (id) {
+      const maturidade = this.maturidadeByEsteiraId.find((maturidade) => maturidade.id === id);
+        console.log(" Var Maturidade: ", this.maturidadeByEsteiraId);
+      if (maturidade) {
+        let date = new Date(maturidade.dataHora);
+        let timestamp = date.getTime();
+        this.currentMaturidade = {
+          ...maturidade,
+          dataHora: [timestamp]
+        };
+        this.formattedDate = this.currentMaturidade.dataHora[0].toString();
+        console.log("Current Maturidade: ", this.currentMaturidade);
+      }
+    } else {
+      this.getMaturidade();
+      this.currentMaturidade = {
+        esteira: {
+          id: 0,
+          nome: '',
+          tipo: '' as TiposEnum,
+          empresa: {
+            id: 0,
+            nome: '',
+          },
+        },
+        dataHora: [],
+        numero: 0,
+        leadTime: 0,
+        frequencyDeployment: 0,
+        changeFailureRate: 0,
+        timeToRecovery: 0,
+        saude: 0,
+        metricas4: 0,
+        capacidadeDora: 0,
+        mediaDeJornada: 0
+      };
+      }
+    }
 
 }
