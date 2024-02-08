@@ -56,6 +56,7 @@ export class DashProjetoComponent implements OnInit {
   };
 
   public currentMaturidade: Maturidade = {
+    id: 0,
     esteira: {
       id: 0,
       nome: '',
@@ -428,10 +429,14 @@ public async setCurrentMaturidade (id: number) {
         };
         this.formattedDate = this.currentMaturidade.dataHora[0].toString();
         console.log("Current Maturidade: ", this.currentMaturidade);
+        if(this.currentMaturidade) {
+          this.getValorDoIndicesByMaturidadeId(this.currentMaturidade.id);
+        }
       }
     } else {
       this.getMaturidade();
       this.currentMaturidade = {
+        id: 0,
         esteira: {
           id: 0,
           nome: '',
