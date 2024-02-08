@@ -46,15 +46,6 @@ public ResponseEntity<List<ValorDosIndicesDeMaturidadeDto>> getValoresByEsteiraI
     return new ResponseEntity<>(result, HttpStatus.OK);
 }
 
-//retorna os dados de acordo com a data de maturidade id em ordem cresente
-@GetMapping("dataesteira/{esteiraId}")
-public ResponseEntity<List<ValorDosIndicesDeMaturidadeDto>> getMaturidade(@PathVariable Long esteiraId) {
-    List<ValorDosIndicesDeMaturidadeDto> entities = service.findByEsteiraId(esteiraId);
-    return ResponseEntity.ok(entities);
-}
-
-    //retorna os dados de acordo com a data de maturidade id em ordem cresente
-
 
     /*@GetMapping("/itemdematuridade/latest/esteira/{esteiraId}")
     public ResponseEntity<String> getLatestItemDeMaturidadeByEsteiraId(@PathVariable Long esteiraId) {
@@ -70,4 +61,17 @@ public ResponseEntity<List<ValorDosIndicesDeMaturidadeDto>> getMaturidade(@PathV
     }
     
 
+
+    //retorna os dados de acordo com a data de maturidade id em ordem cresente
+@GetMapping("/maturidade/{maturidadeId}")
+public ResponseEntity<List<Object[]>> findByMaturidadeId(@PathVariable Long maturidadeId) {
+    List<Object[]> entities = service.findByMaturidadeId(maturidadeId);
+    return ResponseEntity.ok(entities);
+}
+
+@GetMapping("/allmaturidade/{maturidadeId}")
+public ResponseEntity<List<ValorDosIndicesDeMaturidadeDto>> getMaturidade(@PathVariable Long maturidadeId) {
+    List<ValorDosIndicesDeMaturidadeDto> entities = service.findValorDoIndicesByMaturidadeId(maturidadeId);
+    return ResponseEntity.ok(entities);
+}
 }

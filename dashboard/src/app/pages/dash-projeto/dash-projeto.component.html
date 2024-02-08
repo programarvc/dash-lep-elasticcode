@@ -7,11 +7,18 @@
           <div class="col-md-12">
             <div class="campo-data-metrica">
               <h1>Dashboard</h1>
-              <select [(ngModel)]="selectedOption" (change)="onOptionChange($event)" id="data" name="data ">
-                <option *ngFor="let maturidadeData of maturidadeByEsteiraId; let i = index" [value]="i">
-                  {{maturidadeData.dataHora | date: 'dd/MM/yyyy HH:mm'}}
-                </option>
-              </select>
+              <div class="filter">
+                <div ngbDropdown>
+                  <button type="button" id="dropdownMaturidades" ngbDropdownToggle>
+                    {{ currentMaturidade ? (formattedDate | date: 'dd/MM/yyyy HH:mm') : 'Selecione'}}
+                  </button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownMaturidades">
+                    <button ngbDropdownItem *ngFor="let maturidadeData of maturidadeByEsteiraId; let i = index" (click)="selecionarMaturidade(maturidadeData.id)">
+                      {{maturidadeData.dataHora | date: 'dd/MM/yyyy HH:mm'}}
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -25,8 +32,8 @@
                     <div class="card velocidade">
                       <p class="titulo-card">Lead Time for Changes</p>
                       <p class="text-number">
-                        <span [ngStyle]="{'font-size': this.getFontSize(maturidadeByEsteiraId[selectedOption]?.leadTime)}">
-                          {{maturidadeByEsteiraId[selectedOption]?.leadTime !== null ? maturidadeByEsteiraId[selectedOption]?.leadTime : 'sem dado'}}
+                        <span [ngStyle]="{'font-size': this.getFontSize(currentMaturidade?.leadTime)}">
+                          {{currentMaturidade?.leadTime !== null ? currentMaturidade?.leadTime : 'sem dado'}}
                         </span>
                         {{currentMaturidade.leadTime !== null ? 'dias' : ''}}
                       </p>
@@ -34,10 +41,10 @@
                     <div class="card velocidade">
                       <p class="titulo-card">Deployment Frequency</p>
                       <p class="text-number">
-                        <span [ngStyle]="{'font-size': this.getFontSize(maturidadeByEsteiraId[selectedOption]?.frequencyDeployment)}">
-                          {{maturidadeByEsteiraId[selectedOption]?.frequencyDeployment !== null ? maturidadeByEsteiraId[selectedOption]?.frequencyDeployment : 'sem dado'}}
+                        <span [ngStyle]="{'font-size': this.getFontSize(currentMaturidade?.frequencyDeployment)}">
+                          {{currentMaturidade?.frequencyDeployment !== null ? currentMaturidade?.frequencyDeployment : 'sem dado'}}
                         </span>
-                        {{maturidadeByEsteiraId[selectedOption]?.frequencyDeployment !== null ? 'dias' : ''}}
+                        {{currentMaturidade?.frequencyDeployment !== null ? 'dias' : ''}}
                       </p>
                     </div>
                   </div>
@@ -47,13 +54,13 @@
                   <div class="espaco-cards">
                     <div class="card estabilidade">
                       <p class="titulo-card">Change Failure Rate</p>
-                      <p class="text-porcent" [ngStyle]="{'font-size': this.getFontSizeFailureRate(maturidadeByEsteiraId[selectedOption]?.changeFailureRate)}">
-                        {{maturidadeByEsteiraId[selectedOption]?.changeFailureRate !== null ?  maturidadeByEsteiraId[selectedOption]?.changeFailureRate + "%" : 'sem dado' }}
+                      <p class="text-porcent" [ngStyle]="{'font-size': this.getFontSizeFailureRate(currentMaturidade?.changeFailureRate)}">
+                        {{currentMaturidade?.changeFailureRate !== null ?  currentMaturidade?.changeFailureRate + "%" : 'sem dado' }}
                       </p>
                     </div>
                     <div class="card estabilidade">
                       <p class="titulo-card">Mean Time to Recovery</p>
-                      <p class="text-date" [ngStyle]="{'font-size': this.getFontSize(maturidadeByEsteiraId[selectedOption]?.timeToRecovery)}">{{maturidadeByEsteiraId[selectedOption]?.timeToRecovery ?? 'sem dado' }}</p>
+                      <p class="text-date" [ngStyle]="{'font-size': this.getFontSize(currentMaturidade?.timeToRecovery)}">{{currentMaturidade?.timeToRecovery ?? 'sem dado' }}</p>
                     </div>
                   </div>
                 </div>
@@ -66,15 +73,15 @@
               <h2>Jornada de Transformação</h2>
               <div class="jornada-progress">
                 <div class="jornada-level">
-                  <span [ngStyle]="{'color': this.getCorJornada(maturidadeByEsteiraId[selectedOption]?.mediaDeJornada, 'Baixa')}">Baixa</span>
-                  <span [ngStyle]="{'color': this.getCorJornada(maturidadeByEsteiraId[selectedOption]?.mediaDeJornada, 'Média')}">Média</span>
-                  <span [ngStyle]="{'color': this.getCorJornada(maturidadeByEsteiraId[selectedOption]?.mediaDeJornada, 'Alta')}">Alta</span>
-                  <span [ngStyle]="{'color': this.getCorJornada(maturidadeByEsteiraId[selectedOption]?.mediaDeJornada, 'Elite')}">Elite</span>
+                  <span [ngStyle]="{'color': this.getCorJornada(currentMaturidade?.mediaDeJornada, 'Baixa')}">Baixa</span>
+                  <span [ngStyle]="{'color': this.getCorJornada(currentMaturidade?.mediaDeJornada, 'Média')}">Média</span>
+                  <span [ngStyle]="{'color': this.getCorJornada(currentMaturidade?.mediaDeJornada, 'Alta')}">Alta</span>
+                  <span [ngStyle]="{'color': this.getCorJornada(currentMaturidade?.mediaDeJornada, 'Elite')}">Elite</span>
                 </div>
                 <div class="jornada-bar-content">
                   <div class="jornada-bar">
                     <div class="jornada-goal"
-                    [ngStyle]="{'width': maturidadeByEsteiraId[selectedOption]?.mediaDeJornada + '%'}"
+                    [ngStyle]="{'width': currentMaturidade?.mediaDeJornada + '%'}"
                     >
                   </div>
                 </div>
@@ -84,11 +91,11 @@
               <h3>Saúde da Operação</h3>
               <div class="saude-operacao-content">
                 <span class="nivel-saude">
-                  {{this.getNivel(maturidadeByEsteiraId[selectedOption]?.saude)}}
+                  {{this.getNivel(currentMaturidade?.saude)}}
                 </span>
-                <span class="rate-saude" [ngStyle]="{'font-size': this.getFontSizeSaude(maturidadeByEsteiraId[selectedOption]?.saude)}">
-                  {{maturidadeByEsteiraId[selectedOption]?.saude !== null ? maturidadeByEsteiraId[selectedOption].saude : ''}}
-                  {{maturidadeByEsteiraId[selectedOption]?.saude !== null ? '%' : ''}}
+                <span class="rate-saude" [ngStyle]="{'font-size': this.getFontSizeSaude(currentMaturidade?.saude)}">
+                  {{currentMaturidade?.saude !== null ? currentMaturidade.saude : ''}}
+                  {{currentMaturidade?.saude !== null ? '%' : ''}}
                 </span>
               </div>
             </div>
@@ -100,17 +107,17 @@
                   </h3>
                   <div class="rate-value-4key">
                     <span>
-                      {{ this.getNivel(maturidadeByEsteiraId[selectedOption]?.metricas4)}}
+                      {{ this.getNivel(currentMaturidade?.metricas4)}}
                     </span>
-                    <span class="rate-saude" [ngStyle]="{'font-size': this.getFontSizeMetricas(maturidadeByEsteiraId[selectedOption]?.metricas4)}">
-                      {{maturidadeByEsteiraId[selectedOption]?.metricas4 !== null ? maturidadeByEsteiraId[selectedOption].metricas4 : ''}}
-                      {{maturidadeByEsteiraId[selectedOption]?.metricas4 !== null ? '%' : ''}}
+                    <span class="rate-saude" [ngStyle]="{'font-size': this.getFontSizeMetricas(currentMaturidade?.metricas4)}">
+                      {{currentMaturidade?.metricas4 !== null ? currentMaturidade.metricas4 : ''}}
+                      {{currentMaturidade?.metricas4 !== null ? '%' : ''}}
                     </span>
                   </div>
                   <div class="jornada-card-bar-content">
                     <div class="jornada-card-bar">
                       <div class="jornada-card-goal"
-                      [ngStyle]="{'width': (maturidadeByEsteiraId[selectedOption]?.metricas4 !== null ? maturidadeByEsteiraId[selectedOption]?.metricas4 : 0) + '%'}"
+                      [ngStyle]="{'width': (currentMaturidade?.metricas4 !== null ? currentMaturidade?.metricas4 : 0) + '%'}"
                       >
                       </div>
                   </div>
@@ -122,17 +129,17 @@
                 </h3>
                 <div class="rate-value-4key">
                   <span>
-                    {{ this.getNivel(maturidadeByEsteiraId[selectedOption]?.capacidadeDora)}}
+                    {{ this.getNivel(currentMaturidade?.capacidadeDora)}}
                   </span>
-                  <span class="rate-saude" [ngStyle]="{'font-size': this.getFontSizeMetricas(maturidadeByEsteiraId[selectedOption]?.capacidadeDora)}">
-                    {{maturidadeByEsteiraId[selectedOption]?.capacidadeDora !== null ? maturidadeByEsteiraId[selectedOption].capacidadeDora : ''}}
-                    {{maturidadeByEsteiraId[selectedOption]?.capacidadeDora !== null ? '%' : ''}}
+                  <span class="rate-saude" [ngStyle]="{'font-size': this.getFontSizeMetricas(currentMaturidade?.capacidadeDora)}">
+                    {{currentMaturidade?.capacidadeDora !== null ? currentMaturidade.capacidadeDora : ''}}
+                    {{currentMaturidade?.capacidadeDora !== null ? '%' : ''}}
                   </span>
                 </div>
                 <div class="jornada-card-bar-content">
                   <div class="jornada-card-bar">
                     <div class="jornada-card-goal"
-                    [ngStyle]="{'width': (maturidadeByEsteiraId[selectedOption]?.capacidadeDora !== null ? maturidadeByEsteiraId[selectedOption]?.capacidadeDora: 0) + '%'}"
+                    [ngStyle]="{'width': (currentMaturidade?.capacidadeDora !== null ? currentMaturidade?.capacidadeDora: 0) + '%'}"
                     >
                   </div>
                 </div>
@@ -184,7 +191,7 @@
       </div>
         <div class="cultura-geral">
           <div class="cultura-textos">
-            <p class="tecnicas-texto" *ngFor="let valor of valorMaturidadeCultura">
+            <p class="tecnicas-texto" *ngFor="let valor of valorMaturidadeC">
               <ng-container *ngIf="valor.itemDeMaturidade.tipoMaturidade === 'CULTURA'">
                   {{valor.itemDeMaturidade.nome}}
               </ng-container>
@@ -192,10 +199,12 @@
           </div>
           <div class="processo-cultura">
               <div class="barras">
-                <ng-container *ngFor="let item of valorMaturidadeCultura">
-                  <div class="cultura-barra-meta" [ngStyle]="{'width': item.valorEsperado  + '%'}">
-                    <div class="cultura-barra" [ngStyle]="{'width': item.valorAtingido  + '%'}"></div>
-                  </div>
+                <ng-container *ngFor="let item of valorMaturidadeC">
+                  <ng-container *ngIf="item.itemDeMaturidade.tipoMaturidade === 'CULTURA'">
+                    <div class="cultura-barra-meta" [ngStyle]="{'width': item.valorEsperado  + '%'}">
+                      <div class="cultura-barra" [ngStyle]="{'width': item.valorAtingido  + '%'}"></div>
+                    </div>
+                  </ng-container>
                 </ng-container>
               </div>
           </div>

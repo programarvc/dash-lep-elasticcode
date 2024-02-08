@@ -9,6 +9,7 @@ import {
   TiposMaturidadeEnum,
   ValorDosIndicesDeMaturidadeByEsteiraIdAndTecnica,
   ValorDosIndicesDeMaturidade,
+
 } from 'src/app/types/valorMaturidade-types';
 import { EsteiraService } from 'src/services/esteira/esteira.service';
 import { EmpresaService } from 'src/services/empresa/empresa.service';
@@ -39,7 +40,7 @@ export class TecnicaComponent implements OnInit {
         this.valorMaturidades.forEach((valor) => {
             if (valor.itemDeMaturidade.tipoMaturidade) {
                 this.uniqueTiposMaturidade.add(valor.itemDeMaturidade.tipoMaturidade);
-                
+
             }
         });
     }
@@ -63,13 +64,17 @@ export class TecnicaComponent implements OnInit {
           nome: '',
         },
       },
-      data: '',
       dataHora: [],
       numero: 0,
       leadTime: 0,
       frequencyDeployment: 0,
       changeFailureRate: 0,
       timeToRecovery: 0,
+
+      saude: 0,
+      metricas4: 0,
+      capacidadeDora: 0,
+      mediaDeJornada: 0
     },
     itemDeMaturidade: {
       id: 0,
@@ -84,9 +89,13 @@ export class TecnicaComponent implements OnInit {
   public maturidade: Maturidade[] = [];
   public tipo: TiposEnum[] = [];
   public tiposMaturidade: TiposMaturidadeEnum[] = [];
+  public maturidadeByEsteiraId: Maturidade[] = [];
   public valorMaturidadeTecnica: ValorDosIndicesDeMaturidadeByEsteiraIdAndTecnica[] = [];
   public valorMaturidadeProcesso:  ValorDosIndicesDeMaturidadeByEsteiraIdAndTecnica[] =[];
   public valorMaturidadeMetrica:  ValorDosIndicesDeMaturidadeByEsteiraIdAndTecnica[] =[];
+  public valorMaturidadeC:  ValorDosIndicesDeMaturidade[] = [];
+  public selectedOption: number;
+  public valorMaturidadeDate: Date;
 
   constructor(
     private router: Router,
@@ -96,7 +105,11 @@ export class TecnicaComponent implements OnInit {
     private valorMaturidadeService: valorMaturidadeService
 
 
-  ) { }
+  ) {
+    this.selectedOption = 0;
+    this.valorMaturidadeDate = new Date();
+
+   }
 
   ngOnInit(): void {
     this.getValorMaturidades();
@@ -109,6 +122,10 @@ export class TecnicaComponent implements OnInit {
         this.getValorMaturidadesByEsteiraIdAndMetrica(parseInt(id));
 
       }
+      const maturidadeId = params.get('maturidadeId');
+      if (maturidadeId ) {
+        this.getValorDoIndicesByMaturidadeId
+      }
     });
   }
 
@@ -119,6 +136,8 @@ export class TecnicaComponent implements OnInit {
      this.getValorMaturidadesByEsteiraIdAndMetrica(id);
   }
 
+  
+
 
   public getValorMaturidades(): void {
     this.valorMaturidadeService.getValorMaturidades().subscribe((response) => {
@@ -128,6 +147,8 @@ export class TecnicaComponent implements OnInit {
 
     });
   }
+
+
 
   public getValorMaturidadesByEsteiraIdAndProcesso(id: number): void{
     this.valorMaturidadeService.getValorMaturidadesByEsteiraIdAndProcessoLatest(id).subscribe((response) =>{
@@ -141,6 +162,14 @@ export class TecnicaComponent implements OnInit {
     });
   }
 
+  getValorDoIndicesByMaturidadeId(maturidadeId: number): void {
+    this.valorMaturidadeService
+      .getValorDoIndicesByMaturidadeId(maturidadeId)
+      .subscribe((valorMaturidade) => {
+        this.valorMaturidadeC = valorMaturidade;
+        console.log(this.valorMaturidadeC);
+      });
+  }
 
   calculateWidth(): number {
     // Substitua isso pela lógica real de cálculo da largura
@@ -156,5 +185,14 @@ export class TecnicaComponent implements OnInit {
 
   }
 
+  onOptionChange(event: Event) {
+    let selectElement = event.target as HTMLSelectElement;
+    this.selectedOption = Number(selectElement.value);
+
+    let selectedOptionElement = selectElement.options[selectElement.selectedIndex];
+    let maturidadeId = Number(selectedOptionElement.getAttribute('data-id'));
+
+    this.getValorDoIndicesByMaturidadeId(maturidadeId);
+  }
 
 }

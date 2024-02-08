@@ -54,13 +54,17 @@ export enum TiposMaturidadeEnum {
 export interface Maturidade {
     id: number;
     esteira: EsteiraDeDesenvolvimento;
-    data: string;
     dataHora: number[],
     numero: number;
     leadTime: number;
     frequencyDeployment: number;
     changeFailureRate: number;
     timeToRecovery: number;
+
+    saude: number;
+    metricas4: number;
+    capacidadeDora: number;
+    mediaDeJornada: number;
 }
 
 export interface EsteiraDeDesenvolvimento {
@@ -82,4 +86,15 @@ export enum TiposEnum {
     TESTE = "TESTE",
     IMPLANTACAO = "IMPLANTACAO",
     MONITORAMENTO = "MONITORAMENTO",
+}
+
+export interface ValorDosIndicesDeMaturidadeFilter {
+  tipoMaturidade: string;
+  nome: string;
+  dataHora: number[];
+  id: number;
+  valorAtingido: number;
+  valorEsperado: number;
+  itemDeMaturidade: ItemDeMaturidade;
+  maturidade: Maturidade;
 }
