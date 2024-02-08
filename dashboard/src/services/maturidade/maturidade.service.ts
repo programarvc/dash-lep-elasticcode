@@ -5,11 +5,45 @@ import { Observable, of } from "rxjs";
 import { catchError } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 
+import { Maturidade, TiposEnum } from "src/app/types/esteira-types";
+
 @Injectable({
     providedIn: "root",
 })
 
 export class MaturidadeService {
+
+  public currentMaturidade: Maturidade = {
+    id: 0,
+    esteira: {
+      id: 0,
+      nome: '',
+      tipo: '' as TiposEnum,
+      empresa: {
+        id: 0,
+        nome: '',
+      },
+    },
+    dataHora: [],
+    numero: 0,
+    leadTime: 0,
+    frequencyDeployment: 0,
+    changeFailureRate: 0,
+    timeToRecovery: 0,
+    saude: 0,
+    metricas4: 0,
+    capacidadeDora: 0,
+    mediaDeJornada: 0
+  };
+
+    setCurrentMaturidade(maturidade: Maturidade) {
+      this.currentMaturidade = maturidade;
+    }
+
+    getCurrentMaturidade(): Maturidade {
+      return this.currentMaturidade;
+    }
+    
     private handleError<T>(operation = "operation", result?: T) {
         return (error: any): Observable<T> => {
             console.error("Erro => " + JSON.stringify(error));
@@ -47,7 +81,5 @@ export class MaturidadeService {
       .get<any>(url)
       .pipe(catchError(this.handleError<any>('getLatestMaturidadeByEsteiraId')));
   }
-
-
 
 }

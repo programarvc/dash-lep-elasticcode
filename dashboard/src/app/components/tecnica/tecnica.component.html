@@ -3,11 +3,6 @@
          <div class="row">
              <div class="col-md-8">
                  <div class="bloco-tecnica">
-                  <!--<select [(ngModel)]="selectedOption" (change)="onOptionChange($event)" id="data" name="data">
-                    <option *ngFor="let maturidadeData of maturidadeByEsteiraId; let i = index" [value]="i" [attr.data-id]="maturidadeData.id">
-                      {{maturidadeData.dataHora | date: 'dd/MM/yyyy HH:mm'}}
-                    </option>
-                  </select>!-->
                          <div class="tituloLegenda">
                              <div class="titulo-tecnica1">
                                  <h2 class="titulo-tecnica">Técnica</h2>
@@ -43,7 +38,7 @@
                              <div class="tecnicas-textos">
                                  <p class="tecnicas-texto" *ngFor="let valor of valorMaturidadeC">
                                      <ng-container *ngIf="valor.itemDeMaturidade.tipoMaturidade === 'TECNICA'">
-                                         {{valor.itemDeMaturidade.nome}}
+                                        {{valor.itemDeMaturidade.nome}}
                                      </ng-container>
                                  </p>
                              </div>

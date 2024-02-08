@@ -427,6 +427,7 @@ public async setCurrentMaturidade (id: number) {
           ...maturidade,
           dataHora: [timestamp]
         };
+        this.maturidadeService.setCurrentMaturidade(this.currentMaturidade);
         this.formattedDate = this.currentMaturidade.dataHora[0].toString();
         console.log("Current Maturidade: ", this.currentMaturidade);
         if(this.currentMaturidade) {
