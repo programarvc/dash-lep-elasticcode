@@ -172,7 +172,7 @@
                             </p>
                           </ng-container> -->
                     </div>
-                    <div class="metricas">
+                    <div class="metricas-ellipse">
                         <div class="ellipse-roxa"></div>
                         <p class="metricas-texto">Atingido</p>
                         <div class="ellipse-cinza"></div>
@@ -321,11 +321,13 @@
                     </div>
                     <div class="metrica-progresso">
                         <div class="barras-metricas">
-                            <ng-container *ngFor="let valor of valorMaturidadeC; let i = index">
+                            <ng-container *ngFor="let valor of valorMaturidadeC">
+                              <ng-container *ngIf="valor.itemDeMaturidade.tipoMaturidade === 'METRICA'">
                                 <div [ngStyle]="{'width': valor.valorEsperado  + '%'}" class="metrica-barra-meta">
                                     <div class="metrica-barra" [ngStyle]="{'width': valor.valorAtingido+ '%'}"></div>
                                 </div>
                             </ng-container>
+                          </ng-container>
                        </div>
                     </div>
         </div>
@@ -369,7 +371,7 @@
             </p>
           </div>
           <div class="processo-cultura">
-              <div class="barras">
+              <div class="barras-cultura">
                 <ng-container *ngFor="let item of valorMaturidadeC">
                   <ng-container *ngIf="item.itemDeMaturidade.tipoMaturidade === 'CULTURA'">
                     <div class="cultura-barra-meta" [ngStyle]="{'width': item.valorEsperado  + '%'}">
