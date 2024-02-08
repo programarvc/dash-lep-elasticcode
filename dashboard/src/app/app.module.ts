@@ -22,12 +22,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { ColaboradorComponent } from './pages/colaborador/colaborador.component';
 import { DashProjetoComponent } from './pages/dash-projeto/dash-projeto.component';
 import { AmplifyUiLoginComponent } from './pages/amplify-ui-login/amplify-ui-login.component';
-import { TimeComponent } from './pages/time/time.component';
 
 Amplify.configure(awsconfig);
 
 @NgModule({
-  declarations: [AppComponent, SearchBarComponent, ColaboradorComponent, DashProjetoComponent, SidebarMenuComponent, TecnicaComponent, MaturidadeLgComponent, MaturidadeSmComponent, AmplifyUiLoginComponent, TimeComponent],
+  declarations: [AppComponent, SearchBarComponent, ColaboradorComponent, DashProjetoComponent, SidebarMenuComponent, TecnicaComponent, MaturidadeLgComponent, MaturidadeSmComponent, AmplifyUiLoginComponent],
   imports: [HttpClientModule, BrowserModule, AppRoutingModule,FormsModule, NgbModule, AmplifyAuthenticatorModule],
   providers: [],
   bootstrap: [AppComponent],
