@@ -2,6 +2,7 @@ import { ValorDosIndicesDeMaturidadeByEsteiraIdAndCultura } from './../../types/
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
+
 import {
   EsteiraDeDesenvolvimento,
   TiposEnum,
@@ -20,7 +21,8 @@ import {
 
 import {
   ValorDosIndicesDeMaturidade,
-  ValorDosIndicesDeMaturidadeByEsteiraIdAndTecnica
+  ValorDosIndicesDeMaturidadeByEsteiraIdAndTecnica,
+  ValorDosIndicesDeMaturidadeFilter
 } from 'src/app/types/valorMaturidade-types';
 
 
@@ -54,6 +56,7 @@ export class DashProjetoComponent implements OnInit {
   };
 
   public currentMaturidade: Maturidade = {
+    id: 0,
     esteira: {
       id: 0,
       nome: '',
@@ -89,13 +92,18 @@ export class DashProjetoComponent implements OnInit {
           nome: '',
         },
       },
-      data: '',
+
       dataHora: [],
       numero: 0,
       leadTime: 0,
       frequencyDeployment: 0,
       changeFailureRate: 0,
       timeToRecovery: 0,
+
+      saude: 0,
+      metricas4: 0,
+      capacidadeDora: 0,
+      mediaDeJornada: 0
     },
     itemDeMaturidade: {
       id: 0,
@@ -140,6 +148,44 @@ export class DashProjetoComponent implements OnInit {
     id: 0,
   };
 
+  public currentFilterValorMaturidade: ValorDosIndicesDeMaturidadeFilter = {
+    id: 0,
+    maturidade: {
+      id: 0,
+      esteira: {
+        id: 0,
+        nome: '',
+        tipo: '' as TiposEnum,
+        empresa: {
+          id: 0,
+          nome: '',
+        },
+      },
+      dataHora: [],
+      numero: 0,
+      leadTime: 0,
+      frequencyDeployment: 0,
+      changeFailureRate: 0,
+      timeToRecovery: 0,
+      saude: 0,
+      metricas4: 0,
+      capacidadeDora: 0,
+      mediaDeJornada: 0
+    },
+    itemDeMaturidade: {
+      id: 0,
+      tipoMaturidade: '' as TiposMaturidadeEnum,
+      nome: '',
+    },
+    valorAtingido: 0,
+    valorEsperado: 0,
+    tipoMaturidade: '',
+    nome: '',
+    dataHora: []
+  }
+
+
+
   public empresas: Empresa[] = [];
   public maturidade: Maturidade[] = [];
   public capacidade: CapacidadesRecomendadas[] = [];
@@ -151,6 +197,10 @@ export class DashProjetoComponent implements OnInit {
   public valorMaturidadeCultura: ValorDosIndicesDeMaturidadeByEsteiraIdAndCultura[] = [];
   public valorMaturidadeC:  ValorDosIndicesDeMaturidade[] = [];
   public selectedOption: number;
+  public filterValorMaturidade: ValorDosIndicesDeMaturidadeFilter[] = [];
+  public valorMaturidadeDate: Date;
+  public formattedDate: string | null = null;
+
 
 
   constructor(
@@ -162,6 +212,7 @@ export class DashProjetoComponent implements OnInit {
     private valorMaturidadeService: valorMaturidadeService
   ) {
     this.selectedOption = 0;
+    this.valorMaturidadeDate = new Date();
   }
 
   ngOnInit(): void {
@@ -179,6 +230,11 @@ export class DashProjetoComponent implements OnInit {
         this.getMaturidadeByEsteiraId(parseInt(id));
 
       }
+      const maturidadeId = params.get('maturidadeId');
+      if (maturidadeId ) {
+        this.setCurrentMaturidade(parseInt(maturidadeId));
+
+      }
     });
   }
 
@@ -190,9 +246,19 @@ public async setCurrent(id: number) {
   this.getValorMaturidadesByEsteiraIdAndCultura(id);
   this.getMaturidadeByEsteiraId(id);
 
+}
+
+public async setCurrentMaturidade (id: number) {
+  const maturidade = this.valorMaturidadeC.find(
+    (maturidade) => maturidade.id === id
+  );
+  if (maturidade) {
+    this.currentValorMaturidade = maturidade;
+    this.getValorDoIndicesByMaturidadeId(maturidade.id);
+    console.log(this.currentValorMaturidade);
   }
 
-
+}
 
   public async getMaturidade() {
     this.esteiraService.getEsteiras().subscribe((response) => {
@@ -217,6 +283,7 @@ public async setCurrent(id: number) {
       });
   }
 
+
   getMaturidadeByEsteiraId(id: number): void {
     this.maturidadeService
       .getMaturidadeByEsteiraId(id)
@@ -228,6 +295,9 @@ public async setCurrent(id: number) {
           maturidadeData.dataHora = date.toISOString();
         });
         this.maturidadeByEsteiraId = maturidadeArray;
+        if(this.maturidadeByEsteiraId.length > 0) {
+          this.selecionarMaturidade(this.maturidadeByEsteiraId[0].id);
+        }
         console.log(this.maturidadeByEsteiraId);
       });
   }
@@ -256,6 +326,15 @@ public async setCurrent(id: number) {
     });
   }
 
+  getValorDoIndicesByMaturidadeId(maturidadeId: number): void {
+    this.valorMaturidadeService
+      .getValorDoIndicesByMaturidadeId(maturidadeId)
+      .subscribe((valorMaturidade) => {
+        this.valorMaturidadeC = valorMaturidade;
+        console.log(this.valorMaturidadeC);
+      });
+  }
+
   getCapacidadesByEsteiraId(id: number): void {
     this.capacidadeService
       .getCapacidadesByEsteiraId(id)
@@ -274,8 +353,10 @@ public async setCurrent(id: number) {
 
 
 
-  getCorJornada(jornadaGoal: number, nivel: string): string {
-    if (jornadaGoal >= 0 && jornadaGoal <= 25 && nivel === 'Baixa') {
+  getCorJornada(jornadaGoal: number | undefined, nivel: string): string | undefined {
+    if (jornadaGoal === null || jornadaGoal === undefined) {
+      return '#8892A7';
+    } else if (jornadaGoal >= 0 && jornadaGoal <= 25 && nivel === 'Baixa') {
       return '#12C3FF';
     } else if (jornadaGoal >= 26 && jornadaGoal <= 50 && nivel === 'Média') {
       return '#12C3FF';
@@ -284,12 +365,12 @@ public async setCurrent(id: number) {
     } else if (jornadaGoal >= 76 && nivel === 'Elite') {
       return '#12C3FF';
     } else {
-      return '#8892A7';
+      return undefined;
     }
   }
 
-  getNivel(rate: number): string | undefined {
-    if (rate === null){
+  getNivel(rate: number | undefined): string | undefined {
+    if (rate === null || rate === undefined){
       return 'sem dado';
     } else if (rate >= 0 && rate <= 25) {
       return 'Baixo';
@@ -302,11 +383,82 @@ public async setCurrent(id: number) {
     }
   }
 
-  onOptionChange(event: Event) {
-    let selectElement = event.target as HTMLSelectElement;
-    this.selectedOption = Number(selectElement.value);
-    console.log("Selected option: " + this.selectedOption);
-    console.log(this.maturidadeByEsteiraId[this.selectedOption].capacidadeDora)
+  getFontSize (size: number | undefined): string | undefined {
+    if (size === null || size === undefined){
+      return '25px';
+    } else {
+      return '40px';
+    }
   }
+
+  getFontSizeFailureRate (size: number | undefined): string | undefined {
+    if (size === null || size === undefined){
+      return '25px';
+    } else {
+      return '39px';
+    }
+  }
+
+  getFontSizeSaude (size: number | undefined): string | undefined {
+    if (size === null || size === undefined){
+      return '25px';
+    } else {
+      return '16px';
+    }
+  }
+
+  getFontSizeMetricas (size: number | undefined): string | undefined {
+    if (size === null || size === undefined){
+      return '14px';
+    } else {
+      return '12px';
+    }
+  }
+
+  public selecionarMaturidade (id?: number) {
+    console.log("Maturidade: ", this.maturidadeByEsteiraId);
+    if (id) {
+      const maturidade = this.maturidadeByEsteiraId.find((maturidade) => maturidade.id === id);
+        console.log(" Var Maturidade: ", this.maturidadeByEsteiraId);
+      if (maturidade) {
+        let date = new Date(maturidade.dataHora);
+        let timestamp = date.getTime();
+        this.currentMaturidade = {
+          ...maturidade,
+          dataHora: [timestamp]
+        };
+        this.maturidadeService.setCurrentMaturidade(this.currentMaturidade);
+        this.formattedDate = this.currentMaturidade.dataHora[0].toString();
+        console.log("Current Maturidade: ", this.currentMaturidade);
+        if(this.currentMaturidade) {
+          this.getValorDoIndicesByMaturidadeId(this.currentMaturidade.id);
+        }
+      }
+    } else {
+      this.getMaturidade();
+      this.currentMaturidade = {
+        id: 0,
+        esteira: {
+          id: 0,
+          nome: '',
+          tipo: '' as TiposEnum,
+          empresa: {
+            id: 0,
+            nome: '',
+          },
+        },
+        dataHora: [],
+        numero: 0,
+        leadTime: 0,
+        frequencyDeployment: 0,
+        changeFailureRate: 0,
+        timeToRecovery: 0,
+        saude: 0,
+        metricas4: 0,
+        capacidadeDora: 0,
+        mediaDeJornada: 0
+      };
+      }
+    }
 
 }

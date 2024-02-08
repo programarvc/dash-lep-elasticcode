@@ -20,6 +20,7 @@ export interface Empresa {
 }
 
 export interface Maturidade {
+  id: number,
   esteira: EsteiraDeDesenvolvimento;
   dataHora: number[];
   numero: number;
