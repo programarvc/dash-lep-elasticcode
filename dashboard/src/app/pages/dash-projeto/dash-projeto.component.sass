@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap')
 
+*
+    margin: 0
+
 .dash-projeto .container-fluid
     padding: 0
 
@@ -30,10 +33,14 @@ body
   display: flex
   justify-content: flex-start
   align-items: center
+  gap: 10px
 
   #data
     margin-left: 20px
     margin-top: 18px
+
+.filter
+    margin: 40px 0 20px
 
 .bloco-metricas
     text-align: center
@@ -304,9 +311,550 @@ body
     font-size: 12px
     font-weight: 500
 
-.bloco-geral
-    margin-top:30px
+.bloco-tecnica
+    border-radius: 15px
+    background: #F6F8FF
+    box-shadow: 0px 3.352px 3.352px 0px rgba(0, 0, 0, 0.05)
+    width: 100%
+    height: 500px
+    display: flex
+    flex-direction: column
+    margin-top: 30px
 
+.titulo-tecnica
+    color: #141414
+    font-family: Poppins
+    font-size: 18px
+    font-style: normal
+    font-weight: 600
+    line-height: normal
+    padding: 35px 39px
+
+.tituloLegenda
+    display: flex
+    width: 100%
+
+.titulo-tecnica1
+    width: 30%
+
+.tecnicas-texto
+    color: #141414
+    font-family: Poppins
+    font-size: 14px
+    font-weight: 400
+    margin-bottom: 17px
+
+.tecnicas-textos
+    text-align: right
+    width: 27%
+    padding-left: 1%
+
+.barras
+    padding: 0px 2px 0px 15px
+    z-index: 2
+    position: absolute
+    top: 0
+    width: 100%
+
+.barras-metricas
+    padding: 0 2px 0px 15px
+    z-index: 2
+    position: absolute
+    top: 20px
+    width: 100%
+
+.pontilhados2
+    display: flex
+    height: 280px
+
+.processos-geral
+    width: 100%
+    display: flex
+    flex-direction: row
+    margin-top: 15px
+    overflow: auto
+    height: 300px
+
+.processos-geral::-webkit-scrollbar
+    display: none
+
+.metricas-geral
+    width: 100%
+    display: flex
+    flex-direction: row
+    margin-top: 8px
+    overflow: auto
+
+.metricas-geral::-webkit-scrollbar
+    display: none
+
+.pontilhados
+    height: 100%
+    position: absolute
+    margin-left: 230px
+    margin-top: 120px
+
+.pontilhado
+    height: 100%
+    z-index: 0
+    border: 1px dashed #d2d2d2
+    width: 49px
+    border-top-color: transparent
+    border-bottom-color: transparent
+
+.texto-boostrap
+    text-align: right
+    max-width: 290px
+
+.ellipse-roxa
+    width: 15px
+    height: 15px
+    border-radius:50%
+    background-color: #6A5FFF
+    margin-right: 20px
+
+.metricas-ellipse
+    display: flex
+    width: 70%
+    justify-content: center
+    align-items: center
+
+.metricas-texto
+    color: #141414
+    font-family: Poppins
+    font-size: 14px
+    font-style: normal
+    font-weight: 400
+    margin-bottom: 0px
+    margin-right: 40px
+
+.ellipse-cinza
+    width: 15px
+    height: 15px
+    border-radius:50%
+    background-color: #D9D9D9
+    margin-right: 20px
+
+.metricas-texto-esperado
+    color: #141414
+    font-family: Poppins
+    font-size: 14px
+    font-style: normal
+    font-weight: 400
+    margin-bottom: 0px
+    margin-right: 40px
+
+.processo
+    position: relative
+    width: 71%
+
+.numeros
+    display: flex
+    flex-direction: row
+    z-index: 1
+    margin-left: 191px
+
+.barra-arq
+    height: 21px
+    border-radius: 100px
+    background: #ABABAB
+    margin-bottom: 17px
+
+.barra
+    height: 21px
+    flex-shrink: 0
+    border-radius: 100px
+    background: #6A5FFF
+    z-index: 1
+
+.tecnicas-num
+    margin-left: 37px
+    color: #141414
+    text-align: center
+    font-family: Poppins
+    font-size: 14px
+    font-style: normal
+    font-weight: 400
+    line-height: normal
+    z-index: 1
+
+.progress-bar-content
+    position: relative
+    padding: 5px 0
+
+.progress-bar
+    width: 100%
+    height: 20px
+    border-radius: 10px
+    background-color: #e2e2e2
+
+.progress-goal
+    height: 20px
+    border-radius: 10px
+
+.competencies .progress-goal
+    background-color: #0f9caf
+
+.courses .progress-goal
+    background-color: #cd4e4e
+    display: flex
+    justify-content: flex-end
+    align-items: center
+
+.courses .progress-goal span
+    margin: 0 8px
+    color: #FFF
+    font-size: 12px
+    font-weight: 700
+
+.goal-value
+    position: absolute
+    top: 0px
+    width: 30px
+    height: 30px
+    background-color: #dbae2b
+    border: 2px solid #FFF
+    border-radius: 15px
+    display: flex
+    align-items: center
+    justify-content: center
+
+.goal-value span
+    font-size: 12px
+    font-weight: 700
+    color: #fff
+
+.bloco-pequeno
+    margin-top: 30px
+    padding: 20px 20px 35px
+    border-radius: 15px
+    background: #F6F8FF
+    box-shadow: 0px 3.352px 3.352px 0px rgba(0, 0, 0, 0.05)
+    height: 235px
+    display: flex
+    flex-direction: column
+
+.cabecalho-quadro
+    display: flex
+
+.titulo-processo
+    color: #141414
+    font-family: Poppins
+    font-size: 18px
+    font-style: normal
+    font-weight: 600
+    line-height: normal
+
+.metricas-legenda
+    padding-top: 4px
+    display: flex
+    flex-direction: row
+    justify-content: center
+
+.ellipse-azul-processo
+    width: 15px
+    height: 15px
+    border-radius:50%
+    background-color: #5182FF
+    margin: 3px 4px 0 0
+
+.cabecalho-texto
+    color: #141414
+    font-family: Poppins
+    font-size: 14px
+    font-style: normal
+    font-weight: 400
+    margin-right: 10px
+
+.ellipse-cinza-processo
+    width: 15px
+    height: 15px
+    border-radius:50%
+    background-color: #D9D9D9
+    margin: 3px 4px 0 0
+
+.processos-textos
+    text-align: right
+    width: 45%
+
+.metricas-textos1
+    text-align: right
+    width: 50%
+    color: #000
+    font-family: Poppins
+    font-size: 14px
+    font-style: normal
+    font-weight: 400
+    line-height: normal
+
+.processos-textos::-webkit-scrollbar
+    display: none
+
+.processos-texto
+    color: #141414
+    font-family: Poppins
+    font-size: 14px
+    font-weight: 400
+    margin-bottom: 10px
+
+.processos-texto-metricas
+    color: #141414
+    font-family: Poppins
+    font-size: 14px
+    font-weight: 400
+    margin-bottom: 10px
+
+.pontilhados-processo
+    height: 100%
+    position: absolute
+    margin-left: 123px
+    margin-top: 61px
+
+
+.pontilhados-processo2
+   display: flex
+   height: 110px
+
+.pontilhados-metrica
+    margin-left: 120px
+    height: 110px
+    position: absolute
+
+.pontilhados-metrica2
+    display: flex
+    height: 100%
+    margin-top: 29px
+
+.processo-barra-meta
+    height: 15px
+    border-radius: 100px
+    background: #ABABAB
+    margin-bottom: 22px
+
+.quadro-metricas-textos
+    text-align: right
+    width: 30%
+
+.processo-barra
+    height: 15px
+    flex-shrink: 0
+    border-radius: 100px
+    background: #5182FF
+    z-index: 1
+
+.percent-metrica
+    color: #000
+    text-align: center
+    font-family: Poppins
+    font-size: 14px
+    font-style: normal
+    font-weight: 600
+    line-height: normal
+    position: absolute
+    left: 320px
+    bottom: 119px
+
+.percent-metrica2
+    color: #000
+    text-align: center
+    font-family: Poppins
+    font-size: 14px
+    font-style: normal
+    font-weight: 600
+    line-height: normal
+    position: absolute
+    left: 320px
+    bottom: 81px
+
+.percent-metrica3
+    color: #000
+    text-align: center
+    font-family: Poppins
+    font-size: 14px
+    font-style: normal
+    font-weight: 600
+    line-height: normal
+    position: absolute
+    left: 320px
+    bottom: 44px
+
+.percent-metrica4
+    color: #000
+    text-align: center
+    font-family: Poppins
+    font-size: 14px
+    font-style: normal
+    font-weight: 600
+    line-height: normal
+    position: absolute
+    left: 320px
+    bottom: 8px
+
+.processo-progresso
+    position: relative
+    width: 100%
+    margin-left: 25px
+
+.metrica-progresso
+    position: relative
+    width: 70%
+    height: 100%
+
+.tracejado
+    border: 1px dashed #d2d2d2
+    z-index: 0
+    height: 100%
+    width: 27px
+    border-top-color: transparent
+    border-bottom-color: transparent
+
+.barras-processo
+    z-index: 2
+    position: absolute
+    top: 20px
+    width: 100%
+
+.tracejado2
+    border: 1px dashed #d2d2d2
+    height: 136px
+    left: 120px
+    top: 0
+
+.tracejado3
+    border-right: 1px dashed #d2d2d2
+    height: 136px
+    left: 140px
+    top: 0
+
+.tracejado4
+    border-right: 1px dashed #d2d2d2
+    height: 136px
+    left: 160px
+    top: 0
+
+.tracejado5
+    border-right: 1px dashed #d2d2d2
+    height: 136px
+    left: 180px
+    top: 0
+
+.tracejado6
+    border-right: 1px dashed #d2d2d2
+    height: 136px
+    left: 200px
+    top: 0
+
+.tracejado7
+    border-right: 1px dashed #d2d2d2
+    height: 136px
+    left: 220px
+    top: 0
+
+.tracejado8
+    border-right: 1px dashed #d2d2d2
+    height: 136px
+    left: 240px
+    top: 0
+
+.tracejado9
+    border-right: 1px dashed #d2d2d2
+    height: 136px
+    left: 260px
+    top: 0
+
+.tracejado10
+    border-right: 1px dashed #d2d2d2
+    height: 136px
+    left: 280px
+    top: 0
+
+.tracejado11
+    border-right: 1px dashed #d2d2d2
+    height: 136px
+    left: 300px
+    top: 0
+
+.titulo-metrica
+    color: #141414
+    font-family: Poppins
+    font-size: 18px
+    font-style: normal
+    font-weight: 600
+    line-height: normal
+    padding: 30px 35px
+
+.metrica-texto1
+    color: #141414
+    font-family: Poppins
+    font-size: 14px
+    font-weight: 400
+    margin-bottom:10px
+    position: relative
+    bottom: 78px
+    right: 253px
+
+.metrica-texto2
+    color: #141414
+    font-family: Poppins
+    font-size: 14px
+    font-weight: 400
+    margin-bottom:10px
+    position: relative
+    bottom: 78px
+    right: 253px
+
+.metrica-texto3
+    color: #141414
+    font-family: Poppins
+    font-size: 14px
+    font-weight: 400
+    margin-bottom:10px
+    position: relative
+    bottom: 78px
+    right: 253px
+
+.metrica-texto4
+    color: #141414
+    font-family: Poppins
+    font-size: 14px
+    font-weight: 400
+    margin-bottom:10px
+    position: relative
+    bottom: 78px
+    right: 253px
+
+.metrica-texto5
+    color: #141414
+    font-family: Poppins
+    font-size: 14px
+    font-weight: 400
+    margin-bottom:10px
+    position: relative
+    bottom: 78px
+    right: 253px
+
+.metrica-barra-meta
+    height: 15px
+    border-radius: 100px
+    background: #ABABAB
+    position: relative
+    top: 1px
+    z-index: 1
+    margin-bottom: 22px
+
+.metrica-barra
+    height: 15px
+    flex-shrink: 0
+    border-radius: 100px
+    background: #5182FF
+
+.quadroTeste
+    width: 640px
+    height: 357px
+    flex-shrink: 0
+    border-radius: 15px
+    background: #F6F8FF
+    box-shadow: 0px 3.352px 3.352px 0px rgba(0, 0, 0, 0.05)
 
 .bloco-cultura
     border-radius: 15px
@@ -441,7 +989,7 @@ body
     line-height: normal
     z-index: 1
 
-.barras
+.barras-cultura
     padding: 0 4px 0px 19px
     z-index: 2
     position: absolute
@@ -508,7 +1056,7 @@ body
 
 .cultura-textos
     text-align: right
-    margin-top: 15px
+
 
 
 .cultura-texto
@@ -568,7 +1116,43 @@ body
 .cultura-num
     margin-left: 40px
 
+@media(min-width: 1200px)
+    .pontilhados-processo
+        margin-left: 132px
+
+    .pontilhados
+        margin-left: 244px
+
+    .pontilhados-metrica
+        margin-left: 128px    
+
 @media(min-width: 1400px)
+    .pontilhados
+        margin-left: 250px
+        width: 40%
+
+    .pontilhado
+        width: 100%
+
+    .pontilhados2
+        height: 280px
+        width: 100%
+
+    pontilhados
+        width: 100%
+
+    .numeros
+        margin-left: 210px
+
+    .tecnicas-num
+        margin-left: 6.3%
+
+    .pontilhados-processo
+        margin-left: 133px
+
+    .pontilhados-metrica
+        margin-left: 128px
+
     .pontilhado-cultura
         width: 100%
 
@@ -588,7 +1172,40 @@ body
     .capacidades-recomendadas-card
         width: 17%
 
+    .barras-cultura
+        padding: 0 0px 0px 29px
+
 @media(min-width: 1600px)
+
+    .pontilhados
+        margin-left: 280px
+
+    .pontilhado
+        width: 100%
+
+    .numeros
+        margin-left: 230px
+
+    .tecnicas-num
+        margin-left: 47px
+
+    .pontilhados-processo
+        margin-left: 9.6%
+        width: 17%
+
+    .pontilhados-processo2
+        width: 100%
+
+    .tracejado
+        width: 100%
+
+    .pontilhados-metrica
+        margin-left: 9%
+        width: 17.5%
+
+    .pontilhados-processo
+        width: 18%
+
     .pontilhados-cultura
         left: 28.5%
         width: 45%
@@ -602,7 +1219,28 @@ body
     .capacidades-recomendadas-card
         width: 17.2%
 
+    .barras
+        padding: 0px 23px 0px 15px
+
 @media(min-width: 1920px)
+
+    .pontilhados-metrica
+        margin-left: 9.3%
+        width: 18.3%
+
+    .pontilhados-processo
+        width: 18.5%
+
+    .pontilhados
+        margin-left: 17.5%
+        width: 42.3%
+
+    .numeros
+        margin-left: 24%
+
+    .tecnicas-num
+        margin-left: 7%
+
     .pontilhados
         margin-left: 17.5%
         width: 42%
@@ -627,6 +1265,24 @@ body
         width: 18%
 
 @media(min-width: 2560px)
+
+    .pontilhados
+        width: 43.8%
+
+    .numeros
+        margin-left: 22%
+
+    .tecnicas-num
+        margin-left: 7.5%
+
+    .pontilhados-processo
+        width: 19.7%
+        margin-left: 9.8%
+
+    .pontilhados-metrica
+        margin-left: 9.4%
+        width: 19.9%
+
     .pontilhados-cultura
         left: 23%
         width: 48.4%

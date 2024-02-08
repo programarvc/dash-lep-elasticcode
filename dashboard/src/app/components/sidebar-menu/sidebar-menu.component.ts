@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CognitoService } from 'src/app/cognito.service';
+import { SidebarButtonService } from 'src/services/sidedar-button/sidebar-button.service';
 
 import {
   UserEsteira,
@@ -31,12 +32,14 @@ export class SidebarMenuComponent {
   public colaborador: Colaborador[] = [];
   public habilidades: Habilidade[] = [];
   public empresa: Empresa[] = [];
+  public selectedButton: string = '';
 
   constructor(
     private cognitoService: CognitoService,
     private userService: UserService,
     private router: Router,
-    private timeService: TimeService
+    private timeService: TimeService,
+    public sidebarButtonService: SidebarButtonService
   ) { }
 
   public signOut(){
@@ -47,6 +50,8 @@ export class SidebarMenuComponent {
   }
 
   public async devDash() {
+    this.sidebarButtonService.setSelectedButton('botao-dois');
+
     const username = await this.cognitoService.getLoggedInUsername();
 
     this.userService.getEsteiraIdAndUsername().subscribe((response) => {
@@ -64,6 +69,8 @@ export class SidebarMenuComponent {
   }
 
   public async getEsteiraIdAndUsername(){
+    this.sidebarButtonService.setSelectedButton('botao-um');
+
     const username = await this.cognitoService.getLoggedInUsername();
 
     this.userService.getEsteiraIdAndUsername().subscribe((response) => {

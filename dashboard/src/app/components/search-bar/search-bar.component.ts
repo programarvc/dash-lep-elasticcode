@@ -9,6 +9,7 @@ import { Component, OnChanges, OnInit,Output,EventEmitter, Input} from '@angular
 
 })
 
+
 export class SearchBarComponent implements OnInit, OnChanges {
   @Input() phrases: string[] = [];
   @Output() TextoPesquisa = new EventEmitter<string>();
