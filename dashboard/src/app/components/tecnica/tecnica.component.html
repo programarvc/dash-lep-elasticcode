@@ -3,7 +3,11 @@
          <div class="row">
              <div class="col-md-8">
                  <div class="bloco-tecnica">
-
+                  <!--<select [(ngModel)]="selectedOption" (change)="onOptionChange($event)" id="data" name="data">
+                    <option *ngFor="let maturidadeData of maturidadeByEsteiraId; let i = index" [value]="i" [attr.data-id]="maturidadeData.id">
+                      {{maturidadeData.dataHora | date: 'dd/MM/yyyy HH:mm'}}
+                    </option>
+                  </select>!-->
                          <div class="tituloLegenda">
                              <div class="titulo-tecnica1">
                                  <h2 class="titulo-tecnica">Técnica</h2>
@@ -37,7 +41,7 @@
                          </div>
                          <div class="processos-geral">
                              <div class="tecnicas-textos">
-                                 <p class="tecnicas-texto" *ngFor="let valor of valorMaturidadeTecnica">
+                                 <p class="tecnicas-texto" *ngFor="let valor of valorMaturidadeC">
                                      <ng-container *ngIf="valor.itemDeMaturidade.tipoMaturidade === 'TECNICA'">
                                          {{valor.itemDeMaturidade.nome}}
                                      </ng-container>
@@ -45,11 +49,13 @@
                              </div>
                              <div class="processo">
                                  <div class="barras">
-                                     <ng-container *ngFor="let valor of valorMaturidadeTecnica; let i = index">
+                                     <ng-container *ngFor="let valor of valorMaturidadeC; let i = index">
+                                     <ng-container  *ngIf="valor.itemDeMaturidade.tipoMaturidade === 'TECNICA'">
                                          <div [ngStyle]="{'width': valor.valorEsperado  + '%'}" class="barra-arq">
                                              <div class="barra" [ngStyle]="{'width': valor.valorAtingido  + '%'}"></div>
                                          </div>
                                      </ng-container>
+                                      </ng-container>
                                  </div>
                              </div>
                          </div>
@@ -99,7 +105,7 @@
                      </div>
                      <div class="processos-geral">
                          <div class="processos-textos">
-                             <p class="tecnicas-texto" *ngFor="let valor of valorMaturidadeProcesso">
+                             <p class="tecnicas-texto" *ngFor="let valor of valorMaturidadeC">
                                  <ng-container *ngIf="valor.itemDeMaturidade.tipoMaturidade === 'PROCESSO'">
                                      {{valor.itemDeMaturidade.nome}}
                                  </ng-container>
@@ -108,10 +114,12 @@
                      <div class="processo-progresso">
                          <div class="barras-processo">
                              <ng-container *ngFor="let valor of valorMaturidadeProcesso">
+                                  <ng-container *ngIf="valor.itemDeMaturidade.tipoMaturidade === 'PROCESSO'">
                                  <div [ngStyle]="{'width': valor.valorEsperado + '%'}" class="processo-barra-meta">
                                  <div class="processo-barra" [ngStyle]="{'width': valor.valorAtingido + '%'}"></div>
                                  </div>
                              </ng-container>
+                              </ng-container>
                          </div>
                          </div>
                      </div>

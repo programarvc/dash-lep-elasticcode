@@ -2,6 +2,7 @@ import { ValorDosIndicesDeMaturidadeByEsteiraIdAndCultura } from './../../types/
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
+
 import {
   EsteiraDeDesenvolvimento,
   TiposEnum,
@@ -90,7 +91,7 @@ export class DashProjetoComponent implements OnInit {
           nome: '',
         },
       },
-      data: '',
+
       dataHora: [],
       numero: 0,
       leadTime: 0,
@@ -159,7 +160,6 @@ export class DashProjetoComponent implements OnInit {
           nome: '',
         },
       },
-      data: '',
       dataHora: [],
       numero: 0,
       leadTime: 0,
@@ -196,7 +196,9 @@ export class DashProjetoComponent implements OnInit {
   public valorMaturidadeCultura: ValorDosIndicesDeMaturidadeByEsteiraIdAndCultura[] = [];
   public valorMaturidadeC:  ValorDosIndicesDeMaturidade[] = [];
   public selectedOption: number;
-  public FilterValorMaturidade: ValorDosIndicesDeMaturidadeFilter[] = [];
+  public filterValorMaturidade: ValorDosIndicesDeMaturidadeFilter[] = [];
+  public valorMaturidadeDate: Date;
+
 
 
   constructor(
@@ -208,6 +210,7 @@ export class DashProjetoComponent implements OnInit {
     private valorMaturidadeService: valorMaturidadeService
   ) {
     this.selectedOption = 0;
+    this.valorMaturidadeDate = new Date();
   }
 
   ngOnInit(): void {
@@ -227,8 +230,9 @@ export class DashProjetoComponent implements OnInit {
       }
       const maturidadeId = params.get('maturidadeId');
       if (maturidadeId ) {
-        this.getMaturidadeFilterById(parseInt(maturidadeId));
-      } 
+        this.setCurrentMaturidade(parseInt(maturidadeId));
+
+      }
     });
   }
 
@@ -240,7 +244,20 @@ public async setCurrent(id: number) {
   this.getValorMaturidadesByEsteiraIdAndCultura(id);
   this.getMaturidadeByEsteiraId(id);
 
+}
+
+public async setCurrentMaturidade (id: number) {
+  const maturidade = this.valorMaturidadeC.find(
+    (maturidade) => maturidade.id === id
+  );
+  if (maturidade) {
+    this.currentValorMaturidade = maturidade;
+    this.getValorDoIndicesByMaturidadeId(maturidade.id);
+    console.log(this.currentValorMaturidade);
   }
+
+}
+
 
 
 
@@ -267,12 +284,6 @@ public async setCurrent(id: number) {
       });
   }
 
-  getMaturidadeFilterById(maturidadeId: number): void {
-    this.valorMaturidadeService.getMaturidadeFilterById(maturidadeId).subscribe((response) => {
-      this.FilterValorMaturidade = response;
-      console.log(this.FilterValorMaturidade);
-    });
-  }
 
   getMaturidadeByEsteiraId(id: number): void {
     this.maturidadeService
@@ -311,6 +322,15 @@ public async setCurrent(id: number) {
     this.valorMaturidadeService.getValorMaturidadesByEsteiraIdAndCulturaLatest(id).subscribe((response) =>{
       this.valorMaturidadeCultura = response;
     });
+  }
+
+  getValorDoIndicesByMaturidadeId(maturidadeId: number): void {
+    this.valorMaturidadeService
+      .getValorDoIndicesByMaturidadeId(maturidadeId)
+      .subscribe((valorMaturidade) => {
+        this.valorMaturidadeC = valorMaturidade;
+        console.log(this.valorMaturidadeC);
+      });
   }
 
   getCapacidadesByEsteiraId(id: number): void {
@@ -367,7 +387,7 @@ public async setCurrent(id: number) {
     } else {
       return '40px';
     }
-  } 
+  }
 
   getFontSizeFailureRate (size: number | undefined): string | undefined {
     if (size === null || size === undefined){
@@ -383,7 +403,7 @@ public async setCurrent(id: number) {
     } else {
       return '16px';
     }
-  } 
+  }
 
   getFontSizeMetricas (size: number | undefined): string | undefined {
     if (size === null || size === undefined){
@@ -393,10 +413,10 @@ public async setCurrent(id: number) {
     }
   }
 
-  onOptionChange(event: Event) {
-    let selectElement = event.target as HTMLSelectElement;
-    this.selectedOption = Number(selectElement.value);
-  
+  onOptionChange(index: number) {
+    this.selectedOption = index;
+    let maturidadeId = this.maturidadeByEsteiraId[this.selectedOption].id;
+    this.getValorDoIndicesByMaturidadeId(maturidadeId);
   }
 
 }

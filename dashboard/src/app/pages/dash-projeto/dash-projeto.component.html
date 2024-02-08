@@ -7,11 +7,18 @@
           <div class="col-md-12">
             <div class="campo-data-metrica">
               <h1>Dashboard</h1>
-              <select [(ngModel)]="selectedOption" (change)="onOptionChange($event)" id="data" name="data ">
-                <option *ngFor="let maturidadeData of maturidadeByEsteiraId; let i = index" [value]="i">
-                  {{maturidadeData.dataHora | date: 'dd/MM/yyyy HH:mm'}}
-                </option>
-              </select>
+              <div class="filter">
+                <div ngbDropdown>
+                  <button type="button" id="dropdownMaturidades" ngbDropdownToggle>
+                    {{selectedOption? (maturidadeByEsteiraId[selectedOption].dataHora | date: 'dd/MM/yyyy HH:mm') : 'Selecione'}}
+                  </button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownMaturidades">
+                    <button ngbDropdownItem *ngFor="let maturidadeData of maturidadeByEsteiraId; let i = index" (click)="onOptionChange(i)">
+                      {{maturidadeData.dataHora | date: 'dd/MM/yyyy HH:mm'}}
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -184,7 +191,7 @@
       </div>
         <div class="cultura-geral">
           <div class="cultura-textos">
-            <p class="tecnicas-texto" *ngFor="let valor of valorMaturidadeCultura">
+            <p class="tecnicas-texto" *ngFor="let valor of valorMaturidadeC">
               <ng-container *ngIf="valor.itemDeMaturidade.tipoMaturidade === 'CULTURA'">
                   {{valor.itemDeMaturidade.nome}}
               </ng-container>
@@ -192,10 +199,12 @@
           </div>
           <div class="processo-cultura">
               <div class="barras">
-                <ng-container *ngFor="let item of valorMaturidadeCultura">
-                  <div class="cultura-barra-meta" [ngStyle]="{'width': item.valorEsperado  + '%'}">
-                    <div class="cultura-barra" [ngStyle]="{'width': item.valorAtingido  + '%'}"></div>
-                  </div>
+                <ng-container *ngFor="let item of valorMaturidadeC">
+                  <ng-container *ngIf="item.itemDeMaturidade.tipoMaturidade === 'CULTURA'">
+                    <div class="cultura-barra-meta" [ngStyle]="{'width': item.valorEsperado  + '%'}">
+                      <div class="cultura-barra" [ngStyle]="{'width': item.valorAtingido  + '%'}"></div>
+                    </div>
+                  </ng-container>
                 </ng-container>
               </div>
           </div>

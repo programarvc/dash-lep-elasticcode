@@ -54,7 +54,6 @@ export enum TiposMaturidadeEnum {
 export interface Maturidade {
     id: number;
     esteira: EsteiraDeDesenvolvimento;
-    data: string;
     dataHora: number[],
     numero: number;
     leadTime: number;

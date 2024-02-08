@@ -26,9 +26,13 @@ public interface ValorDosIndicesDeMaturidadeRepository extends JpaRepository<Val
     @Query("SELECT v.itemDeMaturidade.nome FROM ValorDosIndicesDeMaturidadeEntity v WHERE v.maturidade.esteira.id = :esteiraId AND v.maturidade.dataHora = :dataHora")
     List<String> findItemDeMaturidadeByEsteiraIdAndDataHora(@Param("esteiraId") Long esteiraId, @Param("dataHora") LocalDateTime dataHora);
 
+  
+  
+  
     @Query("SELECT v FROM ValorDosIndicesDeMaturidadeEntity v WHERE v.maturidade.esteira.id = :esteiraId AND v.itemDeMaturidade.tipoMaturidade = :tipoMaturidade ")
     List<ValorDosIndicesDeMaturidadeEntity> findLatestByEsteiraIdAndTipoMaturidade(@Param("esteiraId") Long esteiraId, @Param("tipoMaturidade") TiposMaturidadeEnum tipoMaturidade);
 
+   
     @Query(value = "SELECT m.id, im.tipo_maturidade, im.nome, vim.valor_atingido, vim.valor_esperado FROM valordosindicesdematuridadeentity AS vim INNER JOIN maturidadeentity AS m ON m.id = vim.maturidade_id INNER JOIN itemdematuridadeentity AS im ON im.id = vim.item_de_maturidade_id WHERE m.id = :maturidadeId", nativeQuery = true)
     List<Object[]> findLatestByEsteiraIdAndTipoMaturidade(@Param("maturidadeId") Long maturidadeId);
    
@@ -36,6 +40,11 @@ public interface ValorDosIndicesDeMaturidadeRepository extends JpaRepository<Val
     @Query(value = "SELECT im.tipo_maturidade, im.nome, m.data_hora, vim.id, vim.valor_atingido as valorAtingido, vim.valor_esperado, vim.item_de_maturidade_id, vim.maturidade_id as maturidade_id FROM valordosindicesdematuridadeentity vim INNER JOIN maturidadeentity m ON m.id = vim.maturidade_id INNER JOIN itemdematuridadeentity im ON im.id = vim.item_de_maturidade_id WHERE m.id = :maturidadeId ORDER BY m.data_hora DESC", nativeQuery = true)
     List<Object[]> findByMaturidadeId(@Param("maturidadeId") Long maturidadeId);
 
+    
+
+        List<ValorDosIndicesDeMaturidadeEntity> findValorDoIndicesByMaturidadeId(Long maturidadeId);
+
+   
    
 
    

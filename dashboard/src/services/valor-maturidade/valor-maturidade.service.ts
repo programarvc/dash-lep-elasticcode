@@ -95,6 +95,8 @@ export class valorMaturidadeService {
   }
 
 
+
+
   getMaturidadeFilterById(maturidadeId: number): Observable<any>{
     const url: string = `${environment.api}indicesdematuridade/maturidade/${maturidadeId}`;
     return this.http
@@ -106,4 +108,14 @@ export class valorMaturidadeService {
       );
   }
 
+  getValorDoIndicesByMaturidadeId(maturidadeId: number): Observable<any>{
+    const url: string = `${environment.api}indicesdematuridade/allmaturidade/${maturidadeId}`;
+    return this.http
+      .get<any>(url)
+      .pipe(
+        catchError(
+          this.handleError<any>('getValorDoIndicesByMaturidadeId')
+        )
+      );
+  }
 }
