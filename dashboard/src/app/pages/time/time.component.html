@@ -16,6 +16,18 @@
                   <span *ngFor="let habilidade of habilidadesByColaborador; let isFirst = first">{{ isFirst ? '' : ' - ' }} {{habilidade.habilidade.nome}}</span>
                 </span>
               </div>
+              <div class="filter-dev-data">
+                <div ngbDropdown>
+                  <button type="button" class="dropdown-dev-toggle" id="dropdownMaturidades" ngbDropdownToggle>
+                    Selecione a Data
+                  </button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownMaturidades">
+                    <button ngbDropdownItem >
+                      
+                    </button>
+                  </div>
+                </div>
+              </div>
           </div>
       </div>
       <div class="col-md-5">
