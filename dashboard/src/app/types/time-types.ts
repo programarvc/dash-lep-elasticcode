@@ -16,6 +16,7 @@ export interface Colaborador {
     nome: string;
     email: string;
     github: string;
+    miniBio: string;
     habilidades: Habilidade[];
 
   }

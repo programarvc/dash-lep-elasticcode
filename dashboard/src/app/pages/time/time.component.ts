@@ -52,6 +52,7 @@ export class TimeComponent implements OnInit {
       nome: '',
       email: '',
       github: '',
+      miniBio: '',
       habilidades: [],
     },
   };
@@ -82,6 +83,7 @@ export class TimeComponent implements OnInit {
     nome: '',
     email: '',
     github: '',
+    miniBio: '',
     habilidades: [],
   };
 
