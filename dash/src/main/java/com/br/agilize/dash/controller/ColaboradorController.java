@@ -8,11 +8,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.br.agilize.dash.model.dto.ColaboradorDto;
+import com.br.agilize.dash.model.dto.dashboardDto.MetasOneAOneDto;
+import com.br.agilize.dash.model.entity.dashboardEntity.MetasOneAOneEntity;
 import com.br.agilize.dash.service.ColaboradorService;
 
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "ColaboradorControoler", description = "Api para gerenciar os colaboradores")
@@ -20,7 +24,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/colaborador")
 public class ColaboradorController extends ControllerCrudBase<ColaboradorDto> {
     @Autowired ColaboradorService service;
-
 
    public ColaboradorController(@Autowired ColaboradorService service) {
         super(service);
@@ -38,5 +41,17 @@ public class ColaboradorController extends ControllerCrudBase<ColaboradorDto> {
         List<ColaboradorDto> colaboradores = service.getColaboradoresByEsteiraId(esteiraId);
         return new ResponseEntity<>(colaboradores, HttpStatus.OK);
     }*/
+
+   /*  @GetMapping("/{colaboradorId}/metasOneAOne")
+    public MetasOneAOneDto getLatestByColaboradorId(@PathVariable Long colaboradorId) {
+        return service.findLatestByColaboradorId(colaboradorId);
+    }*/
+
+    @PostMapping("/meta")
+    public ResponseEntity<MetasOneAOneDto> salvarMeta(@RequestBody MetasOneAOneDto payload) {
+        MetasOneAOneDto savedMeta = service.createMeta(payload);
+        return ResponseEntity.ok(savedMeta);
+    }
+
     
 }
