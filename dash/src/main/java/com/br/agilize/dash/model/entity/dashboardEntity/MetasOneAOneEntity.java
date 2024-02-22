@@ -3,6 +3,7 @@ package com.br.agilize.dash.model.entity.dashboardEntity;
 import com.br.agilize.dash.model.entity.ColaboradorEntity;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -27,16 +28,16 @@ public class MetasOneAOneEntity {
     private String meta;
 
     @Column( nullable = false, name = "data")
-    private LocalDate data;
+    private LocalDateTime data;
 
     @PrePersist
     public void prePersist() {
-       data = LocalDate.now();
+       data = LocalDateTime.now();
     } 
 
     @PreUpdate
     public void preUpdate() {
-       data = LocalDate.now();
+       data = LocalDateTime.now();
     }
 
 }
