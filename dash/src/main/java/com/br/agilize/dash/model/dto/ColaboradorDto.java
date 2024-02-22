@@ -10,6 +10,7 @@ public class ColaboradorDto {
     private String nome;
     private String email;
     private String github;
+    private String miniBio; // Mini Biografia
     private List<HabilidadeDto> habilidades;
     private List<EmpresaDto> empresas;
 }
