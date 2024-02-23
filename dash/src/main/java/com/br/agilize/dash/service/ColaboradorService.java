@@ -68,13 +68,7 @@ public class ColaboradorService extends ServiceCrudBase<ColaboradorDto> {
         return colaboradores.stream().map(this.mapper::modelToDTO).collect(Collectors.toList());
     }*/
 
-    public MetasOneAOneDto createMeta(MetasOneAOneDto metaDto) {
-        MetasOneAOneEntity meta = this.metasOneAOneMapper.dtoToModel(metaDto);
-        if (meta == null) {
-            throw new IllegalArgumentException("Payload cannot be mapped to entity");
-        }
-        return metasOneAOneMapper.modelToDTO(metasOneAOneRepository.save(meta));
-    }
+    
 
    /* public MetasOneAOneDto findLatestByColaboradorId(Long colaboradorId) {
         MetasOneAOneEntity metasOneAOne = this.metasOneAOneRepository.findLatestByColaboradorId(colaboradorId)
