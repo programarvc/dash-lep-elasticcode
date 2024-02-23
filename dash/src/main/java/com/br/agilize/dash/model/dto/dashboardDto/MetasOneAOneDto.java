@@ -6,5 +6,5 @@ import lombok.Data;
 public class MetasOneAOneDto {
 
     private Long id;
-    private String meta;
+    private String metas;
 }
