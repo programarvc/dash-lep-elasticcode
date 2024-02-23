@@ -47,3 +47,22 @@ export interface Habilidade {
         id: number;
         nome: string;
     }
+
+    export interface MetasOneAOne{
+      id: number;
+      metas: string;
+    }
+
+    export interface MetasColaborador{
+      id: number;
+      colaborador: Colaborador;
+      meta: MetasOneAOne;
+      data: number [];
+    }
+
+    export interface AllLatestMetaByColaboradorId{
+      id: number;
+      colaborador: Colaborador;
+      meta: MetasOneAOne;
+      data: string;
+    }

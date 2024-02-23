@@ -19,11 +19,11 @@
               <div class="filter-dev-data">
                 <div ngbDropdown>
                   <button type="button" class="dropdown-dev-toggle" id="dropdownMaturidades" ngbDropdownToggle>
-                    Selecione a Data
+                    {{ currentMetasColaborador ? (formattedDate | date: 'dd/MM/yyyy') : 'Selecione'}}
                   </button>
                   <div ngbDropdownMenu aria-labelledby="dropdownMaturidades">
-                    <button ngbDropdownItem >
-                      
+                    <button ngbDropdownItem *ngFor="let metasCData of metasColaborador; let i = index" (click)="selecionarMetaColaborador(metasColaboradorData.id)">
+                        
                     </button>
                   </div>
                 </div>
@@ -155,7 +155,7 @@
         </div>
         <div class="card">
             <h2>Metas estabelecidas</h2>
-            <p></p>
+            <p>{{currentMetasColaborador.meta}}</p>
         </div>
         <div class="card">
             <h2>Pull Requests</h2>

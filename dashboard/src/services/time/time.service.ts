@@ -4,12 +4,31 @@ import { Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
 import { catchError } from "rxjs/operators";
 import { environment } from "src/environments/environment";
+import { MetasColaborador } from "src/app/types/time-types";
 
 @Injectable({
     providedIn: "root",
 })
 
 export class TimeService {
+
+  public currentMetasColaborador: MetasColaborador = {
+    id: 0,
+    colaborador: {
+      id: 0,
+      nome: '',
+      email: '',
+      github: '',
+      miniBio: '',
+      habilidades: [],
+    },
+    meta: {
+      id: 0,
+      metas: '',
+    },
+    data: [],
+  };
+
   getUserById() {
     throw new Error('Method not implemented.');
   }
@@ -71,6 +90,35 @@ export class TimeService {
     return this.http
       .get<any>(url)
       .pipe(catchError(this.handleError<any>("getTimesAndEsteiraByColaboradorId")));
+  }
+
+  getLatestMetaByColaboradorId(colaboradorId: number){
+    const url: string = `${environment.api}/metas/colaborador/${colaboradorId}`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>("getLatestMetaByColaboradorId")));
+  }
+
+  getAllLatestMetaByColaboradorId(colaboradorId: number){
+    const url: string = `${environment.api}/metas/colaborador/${colaboradorId}/all`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>("getLatestMetaByColaboradorId")));
+  }
+
+  getMetas(): Observable <any> {
+    const url: string = `${environment.api}/metas`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>("getMetas")));
+  }
+
+  setCurrentMetasColaborador(metas: MetasColaborador) {
+    this.currentMetasColaborador = metas;
+  }
+
+  getCurrentMetasColaborador(): MetasColaborador {
+    return this.currentMetasColaborador;
   }
 
 
