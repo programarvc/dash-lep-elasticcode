@@ -22,8 +22,8 @@
                     {{ currentMetasColaborador ? (formattedDate | date: 'dd/MM/yyyy') : 'Selecione'}}
                   </button>
                   <div ngbDropdownMenu aria-labelledby="dropdownMaturidades">
-                    <button ngbDropdownItem *ngFor="let metasCData of metasColaborador; let i = index" (click)="selecionarMetaColaborador(metasColaboradorData.id)">
-                        
+                    <button ngbDropdownItem *ngFor="let metasCData of allLatestMetaByColaboradorId" (click)="selecionarMetaColaborador(metasCData.id)">
+                        {{metasCData.data | date: 'dd/MM/yyyy'}}
                     </button>
                   </div>
                 </div>
@@ -155,7 +155,7 @@
         </div>
         <div class="card">
             <h2>Metas estabelecidas</h2>
-            <p>{{currentMetasColaborador.meta}}</p>
+            <p>{{currentMetasColaborador?.meta?.metas}}</p>
         </div>
         <div class="card">
             <h2>Pull Requests</h2>
