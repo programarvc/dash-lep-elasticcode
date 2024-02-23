@@ -156,10 +156,7 @@ export class TimeComponent implements OnInit {
       const colaboradorId = params.get('colaboradorId');
       if (colaboradorId) {
         this.getTimesAcoesHabilidades(parseInt(colaboradorId));
-        
-
       }
-
     });
   }
 
@@ -250,12 +247,11 @@ getColaboradorEsteiraId(esteiraId: number) {
       this.getTimesByColaboradorId(colaborador.id);
       this.getLatestMetaByColaboradorId(colaborador.id);
       this.getAllLatestMetaByColaboradorId(colaborador.id);
-      this.setCurrentMetasColaborador(colaborador.id);
     }
 
   }
 
-  public async setCurrentMetasColaborador (id: number) {
+  /*public async setCurrentMetasColaborador (id: number) {
     const metas = this.metasColaborador.find(
       (metasColaborador) => metasColaborador.id === id
     );
@@ -264,8 +260,7 @@ getColaboradorEsteiraId(esteiraId: number) {
       this.getAllLatestMetaByColaboradorId(metas.id);
       console.log(this.currentMetasColaborador);
     }
-  
-  }
+  }*/
 
   handleSearch(event: string) {
     if(event !== ''){
@@ -362,10 +357,7 @@ public selecionarMetaColaborador (id?: number) {
       };
       this.timeService.setCurrentMetasColaborador(this.currentMetasColaborador);
       this.formattedDate = this.currentMetasColaborador.data[0].toString();
-      console.log("Current MetasColaborador: ", this.currentMetasColaborador);
-      if(this.currentMetasColaborador) {
-        this.getAllLatestMetaByColaboradorId(this.currentColaborador.id);
-      }                                                        
+      console.log("Current MetasColaborador: ", this.currentMetasColaborador);                                              
     }
   } else {
       this.getMetas();
