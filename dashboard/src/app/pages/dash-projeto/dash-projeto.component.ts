@@ -255,7 +255,7 @@ public async setCurrentMaturidade (id: number) {
   if (maturidade) {
     this.currentValorMaturidade = maturidade;
     this.getValorDoIndicesByMaturidadeId(maturidade.id);
-    console.log(this.currentValorMaturidade);
+    
   }
 
 }
@@ -298,7 +298,7 @@ public async setCurrentMaturidade (id: number) {
         if(this.maturidadeByEsteiraId.length > 0) {
           this.selecionarMaturidade(this.maturidadeByEsteiraId[0].id);
         }
-        console.log(this.maturidadeByEsteiraId);
+        
       });
   }
 
@@ -331,7 +331,7 @@ public async setCurrentMaturidade (id: number) {
       .getValorDoIndicesByMaturidadeId(maturidadeId)
       .subscribe((valorMaturidade) => {
         this.valorMaturidadeC = valorMaturidade;
-        console.log(this.valorMaturidadeC);
+        
       });
   }
 
@@ -416,10 +416,9 @@ public async setCurrentMaturidade (id: number) {
   }
 
   public selecionarMaturidade (id?: number) {
-    console.log("Maturidade: ", this.maturidadeByEsteiraId);
+   
     if (id) {
       const maturidade = this.maturidadeByEsteiraId.find((maturidade) => maturidade.id === id);
-        console.log(" Var Maturidade: ", this.maturidadeByEsteiraId);
       if (maturidade) {
         let date = new Date(maturidade.dataHora);
         let timestamp = date.getTime();
@@ -429,7 +428,6 @@ public async setCurrentMaturidade (id: number) {
         };
         this.maturidadeService.setCurrentMaturidade(this.currentMaturidade);
         this.formattedDate = this.currentMaturidade.dataHora[0].toString();
-        console.log("Current Maturidade: ", this.currentMaturidade);
         if(this.currentMaturidade) {
           this.getValorDoIndicesByMaturidadeId(this.currentMaturidade.id);
         }

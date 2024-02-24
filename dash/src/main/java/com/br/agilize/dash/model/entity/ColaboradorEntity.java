@@ -30,6 +30,9 @@ public class ColaboradorEntity {
     @Column(unique = true)
     private String github;
 
+    @Column(unique = true, columnDefinition = "TEXT")
+    private String miniBio;
+
     @ManyToMany
     @JoinTable(name = "empresacolaboradorentity", joinColumns = @JoinColumn(name = "colaborador_id"), inverseJoinColumns = @JoinColumn(name = "empresa_id"))
     private List<EmpresaEntity> empresas;

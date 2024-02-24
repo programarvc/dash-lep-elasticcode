@@ -6,6 +6,9 @@ import {
           EsteiraDeDesenvolvimento,
           TiposEnum,
           Colaborador,
+          MetasColaborador,
+          MetasOneAOne,
+          AllLatestMetaByColaboradorId
 
          } from 'src/app/types/time-types';
 import { TimeService } from 'src/services/time/time.service';
@@ -16,7 +19,7 @@ import {  Habilidade,
           EmpresaByColaborador,
           Empresa,
           Competencia,
-          Acao,
+          Acao
           } from 'src/app/types/colaborador-types';
 import { AcaoService } from 'src/services/acao/acao.service';
 import { ColaboradorService } from 'src/services/colaborador/colaborador.service';
@@ -52,6 +55,7 @@ export class TimeComponent implements OnInit {
       nome: '',
       email: '',
       github: '',
+      miniBio: '',
       habilidades: [],
     },
   };
@@ -82,6 +86,7 @@ export class TimeComponent implements OnInit {
     nome: '',
     email: '',
     github: '',
+    miniBio: '',
     habilidades: [],
   };
 
@@ -95,6 +100,25 @@ export class TimeComponent implements OnInit {
       nome: '',
     },
   };
+  public metasColaborador: MetasColaborador[] = [];
+  public currentMetasColaborador: MetasColaborador = {
+    id: 0,
+    colaborador: {
+      id: 0,
+      nome: '',
+      email: '',
+      github: '',
+      miniBio: '',
+      habilidades: [],
+    },
+    meta: {
+      id: 0,
+      metas: '',
+    },
+    data: [],
+  };
+  public metasOneAOne: MetasOneAOne[] = [];
+  public allLatestMetaByColaboradorId: AllLatestMetaByColaboradorId[] = []; 
   public competencias: CompetenciaByColaborador[] = [];
   public acoes: AcaoByColaborador[] = [];
   public empresas: Empresa[] = [];
@@ -102,6 +126,7 @@ export class TimeComponent implements OnInit {
   public searchResultsAcoes: AcaoByColaborador[] = [];
   public searchResultsCompetencias:  CompetenciaByColaborador[] = [];
   public habilidadesByColaborador: HabilidadeByColaborador[] = [];
+  public formattedDate: string | null = null;
 
   constructor(
     private router: Router,
@@ -132,9 +157,10 @@ export class TimeComponent implements OnInit {
       if (colaboradorId) {
         this.getTimesAcoesHabilidades(parseInt(colaboradorId));
       }
-
     });
   }
+
+
 
    getColaboradoresByEsteira(esteiraId: number) {
   this.timeService.getColaboradoresByEsteiraId(esteiraId).subscribe((response) => {
@@ -142,28 +168,24 @@ export class TimeComponent implements OnInit {
     this.currentColaborador = response[0];
     this.colaboradores = response;
     this.getTimesAcoesHabilidades(this.currentColaborador.id);
-    console.log(this.currentColaborador);
   });
 }
 
 getColaboradorEsteiraId(esteiraId: number) {
   this.colaboradorService.getColaboradoresByEsteiraId(esteiraId).subscribe((response) => {
     this.colaboradoresByEsteira = response;
-    console.log(this.colaboradoresByEsteira);
   });
 }
 
   getTimesByEsteira(esteiraId: number) {
       this.timeService.getTimesByEsteiraId(esteiraId).subscribe((response) => {
         this.time = response;
-        console.log(this.time);
       });
   }
 
   getTimeAndColaboradorByEsteiraId(esteiraId: number) {
     this.timeService.getTimeAndColaboradorByEsteiraId(esteiraId).subscribe((response) => {
       this.timesColaborador = response;
-      console.log(this.timesColaborador);
 
     });
   }
@@ -171,7 +193,6 @@ getColaboradorEsteiraId(esteiraId: number) {
   getColaboradoresByTime(timeId: number) {
     this.timeService.getColaboradoresByTimeId(timeId).subscribe(colaboradores => {
       this.colaboradores = colaboradores;
-      console.log(this.colaboradores);
 
     });
   }
@@ -203,6 +224,12 @@ getColaboradorEsteiraId(esteiraId: number) {
     });
   }
 
+  public getMetas () {
+    this.timeService.getMetas().subscribe((response) => {
+      this.metasOneAOne = response;
+    });
+  }
+
   public async getTimesAcoesHabilidades(colaboradorId: number) {
     const colaborador = this.colaboradores.find(
       (colaborador) => colaborador.id === colaboradorId
@@ -213,10 +240,21 @@ getColaboradorEsteiraId(esteiraId: number) {
       this.getAcoes(colaborador.id);
       this.getHabilidades(colaborador.id);
       this.getTimesByColaboradorId(colaborador.id);
+      this.getLatestMetaByColaboradorId(colaborador.id);
+      this.getAllLatestMetaByColaboradorId(colaborador.id);
     }
 
   }
 
+  /*public async setCurrentMetasColaborador (id: number) {
+    const metas = this.metasColaborador.find(
+      (metasColaborador) => metasColaborador.id === id
+    );
+    if (metas) {
+      this.currentMetasColaborador = metas;
+      this.getAllLatestMetaByColaboradorId(metas.id);
+    }
+  }*/
 
   handleSearch(event: string) {
     if(event !== ''){
@@ -273,6 +311,64 @@ selectTime(time: Time) {
   this.getColaboradorEsteiraId(this.currentEsteira.id);
   this.currentColaborador = this.colaboradores[0];
 }
+
+getLatestMetaByColaboradorId(colaboradorId: number){
+  this.timeService.getLatestMetaByColaboradorId(colaboradorId).subscribe((response) => {
+    this.currentMetasColaborador = response;
+  });
+}
+
+getAllLatestMetaByColaboradorId(id: number): void {
+  this.timeService
+    .getAllLatestMetaByColaboradorId(id)
+    .subscribe((metasColaboradorArray: AllLatestMetaByColaboradorId[]) => {
+      metasColaboradorArray.forEach((metasColaboradorData: AllLatestMetaByColaboradorId) => {
+        let dateParts = metasColaboradorData.data;
+        let milliseconds = Number(dateParts[6]) / 1000000; // Convert nanoseconds to milliseconds
+        let date = new Date(Number(dateParts[0]), Number(dateParts[1]) - 1, Number(dateParts[2]), Number(dateParts[3]), Number(dateParts[4]), Number(dateParts[5]), milliseconds);
+        metasColaboradorData.data = date.toISOString();
+      });
+      this.allLatestMetaByColaboradorId = metasColaboradorArray;
+      if(this.allLatestMetaByColaboradorId.length > 0) {
+        this.selecionarMetaColaborador(this.allLatestMetaByColaboradorId[0].id);
+      }
+    });
+}
+
+
+public selecionarMetaColaborador (id?: number) {
+  if (id) {
+    const metas = this.allLatestMetaByColaboradorId.find((metas) => metas.id === id);
+    if (metas) {
+      let date = new Date(metas.data);
+      let timestamp = date.getTime();
+      this.currentMetasColaborador = {
+        ...metas,
+        data: [timestamp]
+      };
+      this.timeService.setCurrentMetasColaborador(this.currentMetasColaborador);
+      this.formattedDate = this.currentMetasColaborador.data[0].toString();                                             
+    }
+  } else {
+      this.getMetas();
+      this.currentMetasColaborador = {
+        id: 0,
+        colaborador: {
+          id: 0,
+          nome: '',
+          email: '',
+          github: '',
+          miniBio: '',
+          habilidades: [],
+        },
+        meta: {
+          id: 0,
+          metas: '',
+        },
+        data: [],
+      };
+    }
+  }
 
 }
 
