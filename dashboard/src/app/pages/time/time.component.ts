@@ -168,28 +168,24 @@ export class TimeComponent implements OnInit {
     this.currentColaborador = response[0];
     this.colaboradores = response;
     this.getTimesAcoesHabilidades(this.currentColaborador.id);
-    console.log(this.currentColaborador);
   });
 }
 
 getColaboradorEsteiraId(esteiraId: number) {
   this.colaboradorService.getColaboradoresByEsteiraId(esteiraId).subscribe((response) => {
     this.colaboradoresByEsteira = response;
-    console.log(this.colaboradoresByEsteira);
   });
 }
 
   getTimesByEsteira(esteiraId: number) {
       this.timeService.getTimesByEsteiraId(esteiraId).subscribe((response) => {
         this.time = response;
-        console.log(this.time);
       });
   }
 
   getTimeAndColaboradorByEsteiraId(esteiraId: number) {
     this.timeService.getTimeAndColaboradorByEsteiraId(esteiraId).subscribe((response) => {
       this.timesColaborador = response;
-      console.log(this.timesColaborador);
 
     });
   }
@@ -197,7 +193,6 @@ getColaboradorEsteiraId(esteiraId: number) {
   getColaboradoresByTime(timeId: number) {
     this.timeService.getColaboradoresByTimeId(timeId).subscribe(colaboradores => {
       this.colaboradores = colaboradores;
-      console.log(this.colaboradores);
 
     });
   }
@@ -258,7 +253,6 @@ getColaboradorEsteiraId(esteiraId: number) {
     if (metas) {
       this.currentMetasColaborador = metas;
       this.getAllLatestMetaByColaboradorId(metas.id);
-      console.log(this.currentMetasColaborador);
     }
   }*/
 
@@ -338,16 +332,13 @@ getAllLatestMetaByColaboradorId(id: number): void {
       if(this.allLatestMetaByColaboradorId.length > 0) {
         this.selecionarMetaColaborador(this.allLatestMetaByColaboradorId[0].id);
       }
-      console.log(this.allLatestMetaByColaboradorId);
     });
 }
 
 
 public selecionarMetaColaborador (id?: number) {
-  console.log("Metas: ", this.allLatestMetaByColaboradorId);
   if (id) {
     const metas = this.allLatestMetaByColaboradorId.find((metas) => metas.id === id);
-      console.log(" Var Metas: ", this.allLatestMetaByColaboradorId);
     if (metas) {
       let date = new Date(metas.data);
       let timestamp = date.getTime();
@@ -356,8 +347,7 @@ public selecionarMetaColaborador (id?: number) {
         data: [timestamp]
       };
       this.timeService.setCurrentMetasColaborador(this.currentMetasColaborador);
-      this.formattedDate = this.currentMetasColaborador.data[0].toString();
-      console.log("Current MetasColaborador: ", this.currentMetasColaborador);                                              
+      this.formattedDate = this.currentMetasColaborador.data[0].toString();                                             
     }
   } else {
       this.getMetas();
