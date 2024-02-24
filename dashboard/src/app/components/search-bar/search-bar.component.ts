@@ -23,7 +23,6 @@ export class SearchBarComponent implements OnInit, OnChanges {
 
   sendMessage(event:any) {
     this.TextoPesquisa.emit(event.target.value)
-    console.log(event.target.value);
   }
 
 

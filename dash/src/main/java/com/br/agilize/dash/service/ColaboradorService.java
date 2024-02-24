@@ -10,9 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.br.agilize.dash.exception.DashNotFoundException;
 import com.br.agilize.dash.mapper.ColaboradorMapper;
+import com.br.agilize.dash.mapper.dashboardMapper.MetasOneAOneMapper;
 import com.br.agilize.dash.model.dto.ColaboradorDto;
+import com.br.agilize.dash.model.dto.dashboardDto.MetasOneAOneDto;
 import com.br.agilize.dash.model.entity.ColaboradorEntity;
+import com.br.agilize.dash.model.entity.dashboardEntity.MetasOneAOneEntity;
 import com.br.agilize.dash.repository.ColaboradorRepository;
+import com.br.agilize.dash.repository.dashboardRepository.MetasOneAOneRepository;
 
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
@@ -21,7 +25,13 @@ public class ColaboradorService extends ServiceCrudBase<ColaboradorDto> {
     private ColaboradorRepository repository;
 
     @Autowired
+    private MetasOneAOneRepository metasOneAOneRepository;
+
+    @Autowired
     private ColaboradorMapper mapper;
+
+    @Autowired
+    private MetasOneAOneMapper metasOneAOneMapper;
 
     @Override
     public ColaboradorDto obterPorId(Long id) {
@@ -56,5 +66,13 @@ public class ColaboradorService extends ServiceCrudBase<ColaboradorDto> {
    /* public List<ColaboradorDto> getColaboradoresByEsteiraId(Long esteiraId) {
         List<ColaboradorEntity> colaboradores = this.repository.getColaboradoresByEsteiraId(esteiraId);
         return colaboradores.stream().map(this.mapper::modelToDTO).collect(Collectors.toList());
+    }*/
+
+    
+
+   /* public MetasOneAOneDto findLatestByColaboradorId(Long colaboradorId) {
+        MetasOneAOneEntity metasOneAOne = this.metasOneAOneRepository.findLatestByColaboradorId(colaboradorId)
+                .orElseThrow(DashNotFoundException::new);
+        return this.metasOneAOneMapper.modelToDTO(metasOneAOne);
     }*/
 }
