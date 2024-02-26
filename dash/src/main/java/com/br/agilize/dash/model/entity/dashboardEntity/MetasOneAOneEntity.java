@@ -19,7 +19,7 @@ public class MetasOneAOneEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "meta", columnDefinition = "TEXT")
-    private String meta;
+    @Column(name = "metas", columnDefinition = "TEXT")
+    private String metas;
 
 }
