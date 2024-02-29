@@ -277,21 +277,29 @@ updateColaboradoresByTime(timeId: number) {
   });
 }
 
-updateTimesByColaborador(colaboradorId: number) {
-
-  this.getTimesByColaboradorId(colaboradorId);
-  this.getTimesByEsteira(this.currentEsteira.id);
-  this.getColaboradorEsteiraId(this.currentEsteira.id);
+public selecionarTime(timeId: number) {
+  this.timeService.getTimeById(timeId).subscribe((time) => {
+    this.currentTimes = time; // atualiza o time atual
+    this.getColaboradoresByTime(timeId);
+    this.getTimesByEsteira(time.esteira.id);
+    this.getColaboradorEsteiraId(this.currentEsteira.id);
+  });
 }
 
-updateCurrentColaborador(colaborador: Colaborador) {
-  this.currentColaborador = colaborador;
-  this.getTimesAcoesHabilidades(colaborador.id);
-  this.getTimesByColaboradorId(colaborador.id);
+public selecionarColaborador(colaboradorId: number) {
+  this.colaboradorService.getColaboradorById(colaboradorId).subscribe((colaborador) => {
+    this.currentColaborador = colaborador; // atualiza o colaborador atual
+    this.getTimesAcoesHabilidades(colaborador.id);
+    this.getTimesByColaboradorId(colaborador.id);
+    this.getColaboradorEsteiraId(this.currentEsteira.id);
+    this.getTimesByEsteira(this.currentEsteira.id);
+  });
+}
 
-  // Recupera todos os times da esteira
-  this.getColaboradorEsteiraId(this.currentEsteira.id);
-  this.getTimesByEsteira(this.currentEsteira.id);
+getLatestMetaByColaboradorId(colaboradorId: number){
+  this.timeService.getLatestMetaByColaboradorId(colaboradorId).subscribe((response) => {
+    this.currentMetasColaborador = response;
+  });
 }
 
 getAllTimesAndDevs() {
@@ -299,23 +307,7 @@ getAllTimesAndDevs() {
   this.getColaboradoresByEsteira(this.currentEsteira.id);
   this.currentTimes.nomeTime = 'Todos';
 
-  // Atualiza o colaborador atual para o primeiro da lista, se existir
-  if (this.colaboradores.length > 0) {
-    this.currentColaborador = this.colaboradores[0];
-  }
-}
 
-selectTime(time: Time) {
-  this.getTimesByEsteira(time.esteira.id);
-  this.updateColaboradoresByTime(time.id);
-  this.getColaboradorEsteiraId(this.currentEsteira.id);
-  this.currentColaborador = this.colaboradores[0];
-}
-
-getLatestMetaByColaboradorId(colaboradorId: number){
-  this.timeService.getLatestMetaByColaboradorId(colaboradorId).subscribe((response) => {
-    this.currentMetasColaborador = response;
-  });
 }
 
 getAllLatestMetaByColaboradorId(id: number): void {
