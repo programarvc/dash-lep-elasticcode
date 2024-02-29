@@ -66,6 +66,9 @@ public class VcsPullRequestService implements CommandLineRunner {
 
              // Itere sobre a lista de DTOs
              for (VcsPullRequestDto prDataDto : prDataDtos) {
+                 String authorName = prDataDto.getAuthor().split("\\|")[1];
+                 prDataDto.setAuthor(authorName);
+
                  VcsPullRequestEntity prData = metaBaseMapper.dtoToModel(prDataDto);
                  metaBaseRepository.save(prData);
              }
