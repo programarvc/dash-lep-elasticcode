@@ -75,7 +75,17 @@ public class VcsPullRequestService implements CommandLineRunner {
                  System.out.println("Author: " + authorName + " PR Count: " + authorPrCount.get(authorName) + " PR Data: " + prDataDto.toString() + "\n");
 
                  VcsPullRequestEntity prData = metaBaseMapper.dtoToModel(prDataDto);
-                 metaBaseRepository.save(prData);
+
+                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'+00:00'");
+                 LocalDateTime dateTime = LocalDateTime.parse(prData.getMergedAt(), formatter);
+
+                 // Verifica se já existe um registro com o mesmo author, title e mergedAt
+                 Optional<VcsPullRequestEntity> existingPrData = metaBaseRepository.findByAuthorAndTitleAndMergedAt(prData.getAuthor(), prData.getTitle(), prData.getMergedAt());
+
+                 // Se o registro não existir, salva no banco de dados
+                 if (!existingPrData.isPresent()) {
+                     metaBaseRepository.save(prData);
+                 }
              }
         } catch (JsonProcessingException e) {
             e.printStackTrace();
