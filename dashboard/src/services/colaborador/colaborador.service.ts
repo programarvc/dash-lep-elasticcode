@@ -32,4 +32,12 @@ export class ColaboradorService {
       .get<any>(url)
       .pipe(catchError(this.handleError<any>('getColaboradoresByEsteiraId')));
   }
+
+  getColaboradorById(id: number): Observable<any> {
+    const url: string = `${environment.api}/colaborador/${id}`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>('getColaboradorById')));
+  }
+
 }

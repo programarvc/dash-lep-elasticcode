@@ -169,7 +169,6 @@ export class TecnicaComponent implements OnInit {
       .getValorDoIndicesByMaturidadeId(maturidade.id)
       .subscribe((valorMaturidade) => {
       this.valorMaturidadeC = valorMaturidade;
-      console.log(this.valorMaturidadeC);
     });
   }
 

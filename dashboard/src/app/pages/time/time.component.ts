@@ -168,28 +168,24 @@ export class TimeComponent implements OnInit {
     this.currentColaborador = response[0];
     this.colaboradores = response;
     this.getTimesAcoesHabilidades(this.currentColaborador.id);
-    console.log(this.currentColaborador);
   });
 }
 
 getColaboradorEsteiraId(esteiraId: number) {
   this.colaboradorService.getColaboradoresByEsteiraId(esteiraId).subscribe((response) => {
     this.colaboradoresByEsteira = response;
-    console.log(this.colaboradoresByEsteira);
   });
 }
 
   getTimesByEsteira(esteiraId: number) {
       this.timeService.getTimesByEsteiraId(esteiraId).subscribe((response) => {
         this.time = response;
-        console.log(this.time);
       });
   }
 
   getTimeAndColaboradorByEsteiraId(esteiraId: number) {
     this.timeService.getTimeAndColaboradorByEsteiraId(esteiraId).subscribe((response) => {
       this.timesColaborador = response;
-      console.log(this.timesColaborador);
 
     });
   }
@@ -197,7 +193,6 @@ getColaboradorEsteiraId(esteiraId: number) {
   getColaboradoresByTime(timeId: number) {
     this.timeService.getColaboradoresByTimeId(timeId).subscribe(colaboradores => {
       this.colaboradores = colaboradores;
-      console.log(this.colaboradores);
 
     });
   }
@@ -258,7 +253,6 @@ getColaboradorEsteiraId(esteiraId: number) {
     if (metas) {
       this.currentMetasColaborador = metas;
       this.getAllLatestMetaByColaboradorId(metas.id);
-      console.log(this.currentMetasColaborador);
     }
   }*/
 
@@ -283,21 +277,29 @@ updateColaboradoresByTime(timeId: number) {
   });
 }
 
-updateTimesByColaborador(colaboradorId: number) {
-
-  this.getTimesByColaboradorId(colaboradorId);
-  this.getTimesByEsteira(this.currentEsteira.id);
-  this.getColaboradorEsteiraId(this.currentEsteira.id);
+public selecionarTime(timeId: number) {
+  this.timeService.getTimeById(timeId).subscribe((time) => {
+    this.currentTimes = time; // atualiza o time atual
+    this.getColaboradoresByTime(timeId);
+    this.getTimesByEsteira(time.esteira.id);
+    this.getColaboradorEsteiraId(this.currentEsteira.id);
+  });
 }
 
-updateCurrentColaborador(colaborador: Colaborador) {
-  this.currentColaborador = colaborador;
-  this.getTimesAcoesHabilidades(colaborador.id);
-  this.getTimesByColaboradorId(colaborador.id);
+public selecionarColaborador(colaboradorId: number) {
+  this.colaboradorService.getColaboradorById(colaboradorId).subscribe((colaborador) => {
+    this.currentColaborador = colaborador; // atualiza o colaborador atual
+    this.getTimesAcoesHabilidades(colaborador.id);
+    this.getTimesByColaboradorId(colaborador.id);
+    this.getColaboradorEsteiraId(this.currentEsteira.id);
+    this.getTimesByEsteira(this.currentEsteira.id);
+  });
+}
 
-  // Recupera todos os times da esteira
-  this.getColaboradorEsteiraId(this.currentEsteira.id);
-  this.getTimesByEsteira(this.currentEsteira.id);
+getLatestMetaByColaboradorId(colaboradorId: number){
+  this.timeService.getLatestMetaByColaboradorId(colaboradorId).subscribe((response) => {
+    this.currentMetasColaborador = response;
+  });
 }
 
 getAllTimesAndDevs() {
@@ -305,23 +307,7 @@ getAllTimesAndDevs() {
   this.getColaboradoresByEsteira(this.currentEsteira.id);
   this.currentTimes.nomeTime = 'Todos';
 
-  // Atualiza o colaborador atual para o primeiro da lista, se existir
-  if (this.colaboradores.length > 0) {
-    this.currentColaborador = this.colaboradores[0];
-  }
-}
 
-selectTime(time: Time) {
-  this.getTimesByEsteira(time.esteira.id);
-  this.updateColaboradoresByTime(time.id);
-  this.getColaboradorEsteiraId(this.currentEsteira.id);
-  this.currentColaborador = this.colaboradores[0];
-}
-
-getLatestMetaByColaboradorId(colaboradorId: number){
-  this.timeService.getLatestMetaByColaboradorId(colaboradorId).subscribe((response) => {
-    this.currentMetasColaborador = response;
-  });
 }
 
 getAllLatestMetaByColaboradorId(id: number): void {
@@ -338,16 +324,13 @@ getAllLatestMetaByColaboradorId(id: number): void {
       if(this.allLatestMetaByColaboradorId.length > 0) {
         this.selecionarMetaColaborador(this.allLatestMetaByColaboradorId[0].id);
       }
-      console.log(this.allLatestMetaByColaboradorId);
     });
 }
 
 
 public selecionarMetaColaborador (id?: number) {
-  console.log("Metas: ", this.allLatestMetaByColaboradorId);
   if (id) {
     const metas = this.allLatestMetaByColaboradorId.find((metas) => metas.id === id);
-      console.log(" Var Metas: ", this.allLatestMetaByColaboradorId);
     if (metas) {
       let date = new Date(metas.data);
       let timestamp = date.getTime();
@@ -356,8 +339,7 @@ public selecionarMetaColaborador (id?: number) {
         data: [timestamp]
       };
       this.timeService.setCurrentMetasColaborador(this.currentMetasColaborador);
-      this.formattedDate = this.currentMetasColaborador.data[0].toString();
-      console.log("Current MetasColaborador: ", this.currentMetasColaborador);                                              
+      this.formattedDate = this.currentMetasColaborador.data[0].toString();                                             
     }
   } else {
       this.getMetas();
