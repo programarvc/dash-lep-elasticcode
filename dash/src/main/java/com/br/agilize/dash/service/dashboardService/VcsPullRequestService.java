@@ -1,5 +1,6 @@
 package com.br.agilize.dash.service.dashboardService;
 
+import io.micrometer.observation.Observation;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -21,9 +22,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -64,10 +63,16 @@ public class VcsPullRequestService implements CommandLineRunner {
             VcsPullRequestResponse responseDto = mapper.readValue(response.getBody(), VcsPullRequestResponse.class);
             List<VcsPullRequestDto> prDataDtos = responseDto.getVcs_PullRequest();
 
+            Map<String, Integer> authorPrCount = new HashMap<>();
+
              // Itere sobre a lista de DTOs
              for (VcsPullRequestDto prDataDto : prDataDtos) {
                  String authorName = prDataDto.getAuthor().split("\\|")[1];
                  prDataDto.setAuthor(authorName);
+
+                 // Incrementa a contagem para o autor no mapa
+                 authorPrCount.put(authorName, authorPrCount.getOrDefault(authorName, 0) + 1);
+                 System.out.println("Author: " + authorName + " PR Count: " + authorPrCount.get(authorName) + " PR Data: " + prDataDto.toString() + "\n");
 
                  VcsPullRequestEntity prData = metaBaseMapper.dtoToModel(prDataDto);
                  metaBaseRepository.save(prData);

@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="75a55f67-f71d-4f20-b265-9906ea2ea47e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dash/src/main/java/com/br/agilize/dash/controller/dashboardController/TimeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/dash/src/main/java/com/br/agilize/dash/controller/dashboardController/TimeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dash/src/main/java/com/br/agilize/dash/repository/dashboardRepository/TimeColaboradorRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/dash/src/main/java/com/br/agilize/dash/repository/dashboardRepository/TimeColaboradorRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dash/src/main/java/com/br/agilize/dash/service/dashboardService/TimeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/dash/src/main/java/com/br/agilize/dash/service/dashboardService/TimeService.java" afterDir="false" />
-    </list>
+    <list default="true" id="75a55f67-f71d-4f20-b265-9906ea2ea47e" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -89,7 +83,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "android.gradle.sync.needed": "true",
-    "git-widget-placeholder": "feature/controle-de-acesso",
+    "git-widget-placeholder": "feature/moving-tecnica",
     "ignore.virus.scanning.warn.message": "true",
     "jdk.selected.JAVA_MODULE": "19",
     "last_opened_file_path": "C:/Gradle/gradle-8.1.1",
@@ -102,7 +96,7 @@
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.29770115",
     "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
-    "ts.external.directory.path": "D:\\Arquivos e Programas\\ModificaçõesOficiais\\dash-lep-elasticcode\\dashboard\\node_modules\\typescript\\lib",
+    "ts.external.directory.path": "C:\\Users\\user\\Desktop\\dash2\\dash-lep-elasticcode\\dashboard\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
