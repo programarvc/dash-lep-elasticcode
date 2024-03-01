@@ -151,15 +151,15 @@
     <div class="col-md-3">
         <div class="card">
             <h2>Biografia</h2>
-            <p >{{ currentColaborador.miniBio}}</p>
+            <p class="card-colaborador-content">{{ currentColaborador.miniBio}}</p>
         </div>
         <div class="card">
             <h2>Metas estabelecidas</h2>
-            <p>{{currentMetasColaborador?.meta?.metas}}</p>
+            <p class="card-colaborador-content">{{currentMetasColaborador?.meta?.metas}}</p>
         </div>
         <div class="card">
             <h2>Pull Requests</h2>
-            <p></p>
+            <p class="pr-count"><b>{{currentPrCount?.count}}</b></p>
         </div>
     </div>
   </div>

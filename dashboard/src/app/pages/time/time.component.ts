@@ -8,8 +8,8 @@ import {
           Colaborador,
           MetasColaborador,
           MetasOneAOne,
-          AllLatestMetaByColaboradorId
-
+          AllLatestMetaByColaboradorId,
+          PrCount
          } from 'src/app/types/time-types';
 import { TimeService } from 'src/services/time/time.service';
 import {  Habilidade,
@@ -117,6 +117,20 @@ export class TimeComponent implements OnInit {
     },
     data: [],
   };
+
+  public currentPrCount: PrCount = { 
+    id: 0,
+    count: 0,
+    colaborador: {
+      id: 0,
+      nome: '',
+      email: '',
+      github: '',
+      miniBio: '',
+      habilidades: [],
+    }
+  };
+  public prCount: PrCount[] = [];
   public metasOneAOne: MetasOneAOne[] = [];
   public allLatestMetaByColaboradorId: AllLatestMetaByColaboradorId[] = []; 
   public competencias: CompetenciaByColaborador[] = [];
@@ -156,6 +170,8 @@ export class TimeComponent implements OnInit {
       const colaboradorId = params.get('colaboradorId');
       if (colaboradorId) {
         this.getTimesAcoesHabilidades(parseInt(colaboradorId));
+        this.getPrCountByColaboradorId(parseInt(colaboradorId));
+        
       }
     });
   }
@@ -291,6 +307,7 @@ public selecionarColaborador(colaboradorId: number) {
     this.currentColaborador = colaborador; // atualiza o colaborador atual
     this.getTimesAcoesHabilidades(colaborador.id);
     this.getTimesByColaboradorId(colaborador.id);
+    this.getPrCountByColaboradorId(colaborador.id);
     this.getColaboradorEsteiraId(this.currentEsteira.id);
     this.getTimesByEsteira(this.currentEsteira.id);
   });
@@ -362,5 +379,12 @@ public selecionarMetaColaborador (id?: number) {
     }
   }
 
+  getPrCountByColaboradorId( colaboradorId: number) {
+    this.timeService.getPrCountByColaboradorId(colaboradorId).subscribe((response) => {
+      this.currentPrCount = response;
+      console.log(this.currentPrCount);
+    });
+  }
 }
+
 
