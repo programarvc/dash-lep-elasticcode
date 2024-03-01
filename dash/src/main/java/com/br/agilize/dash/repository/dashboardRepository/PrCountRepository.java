@@ -12,4 +12,13 @@ import com.br.agilize.dash.model.entity.dashboardEntity.PrCountEntity;
 public interface PrCountRepository extends JpaRepository<PrCountEntity, Long> {
     
     PrCountEntity findByColaborador(ColaboradorEntity colaborador);
+
+    
+    PrCountEntity findByColaboradorId(Long colaboradorId);
+
+   /* PrCountEntity findByTimeColaborador_Colaborador(ColaboradorEntity colaborador);
+
+    @Query("SELECT p FROM PrCountEntity p WHERE p.timeColaborador.colaborador.id = :colaboradorId")
+    PrCountEntity findByColaboradorId(@Param("colaboradorId") Long colaboradorId);*/
+    
 }

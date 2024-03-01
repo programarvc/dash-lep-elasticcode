@@ -1,6 +1,8 @@
 package com.br.agilize.dash.service.dashboardService;
 
 import io.micrometer.observation.Observation;
+import jakarta.persistence.EntityNotFoundException;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -55,6 +57,7 @@ public class VcsPullRequestService implements CommandLineRunner {
 
     @Autowired
     private ColaboradorMapper colaboradorMapper;
+
 
     @Override
     @Transactional
@@ -126,4 +129,13 @@ public class VcsPullRequestService implements CommandLineRunner {
             e.printStackTrace();
         }
     }
+
+        @Transactional
+        public PrCountDto getPrCountByColaboradorId(Long colaboradorId) {
+            PrCountEntity prCountEntity = this.prCountRepository.findByColaboradorId(colaboradorId);
+            if (prCountEntity == null) {
+                throw new EntityNotFoundException("Não foi encontrado PrCount para o id do colaborador: " + colaboradorId);
+            }
+            return prCountMapper.modelToDTO(prCountEntity);
+        }
 }
