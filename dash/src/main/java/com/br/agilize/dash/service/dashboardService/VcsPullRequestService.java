@@ -134,7 +134,9 @@ public class VcsPullRequestService implements CommandLineRunner {
         public PrCountDto getPrCountByColaboradorId(Long colaboradorId) {
             PrCountEntity prCountEntity = this.prCountRepository.findByColaboradorId(colaboradorId);
             if (prCountEntity == null) {
-                throw new EntityNotFoundException("Não foi encontrado PrCount para o id do colaborador: " + colaboradorId);
+                PrCountDto prCountDto = new PrCountDto();
+                prCountDto.setCount(0);
+                return prCountDto;
             }
             return prCountMapper.modelToDTO(prCountEntity);
         }
