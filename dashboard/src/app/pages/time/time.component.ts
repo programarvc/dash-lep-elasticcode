@@ -170,8 +170,6 @@ export class TimeComponent implements OnInit {
       const colaboradorId = params.get('colaboradorId');
       if (colaboradorId) {
         this.getTimesAcoesHabilidades(parseInt(colaboradorId));
-        this.getPrCountByColaboradorId(parseInt(colaboradorId));
-        
       }
     });
   }
@@ -258,6 +256,7 @@ getColaboradorEsteiraId(esteiraId: number) {
       this.getTimesByColaboradorId(colaborador.id);
       this.getLatestMetaByColaboradorId(colaborador.id);
       this.getAllLatestMetaByColaboradorId(colaborador.id);
+      this.getPrCountByColaboradorId(colaborador.id);
     }
 
   }
