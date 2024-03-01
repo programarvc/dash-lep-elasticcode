@@ -38,12 +38,12 @@
                       <button type="button" id="dropdownEmpresa" ngbDropdownToggle>
                         {{ currentTimes.nomeTime ? currentTimes.nomeTime : 'Times'}}
                       </button>
-                      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                      <div ngbDropdownMenu aria-labelledby="dropdownBasic1" >
                         <button ngbDropdownItem (click)="getAllTimesAndDevs();">
                           Todos
                         </button>
                         <button ngbDropdownItem *ngFor="let time of time"
-                        (click)="selectTime(time)">
+                        (click)="selecionarTime(time.id)">
                           {{time.nomeTime}}
                         </button>
                       </div>
@@ -56,7 +56,7 @@
                       </button>
                       <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
                         <button ngbDropdownItem *ngFor="let colaborador of colaboradores"
-                          (click)="updateCurrentColaborador(colaborador); updateTimesByColaborador(colaborador.id)">
+                        (click)="selecionarColaborador(colaborador.id)">
                           <a *ngIf="colaborador.id" [routerLinkActive]="['active']"
                             [routerLinkActiveOptions]="{exact:true}">{{colaborador.nome}}</a>
                         </button>
@@ -151,15 +151,15 @@
     <div class="col-md-3">
         <div class="card">
             <h2>Biografia</h2>
-            <p >{{ currentColaborador.miniBio}}</p>
+            <p class="card-colaborador-content">{{ currentColaborador.miniBio}}</p>
         </div>
         <div class="card">
             <h2>Metas estabelecidas</h2>
-            <p>{{currentMetasColaborador?.meta?.metas}}</p>
+            <p class="card-colaborador-content">{{currentMetasColaborador?.meta?.metas}}</p>
         </div>
         <div class="card">
             <h2>Pull Requests</h2>
-            <p></p>
+            <p class="pr-count"><b>{{currentPrCount?.count}}</b></p>
         </div>
     </div>
   </div>

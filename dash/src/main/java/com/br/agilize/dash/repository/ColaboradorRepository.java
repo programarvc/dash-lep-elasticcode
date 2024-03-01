@@ -18,4 +18,6 @@ public interface ColaboradorRepository extends JpaRepository<ColaboradorEntity, 
 @Query("SELECT tc.colaborador FROM TimeColaboradorEntity tc WHERE tc.time.esteira.id = :esteiraId")
 List<ColaboradorEntity> findColaboradoresByEsteiraId(@Param("esteiraId") Long esteiraId);
 
+ColaboradorEntity findByGithub(String github);
+
 }

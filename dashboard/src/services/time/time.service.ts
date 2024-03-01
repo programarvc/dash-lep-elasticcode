@@ -113,6 +113,13 @@ export class TimeService {
       .pipe(catchError(this.handleError<any>("getMetas")));
   }
 
+  getPrCountByColaboradorId( colaboradorId: number): Observable<any> {
+    const url: string = `${environment.api}/prcount/colaborador/${colaboradorId}`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>("getPrCountByColaboradorId")));
+  }
+
   setCurrentMetasColaborador(metas: MetasColaborador) {
     this.currentMetasColaborador = metas;
   }

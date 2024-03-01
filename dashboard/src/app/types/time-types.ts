@@ -66,3 +66,9 @@ export interface Habilidade {
       meta: MetasOneAOne;
       data: string;
     }
+
+    export interface PrCount {
+      id: number;
+      colaborador: Colaborador;
+      count: number;
+    }
