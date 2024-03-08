@@ -125,24 +125,23 @@
                               </td>
                           </tr>
                           </ng-container>
-                          <ng-container *ngIf="searchResultsCompetencias.length>0">
-                          <tr
-                           *ngFor="let competencia of searchResultsCompetencias">
-                              <td>{{competencia.competencia.nome}}</td>
-                              <td>
-                                  <div class="progress-bar-content">
-                                      <div class="progress-bar">
-                                          <div class="progress-goal"
-                                              [ngStyle]="{'width': (competencia.progresso * 10).toString() + '%'}">
-                                              <div class="goal-value" style="left: 96.5%">
-                                                  <span>{{competencia.meta}}</span>
-                                              </div>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </td>
-                          </tr>
-                          </ng-container>
+                          <ng-container *ngIf="searchResultsCompetencias.length === 0">
+                            <tr *ngFor="let competencia of competencias" >
+                                <td>{{competencia.competencia.nome}}</td>
+                                <td>
+                                    <div class="progress-bar-content">
+                                        <div class="progress-bar">
+                                            <div class="progress-goal"
+                                                [ngStyle]="{'width': (competencia.progresso * 10).toString() + '%'}">
+                                                <div class="goal-value" style="left: 96.5%">
+                                                    <span>{{competencia.meta}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-container>
                       </tbody>
                   </table>
               </div>
