@@ -149,17 +149,21 @@
           </section>
       </div>
     <div class="col-md-3">
-        <div class="card">
+        <div class="cardLaterais">
             <h2>Biografia</h2>
             <p class="card-colaborador-content">{{ currentColaborador.miniBio}}</p>
         </div>
-        <div class="card">
+        <div class="cardLaterais">
             <h2>Metas estabelecidas</h2>
             <p class="card-colaborador-content">{{currentMetasColaborador?.meta?.metas}}</p>
         </div>
-        <div class="card">
+        <div class="cardLaterais">
             <h2>Pull Requests</h2>
             <p class="pr-count"><b>{{currentPrCount?.count}}</b></p>
+        </div>
+        <div class="cardLaterais">
+            <h2>Índice de Sobrevivência do Dev</h2>
+            <p class="ISD-count"><b></b></p>
         </div>
     </div>
   </div>
