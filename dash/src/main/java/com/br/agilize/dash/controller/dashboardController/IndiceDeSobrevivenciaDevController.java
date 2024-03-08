@@ -28,8 +28,8 @@ public class IndiceDeSobrevivenciaDevController extends ControllerCrudBase<Indic
     }
 
     @GetMapping("/colaborador/{colaboradorId}")
-    public ResponseEntity<Double> obterValorIndicePorIdColaborador(@PathVariable Long colaboradorId) {
-        Double valorIndice = service.obterValorIndicePorIdColaborador(colaboradorId);
+    public ResponseEntity<Map<String, Object>> obterValorIndicePorIdColaborador(@PathVariable Long colaboradorId) {
+        Map<String, Object> valorIndice = service.obterValorIndicePorIdColaborador(colaboradorId);
         return ResponseEntity.ok(valorIndice);
     }
 }

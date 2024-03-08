@@ -47,7 +47,12 @@ public class IndiceDeSobrevivenciaDevService extends ServiceCrudBase<IndiceDeSob
         this.repository.deleteById(id);
     }
 
-    public Double obterValorIndicePorIdColaborador(Long colaboradorId) {
-        return this.repository.findValorIndiceByColaboradorId(colaboradorId);
+    public Map<String, Object> obterValorIndicePorIdColaborador(Long colaboradorId) {
+        Map<String, Object> valorIndice = this.repository.findValorIndiceByColaboradorId(colaboradorId);
+        if (valorIndice == null || valorIndice.isEmpty()) {
+            valorIndice = new HashMap<>();
+            valorIndice.put("valorIndice", 0);
         }
+        return valorIndice;
+    }
 }

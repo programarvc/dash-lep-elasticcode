@@ -10,7 +10,7 @@ import com.br.agilize.dash.model.entity.dashboardEntity.IndiceDeSobrevivenciaDev
 
 @Repository
 public interface IndiceDeSobrevivenciaDevRepository extends JpaRepository<IndiceDeSobrevivenciaDevEntity, Long> {
-    @Query("SELECT i.valorIndice FROM IndiceDeSobrevivenciaDevEntity i WHERE i.timeColaborador.colaborador.id = :colaboradorId")
-    Double findValorIndiceByColaboradorId(@Param("colaboradorId") Long colaboradorId);
+    @Query("SELECT new map(i.valorIndice as valorIndice) FROM IndiceDeSobrevivenciaDevEntity i WHERE i.timeColaborador.colaborador.id = :colaboradorId")
+    Map<String, Object> findValorIndiceByColaboradorId(@Param("colaboradorId") Long colaboradorId);
 
 }
