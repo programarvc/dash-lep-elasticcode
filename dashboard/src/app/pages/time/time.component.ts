@@ -322,8 +322,6 @@ getAllTimesAndDevs() {
   this.getTimesByEsteira(this.currentEsteira.id);
   this.getColaboradoresByEsteira(this.currentEsteira.id);
   this.currentTimes.nomeTime = 'Todos';
-
-
 }
 
 getAllLatestMetaByColaboradorId(id: number): void {
