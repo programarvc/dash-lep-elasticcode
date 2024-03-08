@@ -72,3 +72,9 @@ export interface Habilidade {
       colaborador: Colaborador;
       count: number;
     }
+
+    export interface IndiceDeSobrevivenciaDev {
+      id: number;
+      timeColaborador: TimeColaborador;
+      valorIndice: number;
+    }
