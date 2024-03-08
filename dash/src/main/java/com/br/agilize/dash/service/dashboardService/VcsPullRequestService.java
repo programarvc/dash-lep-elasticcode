@@ -114,15 +114,17 @@ public class VcsPullRequestService implements CommandLineRunner {
 
                 VcsPullRequestEntity prData = metaBaseMapper.dtoToModel(prDataDto);
 
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'+00:00'");
-                LocalDateTime dateTime = LocalDateTime.parse(prData.getMergedAt(), formatter);
+                if(prData.getMergedAt() != null && prData.getAuthor() != null && prData.getTitle() != null) {
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'+00:00'");
+                    LocalDateTime dateTime = LocalDateTime.parse(prData.getMergedAt(), formatter);
 
-                // Verifica se já existe um registro com o mesmo author, title e mergedAt
-                Optional<VcsPullRequestEntity> existingPrData = metaBaseRepository.findByAuthorAndTitleAndMergedAt(prData.getAuthor(), prData.getTitle(), prData.getMergedAt());
+                    // Verifica se já existe um registro com o mesmo author, title e mergedAt
+                    Optional<VcsPullRequestEntity> existingPrData = metaBaseRepository.findByAuthorAndTitleAndMergedAt(prData.getAuthor(), prData.getTitle(), prData.getMergedAt());
 
-                // Se o registro não existir, salva no banco de dados
-                if (!existingPrData.isPresent()) {
-                    metaBaseRepository.save(prData);
+                    // Se o registro não existir, salva no banco de dados
+                    if (!existingPrData.isPresent()) {
+                        metaBaseRepository.save(prData);
+                    }
                 }
             }
         } catch (JsonProcessingException e) {
