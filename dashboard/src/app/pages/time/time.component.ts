@@ -203,6 +203,12 @@ export class TimeComponent implements OnInit {
         
       }
     });
+    if (this.searchResultsCompetencias.length === 0) {
+      const cardElement = document.querySelector('.card-colaborador-content');
+      if (cardElement) {
+        cardElement.classList.add('card-colaborador-content-Scrrol');
+      }
+    }
   }
 
 
