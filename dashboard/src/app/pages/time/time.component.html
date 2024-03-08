@@ -1,255 +1,254 @@
 <header>
-  <div class="row">
-      <div class="col-md-6">
-          <div class="user-identification">
-              <div class="photo">
-                  <img src="{{'https://github.com/' + currentColaborador.github + '.png'}}" alt="foto do colaborador">
-              </div>
-              <div class="personal-data">
-                <span class="name">{{currentColaborador.nome}} -
-                  <span *ngFor="let time of time; let isFirst = first" >
-                    {{ isFirst ? '' : ', ' }} {{time.nomeTime}}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="user-identification">
+                <div class="photo">
+                    <img src="{{'https://github.com/' + currentColaborador.github + '.png'}}" alt="foto do colaborador">
+                </div>
+                <div class="personal-data">
+                  <span class="name">{{currentColaborador.nome}} -
+                    <span *ngFor="let time of time; let isFirst = first" >
+                      {{ isFirst ? '' : ', ' }} {{time.nomeTime}}
+                    </span>
                   </span>
-                </span>
-
-                <span class="occupation">
-                  <span *ngFor="let habilidade of habilidadesByColaborador; let isFirst = first">{{ isFirst ? '' : ' - ' }} {{habilidade.habilidade.nome}}</span>
-                </span>
-              </div>
-              <div class="filter-dev-data">
-                <div ngbDropdown>
-                  <button type="button" class="dropdown-dev-toggle" id="dropdownMaturidades" ngbDropdownToggle>
-                    {{ currentMetasColaborador ? (formattedDate | date: 'dd/MM/yyyy') : 'Selecione'}}
-                  </button>
-                  <div ngbDropdownMenu aria-labelledby="dropdownMaturidades">
-                    <button ngbDropdownItem *ngFor="let metasCData of allLatestMetaByColaboradorId" (click)="selecionarMetaColaborador(metasCData.id)">
-                        {{metasCData.data | date: 'dd/MM/yyyy'}}
+  
+                  <span class="occupation">
+                    <span *ngFor="let habilidade of habilidadesByColaborador; let isFirst = first">{{ isFirst ? '' : ' - ' }} {{habilidade.habilidade.nome}}</span>
+                  </span>
+                </div>
+                <div class="filter-dev-data">
+                  <div ngbDropdown>
+                    <button type="button" class="dropdown-dev-toggle" id="dropdownMaturidades" ngbDropdownToggle>
+                      {{ currentMetasColaborador ? (formattedDate | date: 'dd/MM/yyyy') : 'Selecione'}}
                     </button>
+                    <div ngbDropdownMenu aria-labelledby="dropdownMaturidades">
+                      <button ngbDropdownItem *ngFor="let metasCData of allLatestMetaByColaboradorId" (click)="selecionarMetaColaborador(metasCData.id)">
+                          {{metasCData.data | date: 'dd/MM/yyyy'}}
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-          </div>
-      </div>
-      <div class="col-md-5">
-          <div class="search">
-              <div class="filters-display">
-                  <div class="filter">
-                    <div ngbDropdown>
-                      <button type="button" id="dropdownEmpresa" ngbDropdownToggle>
-                        {{ currentTimes.nomeTime ? currentTimes.nomeTime : 'Times'}}
-                      </button>
-                      <div ngbDropdownMenu aria-labelledby="dropdownBasic1" >
-                        <button ngbDropdownItem (click)="getAllTimesAndDevs();">
-                          Todos
-                        </button>
-                        <button ngbDropdownItem *ngFor="let time of time"
-                        (click)="selecionarTime(time.id)">
-                          {{time.nomeTime}}
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="filter">
-                    <div ngbDropdown>
-                      <button type="button" id="dropdownBasic1" ngbDropdownToggle >
-                        {{ currentColaborador.nome ? currentColaborador.nome : 'Devs'}}
-                      </button>
-                      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                        <button ngbDropdownItem *ngFor="let colaborador of colaboradores"
-                        (click)="selecionarColaborador(colaborador.id)">
-                          <a *ngIf="colaborador.id" [routerLinkActive]="['active']"
-                            [routerLinkActiveOptions]="{exact:true}">{{colaborador.nome}}</a>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-              </div>
-              <app-search-bar (TextoPesquisa)="handleSearch($event)"></app-search-bar>
-          </div>
-     </div>
-  </div>
-</header>
-<main>
-  <app-sidebar-menu></app-sidebar-menu>
-  <div class="dev-dashboard">
-  <div class="row">
-      <div class="col-md-9">
-          <section>
-              <div class="table-responsive">
-                  <table class="competencies">
-                      <thead>
-                          <tr>
-                              <th>Competências</th>
-                              <th></th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          <tr class="legend">
-                              <td>
-                                  <div class="informations">
-                                      <div class="advancement">
-                                          <div class="color"></div>
-                                          <span>Progresso</span>
-                                      </div>
-                                      <div class="goal">
-                                          <div class="color"></div>
-                                          <span>Meta</span>
-                                      </div>
-                                  </div>
-                              </td>
-                              <td>
-                                  <div class="levels">
-                                      <span>0</span>
-                                      <span>2</span>
-                                      <span>4</span>
-                                      <span>6</span>
-                                      <span>8</span>
-                                      <span>10</span>
-                                  </div>
-                              </td>
-                          </tr>
-                          <ng-container *ngIf="searchResultsCompetencias.length===0">
-                          <tr *ngFor="let competencia of competencias" >
-                              <td>{{competencia.competencia.nome}}</td>
-                              <td>
-                                  <div class="progress-bar-content">
-                                      <div class="progress-bar">
-                                          <div class="progress-goal"
-                                              [ngStyle]="{'width': (competencia.progresso * 10).toString() + '%'}">
-                                              <div class="goal-value" style="left: 96.5%">
-                                                  <span>{{competencia.meta}}</span>
-                                              </div>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </td>
-                          </tr>
-                          </ng-container>
-                          <ng-container *ngIf="searchResultsCompetencias.length>0">
-                          <tr
-                           *ngFor="let competencia of searchResultsCompetencias">
-                              <td>{{competencia.competencia.nome}}</td>
-                              <td>
-                                  <div class="progress-bar-content">
-                                      <div class="progress-bar">
-                                          <div class="progress-goal"
-                                              [ngStyle]="{'width': (competencia.progresso * 10).toString() + '%'}">
-                                              <div class="goal-value" style="left: 96.5%">
-                                                  <span>{{competencia.meta}}</span>
-                                              </div>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </td>
-                          </tr>
-                          </ng-container>
-                      </tbody>
-                  </table>
-              </div>
-          </section>
-      </div>
-    <div class="col-md-3">
-        <div class="card">
-            <h2>Biografia</h2>
-            <div class="bio-content">
-              <p class="card-colaborador-content">{{ currentColaborador.miniBio}}</p>
             </div>
         </div>
-        <div class="card">
-            <h2>Metas estabelecidas</h2>
-            <p class="card-colaborador-content">{{currentMetasColaborador?.meta?.metas}}</p>
+        <div class="col-md-5">
+            <div class="search">
+                <div class="filters-display">
+                    <div class="filter">
+                      <div ngbDropdown>
+                        <button type="button" id="dropdownEmpresa" ngbDropdownToggle>
+                          {{ currentTimes.nomeTime ? currentTimes.nomeTime : 'Times'}}
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1" >
+                          <button ngbDropdownItem (click)="getAllTimesAndDevs();">
+                            Todos
+                          </button>
+                          <button ngbDropdownItem *ngFor="let time of time"
+                          (click)="selecionarTime(time.id)">
+                            {{time.nomeTime}}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="filter">
+                      <div ngbDropdown>
+                        <button type="button" id="dropdownBasic1" ngbDropdownToggle >
+                          {{ currentColaborador.nome ? currentColaborador.nome : 'Devs'}}
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                          <button ngbDropdownItem *ngFor="let colaborador of colaboradores"
+                          (click)="selecionarColaborador(colaborador.id)">
+                            <a *ngIf="colaborador.id" [routerLinkActive]="['active']"
+                              [routerLinkActiveOptions]="{exact:true}">{{colaborador.nome}}</a>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                <app-search-bar (TextoPesquisa)="handleSearch($event)"></app-search-bar>
+            </div>
+       </div>
+    </div>
+  </header>
+  <main>
+    <app-sidebar-menu></app-sidebar-menu>
+    <div class="dev-dashboard">
+    <div class="row">
+        <div class="col-md-9">
+            <section>
+                <div class="table-responsive">
+                    <table class="competencies">
+                        <thead>
+                            <tr>
+                                <th>Competências</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="legend">
+                                <td>
+                                    <div class="informations">
+                                        <div class="advancement">
+                                            <div class="color"></div>
+                                            <span>Progresso</span>
+                                        </div>
+                                        <div class="goal">
+                                            <div class="color"></div>
+                                            <span>Meta</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="levels">
+                                        <span>0</span>
+                                        <span>2</span>
+                                        <span>4</span>
+                                        <span>6</span>
+                                        <span>8</span>
+                                        <span>10</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <ng-container *ngIf="searchResultsCompetencias.length===0">
+                            <tr *ngFor="let competencia of competencias" >
+                                <td>{{competencia.competencia.nome}}</td>
+                                <td>
+                                    <div class="progress-bar-content">
+                                        <div class="progress-bar">
+                                            <div class="progress-goal"
+                                                [ngStyle]="{'width': (competencia.progresso * 10).toString() + '%'}">
+                                                <div class="goal-value" style="left: 96.5%">
+                                                    <span>{{competencia.meta}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            </ng-container>
+                            <ng-container *ngIf="searchResultsCompetencias.length>0">
+                            <tr
+                             *ngFor="let competencia of searchResultsCompetencias">
+                                <td>{{competencia.competencia.nome}}</td>
+                                <td>
+                                    <div class="progress-bar-content">
+                                        <div class="progress-bar">
+                                            <div class="progress-goal"
+                                                [ngStyle]="{'width': (competencia.progresso * 10).toString() + '%'}">
+                                                <div class="goal-value" style="left: 96.5%">
+                                                    <span>{{competencia.meta}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
         </div>
-        <div class="card">
-            <h2>Pull Requests<br><span>(do github)</span></h2>
+      <div class="col-md-3">
+          <div class="card">
+              <h2>Biografia</h2>
+              <div class="bio-content">
+                <p class="card-colaborador-content">{{ currentColaborador.miniBio}}</p>
+              </div>
+          </div>
+          <div class="card">
+              <h2>Metas estabelecidas</h2>
+              <p class="card-colaborador-content">{{currentMetasColaborador?.meta?.metas}}</p>
+          </div>
+          <div class="card">
+              <h2>Pull Requests<br><span>(do github)</span></h2>
+              <div class="pr-count">
+                <p><b>{{currentPrCount?.count}}</b></p>
+              </div>
+          </div>
+          <div class="card">
+            <h2>Indice de Sobrevivência do Dev</h2>
             <div class="pr-count">
-              <p><b>{{currentPrCount?.count}}</b></p>
+              <p><b>5</b></p>
             </div>
-        </div>
-        <div class="card">
-          <h2>Indice de Sobrevivência do Dev</h2>
-          <div class="pr-count">
-            <p><b>5</b></p>
           </div>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <section>
+                <div class="content">
+                    <div class="table-responsive">
+                        <table class="courses">
+                            <thead>
+                                <tr>
+                                    <th>Ações necessárias para concluir as metas</th>
+                                    <th>Progresso</th>
+                                    <th>Iniciado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr></tr>
+                                <ng-container *ngIf="searchResultsAcoes.length===0">
+                                <tr *ngFor="let acao of acoes">
+                                    <td>
+                                        <div class="discipline">
+                                            <!---<div class="method">
+                                                <img src="./assets/images/tv.png" alt="tv">
+                                                <b>Online</b>
+                                            </div>-->
+                                            <span>{{acao.acao.nome}}</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="progress-bar">
+                                            <div class="progress-goal"
+                                                [ngStyle]="{'width': (acao.progresso).toString() + '%'}">
+                                                <span>{{acao.progresso}}%</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </ng-container>
+                            <ng-container *ngIf="searchResultsAcoes.length>0">
+                                <tr *ngFor="let acao of searchResultsAcoes">
+                                    <td>
+                                        <div class="discipline">
+                                            <!---<div class="method">
+                                                <img src="./assets/images/tv.png" alt="tv">
+                                                <b>Online</b>
+                                            </div>-->
+                                            <span>{{acao.acao.nome}}</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="progress-bar">
+                                            <div class="progress-goal"
+                                                [ngStyle]="{'width': (acao.progresso).toString() + '%'}">
+                                                <span>{{acao.progresso}}%</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </ng-container>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
         </div>
     </div>
+    <section class="graphic">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="image">
+                        <img src="./assets/images/grafico.png" alt="gráfico" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
   </div>
-  <div class="row">
-      <div class="col-md-12">
-          <section>
-              <div class="content">
-                  <div class="table-responsive">
-                      <table class="courses">
-                          <thead>
-                              <tr>
-                                  <th>Ações necessárias para concluir as metas</th>
-                                  <th>Progresso</th>
-                                  <th>Iniciado</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              <tr></tr>
-                              <ng-container *ngIf="searchResultsAcoes.length===0">
-                              <tr *ngFor="let acao of acoes">
-                                  <td>
-                                      <div class="discipline">
-                                          <!---<div class="method">
-                                              <img src="./assets/images/tv.png" alt="tv">
-                                              <b>Online</b>
-                                          </div>-->
-                                          <span>{{acao.acao.nome}}</span>
-                                      </div>
-                                  </td>
-                                  <td>
-                                      <div class="progress-bar">
-                                          <div class="progress-goal"
-                                              [ngStyle]="{'width': (acao.progresso).toString() + '%'}">
-                                              <span>{{acao.progresso}}%</span>
-                                          </div>
-                                      </div>
-                                  </td>
-                                  <td></td>
-                              </tr>
-                          </ng-container>
-                          <ng-container *ngIf="searchResultsAcoes.length>0">
-                              <tr *ngFor="let acao of searchResultsAcoes">
-                                  <td>
-                                      <div class="discipline">
-                                          <!---<div class="method">
-                                              <img src="./assets/images/tv.png" alt="tv">
-                                              <b>Online</b>
-                                          </div>-->
-                                          <span>{{acao.acao.nome}}</span>
-                                      </div>
-                                  </td>
-                                  <td>
-                                      <div class="progress-bar">
-                                          <div class="progress-goal"
-                                              [ngStyle]="{'width': (acao.progresso).toString() + '%'}">
-                                              <span>{{acao.progresso}}%</span>
-                                          </div>
-                                      </div>
-                                  </td>
-                                  <td></td>
-                              </tr>
-                          </ng-container>
-                          </tbody>
-                      </table>
-                  </div>
-              </div>
-          </section>
-      </div>
-  </div>
-  <section class="graphic">
-      <div class="container-fluid">
-          <div class="row">
-              <div class="col-md-12">
-                  <div class="image">
-                      <img src="./assets/images/grafico.png" alt="gráfico" class="img-fluid">
-                  </div>
-              </div>
-          </div>
-      </div>
-  </section>
-</div>
-</main>
-
+</main>  
