@@ -1,5 +1,7 @@
 package com.br.agilize.dash.service.dashboardService;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,10 +44,10 @@ public class MaturidadeService extends ServiceCrudBase<MaturidadeDto> {
         MaturidadeEntity maturidade = this.mapper.dtoToModel(payload);
            
         //Multiplicando valores especificos por 100 antes de salvar
-        maturidade.setLeadTime(multiplicarPor100(maturidade.getLeadTime()));
-        maturidade.setFrequencyDeployment(multiplicarPor100(maturidade.getFrequencyDeployment()));
-        maturidade.setChangeFailureRate(multiplicarPor100(maturidade.getChangeFailureRate()));
-        maturidade.setTimeToRecovery(multiplicarPor100(maturidade.getTimeToRecovery()));
+        maturidade.setLeadTime(multiplicarPor100(calcularMetrica(maturidade.getLeadTime(), maturidade.getLeadTimeEsperado())));
+        maturidade.setFrequencyDeployment(multiplicarPor100(calcularMetrica(maturidade.getFrequencyDeployment(), maturidade.getFrequencyDeploymentEsperado())));
+        maturidade.setChangeFailureRate(multiplicarPor100(calcularMetrica(maturidade.getChangeFailureRate(), maturidade.getChangeFailureRateEsperado())));
+        maturidade.setTimeToRecovery(multiplicarPor100(calcularMetrica(maturidade.getTimeToRecovery(), maturidade.getTimeToRecoveryEsperado())));
         maturidade.setMediaDeJornada(multiplicarPor100(maturidade.getMediaDeJornada()));
         maturidade.setSaude(multiplicarPor100(maturidade.getSaude()));
         maturidade.setMetricas4(multiplicarPor100(maturidade.getMetricas4()));
@@ -73,6 +75,17 @@ public class MaturidadeService extends ServiceCrudBase<MaturidadeDto> {
         }
         return null;
        
+    }
+
+    private Double calcularMetrica (Double valor, Double valorEsperado){
+      Double ratio = valor / valorEsperado; 
+        if (ratio > 1.0) {
+            ratio = 1.0;
+        }
+         BigDecimal bd = new BigDecimal(Double.toString(ratio / 4));
+    bd = bd.setScale(1, RoundingMode.HALF_UP);
+    return bd.doubleValue();
+    
     }
     
 

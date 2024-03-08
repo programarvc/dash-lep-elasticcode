@@ -28,15 +28,27 @@ public class MaturidadeEntity {
     @Column(name = "lead_time")
     private Double leadTime;
 
+    @Column(name = "lead_time_esperado")
+    private Double leadTimeEsperado;
+
     @Column(name = "frequency_deployment")
     private Double frequencyDeployment;
+
+    @Column(name = "frequency_deployment_esperado")
+    private Double frequencyDeploymentEsperado;
 
     @Column(name = "change_failurerate")
     private Double changeFailureRate;
 
+    @Column(name = "change_failurerate_esperado")
+    private Double changeFailureRateEsperado;
+
     @Column(name = "time_torecovery")
     private Double timeToRecovery;
 
+    @Column(name = "time_torecovery_esperado")
+    private Double timeToRecoveryEsperado;
+    
     @Column(name = "media_de_jornada")
     private Double mediaDeJornada;
 

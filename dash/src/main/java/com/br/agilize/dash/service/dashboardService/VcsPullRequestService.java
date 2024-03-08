@@ -113,7 +113,7 @@ public class VcsPullRequestService implements CommandLineRunner {
                 prCountRepository.save(prCountMapper.dtoToModel(prCountDto));
 
                 VcsPullRequestEntity prData = metaBaseMapper.dtoToModel(prDataDto);
-
+                if(prData.getMergedAt() != null && prData.getAuthor() != null && prData.getTitle() != null) { 
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'+00:00'");
                 LocalDateTime dateTime = LocalDateTime.parse(prData.getMergedAt(), formatter);
 
@@ -124,6 +124,7 @@ public class VcsPullRequestService implements CommandLineRunner {
                 if (!existingPrData.isPresent()) {
                     metaBaseRepository.save(prData);
                 }
+            }
             }
         } catch (JsonProcessingException e) {
             e.printStackTrace();
