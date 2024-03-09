@@ -9,7 +9,8 @@ import {
           MetasColaborador,
           MetasOneAOne,
           AllLatestMetaByColaboradorId,
-          PrCount
+          PrCount,
+          IndiceDeSobrevivenciaDev
          } from 'src/app/types/time-types';
 import { TimeService } from 'src/services/time/time.service';
 import {  Habilidade,
@@ -130,6 +131,35 @@ export class TimeComponent implements OnInit {
       habilidades: [],
     }
   };
+
+  public  currentValorIndiceDeSobrevivencia: IndiceDeSobrevivenciaDev = {
+    id: 0,
+    timeColaborador: {
+      id: 0,
+      time: {
+        id: 0,
+        nomeTime: '',
+        esteira: {
+          id: 0,
+          nome: '',
+          tipo: '' as TiposEnum,
+          empresa: {
+            id: 0,
+            nome: '',
+          },
+        },
+      },
+      colaborador: {
+        id: 0,
+        nome: '',
+        email: '',
+        github: '',
+        miniBio: '',
+        habilidades: [],
+      },
+    },
+    valorIndice: 0
+  }
   public prCount: PrCount[] = [];
   public metasOneAOne: MetasOneAOne[] = [];
   public allLatestMetaByColaboradorId: AllLatestMetaByColaboradorId[] = []; 
@@ -170,6 +200,7 @@ export class TimeComponent implements OnInit {
       const colaboradorId = params.get('colaboradorId');
       if (colaboradorId) {
         this.getTimesAcoesHabilidades(parseInt(colaboradorId));
+        
       }
     });
     if (this.searchResultsCompetencias.length === 0) {
@@ -207,6 +238,13 @@ getColaboradorEsteiraId(esteiraId: number) {
     this.timeService.getTimeAndColaboradorByEsteiraId(esteiraId).subscribe((response) => {
       this.timesColaborador = response;
 
+    });
+  }
+  
+  getValorIndicePorIdColaborador(colaboradorId: number){
+    this.timeService.getValorIndicePorIdColaborador(colaboradorId).subscribe((response) => {
+      this.currentValorIndiceDeSobrevivencia = response;
+      console.log(this.currentValorIndiceDeSobrevivencia);
     });
   }
 
@@ -263,8 +301,8 @@ getColaboradorEsteiraId(esteiraId: number) {
       this.getLatestMetaByColaboradorId(colaborador.id);
       this.getAllLatestMetaByColaboradorId(colaborador.id);
       this.getPrCountByColaboradorId(colaborador.id);
+      this.getValorIndicePorIdColaborador(colaboradorId);
     }
-
   }
 
   /*public async setCurrentMetasColaborador (id: number) {
@@ -328,8 +366,6 @@ getAllTimesAndDevs() {
   this.getTimesByEsteira(this.currentEsteira.id);
   this.getColaboradoresByEsteira(this.currentEsteira.id);
   this.currentTimes.nomeTime = 'Todos';
-
-
 }
 
 getAllLatestMetaByColaboradorId(id: number): void {

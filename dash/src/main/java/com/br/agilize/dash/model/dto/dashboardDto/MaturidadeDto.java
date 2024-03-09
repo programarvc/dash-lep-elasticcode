@@ -17,11 +17,19 @@ public class MaturidadeDto {
 
     private Double leadTime;
 
+    private Double leadTimeEsperado;
+
     private Double FrequencyDeployment;
+
+    private Double frequencyDeploymentEsperado;
 
     private Double ChangeFailureRate;
 
+    private Double changeFailureRateEsperado;
+
     private Double timeToRecovery;
+
+    private Double timeToRecoveryEsperado;
 
     private Double mediaDeJornada;
 

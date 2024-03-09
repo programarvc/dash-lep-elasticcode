@@ -120,6 +120,14 @@ export class TimeService {
       .pipe(catchError(this.handleError<any>("getPrCountByColaboradorId")));
   }
 
+  getValorIndicePorIdColaborador(colaboradorId: number): Observable<any> {
+    const url: string = `${environment.api}/indiceDeSobrevivencia/colaborador/${colaboradorId}`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>("getValorIndicePorIdColaborador")));
+
+  }
+
   setCurrentMetasColaborador(metas: MetasColaborador) {
     this.currentMetasColaborador = metas;
   }
