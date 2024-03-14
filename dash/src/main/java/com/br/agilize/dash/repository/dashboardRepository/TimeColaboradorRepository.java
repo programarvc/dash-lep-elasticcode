@@ -40,5 +40,5 @@ List<TimeColaboradorEntity> findTimeAndColaboradorByEsteiraId(@Param("esteiraId"
 List<TimeEntity> findTimesAndEsteiraByColaboradorId(@Param("colaboradorId") Long colaboradorId);
 
 @Query("SELECT t FROM TimeColaboradorEntity t WHERE t.colaborador.github = :github")
-TimeColaboradorEntity findByColaboradorGithub(@Param("github") String github);
+List<TimeColaboradorEntity> findByColaboradorGithub(@Param("github") String github);
 }

@@ -111,20 +111,22 @@ public class VcsPullRequestService implements CommandLineRunner {
                     authorPrCount.put(authorName, authorPrCount.getOrDefault(authorName, 0) + 1);
 
                     // Cria ou atualiza um PrCountDto para o autor
-                    TimeColaboradorEntity timeColaborador = timeColaboradorRepository.findByColaboradorGithub(authorName);
-                    if (timeColaborador != null) {
-                        PrCountEntity prCountEntity = prCountRepository.findByTimeColaboradorId(timeColaborador.getId());
-                        PrCountDto prCountDto;
-                        if (prCountEntity == null) {
-                            prCountDto = new PrCountDto();
-                            prCountDto.setTimeColaborador(timeColaboradorMapper.modelToDTO(timeColaborador));
-                            prCountDto.setCount(authorPrCount.get(authorName));
-                        } else {
-                            prCountDto = prCountMapper.modelToDTO(prCountEntity);
-                            prCountDto.setCount(authorPrCount.get(authorName));
+                    List<TimeColaboradorEntity> timeColaboradores = timeColaboradorRepository.findByColaboradorGithub(authorName);
+                    for (TimeColaboradorEntity timeColaborador : timeColaboradores) {
+                        List<PrCountEntity> prCountEntities = prCountRepository.findByTimeColaboradorId(timeColaborador.getId());
+                        for (PrCountEntity prCountEntity : prCountEntities) {
+                            PrCountDto prCountDto;
+                            if (prCountEntity == null) {
+                                prCountDto = new PrCountDto();
+                                prCountDto.setTimeColaborador(timeColaboradorMapper.modelToDTO(timeColaborador));
+                                prCountDto.setCount(authorPrCount.get(authorName));
+                            } else {
+                                prCountDto = prCountMapper.modelToDTO(prCountEntity);
+                                prCountDto.setCount(authorPrCount.get(authorName));
+                            }
+                            // Salva o PrCountDto no banco de dados
+                            prCountRepository.save(prCountMapper.dtoToModel(prCountDto));
                         }
-                        // Salva o PrCountDto no banco de dados
-                        prCountRepository.save(prCountMapper.dtoToModel(prCountDto));
                     }
 
                     VcsPullRequestEntity prData = metaBaseMapper.dtoToModel(prDataDto);
@@ -147,13 +149,18 @@ public class VcsPullRequestService implements CommandLineRunner {
         }
     }
         @Transactional
-        public PrCountDto getPrCountByColaboradorId(Long colaboradorId) {
-            PrCountEntity prCountEntity = this.prCountRepository.findByColaboradorId(colaboradorId);
-            if (prCountEntity == null) {
-                PrCountDto prCountDto = new PrCountDto();
-                prCountDto.setCount(0);
-                return prCountDto;
+        public List<PrCountDto> getPrCountByColaboradorId(Long colaboradorId) {
+            List<PrCountEntity> prCountEntities = this.prCountRepository.findByColaboradorId(colaboradorId);
+            List<PrCountDto> prCountDtos = new ArrayList<>();
+            for (PrCountEntity prCountEntity : prCountEntities) {
+                if (prCountEntity == null) {
+                    PrCountDto prCountDto = new PrCountDto();
+                    prCountDto.setCount(0);
+                    prCountDtos.add(prCountDto);
+                } else {
+                    prCountDtos.add(prCountMapper.modelToDTO(prCountEntity));
+                }
             }
-            return prCountMapper.modelToDTO(prCountEntity);
+            return prCountDtos;
         }
 }

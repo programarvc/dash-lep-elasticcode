@@ -1,5 +1,7 @@
 package com.br.agilize.dash.controller.dashboardController;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,8 +22,8 @@ public class VcsPullRequestController {
     VcsPullRequestService service;
 
     @GetMapping("/colaborador/{colaboradorId}")
-    public ResponseEntity<PrCountDto> getPrCountByColaboradorId(@PathVariable Long colaboradorId) {
-        PrCountDto prCountDto = service.getPrCountByColaboradorId(colaboradorId);
+    public ResponseEntity<List<PrCountDto>> getPrCountByColaboradorId(@PathVariable Long colaboradorId) {
+        List<PrCountDto> prCountDto = service.getPrCountByColaboradorId(colaboradorId);
         return ResponseEntity.ok(prCountDto);
     }
 
