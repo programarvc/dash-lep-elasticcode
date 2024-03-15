@@ -14,7 +14,15 @@ import com.br.agilize.dash.model.entity.dashboardEntity.PrCountEntity;
 @Repository
 public interface PrCountRepository extends JpaRepository<PrCountEntity, Long> {
     
-     @Query("SELECT p FROM PrCountEntity p WHERE p.timeColaborador.colaborador.id = :colaboradorId")
+    /*  @Query("SELECT p FROM PrCountEntity p WHERE p.timeColaborador.colaborador.id = :colaboradorId")
+    PrCountEntity findByColaboradorId(@Param("colaboradorId") Long colaboradorId); */
+
+    @Query(value = "SELECT pr.* " +
+                   "FROM pr_count pr " +
+                   "INNER JOIN timecolaboradorentity tc ON pr.time_colaborador_id = tc.id " +
+                   "INNER JOIN colaboradorentity c ON tc.colaborador_id = c.id " +
+                   "INNER JOIN timeentity t ON tc.time_id = t.id " +
+                   "WHERE c.id = :colaboradorId", nativeQuery = true)
     PrCountEntity findByColaboradorId(@Param("colaboradorId") Long colaboradorId);
 
     @Query("SELECT p FROM PrCountEntity p WHERE p.timeColaborador.id = :timeColaboradorId")

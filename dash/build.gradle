@@ -39,6 +39,7 @@ dependencies {
 	implementation 'com.graphql-java:graphql-java:14.0'
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
 	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.12.3'
+	implementation 'org.springframework.boot:spring-boot-starter-jersey'
 	
 
 	compileOnly 'org.projectlombok:lombok'
