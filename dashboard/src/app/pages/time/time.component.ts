@@ -121,7 +121,6 @@ export class TimeComponent implements OnInit {
 
   public currentPrCount: PrCount = { 
     id: 0,
-    count: 0,
     timeColaborador: {
       id: 0,
       time: {
@@ -145,8 +144,8 @@ export class TimeComponent implements OnInit {
         miniBio: '',
         habilidades: [],
       },
-    }
-  
+    },
+   count: 0
   };
 
   public  currentValorIndiceDeSobrevivencia: IndiceDeSobrevivenciaDev = {
@@ -305,6 +304,8 @@ getColaboradorEsteiraId(esteiraId: number) {
     });
   }
 
+  
+
   public async getTimesAcoesHabilidades(colaboradorId: number) {
     const colaborador = this.colaboradores.find(
       (colaborador) => colaborador.id === colaboradorId
@@ -318,7 +319,7 @@ getColaboradorEsteiraId(esteiraId: number) {
       this.getLatestMetaByColaboradorId(colaborador.id);
       this.getAllLatestMetaByColaboradorId(colaborador.id);
       this.getPrCountByColaboradorId(colaborador.id);
-      this.getValorIndicePorIdColaborador(colaboradorId);
+      this.getValorIndicePorIdColaborador(colaborador.id);
     }
   }
 
