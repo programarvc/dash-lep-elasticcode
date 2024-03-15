@@ -113,22 +113,20 @@ public class VcsPullRequestService implements CommandLineRunner {
                     // Cria ou atualiza um PrCountDto para o autor
                     List<TimeColaboradorEntity> timeColaboradores = timeColaboradorRepository.findByColaboradorGithub(authorName);
                     for (TimeColaboradorEntity timeColaborador : timeColaboradores) {
+                        PrCountDto prCountDto = new PrCountDto();
+                        prCountDto.setTimeColaborador(timeColaboradorMapper.modelToDTO(timeColaborador));
+                        prCountDto.setCount(authorPrCount.get(authorName));
+                
                         List<PrCountEntity> prCountEntities = prCountRepository.findByTimeColaboradorId(timeColaborador.getId());
                         for (PrCountEntity prCountEntity : prCountEntities) {
-                            PrCountDto prCountDto;
-                            if (prCountEntity == null) {
-                                prCountDto = new PrCountDto();
-                                prCountDto.setTimeColaborador(timeColaboradorMapper.modelToDTO(timeColaborador));
-                                prCountDto.setCount(authorPrCount.get(authorName));
-                            } else {
+                            if (prCountEntity != null) {
                                 prCountDto = prCountMapper.modelToDTO(prCountEntity);
                                 prCountDto.setCount(authorPrCount.get(authorName));
                             }
-                            // Salva o PrCountDto no banco de dados
-                            prCountRepository.save(prCountMapper.dtoToModel(prCountDto));
                         }
+                        // Salva o PrCountDto no banco de dados
+                        prCountRepository.save(prCountMapper.dtoToModel(prCountDto));
                     }
-
                     VcsPullRequestEntity prData = metaBaseMapper.dtoToModel(prDataDto);
 
                     if(prData.getMergedAt() != null && prData.getAuthor() != null && prData.getTitle() != null) {
