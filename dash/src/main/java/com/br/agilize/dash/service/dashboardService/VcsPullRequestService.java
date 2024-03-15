@@ -147,18 +147,14 @@ public class VcsPullRequestService implements CommandLineRunner {
         }
     }
         @Transactional
-        public List<PrCountDto> getPrCountByColaboradorId(Long colaboradorId) {
-            List<PrCountEntity> prCountEntities = this.prCountRepository.findByColaboradorId(colaboradorId);
-            List<PrCountDto> prCountDtos = new ArrayList<>();
-            for (PrCountEntity prCountEntity : prCountEntities) {
-                if (prCountEntity == null) {
-                    PrCountDto prCountDto = new PrCountDto();
-                    prCountDto.setCount(0);
-                    prCountDtos.add(prCountDto);
-                } else {
-                    prCountDtos.add(prCountMapper.modelToDTO(prCountEntity));
-                }
+        public PrCountDto getPrCountByColaboradorId(Long colaboradorId) {
+            PrCountEntity prCountEntity = this.prCountRepository.findByColaboradorId(colaboradorId);
+            if (prCountEntity == null) {
+                PrCountDto prCountDto = new PrCountDto();
+                prCountDto.setCount(0);
+                return prCountDto;
+            } else {
+                return prCountMapper.modelToDTO(prCountEntity);
             }
-            return prCountDtos;
         }
 }

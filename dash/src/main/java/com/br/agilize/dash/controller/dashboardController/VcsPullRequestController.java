@@ -22,8 +22,8 @@ public class VcsPullRequestController {
     VcsPullRequestService service;
 
     @GetMapping("/colaborador/{colaboradorId}")
-    public ResponseEntity<List<PrCountDto>> getPrCountByColaboradorId(@PathVariable Long colaboradorId) {
-        List<PrCountDto> prCountDto = service.getPrCountByColaboradorId(colaboradorId);
+    public ResponseEntity <PrCountDto> getPrCountByColaboradorId(@PathVariable Long colaboradorId) {
+        PrCountDto prCountDto = service.getPrCountByColaboradorId(colaboradorId);
         return ResponseEntity.ok(prCountDto);
     }
 
