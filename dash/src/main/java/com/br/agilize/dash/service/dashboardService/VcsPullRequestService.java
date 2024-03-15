@@ -19,14 +19,14 @@ import com.br.agilize.dash.mapper.dashboardMapper.VcsPullRequestMapper;
 
 import com.br.agilize.dash.model.dto.dashboardDto.PrCountDto;
 import com.br.agilize.dash.model.dto.dashboardDto.VcsPullRequestDto;
-
+import com.br.agilize.dash.model.entity.ColaboradorEntity;
 import com.br.agilize.dash.model.entity.dashboardEntity.PrCountEntity;
 import com.br.agilize.dash.model.entity.dashboardEntity.TimeColaboradorEntity;
 import com.br.agilize.dash.model.entity.dashboardEntity.VcsPullRequestEntity;
 import com.br.agilize.dash.model.response.VcsPullRequestResponse;
-
+import com.br.agilize.dash.repository.ColaboradorRepository;
 import com.br.agilize.dash.repository.dashboardRepository.PrCountRepository;
-import com.br.agilize.dash.repository.dashboardRepository.TimeColaboradorRepository;
+
 import com.br.agilize.dash.repository.dashboardRepository.VcsPullRequestRepository;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -59,10 +59,10 @@ public class VcsPullRequestService implements CommandLineRunner {
     private PrCountMapper prCountMapper;
 
     @Autowired
-    private TimeColaboradorRepository timeColaboradorRepository;
+    private ColaboradorRepository colaboradorRepository;
 
     @Autowired
-    private TimeColaboradorMapper timeColaboradorMapper;
+    private ColaboradorMapper colaboradorMapper;
 
    
 
@@ -102,45 +102,47 @@ public class VcsPullRequestService implements CommandLineRunner {
 
                 Map<String, Integer> authorPrCount = new HashMap<>();
 
-                // Itere sobre a lista de DTOs
-                for (VcsPullRequestDto prDataDto : prDataDtos) {
-                    String authorName = prDataDto.getAuthor().split("\\|")[1];
-                    prDataDto.setAuthor(authorName);
+                            // Itere sobre a lista de DTOs
+            for (VcsPullRequestDto prDataDto : prDataDtos) {
+                String authorName = prDataDto.getAuthor().split("\\|")[1];
+                prDataDto.setAuthor(authorName);
 
-                    // Incrementa a contagem para o autor no mapa
-                    authorPrCount.put(authorName, authorPrCount.getOrDefault(authorName, 0) + 1);
+                // Incrementa a contagem para o autor no mapa
+                authorPrCount.put(authorName, authorPrCount.getOrDefault(authorName, 0) + 1);
 
-                    // Cria ou atualiza um PrCountDto para o autor
-                    List<TimeColaboradorEntity> timeColaboradores = timeColaboradorRepository.findByColaboradorGithub(authorName);
-                    for (TimeColaboradorEntity timeColaborador : timeColaboradores) {
-                        PrCountDto prCountDto = new PrCountDto();
-                        prCountDto.setTimeColaborador(timeColaboradorMapper.modelToDTO(timeColaborador));
-                        prCountDto.setCount(authorPrCount.get(authorName));
-                
-                        List<PrCountEntity> prCountEntities = prCountRepository.findByTimeColaboradorId(timeColaborador.getId());
-                        for (PrCountEntity prCountEntity : prCountEntities) {
-                            if (prCountEntity != null) {
-                                prCountDto = prCountMapper.modelToDTO(prCountEntity);
-                                prCountDto.setCount(authorPrCount.get(authorName));
-                            }
-                        }
-                        // Salva o PrCountDto no banco de dados
-                        prCountRepository.save(prCountMapper.dtoToModel(prCountDto));
+                // Cria ou atualiza um PrCountDto para o autor
+                ColaboradorEntity colaborador = colaboradorRepository.findByGithub(authorName);
+                if (colaborador != null && colaborador.getId() != null) {
+                    PrCountEntity prCountEntity = prCountRepository.findByColaborador(colaborador);
+                    PrCountDto prCountDto;
+                    if (prCountEntity == null) {
+                        prCountDto = new PrCountDto();
+                        prCountDto.setColaborador(colaboradorMapper.modelToDTO(colaborador));
+                    } else {
+                        prCountDto = prCountMapper.modelToDTO(prCountEntity);
                     }
-                    VcsPullRequestEntity prData = metaBaseMapper.dtoToModel(prDataDto);
+                    prCountDto.setCount(authorPrCount.get(authorName));
 
-                    if(prData.getMergedAt() != null && prData.getAuthor() != null && prData.getTitle() != null) {
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'+00:00'");
-                        LocalDateTime dateTime = LocalDateTime.parse(prData.getMergedAt(), formatter);
-                        // Verifica se já existe um registro com o mesmo author, title e mergedAt
-                        Optional<VcsPullRequestEntity> existingPrData = metaBaseRepository.findByAuthorAndTitleAndMergedAt(prData.getAuthor(), prData.getTitle(), prData.getMergedAt());
+                    // Salva o PrCountDto no banco de dados
+                    prCountRepository.save(prCountMapper.dtoToModel(prCountDto));
+                }
 
-                        // Se o registro não existir, salva no banco de dados
-                        if (!existingPrData.isPresent()) {
-                            metaBaseRepository.save(prData);
-                        }
+                VcsPullRequestEntity prData = metaBaseMapper.dtoToModel(prDataDto);
+
+
+                if(prData.getMergedAt() != null && prData.getAuthor() != null && prData.getTitle() != null) {
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'+00:00'");
+                    LocalDateTime dateTime = LocalDateTime.parse(prData.getMergedAt(), formatter);
+                 // Verifica se já existe um registro com o mesmo author, title e mergedAt
+                    Optional<VcsPullRequestEntity> existingPrData = metaBaseRepository.findByAuthorAndTitleAndMergedAt(prData.getAuthor(), prData.getTitle(), prData.getMergedAt());
+
+                    // Se o registro não existir, salva no banco de dados
+                    if (!existingPrData.isPresent()) {
+                        metaBaseRepository.save(prData);
                     }
                 }
+            }
+
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
@@ -154,7 +156,7 @@ public class VcsPullRequestService implements CommandLineRunner {
                 prCountDto.setCount(0);
                 return prCountDto;
             } else {
-                return prCountMapper.modelToDTO(prCountEntity);
+                return prCountMapper.modelToDTO(prCountEntity); 
             }
         }
 }

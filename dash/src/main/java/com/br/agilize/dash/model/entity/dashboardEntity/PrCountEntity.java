@@ -1,5 +1,7 @@
 package com.br.agilize.dash.model.entity.dashboardEntity;
 
+import com.br.agilize.dash.model.entity.ColaboradorEntity;
+
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
@@ -14,9 +16,8 @@ public class  PrCountEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "time_colaborador_id")
-    private TimeColaboradorEntity timeColaborador;
+    @OneToOne
+    private ColaboradorEntity colaborador;
 
     private Integer count;
 
