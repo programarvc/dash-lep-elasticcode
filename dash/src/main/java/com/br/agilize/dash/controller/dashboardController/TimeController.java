@@ -78,5 +78,11 @@ public ResponseEntity<List<TimeColaboradorDto>> getTimeAndColaboradorByEsteiraId
         return ResponseEntity.ok(timeColaborador);
     }
 
+    @GetMapping("/colaborador/{colaboradorId}")
+    public ResponseEntity<List<TimeColaboradorDto>> findTimeColaboradorByColaboradorId(@PathVariable Long colaboradorId) {
+        List<TimeColaboradorDto> timeColaboradores = service.findTimeColaboradorByColaboradorId(colaboradorId);
+        return ResponseEntity.ok(timeColaboradores);
+    }
+
 }
 

@@ -14,17 +14,23 @@ import org.springframework.web.client.RestTemplate;
 import com.amazonaws.lambda.thirdparty.org.json.JSONObject;
 import com.br.agilize.dash.mapper.ColaboradorMapper;
 import com.br.agilize.dash.mapper.dashboardMapper.PrCountMapper;
+import com.br.agilize.dash.mapper.dashboardMapper.TimeColaboradorMapper;
 import com.br.agilize.dash.mapper.dashboardMapper.VcsPullRequestMapper;
+
 import com.br.agilize.dash.model.dto.dashboardDto.PrCountDto;
 import com.br.agilize.dash.model.dto.dashboardDto.VcsPullRequestDto;
 import com.br.agilize.dash.model.entity.ColaboradorEntity;
 import com.br.agilize.dash.model.entity.dashboardEntity.PrCountEntity;
+import com.br.agilize.dash.model.entity.dashboardEntity.TimeColaboradorEntity;
 import com.br.agilize.dash.model.entity.dashboardEntity.VcsPullRequestEntity;
 import com.br.agilize.dash.model.response.VcsPullRequestResponse;
 import com.br.agilize.dash.repository.ColaboradorRepository;
 import com.br.agilize.dash.repository.dashboardRepository.PrCountRepository;
+
 import com.br.agilize.dash.repository.dashboardRepository.VcsPullRequestRepository;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -58,7 +64,10 @@ public class VcsPullRequestService implements CommandLineRunner {
     @Autowired
     private ColaboradorMapper colaboradorMapper;
 
+   
 
+
+   
     @Override
     @Transactional
     public void run(String... args) throws Exception {
@@ -68,28 +77,32 @@ public class VcsPullRequestService implements CommandLineRunner {
     public void getPRDataAndSave() {
         RestTemplate restTemplate = new RestTemplate();
 
-        // Endpoint da API REST
-        String restApiUrl = "http://3.22.183.218:8080/api/rest/pullrequest";
+        // Endpoints da API REST
+        List<String> restApiUrls = Arrays.asList(
+            "http://3.22.183.218:8080/api/rest/pullrequest",
+            "http://18.191.190.74:8080/api/rest/pullrequest"
+        );
 
         // Definindo os cabeçalhos
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-Hasura-Admin-Secret", "admin"); // substitua "admin" pelo seu admin secret
 
-        // Enviando a solicitação
-        HttpEntity<String> request = new HttpEntity<>(headers);
-        ResponseEntity<String> response = restTemplate.exchange(restApiUrl, HttpMethod.GET, request, String.class);
+        for (String restApiUrl : restApiUrls) {
+            // Enviando a solicitação
+            HttpEntity<String> request = new HttpEntity<>(headers);
+            ResponseEntity<String> response = restTemplate.exchange(restApiUrl, HttpMethod.GET, request, String.class);
 
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        try {
-            // Altere a desserialização para uma lista de VcsPullRequestResponse
-            VcsPullRequestResponse responseDto = mapper.readValue(response.getBody(), VcsPullRequestResponse.class);
-            List<VcsPullRequestDto> prDataDtos = responseDto.getVcs_PullRequest();
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new JavaTimeModule());
+            mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+            try {
+                // Altere a desserialização para uma lista de VcsPullRequestResponse
+                VcsPullRequestResponse responseDto = mapper.readValue(response.getBody(), VcsPullRequestResponse.class);
+                List<VcsPullRequestDto> prDataDtos = responseDto.getVcs_PullRequest();
 
-            Map<String, Integer> authorPrCount = new HashMap<>();
+                Map<String, Integer> authorPrCount = new HashMap<>();
 
-            // Itere sobre a lista de DTOs
+                            // Itere sobre a lista de DTOs
             for (VcsPullRequestDto prDataDto : prDataDtos) {
                 String authorName = prDataDto.getAuthor().split("\\|")[1];
                 prDataDto.setAuthor(authorName);
@@ -99,18 +112,20 @@ public class VcsPullRequestService implements CommandLineRunner {
 
                 // Cria ou atualiza um PrCountDto para o autor
                 ColaboradorEntity colaborador = colaboradorRepository.findByGithub(authorName);
-                PrCountEntity prCountEntity = prCountRepository.findByColaborador(colaborador);
-                PrCountDto prCountDto;
-                if (prCountEntity == null) {
-                    prCountDto = new PrCountDto();
-                    prCountDto.setColaborador(colaboradorMapper.modelToDTO(colaborador));
-                } else {
-                    prCountDto = prCountMapper.modelToDTO(prCountEntity);
-                }
-                prCountDto.setCount(authorPrCount.get(authorName));
+                if (colaborador != null && colaborador.getId() != null) {
+                    PrCountEntity prCountEntity = prCountRepository.findByColaborador(colaborador);
+                    PrCountDto prCountDto;
+                    if (prCountEntity == null) {
+                        prCountDto = new PrCountDto();
+                        prCountDto.setColaborador(colaboradorMapper.modelToDTO(colaborador));
+                    } else {
+                        prCountDto = prCountMapper.modelToDTO(prCountEntity);
+                    }
+                    prCountDto.setCount(authorPrCount.get(authorName));
 
-                // Salva o PrCountDto no banco de dados
-                prCountRepository.save(prCountMapper.dtoToModel(prCountDto));
+                    // Salva o PrCountDto no banco de dados
+                    prCountRepository.save(prCountMapper.dtoToModel(prCountDto));
+                }
 
                 VcsPullRequestEntity prData = metaBaseMapper.dtoToModel(prDataDto);
 
@@ -127,12 +142,12 @@ public class VcsPullRequestService implements CommandLineRunner {
                     }
                 }
             }
-            
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
+
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
         }
     }
-
         @Transactional
         public PrCountDto getPrCountByColaboradorId(Long colaboradorId) {
             PrCountEntity prCountEntity = this.prCountRepository.findByColaboradorId(colaboradorId);
@@ -140,7 +155,8 @@ public class VcsPullRequestService implements CommandLineRunner {
                 PrCountDto prCountDto = new PrCountDto();
                 prCountDto.setCount(0);
                 return prCountDto;
+            } else {
+                return prCountMapper.modelToDTO(prCountEntity); 
             }
-            return prCountMapper.modelToDTO(prCountEntity);
         }
 }

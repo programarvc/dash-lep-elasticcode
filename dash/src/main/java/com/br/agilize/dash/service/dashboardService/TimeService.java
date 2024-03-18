@@ -135,5 +135,11 @@ public List<ColaboradorDto> findColaboradoresByTimeId(Long timeId) {
     return colaboradores.stream().map(this.colaboradorMapper::modelToDTO).collect(Collectors.toList());
     
 }
+
+public List<TimeColaboradorDto> findTimeColaboradorByColaboradorId(Long colaboradorId) {
+    List<TimeColaboradorEntity> timeColaboradores = this.timeColaboradorRepository.findTimeColaboradorByColaboradorId(colaboradorId);
+    return timeColaboradores.stream().map(this.timeColaboradorMapper::modelToDTO).collect(Collectors.toList());
+    }
+
    
 }
