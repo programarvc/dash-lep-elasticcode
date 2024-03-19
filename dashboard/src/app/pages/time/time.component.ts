@@ -121,31 +121,15 @@ export class TimeComponent implements OnInit {
 
   public currentPrCount: PrCount = { 
     id: 0,
-    timeColaborador: {
+    colaborador: {
       id: 0,
-      time: {
-        id: 0,
-        nomeTime: '',
-        esteira: {
-          id: 0,
-          nome: '',
-          tipo: '' as TiposEnum,
-          empresa: {
-            id: 0,
-            nome: '',
-          },
-        },
-      },
-      colaborador: {
-        id: 0,
-        nome: '',
-        email: '',
-        github: '',
-        miniBio: '',
-        habilidades: [],
-      },
+      nome: '',
+      email: '',
+      github: '',
+      miniBio: '',
+      habilidades: [],
     },
-   count: 0
+    count: 0
   };
 
   public  currentValorIndiceDeSobrevivencia: IndiceDeSobrevivenciaDev = {

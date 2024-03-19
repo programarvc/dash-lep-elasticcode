@@ -69,7 +69,7 @@ export interface Habilidade {
 
     export interface PrCount {
       id: number;
-      timeColaborador: TimeColaborador;
+      colaborador: Colaborador;
       count: number;
     }
 
