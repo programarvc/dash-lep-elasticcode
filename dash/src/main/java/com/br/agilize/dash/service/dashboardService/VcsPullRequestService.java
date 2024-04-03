@@ -1,5 +1,6 @@
 package com.br.agilize.dash.service.dashboardService;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import io.micrometer.observation.Observation;
 import jakarta.persistence.EntityNotFoundException;
 
@@ -77,15 +78,18 @@ public class VcsPullRequestService implements CommandLineRunner {
     public void getPRDataAndSave() {
         RestTemplate restTemplate = new RestTemplate();
 
+        Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
+
         // Endpoints da API REST
         List<String> restApiUrls = Arrays.asList(
-            "http://3.22.183.218:8080/api/rest/pullrequest",
-            "http://18.191.190.74:8080/api/rest/pullrequest"
+            dotenv.get("API_URL_ELASTIC_PR"),
+            dotenv.get("API_URL_NB_PR")
         );
+
 
         // Definindo os cabeçalhos
         HttpHeaders headers = new HttpHeaders();
-        headers.set("X-Hasura-Admin-Secret", "admin"); // substitua "admin" pelo seu admin secret
+        headers.set("X-Hasura-Admin-Secret", dotenv.get("HASURA_ADMIN_SECRET")); // substitua  pelo seu admin secret
 
         for (String restApiUrl : restApiUrls) {
             // Enviando a solicitação
