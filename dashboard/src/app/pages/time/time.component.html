@@ -160,7 +160,19 @@
               <p class="card-colaborador-content">{{currentMetasColaborador?.meta?.metas}}</p>
           </div>
           <div class="card">
-              <h2>Pull Requests<br><span>(do github)</span></h2>
+              <div class="pr-count-header">
+                <h2>Pull Requests<br><span>(do github)</span></h2>
+                <div ngbDropdown>
+                    <button type="button" class="dropdown-pr-toggle" id="dropdownPr" ngbDropdownToggle>
+                        Todos
+                    </button>
+                    <div ngbDropdownMenu aria-labelledby="dropdownPr">
+                        <button ngbDropdownItem>
+                            1 sem
+                        </button>
+                    </div>
+                </div>
+              </div>
               <div class="pr-count">
                 <p><b>{{currentPrCount.count}}</b></p>
               </div>

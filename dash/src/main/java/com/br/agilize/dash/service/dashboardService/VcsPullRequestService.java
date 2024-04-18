@@ -65,10 +65,10 @@ public class VcsPullRequestService implements CommandLineRunner {
     @Autowired
     private ColaboradorMapper colaboradorMapper;
 
-   
 
 
-   
+
+
     @Override
     @Transactional
     public void run(String... args) throws Exception {
@@ -76,14 +76,14 @@ public class VcsPullRequestService implements CommandLineRunner {
     }
 
     public void getPRDataAndSave() {
-        RestTemplate restTemplate = new RestTemplate();
+        /*RestTemplate restTemplate = new RestTemplate();
 
         Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
 
         // Endpoints da API REST
         List<String> restApiUrls = Arrays.asList(
-            dotenv.get("API_URL_ELASTIC_PR"),
-            dotenv.get("API_URL_NB_PR")
+                dotenv.get("API_URL_ELASTIC_PR"),
+                dotenv.get("API_URL_NB_PR")
         );
 
 
@@ -106,61 +106,61 @@ public class VcsPullRequestService implements CommandLineRunner {
 
                 Map<String, Integer> authorPrCount = new HashMap<>();
 
-                            // Itere sobre a lista de DTOs
-            for (VcsPullRequestDto prDataDto : prDataDtos) {
-                String authorName = prDataDto.getAuthor().split("\\|")[1];
-                prDataDto.setAuthor(authorName);
+                // Itere sobre a lista de DTOs
+                for (VcsPullRequestDto prDataDto : prDataDtos) {
+                    String authorName = prDataDto.getAuthor().split("\\|")[1];
+                    prDataDto.setAuthor(authorName);
 
-                // Incrementa a contagem para o autor no mapa
-                authorPrCount.put(authorName, authorPrCount.getOrDefault(authorName, 0) + 1);
+                    // Incrementa a contagem para o autor no mapa
+                    authorPrCount.put(authorName, authorPrCount.getOrDefault(authorName, 0) + 1);
 
-                // Cria ou atualiza um PrCountDto para o autor
-                ColaboradorEntity colaborador = colaboradorRepository.findByGithub(authorName);
-                if (colaborador != null && colaborador.getId() != null) {
-                    PrCountEntity prCountEntity = prCountRepository.findByColaborador(colaborador);
-                    PrCountDto prCountDto;
-                    if (prCountEntity == null) {
-                        prCountDto = new PrCountDto();
-                        prCountDto.setColaborador(colaboradorMapper.modelToDTO(colaborador));
-                    } else {
-                        prCountDto = prCountMapper.modelToDTO(prCountEntity);
+                    // Cria ou atualiza um PrCountDto para o autor
+                    ColaboradorEntity colaborador = colaboradorRepository.findByGithub(authorName);
+                    if (colaborador != null && colaborador.getId() != null) {
+                        PrCountEntity prCountEntity = prCountRepository.findByColaborador(colaborador);
+                        PrCountDto prCountDto;
+                        if (prCountEntity == null) {
+                            prCountDto = new PrCountDto();
+                            prCountDto.setColaborador(colaboradorMapper.modelToDTO(colaborador));
+                        } else {
+                            prCountDto = prCountMapper.modelToDTO(prCountEntity);
+                        }
+                        prCountDto.setCount(authorPrCount.get(authorName));
+
+                        // Salva o PrCountDto no banco de dados
+                        prCountRepository.save(prCountMapper.dtoToModel(prCountDto));
                     }
-                    prCountDto.setCount(authorPrCount.get(authorName));
 
-                    // Salva o PrCountDto no banco de dados
-                    prCountRepository.save(prCountMapper.dtoToModel(prCountDto));
-                }
-
-                VcsPullRequestEntity prData = metaBaseMapper.dtoToModel(prDataDto);
+                    VcsPullRequestEntity prData = metaBaseMapper.dtoToModel(prDataDto);
 
 
-                if(prData.getMergedAt() != null && prData.getAuthor() != null && prData.getTitle() != null) {
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'+00:00'");
-                    LocalDateTime dateTime = LocalDateTime.parse(prData.getMergedAt(), formatter);
-                 // Verifica se já existe um registro com o mesmo author, title e mergedAt
-                    Optional<VcsPullRequestEntity> existingPrData = metaBaseRepository.findByAuthorAndTitleAndMergedAt(prData.getAuthor(), prData.getTitle(), prData.getMergedAt());
+                    if(prData.getMergedAt() != null && prData.getAuthor() != null && prData.getTitle() != null) {
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'+00:00'");
+                        LocalDateTime dateTime = LocalDateTime.parse(prData.getMergedAt(), formatter);
+                        // Verifica se já existe um registro com o mesmo author, title e mergedAt
+                        Optional<VcsPullRequestEntity> existingPrData = metaBaseRepository.findByAuthorAndTitleAndMergedAt(prData.getAuthor(), prData.getTitle(), prData.getMergedAt());
 
-                    // Se o registro não existir, salva no banco de dados
-                    if (!existingPrData.isPresent()) {
-                        metaBaseRepository.save(prData);
+                        // Se o registro não existir, salva no banco de dados
+                        if (!existingPrData.isPresent()) {
+                            metaBaseRepository.save(prData);
+                        }
                     }
                 }
-            }
 
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
+        }*/
+    }
+    @Transactional
+    public PrCountDto getPrCountByColaboradorId(Long colaboradorId) {
+        PrCountEntity prCountEntity = this.prCountRepository.findByColaboradorId(colaboradorId);
+        if (prCountEntity == null) {
+            PrCountDto prCountDto = new PrCountDto();
+            prCountDto.setCount(0);
+            return prCountDto;
+        } else {
+            return prCountMapper.modelToDTO(prCountEntity);
         }
     }
-        @Transactional
-        public PrCountDto getPrCountByColaboradorId(Long colaboradorId) {
-            PrCountEntity prCountEntity = this.prCountRepository.findByColaboradorId(colaboradorId);
-            if (prCountEntity == null) {
-                PrCountDto prCountDto = new PrCountDto();
-                prCountDto.setCount(0);
-                return prCountDto;
-            } else {
-                return prCountMapper.modelToDTO(prCountEntity); 
-            }
-        }
 }
