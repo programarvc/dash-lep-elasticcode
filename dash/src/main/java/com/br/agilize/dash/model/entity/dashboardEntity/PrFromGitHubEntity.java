@@ -1,9 +1,12 @@
 package com.br.agilize.dash.model.entity.dashboardEntity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.List;
 
+// Getters e Setters gerados pela anotação lombok @Data
+@Data
 
 @Entity
 @Table(name = "pr_from_github")
@@ -24,29 +27,4 @@ public class PrFromGitHubEntity {
     @Column(name = "date")
     private List<String> prDates;
 
-    // getters and setters
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public int getCount() {
-        return prCount;
-    }
-
-    public void setCount(int count) {
-        this.prCount = count;
-    }
-
-    public List<String> getDates() {
-        return prDates;
-    }
-
-    public void setDates(List<String> dates) {
-        this.prDates = dates;
-    }
 }

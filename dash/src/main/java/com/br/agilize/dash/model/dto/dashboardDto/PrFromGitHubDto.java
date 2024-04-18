@@ -2,7 +2,6 @@ package com.br.agilize.dash.model.dto.dashboardDto;
 
 
 import lombok.Data;
-
 import java.util.List;
 
 @Data
