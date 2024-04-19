@@ -76,7 +76,8 @@ public class VcsPullRequestService implements CommandLineRunner {
     }
 
     public void getPRDataAndSave() {
-        RestTemplate restTemplate = new RestTemplate();
+ 
+       /*  RestTemplate restTemplate = new RestTemplate();
 
         Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
 
@@ -150,7 +151,7 @@ public class VcsPullRequestService implements CommandLineRunner {
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
-        }
+        }*/
     }
         @Transactional
         public PrCountDto getPrCountByColaboradorId(Long colaboradorId) {
