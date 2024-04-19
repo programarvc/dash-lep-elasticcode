@@ -14,12 +14,12 @@ import software.amazon.awssdk.services.cognitoidentityprovider.model.CognitoIden
 import software.amazon.awssdk.services.cognitoidentityprovider.model.ListUsersRequest;
 import software.amazon.awssdk.services.cognitoidentityprovider.model.ListUsersResponse;
 
-@Component
-public class CognitoUserMigrationService implements CommandLineRunner {
+//@Component
+public class CognitoUserMigrationService /*implements CommandLineRunner */ {
 
      Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
 
-    @Override
+    //@Override
     public void run(String... args) throws Exception{
         String userPoolId = dotenv.get("USER_POOL_ID");
         CognitoIdentityProviderClient cognitoClient = CognitoIdentityProviderClient.builder()
