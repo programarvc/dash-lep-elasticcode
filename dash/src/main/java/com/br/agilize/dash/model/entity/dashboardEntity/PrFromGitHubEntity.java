@@ -9,22 +9,23 @@ import java.util.List;
 @Data
 
 @Entity
-@Table(name = "pr_from_github")
+@Table(name = "githubprsentity")
 public class PrFromGitHubEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "username")
-    private String username;
+    @Column(name = "Autor")
+    private String prAuthor;
 
-    @Column(name = "pr_count")
-    private Integer prCount;
+    @Column(name = "Data de Criação da PR")
+    private String createdAt;
 
-    @ElementCollection
-    @CollectionTable(name = "pr_dates", joinColumns = @JoinColumn(name = "pull_request_id"))
-    @Column(name = "date")
-    private List<String> prDates;
+    @Column(name = "Data de Merge da PR")
+    private String mergedAt;
+
+    @Column(name = "repo_name")
+    private String repoName;
 
 }

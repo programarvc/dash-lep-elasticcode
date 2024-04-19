@@ -44,41 +44,39 @@ public class PrsGitHubApiService  implements CommandLineRunner{
     }
 
     public void getPrCountByUser() {
-        // Buscar todos os ColaboradorEntity
         List<ColaboradorEntity> colaboradores = colaboradorRepository.findAll();
-    
+
         for (ColaboradorEntity colaborador : colaboradores) {
-        // Usar o campo github do ColaboradorEntity como parâmetro
-        String githubUsername = colaborador.getGithub();
-    
-        RestTemplate restTemplate = new RestTemplate();
-        String repoOwner = dotenv.get("REPO_OWNER");
-        String repoName = dotenv.get("REPO_NAME");
-        String url = "https://api.github.com/repos/" + repoOwner + "/" + repoName + "/pulls?state=all&per_page=100";
-    
-        ResponseEntity<List> response = restTemplate.exchange(url, HttpMethod.GET, null, List.class);
-    
-        List<Map<String, Object>> pullRequests = response.getBody();
-    
-        int count = 0;
-        List<String> dates = new ArrayList<>();
-    
-        for(Map<String, Object> pr : pullRequests) {
-            Map<String, String> user = (Map<String, String>) pr.get("user");
-            if(user.get("login").equals(githubUsername)) {
-            count++;
-            dates.add((String) pr.get("created_at"));
+            String githubUsername = colaborador.getGithub();
+
+            RestTemplate restTemplate = new RestTemplate();
+            String repoOwner = dotenv.get("REPO_OWNER");
+            String repoName = dotenv.get("REPO_NAME");
+            String url = "https://api.github.com/repos/" + repoOwner + "/" + repoName + "/pulls?state=all&per_page=100";
+
+            ResponseEntity<List> response = restTemplate.exchange(url, HttpMethod.GET, null, List.class);
+
+            List<Map<String, Object>> pullRequests = response.getBody();
+
+            List<String> dates = new ArrayList<>();
+
+            for(Map<String, Object> pr : pullRequests) {
+                Map<String, String> user = (Map<String, String>) pr.get("user");
+                if(user.get("login").equals(githubUsername)) {
+
+                    PrFromGitHubDto prFromGitHubDto = new PrFromGitHubDto();
+                    prFromGitHubDto.setCreatedAt((String) pr.get("created_at"));
+                    prFromGitHubDto.setMergedAt((String) pr.get("merged_at"));
+                    prFromGitHubDto.setPrAuthor(githubUsername);
+                    Map<String, Object> base = (Map<String, Object>) pullRequests.get(0).get("base");
+                    Map<String, Object> repo = (Map<String, Object>) base.get("repo");
+                    prFromGitHubDto.setRepoName((String) repo.get("full_name"));
+
+                    PrFromGitHubEntity prFromGitHubEntity = prFromGitHubMapper.dtoToModel(prFromGitHubDto);
+
+                    prFromGitHubRepository.save(prFromGitHubEntity);
+                }
             }
-        }
-    
-        PrFromGitHubDto prFromGitHubDto = new PrFromGitHubDto();
-        prFromGitHubDto.setUsername(githubUsername);
-        prFromGitHubDto.setPrCount(count);
-        prFromGitHubDto.setPrDates(dates);
-    
-        PrFromGitHubEntity prFromGitHubEntity = prFromGitHubMapper.dtoToModel(prFromGitHubDto);
-    
-        prFromGitHubRepository.save(prFromGitHubEntity);
         }
     }
 

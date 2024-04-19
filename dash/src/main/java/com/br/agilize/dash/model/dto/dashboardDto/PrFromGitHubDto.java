@@ -7,7 +7,8 @@ import java.util.List;
 @Data
 public class PrFromGitHubDto {
     private Long id;
-    private String username;
-    private Integer prCount;
-    private List<String> prDates;
+    private String prAuthor;
+    private String createdAt;
+    private String mergedAt;
+    private String repoName;
 }
