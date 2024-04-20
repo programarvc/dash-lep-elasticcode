@@ -9,7 +9,6 @@ import com.br.agilize.dash.repository.dashboardRepository.PrFromGitHubRepository
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.HttpMethod;
@@ -25,6 +24,7 @@ import io.github.cdimascio.dotenv.Dotenv;
 public class PrsGitHubApiService  implements CommandLineRunner{
 
     private final Dotenv dotenv;
+
     private final PrFromGitHubRepository prFromGitHubRepository;
 
     @Autowired
@@ -32,6 +32,7 @@ public class PrsGitHubApiService  implements CommandLineRunner{
 
     @Autowired
     private PrFromGitHubMapper prFromGitHubMapper;
+
     @Autowired
     public PrsGitHubApiService(PrFromGitHubRepository prFromGitHubRepository) {
         dotenv = Dotenv.load();
@@ -45,40 +46,56 @@ public class PrsGitHubApiService  implements CommandLineRunner{
 
     public void getPrCountByUser() {
         List<ColaboradorEntity> colaboradores = colaboradorRepository.findAll();
-
+    
         for (ColaboradorEntity colaborador : colaboradores) {
             String githubUsername = colaborador.getGithub();
-
+    
             RestTemplate restTemplate = new RestTemplate();
             String repoOwner = dotenv.get("REPO_OWNER");
             String repoName = dotenv.get("REPO_NAME");
             String url = "https://api.github.com/repos/" + repoOwner + "/" + repoName + "/pulls?state=all&per_page=100";
-
+    
             ResponseEntity<List> response = restTemplate.exchange(url, HttpMethod.GET, null, List.class);
-
+    
             List<Map<String, Object>> pullRequests = response.getBody();
-
-            List<String> dates = new ArrayList<>();
-
+    
             for(Map<String, Object> pr : pullRequests) {
                 Map<String, String> user = (Map<String, String>) pr.get("user");
                 if(user.get("login").equals(githubUsername)) {
-
-                    PrFromGitHubDto prFromGitHubDto = new PrFromGitHubDto();
-                    prFromGitHubDto.setCreatedAt((String) pr.get("created_at"));
-                    prFromGitHubDto.setMergedAt((String) pr.get("merged_at"));
-                    prFromGitHubDto.setPrAuthor(githubUsername);
-                    Map<String, Object> base = (Map<String, Object>) pullRequests.get(0).get("base");
-                    Map<String, Object> repo = (Map<String, Object>) base.get("repo");
-                    prFromGitHubDto.setRepoName((String) repo.get("full_name"));
-
-                    PrFromGitHubEntity prFromGitHubEntity = prFromGitHubMapper.dtoToModel(prFromGitHubDto);
-
-                    prFromGitHubRepository.save(prFromGitHubEntity);
+    
+                    String createdAt = (String) pr.get("created_at");
+    
+                    // Verificar se a PR já existe no banco de dados
+                    PrFromGitHubEntity existingPr = prFromGitHubRepository.findByPrAuthorAndCreatedAt(githubUsername, createdAt);
+    
+                    // Se a PR não existir no banco de dados, salvá-la
+                    if (existingPr == null) {
+                        PrFromGitHubDto prFromGitHubDto = new PrFromGitHubDto();
+                        prFromGitHubDto.setCreatedAt(createdAt);
+                        prFromGitHubDto.setMergedAt((String) pr.get("merged_at"));
+                        prFromGitHubDto.setPrAuthor(githubUsername);
+                        Map<String, Object> base = (Map<String, Object>) pullRequests.get(0).get("base");
+                        Map<String, Object> repo = (Map<String, Object>) base.get("repo");
+                        prFromGitHubDto.setRepoName((String) repo.get("full_name"));
+    
+                        PrFromGitHubEntity prFromGitHubEntity = prFromGitHubMapper.dtoToModel(prFromGitHubDto);
+    
+                        // Buscar o ColaboradorEntity com o nome de usuário do GitHub igual ao autor do PR
+                        ColaboradorEntity colaboradorEntity = colaboradorRepository.findByGithub(githubUsername);
+    
+                        // Se o ColaboradorEntity for encontrado, definir o campo colaborador do PrFromGitHubEntity para esse ColaboradorEntity
+                        if (colaboradorEntity != null) {
+                            prFromGitHubEntity.setColaborador(colaboradorEntity);
+                        }
+    
+                        prFromGitHubRepository.save(prFromGitHubEntity);
+                    }
                 }
             }
         }
     }
 
-    
+    public Map<String, Object> getPrCountForColaborador(Long colaboradorId) {
+        return prFromGitHubRepository.countByColaboradorId(colaboradorId);
+    }
 }

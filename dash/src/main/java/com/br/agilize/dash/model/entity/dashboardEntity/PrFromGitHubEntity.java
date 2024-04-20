@@ -2,8 +2,7 @@ package com.br.agilize.dash.model.entity.dashboardEntity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
-import java.util.List;
+import com.br.agilize.dash.model.entity.ColaboradorEntity;
 
 // Getters e Setters gerados pela anotação lombok @Data
 @Data
@@ -19,13 +18,16 @@ public class PrFromGitHubEntity {
     @Column(name = "Autor")
     private String prAuthor;
 
-    @Column(name = "Data de Criação da PR")
+    @Column(name = "Data_de_Criação_da_PR")
     private String createdAt;
 
-    @Column(name = "Data de Merge da PR")
+    @Column(name = "Data_de_Merge_da_PR")
     private String mergedAt;
 
     @Column(name = "repo_name")
     private String repoName;
 
+    @ManyToOne
+    private ColaboradorEntity colaborador;
 }
+

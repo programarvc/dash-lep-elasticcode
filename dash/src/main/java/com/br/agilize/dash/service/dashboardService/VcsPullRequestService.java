@@ -152,7 +152,7 @@ public class VcsPullRequestService implements CommandLineRunner {
             }
         }*/
     }
-    @Transactional
+    /*@Transactional
     public PrCountDto getPrCountByColaboradorId(Long colaboradorId) {
         PrCountEntity prCountEntity = this.prCountRepository.findByColaboradorId(colaboradorId);
         if (prCountEntity == null) {
@@ -162,5 +162,5 @@ public class VcsPullRequestService implements CommandLineRunner {
         } else {
             return prCountMapper.modelToDTO(prCountEntity);
         }
-    }
+    }*/
 }
