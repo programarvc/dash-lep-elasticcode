@@ -182,6 +182,8 @@ export class TimeComponent implements OnInit {
   }
 
   public PrCountLast7DaysForColaborador: PrFromGithub[] = [];
+  public PrCountLast30DaysForColaborador: PrFromGithub[] = [];
+  public PrCountLast90DaysForColaborador: PrFromGithub[] = [];
   public prCount: PrCount[] = [];
   public metasOneAOne: MetasOneAOne[] = [];
   public allLatestMetaByColaboradorId: AllLatestMetaByColaboradorId[] = []; 
@@ -326,6 +328,7 @@ getColaboradorEsteiraId(esteiraId: number) {
       this.getAllLatestMetaByColaboradorId(colaborador.id);
       this.getPrFromGithubByColaboradorId(colaborador.id);
       this.getPrCountLast7DaysForColaborador(colaborador.id);
+      this.getPrCountLast30DaysForColaborador(colaborador.id);
       this.getValorIndicePorIdColaborador(colaborador.id);
     }
   }
@@ -464,21 +467,49 @@ public selecionarMetaColaborador (id?: number) {
   getPrCountLast7DaysForColaborador(colaboradorId: number) {
     this.timeService.getPrCountLast7DaysForColaborador(colaboradorId).subscribe((response) => {
        this.currentPrFromGithub.countPr = response.countpr; // Atualiza diretamente a quantidade de PRs
-       console.log(this.currentPrFromGithub.countPr);
     });
-   }
+  }
+   //metodo para retornar a quantidade de pr nos ultimos 30 dias por colaborador
+  getPrCountLast30DaysForColaborador(colaboradorId: number) {
+    this.timeService.getPrCountLast30DaysForColaborador(colaboradorId).subscribe((response) => {
+      this.currentPrFromGithub.countPr = response.countpr; // Atualiza diretamente a quantidade de PRs
+      console.log(this.currentPrFromGithub.countPr);
+   });
+  }
+
+    //metodo para retornar a quantidade de pr nos ultimos 90 dias por colaborador
+  getPrCountLast90DaysForColaborador(colaboradorId: number) {
+      this.timeService.getPrCountLast90DaysForColaborador(colaboradorId).subscribe((response) => {
+        this.currentPrFromGithub.countPr = response.countpr; // Atualiza diretamente a quantidade de PRs
+        console.log(this.currentPrFromGithub.countPr);
+     });
+  }
 
    //garante que o select Todos retorne o total de prs
-   updatePrCountToTotal() {
+  updatePrCountToTotal() {
     const colaboradorId = this.currentColaborador.id;
     this.getPrFromGithubByColaboradorId(colaboradorId);
-   }
+  }
 
    //garante que o select 1 sem retorne a quantidade de prs dos ultimos 7 dias
   updatePrCountToLast7Days() {
     const colaboradorId = this.currentColaborador.id;
     this.getPrCountLast7DaysForColaborador(colaboradorId);
-   }
+  }
+
+   //garante que o select 30 dias retorne a quantidade de prs dos ultimos 30 dias
+  updatePrCountToLast30Days() {
+    const colaboradorId = this.currentColaborador.id;
+    this.getPrCountLast30DaysForColaborador(colaboradorId);
+  }
+
+  //garante que o select 30 dias retorne a quantidade de prs dos ultimos 30 dias
+  updatePrCountToLast90Days() {
+    const colaboradorId = this.currentColaborador.id;
+    this.getPrCountLast90DaysForColaborador(colaboradorId);
+  }
+
+
 }
 
 

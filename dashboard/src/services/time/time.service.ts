@@ -141,7 +141,7 @@ export class TimeService {
     const url: string = `${environment.api}/prgithub/last30days/${colaboradorId}`;
     return this.http
       .get<any>(url)
-      .pipe(catchError(this.handleError<any>("getPrCountLast90DaysForColaborador")));
+      .pipe(catchError(this.handleError<any>("getPrCountLast30DaysForColaborador")));
   }
 
   //metodo busca quantidade de PRs por colaboradorId nos ultimos 7 dias
