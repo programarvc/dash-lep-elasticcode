@@ -376,7 +376,6 @@ public selecionarColaborador(colaboradorId: number) {
     this.getTimesAcoesHabilidades(colaborador.id);
     this.getTimesByColaboradorId(colaborador.id);
     this.getPrFromGithubByColaboradorId(colaborador.id);
-    this.getPrCountLast7DaysForColaborador(colaborador.id);
     this.getColaboradorEsteiraId(this.currentEsteira.id);
     this.getTimesByEsteira(this.currentEsteira.id);
   });
@@ -462,13 +461,24 @@ public selecionarMetaColaborador (id?: number) {
   }
 
   //metodo para retornar a quantidade de pr nos ultimos 7 dias por colaborador
-  getPrCountLast7DaysForColaborador (colaboradorId: number) {
+  getPrCountLast7DaysForColaborador(colaboradorId: number) {
     this.timeService.getPrCountLast7DaysForColaborador(colaboradorId).subscribe((response) => {
-      this.PrCountLast7DaysForColaborador = response;
-      console.log(this.PrCountLast7DaysForColaborador);
+       this.currentPrFromGithub.countPr = response.countpr; // Atualiza diretamente a quantidade de PRs
+       console.log(this.currentPrFromGithub.countPr);
     });
-  }
+   }
 
+   //garante que o select Todos retorne o total de prs
+   updatePrCountToTotal() {
+    const colaboradorId = this.currentColaborador.id;
+    this.getPrFromGithubByColaboradorId(colaboradorId);
+   }
+
+   //garante que o select 1 sem retorne a quantidade de prs dos ultimos 7 dias
+  updatePrCountToLast7Days() {
+    const colaboradorId = this.currentColaborador.id;
+    this.getPrCountLast7DaysForColaborador(colaboradorId);
+   }
 }
 
 

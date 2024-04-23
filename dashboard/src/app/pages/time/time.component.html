@@ -163,11 +163,11 @@
               <div class="pr-count-header">
                 <h2>Pull Requests<br><span>(do github)</span></h2>
                 <div ngbDropdown>
-                    <button type="button" class="dropdown-pr-toggle" id="dropdownPr" ngbDropdownToggle>
+                    <button type="button" class="dropdown-pr-toggle" id="dropdownPr" ngbDropdownToggle (click)="updatePrCountToTotal()">
                         Todos
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownPr">
-                        <button ngbDropdownItem >
+                        <button ngbDropdownItem (click)="updatePrCountToLast7Days()">
                             1 sem
                         </button>
                     </div>

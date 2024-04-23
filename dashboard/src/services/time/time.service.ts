@@ -149,7 +149,7 @@ export class TimeService {
     const url: string = `${environment.api}/prgithub/last7days/${colaboradorId}`;
     return this.http
       .get<any>(url)
-      .pipe(catchError(this.handleError<any>("getPrCountLast90DaysForColaborador")));
+      .pipe(catchError(this.handleError<any>("getPrCountLast7DaysForColaborador")));
   }
 
   getValorIndicePorIdColaborador(colaboradorId: number): Observable<any> {
