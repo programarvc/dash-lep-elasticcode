@@ -21,9 +21,30 @@ public class PrFromGitHubController {
     @Autowired 
     PrsGitHubApiService service;
 
+    // End-point de busca quantidade de PRs de um colaborador por id
     @GetMapping("/count/{colaboradorId}")
     public ResponseEntity<Map<String, Object>> getPrCountForColaborador(@PathVariable Long colaboradorId) {
         Map<String, Object> Count = service.getPrCountForColaborador(colaboradorId);
         return ResponseEntity.ok(Count);
+    }
+
+    // End-point de busca quantidade de PRs de um colaborador por id nos últimos 90 dias
+    @GetMapping("/last90days/{colaboradorId}")
+    public ResponseEntity<Map<String, Object>> getPrCountLast90DaysForColaborador(@PathVariable Long colaboradorId) {
+        Map<String, Object> prCount = service.getPrCountLast90DaysForColaborador(colaboradorId);
+        return ResponseEntity.ok(prCount);
+    }
+
+    // End-point de busca quantidade de PRs de um colaborador por id nos últimos 30 dias
+    @GetMapping("/last30days/{colaboradorId}")
+    public ResponseEntity<Map<String, Object>> getPrCountLast30DaysForColaborador(@PathVariable Long colaboradorId) {
+        Map<String, Object> prCount = service.getPrCountLast30DaysForColaborador(colaboradorId);
+        return ResponseEntity.ok(prCount);
+    }
+    // End-point de busca quantidade de PRs de um colaborador por id nos últimos 7 dias
+    @GetMapping("/last7days/{colaboradorId}")
+    public ResponseEntity<Map<String, Object>> getPrCountLast7DaysForColaborador(@PathVariable Long colaboradorId) {
+        Map<String, Object> prCount = service.getPrCountLast7DaysForColaborador(colaboradorId);
+        return ResponseEntity.ok(prCount);
     }
 }

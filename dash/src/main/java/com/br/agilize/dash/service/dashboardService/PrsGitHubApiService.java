@@ -95,7 +95,23 @@ public class PrsGitHubApiService  implements CommandLineRunner{
         }
     }
 
+    // Query para buscar a quantidade total de PRs de um dev por id
     public Map<String, Object> getPrCountForColaborador(Long colaboradorId) {
         return prFromGitHubRepository.countByColaboradorId(colaboradorId);
+    }
+    
+    // Query para buscar a quantidade de PRs de um dev por id nos últimos 90 dias
+    public Map<String, Object> getPrCountLast90DaysForColaborador(Long colaboradorId) {
+        return prFromGitHubRepository.countPrsLast90DaysByColaboradorId(colaboradorId);
+    }
+
+    // Query para buscar a quantidade de PRs de um dev por id nos últimos 30 dias
+    public Map<String, Object> getPrCountLast30DaysForColaborador(Long colaboradorId) {
+        return prFromGitHubRepository.countPrsLast30DaysByColaboradorId(colaboradorId);
+    }
+
+    // Query para buscar a quantidade de PRs de um dev por id nos últimos 7 dias
+    public Map<String, Object> getPrCountLast7DaysForColaborador(Long colaboradorId) {
+        return prFromGitHubRepository.countPrsLast7DaysByColaboradorId(colaboradorId);
     }
 }

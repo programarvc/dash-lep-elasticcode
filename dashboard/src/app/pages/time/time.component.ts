@@ -10,7 +10,8 @@ import {
           MetasOneAOne,
           AllLatestMetaByColaboradorId,
           PrCount,
-          IndiceDeSobrevivenciaDev
+          IndiceDeSobrevivenciaDev,
+          PrFromGithub
          } from 'src/app/types/time-types';
 import { TimeService } from 'src/services/time/time.service';
 import {  Habilidade,
@@ -119,6 +120,7 @@ export class TimeComponent implements OnInit {
     data: [],
   };
 
+ /* metodo anterior
   public currentPrCount: PrCount = { 
     id: 0,
     colaborador: {
@@ -130,6 +132,24 @@ export class TimeComponent implements OnInit {
       habilidades: [],
     },
     count: 0
+  };*/
+
+  currentPrFromGithub: PrFromGithub = {
+    id: 0,
+    prAuthor: '',
+    createdAt: '',
+    mergedAt: '',
+    repoName: '', 
+    colaborador: {
+      id: 0,
+      nome: '',
+      email: '',
+      github: '',
+      miniBio: '',
+      habilidades: [],
+    },
+    countPr: 0,
+    nome: ''
   };
 
   public  currentValorIndiceDeSobrevivencia: IndiceDeSobrevivenciaDev = {
@@ -160,6 +180,8 @@ export class TimeComponent implements OnInit {
     },
     valorIndice: 0
   }
+
+  public PrCountLast7DaysForColaborador: PrFromGithub[] = [];
   public prCount: PrCount[] = [];
   public metasOneAOne: MetasOneAOne[] = [];
   public allLatestMetaByColaboradorId: AllLatestMetaByColaboradorId[] = []; 
@@ -302,7 +324,8 @@ getColaboradorEsteiraId(esteiraId: number) {
       this.getTimesByColaboradorId(colaborador.id);
       this.getLatestMetaByColaboradorId(colaborador.id);
       this.getAllLatestMetaByColaboradorId(colaborador.id);
-      this.getPrCountByColaboradorId(colaborador.id);
+      this.getPrFromGithubByColaboradorId(colaborador.id);
+      this.getPrCountLast7DaysForColaborador(colaborador.id);
       this.getValorIndicePorIdColaborador(colaborador.id);
     }
   }
@@ -352,7 +375,8 @@ public selecionarColaborador(colaboradorId: number) {
     this.currentColaborador = colaborador; // atualiza o colaborador atual
     this.getTimesAcoesHabilidades(colaborador.id);
     this.getTimesByColaboradorId(colaborador.id);
-    this.getPrCountByColaboradorId(colaborador.id);
+    this.getPrFromGithubByColaboradorId(colaborador.id);
+    this.getPrCountLast7DaysForColaborador(colaborador.id);
     this.getColaboradorEsteiraId(this.currentEsteira.id);
     this.getTimesByEsteira(this.currentEsteira.id);
   });
@@ -422,12 +446,29 @@ public selecionarMetaColaborador (id?: number) {
     }
   }
 
+  /* metodo anterior x
   getPrCountByColaboradorId( colaboradorId: number) {
     this.timeService.getPrCountByColaboradorId(colaboradorId).subscribe((response) => {
       this.currentPrCount = response;
       console.log(this.currentPrCount);
     });
+  }*/
+
+  //metodo para retornar o total de prs por colaborador
+  getPrFromGithubByColaboradorId(colaboradorId: number) {
+    this.timeService.getPrCountForColaboradorId(colaboradorId).subscribe((response) => {
+      this.currentPrFromGithub = response;
+    });
   }
+
+  //metodo para retornar a quantidade de pr nos ultimos 7 dias por colaborador
+  getPrCountLast7DaysForColaborador (colaboradorId: number) {
+    this.timeService.getPrCountLast7DaysForColaborador(colaboradorId).subscribe((response) => {
+      this.PrCountLast7DaysForColaborador = response;
+      console.log(this.PrCountLast7DaysForColaborador);
+    });
+  }
+
 }
 
 
