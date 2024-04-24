@@ -18,7 +18,7 @@ public class PrFromGitHubEntity {
     @Column(name = "Autor")
     private String prAuthor;
 
-    @Column(name = "Data_de_Criação_da_PR")
+    @Column(name = "Data_de_Criacao_da_PR")
     private String createdAt;
 
     @Column(name = "Data_de_Merge_da_PR")
