@@ -7,15 +7,12 @@ import com.br.agilize.dash.model.entity.dashboardEntity.PrFromGitHubEntity;
 import com.br.agilize.dash.repository.ColaboradorRepository;
 import com.br.agilize.dash.repository.dashboardRepository.PrFromGitHubRepository;
 
-import org.checkerframework.checker.units.qual.m;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.HttpMethod;
-
-import java.util.ArrayList;
 
 import java.util.List;
 import java.util.Map;
