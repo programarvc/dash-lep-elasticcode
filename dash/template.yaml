@@ -18,6 +18,8 @@ Globals:
         USER_POOL_ID: !Ref UserPoolId
         ACESS_KEY_ID: !Ref AcessKeyId
         SECRET_ACESS_KEY: !Ref SecretAcessKey
+        REPO_OWNER: !Ref RepoOwner
+        REPO_NAME: !Ref RepoName
 
 Parameters:
   SecurityGroupId:
@@ -44,6 +46,10 @@ Parameters:
   AcessKeyId:
     Type: String
   SecretAcessKey:
+    Type: String
+  RepoOwner:
+    Type: String
+  RepoName:
     Type: String
 
 Resources:
