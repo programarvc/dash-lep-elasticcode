@@ -15,7 +15,8 @@ import software.amazon.awssdk.services.cognitoidentityprovider.model.ListUsersRe
 import software.amazon.awssdk.services.cognitoidentityprovider.model.ListUsersResponse;
 
 //@Component
-public class CognitoUserMigrationService /*implements CommandLineRunner*/ {
+public class CognitoUserMigrationService /*implements CommandLineRunner */ {
+
 
     Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
 

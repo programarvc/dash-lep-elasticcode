@@ -65,10 +65,6 @@ public class VcsPullRequestService implements CommandLineRunner {
     @Autowired
     private ColaboradorMapper colaboradorMapper;
 
-
-
-
-
     @Override
     @Transactional
     public void run(String... args) throws Exception {
@@ -76,7 +72,8 @@ public class VcsPullRequestService implements CommandLineRunner {
     }
 
     public void getPRDataAndSave() {
-        /*RestTemplate restTemplate = new RestTemplate();
+
+       /*  RestTemplate restTemplate = new RestTemplate();
 
         Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
 
