@@ -268,7 +268,6 @@ getColaboradorEsteiraId(esteiraId: number) {
   getValorIndicePorIdColaborador(colaboradorId: number){
     this.timeService.getValorIndicePorIdColaborador(colaboradorId).subscribe((response) => {
       this.currentValorIndiceDeSobrevivencia = response;
-      console.log(this.currentValorIndiceDeSobrevivencia);
     });
   }
 
@@ -452,7 +451,6 @@ public selecionarMetaColaborador (id?: number) {
   getPrCountByColaboradorId( colaboradorId: number) {
     this.timeService.getPrCountByColaboradorId(colaboradorId).subscribe((response) => {
       this.currentPrCount = response;
-      console.log(this.currentPrCount);
     });
   }*/
 
@@ -473,7 +471,6 @@ public selecionarMetaColaborador (id?: number) {
   getPrCountLast30DaysForColaborador(colaboradorId: number) {
     this.timeService.getPrCountLast30DaysForColaborador(colaboradorId).subscribe((response) => {
       this.currentPrFromGithub.countPr = response.countpr || 0; // Atualiza diretamente a quantidade de PRs
-      console.log(this.currentPrFromGithub.countPr);
    });
   }
 
@@ -481,7 +478,6 @@ public selecionarMetaColaborador (id?: number) {
   getPrCountLast90DaysForColaborador(colaboradorId: number) {
       this.timeService.getPrCountLast90DaysForColaborador(colaboradorId).subscribe((response) => {
         this.currentPrFromGithub.countPr = response.countpr || 0; // Atualiza diretamente a quantidade de PRs
-        console.log(this.currentPrFromGithub.countPr);
      });
   }
 
