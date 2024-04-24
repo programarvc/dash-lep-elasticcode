@@ -163,18 +163,21 @@
               <div class="pr-count-header">
                 <h2>Pull Requests<br><span>(do github)</span></h2>
                 <div ngbDropdown>
-                    <button type="button" class="dropdown-pr-toggle" id="dropdownPr" ngbDropdownToggle (click)="updatePrCountToTotal()">
+                    <button type="button" class="dropdown-pr-toggle" id="dropdownPr" ngbDropdownToggle>
                         Todos
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownPr">
+                        <button ngbDropdownItem (click)="updatePrCountToTotal()">
+                            Todos
+                        </button>
                         <button ngbDropdownItem (click)="updatePrCountToLast7Days()">
-                            1 sem
+                            7 d
                         </button>
                         <button ngbDropdownItem (click)="updatePrCountToLast30Days()">
-                            30 dias
+                            30 d
                         </button>
                         <button ngbDropdownItem (click)="updatePrCountToLast90Days()">
-                            90 dias
+                            90 d
                         </button>
                     </div>
                 </div>

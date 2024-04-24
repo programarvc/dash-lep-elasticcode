@@ -466,13 +466,13 @@ public selecionarMetaColaborador (id?: number) {
   //metodo para retornar a quantidade de pr nos ultimos 7 dias por colaborador
   getPrCountLast7DaysForColaborador(colaboradorId: number) {
     this.timeService.getPrCountLast7DaysForColaborador(colaboradorId).subscribe((response) => {
-       this.currentPrFromGithub.countPr = response.countpr; // Atualiza diretamente a quantidade de PRs
+       this.currentPrFromGithub.countPr = response.countpr || 0; // Atualiza diretamente a quantidade de PRs
     });
   }
    //metodo para retornar a quantidade de pr nos ultimos 30 dias por colaborador
   getPrCountLast30DaysForColaborador(colaboradorId: number) {
     this.timeService.getPrCountLast30DaysForColaborador(colaboradorId).subscribe((response) => {
-      this.currentPrFromGithub.countPr = response.countpr; // Atualiza diretamente a quantidade de PRs
+      this.currentPrFromGithub.countPr = response.countpr || 0; // Atualiza diretamente a quantidade de PRs
       console.log(this.currentPrFromGithub.countPr);
    });
   }
@@ -480,7 +480,7 @@ public selecionarMetaColaborador (id?: number) {
     //metodo para retornar a quantidade de pr nos ultimos 90 dias por colaborador
   getPrCountLast90DaysForColaborador(colaboradorId: number) {
       this.timeService.getPrCountLast90DaysForColaborador(colaboradorId).subscribe((response) => {
-        this.currentPrFromGithub.countPr = response.countpr; // Atualiza diretamente a quantidade de PRs
+        this.currentPrFromGithub.countPr = response.countpr || 0; // Atualiza diretamente a quantidade de PRs
         console.log(this.currentPrFromGithub.countPr);
      });
   }
