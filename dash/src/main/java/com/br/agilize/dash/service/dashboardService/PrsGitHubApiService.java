@@ -6,14 +6,13 @@ import com.br.agilize.dash.model.entity.ColaboradorEntity;
 import com.br.agilize.dash.model.entity.dashboardEntity.PrFromGitHubEntity;
 import com.br.agilize.dash.repository.ColaboradorRepository;
 import com.br.agilize.dash.repository.dashboardRepository.PrFromGitHubRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.HttpMethod;
-
-import java.util.ArrayList;
 
 import java.util.List;
 import java.util.Map;
@@ -64,15 +63,15 @@ public class PrsGitHubApiService  implements CommandLineRunner{
                 if(user.get("login").equals(githubUsername)) {
     
                     String createdAt = (String) pr.get("created_at");
-    
+                    String mergedAt = (String) pr.get("merged_at");
                     // Verificar se a PR já existe no banco de dados
-                    PrFromGitHubEntity existingPr = prFromGitHubRepository.findByPrAuthorAndCreatedAt(githubUsername, createdAt);
+                    PrFromGitHubEntity existingPr = prFromGitHubRepository.findByPrAuthorAndCreatedAtAndMergedAt(githubUsername, createdAt, mergedAt);
     
                     // Se a PR não existir no banco de dados, salvá-la
                     if (existingPr == null) {
                         PrFromGitHubDto prFromGitHubDto = new PrFromGitHubDto();
                         prFromGitHubDto.setCreatedAt(createdAt);
-                        prFromGitHubDto.setMergedAt((String) pr.get("merged_at"));
+                        prFromGitHubDto.setMergedAt(mergedAt);
                         prFromGitHubDto.setPrAuthor(githubUsername);
                         Map<String, Object> base = (Map<String, Object>) pullRequests.get(0).get("base");
                         Map<String, Object> repo = (Map<String, Object>) base.get("repo");

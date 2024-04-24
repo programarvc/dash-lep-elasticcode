@@ -59,7 +59,12 @@
                     </div>
                     <div class="card estabilidade">
                       <p class="titulo-card">Mean Time to Recovery</p>
-                      <p class="text-date" [ngStyle]="{'font-size': this.getFontSize(currentMaturidade?.timeToRecovery)}">{{currentMaturidade?.timeToRecovery ?? 'sem dado' }}</p>
+                      <p class="text-date" >
+                        <span [ngStyle]="{'font-size': this.getFontSize(currentMaturidade?.timeToRecovery)}">
+                          {{currentMaturidade?.timeToRecovery ?? 'sem dado' }}
+                        </span>
+                        {{currentMaturidade?.timeToRecovery !== null ? 'horas' : ''}}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -114,7 +119,7 @@
                     </span>
                   </div>
                   <div class="jornada-card-bar-content"
-                  [style.display]="(currentMaturidade?.metricas4 === 0 || currentMaturidade?.metricas4 === null) ? 'none' : 'block'"
+                  [style.display]="(currentMaturidade?.metricas4 === null) ? 'none' : 'block'"
                   >
                     <div class="jornada-card-bar">
                         <div class="jornada-card-goal"
@@ -138,7 +143,7 @@
                   </span>
                 </div>
                 <div class="jornada-card-bar-content"
-                [style.display]="(currentMaturidade?.capacidadeDora === 0 || currentMaturidade?.capacidadeDora === null) ? 'none' : 'block'">
+                [style.display]="(currentMaturidade?.capacidadeDora === null) ? 'none' : 'block'">
                 <div class="jornada-card-bar">
                     <div class="jornada-card-goal"
                         [ngStyle]="{'width': (currentMaturidade?.capacidadeDora !== null ? currentMaturidade?.capacidadeDora : 0) + '%'}">

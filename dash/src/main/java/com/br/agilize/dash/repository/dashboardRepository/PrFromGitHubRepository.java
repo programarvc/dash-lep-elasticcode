@@ -2,7 +2,6 @@ package com.br.agilize.dash.repository.dashboardRepository;
 
 import com.br.agilize.dash.model.entity.dashboardEntity.PrFromGitHubEntity;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface PrFromGitHubRepository extends JpaRepository<PrFromGitHubEntity, Long> {
   
-    PrFromGitHubEntity findByPrAuthorAndCreatedAt(String prAuthor, String createdAt);
+    PrFromGitHubEntity findByPrAuthorAndCreatedAtAndMergedAt(String prAuthor, String createdAt, String mergedAt);
     
     // Query para buscar a quantidade total de PRs de um colaborador por id
     @Query(value = "SELECT new map(c.nome as nome, COUNT(p.id) as countPr) " +
