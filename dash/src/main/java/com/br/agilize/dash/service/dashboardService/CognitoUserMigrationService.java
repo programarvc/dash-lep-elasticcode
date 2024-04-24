@@ -17,7 +17,8 @@ import software.amazon.awssdk.services.cognitoidentityprovider.model.ListUsersRe
 //@Component
 public class CognitoUserMigrationService /*implements CommandLineRunner */ {
 
-     Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
+
+    Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
 
     //@Override
     public void run(String... args) throws Exception{
@@ -49,13 +50,13 @@ public class CognitoUserMigrationService /*implements CommandLineRunner */ {
                     PreparedStatement preparedStatement = conn.prepareStatement(SQL_SELECT);
                     preparedStatement.setString(1, user.username());
                     ResultSet resultSet = preparedStatement.executeQuery();
-            
+
                     if (resultSet.next() && resultSet.getInt(1) == 0) {
                         String SQL_INSERT = "INSERT INTO userentity(username) VALUES(?)";
                         preparedStatement = conn.prepareStatement(SQL_INSERT);
                         preparedStatement.setString(1, user.username());
                         int row = preparedStatement.executeUpdate();
-            
+
                         System.out.println("Row affected " + row);
                     }
                 } catch (SQLException ex) {

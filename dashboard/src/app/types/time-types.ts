@@ -73,6 +73,18 @@ export interface Habilidade {
       count: number;
     }
 
+    export interface PrFromGithub {
+      id: number;
+      prAuthor: string;
+      createdAt: string;
+      mergedAt: string;
+      repoName: string;
+      colaborador: Colaborador;
+      countPr: number;
+      nome: string;
+
+    }
+
     export interface IndiceDeSobrevivenciaDev {
       id: number;
       timeColaborador: TimeColaborador;
