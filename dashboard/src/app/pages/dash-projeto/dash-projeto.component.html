@@ -119,7 +119,7 @@
                     </span>
                   </div>
                   <div class="jornada-card-bar-content"
-                  [style.display]="(currentMaturidade?.metricas4 === 0 || currentMaturidade?.metricas4 === null) ? 'none' : 'block'"
+                  [style.display]="(currentMaturidade?.metricas4 === null) ? 'none' : 'block'"
                   >
                     <div class="jornada-card-bar">
                         <div class="jornada-card-goal"
@@ -143,7 +143,7 @@
                   </span>
                 </div>
                 <div class="jornada-card-bar-content"
-                [style.display]="(currentMaturidade?.capacidadeDora === 0 || currentMaturidade?.capacidadeDora === null) ? 'none' : 'block'">
+                [style.display]="(currentMaturidade?.capacidadeDora === null) ? 'none' : 'block'">
                 <div class="jornada-card-bar">
                     <div class="jornada-card-goal"
                         [ngStyle]="{'width': (currentMaturidade?.capacidadeDora !== null ? currentMaturidade?.capacidadeDora : 0) + '%'}">
