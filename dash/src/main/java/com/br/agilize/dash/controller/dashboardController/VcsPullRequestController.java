@@ -21,10 +21,10 @@ public class VcsPullRequestController {
     @Autowired 
     VcsPullRequestService service;
 
-    /*@GetMapping("/colaborador/{colaboradorId}")
+    @GetMapping("/colaborador/{colaboradorId}")
     public ResponseEntity <PrCountDto> getPrCountByColaboradorId(@PathVariable Long colaboradorId) {
         PrCountDto prCountDto = service.getPrCountByColaboradorId(colaboradorId);
         return ResponseEntity.ok(prCountDto);
-    }*/
+    }
 
 }
