@@ -120,7 +120,7 @@ export class TimeComponent implements OnInit {
     data: [],
   };
 
- /* metodo anterior
+ // metodo anterior
   public currentPrCount: PrCount = { 
     id: 0,
     colaborador: {
@@ -132,8 +132,10 @@ export class TimeComponent implements OnInit {
       habilidades: [],
     },
     count: 0
-  };*/
+  };
 
+  //variavel com dados para armazenar a quantidade total de prs por colaborador github API
+  /*
   currentPrFromGithub: PrFromGithub = {
     id: 0,
     prAuthor: '',
@@ -151,6 +153,7 @@ export class TimeComponent implements OnInit {
     countPr: 0,
     nome: ''
   };
+  */
 
   public  currentValorIndiceDeSobrevivencia: IndiceDeSobrevivenciaDev = {
     id: 0,
@@ -204,13 +207,10 @@ export class TimeComponent implements OnInit {
     private acoesService: AcaoService,
     private esteiraService: EsteiraService,
     private habilidadeService: HabilidadeService,
-    private timeService: TimeService,
-
-
+    private timeService: TimeService
   ) { }
 
   async ngOnInit(): Promise<void> {
-
     this.route.paramMap.subscribe((params) => {
 
       const esteiraId = params.get('esteiraId');
@@ -234,8 +234,6 @@ export class TimeComponent implements OnInit {
       }
     }
   }
-
-
 
    getColaboradoresByEsteira(esteiraId: number) {
   this.timeService.getColaboradoresByEsteiraId(esteiraId).subscribe((response) => {
@@ -311,8 +309,6 @@ getColaboradorEsteiraId(esteiraId: number) {
     });
   }
 
-  
-
   public async getTimesAcoesHabilidades(colaboradorId: number) {
     const colaborador = this.colaboradores.find(
       (colaborador) => colaborador.id === colaboradorId
@@ -325,9 +321,7 @@ getColaboradorEsteiraId(esteiraId: number) {
       this.getTimesByColaboradorId(colaborador.id);
       this.getLatestMetaByColaboradorId(colaborador.id);
       this.getAllLatestMetaByColaboradorId(colaborador.id);
-      this.getPrFromGithubByColaboradorId(colaborador.id);
-      this.getPrCountLast7DaysForColaborador(colaborador.id);
-      this.getPrCountLast30DaysForColaborador(colaborador.id);
+      this.getPrCountByColaboradorId(colaborador.id);
       this.getValorIndicePorIdColaborador(colaborador.id);
     }
   }
@@ -377,7 +371,7 @@ public selecionarColaborador(colaboradorId: number) {
     this.currentColaborador = colaborador; // atualiza o colaborador atual
     this.getTimesAcoesHabilidades(colaborador.id);
     this.getTimesByColaboradorId(colaborador.id);
-    this.getPrFromGithubByColaboradorId(colaborador.id);
+    this.getPrCountByColaboradorId(colaborador.id);
     this.getColaboradorEsteiraId(this.currentEsteira.id);
     this.getTimesByEsteira(this.currentEsteira.id);
   });
@@ -447,13 +441,15 @@ public selecionarMetaColaborador (id?: number) {
     }
   }
 
-  /* metodo anterior x
+  //metodo anterior x
   getPrCountByColaboradorId( colaboradorId: number) {
     this.timeService.getPrCountByColaboradorId(colaboradorId).subscribe((response) => {
       this.currentPrCount = response;
     });
-  }*/
+  }
 
+  //Metodos para retornar a quantidade de prs em tempo determinado github API
+  /*
   //metodo para retornar o total de prs por colaborador
   getPrFromGithubByColaboradorId(colaboradorId: number) {
     this.timeService.getPrCountForColaboradorId(colaboradorId).subscribe((response) => {
@@ -504,7 +500,7 @@ public selecionarMetaColaborador (id?: number) {
     const colaboradorId = this.currentColaborador.id;
     this.getPrCountLast90DaysForColaborador(colaboradorId);
   }
-
+*/
 
 }
 
