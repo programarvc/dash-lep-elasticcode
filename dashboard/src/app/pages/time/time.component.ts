@@ -198,6 +198,7 @@ export class TimeComponent implements OnInit {
   public searchResultsCompetencias:  CompetenciaByColaborador[] = [];
   public habilidadesByColaborador: HabilidadeByColaborador[] = [];
   public formattedDate: string | null = null;
+  public selectedTimePr: string = 'Todos';
 
   constructor(
     private router: Router,
@@ -479,24 +480,28 @@ public selecionarMetaColaborador (id?: number) {
 
    //garante que o select Todos retorne o total de prs
   updatePrCountToTotal() {
+    this.selectedTimePr = 'Todos';
     const colaboradorId = this.currentColaborador.id;
     this.getPrFromGithubByColaboradorId(colaboradorId);
   }
 
    //garante que o select 1 sem retorne a quantidade de prs dos ultimos 7 dias
   updatePrCountToLast7Days() {
+    this.selectedTimePr = '7 d';
     const colaboradorId = this.currentColaborador.id;
     this.getPrCountLast7DaysForColaborador(colaboradorId);
   }
 
    //garante que o select 30 dias retorne a quantidade de prs dos ultimos 30 dias
   updatePrCountToLast30Days() {
+    this.selectedTimePr = '30 d';
     const colaboradorId = this.currentColaborador.id;
     this.getPrCountLast30DaysForColaborador(colaboradorId);
   }
 
   //garante que o select 30 dias retorne a quantidade de prs dos ultimos 30 dias
   updatePrCountToLast90Days() {
+    this.selectedTimePr = '90 d';
     const colaboradorId = this.currentColaborador.id;
     this.getPrCountLast90DaysForColaborador(colaboradorId);
   }

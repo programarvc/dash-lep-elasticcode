@@ -12,6 +12,7 @@ import com.br.agilize.dash.repository.dashboardRepository.PrFromGitHubRepository
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.HttpMethod;
@@ -45,7 +46,8 @@ public class PrsGitHubApiService  implements CommandLineRunner{
     public void run(String... args) throws Exception {
         getPrCountByUser();
     }
-
+    
+    @Scheduled(cron = "0 0 */12 * * ?")
     public void getPrCountByUser() {
         List<ColaboradorEntity> colaboradores = colaboradorRepository.findAll();
     
