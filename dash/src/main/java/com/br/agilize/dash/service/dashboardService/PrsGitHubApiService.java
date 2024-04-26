@@ -24,22 +24,18 @@ import io.github.cdimascio.dotenv.Dotenv;
 @Service
 public class PrsGitHubApiService  implements CommandLineRunner{
 
-    private final Dotenv dotenv;
-
-    private final PrFromGitHubRepository prFromGitHubRepository;
+    Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
+    
+    @Autowired
+    private PrFromGitHubRepository prFromGitHubRepository;
 
     @Autowired
     private ColaboradorRepository colaboradorRepository;
 
     @Autowired
     private PrFromGitHubMapper prFromGitHubMapper;
-
-    @Autowired
-    public PrsGitHubApiService(PrFromGitHubRepository prFromGitHubRepository) {
-    
-        dotenv = Dotenv.load();
-        this.prFromGitHubRepository = prFromGitHubRepository;
-    }
+   
+   
 
     @Override
     public void run(String... args) throws Exception {
