@@ -1,7 +1,6 @@
 package com.br.agilize.dash.service.dashboardService;
 
 //Service que busca os dados de pr da API do GitHub e salva no banco de dados
-/* 
 import com.br.agilize.dash.mapper.dashboardMapper.PrFromGitHubMapper;
 import com.br.agilize.dash.model.dto.dashboardDto.PrFromGitHubDto;
 import com.br.agilize.dash.model.entity.ColaboradorEntity;
@@ -121,5 +120,3 @@ public class PrsGitHubApiService  implements CommandLineRunner{
 
     
 }
- 
-*/
