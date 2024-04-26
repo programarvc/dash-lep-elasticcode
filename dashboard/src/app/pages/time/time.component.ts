@@ -135,7 +135,7 @@ export class TimeComponent implements OnInit {
   };
 
   //variavel com dados para armazenar a quantidade total de prs por colaborador github API
-  /*
+  
   currentPrFromGithub: PrFromGithub = {
     id: 0,
     prAuthor: '',
@@ -153,7 +153,6 @@ export class TimeComponent implements OnInit {
     countPr: 0,
     nome: ''
   };
-  */
 
   public  currentValorIndiceDeSobrevivencia: IndiceDeSobrevivenciaDev = {
     id: 0,
@@ -450,7 +449,7 @@ public selecionarMetaColaborador (id?: number) {
   }
 
   //Metodos para retornar a quantidade de prs em tempo determinado github API
-  /*
+
   //metodo para retornar o total de prs por colaborador
   getPrFromGithubByColaboradorId(colaboradorId: number) {
     this.timeService.getPrCountForColaboradorId(colaboradorId).subscribe((response) => {
@@ -505,7 +504,6 @@ public selecionarMetaColaborador (id?: number) {
     const colaboradorId = this.currentColaborador.id;
     this.getPrCountLast90DaysForColaborador(colaboradorId);
   }
-*/
 
 }
 
