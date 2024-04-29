@@ -24,7 +24,7 @@ public class PrFromGitHubEntity {
     @Column(name = "Data_de_Merge_da_PR")
     private String mergedAt;
 
-    @Column(name = "repo_name")
+    @Column(name = "Nome_Repositorio")
     private String repoName;
 
     @ManyToOne

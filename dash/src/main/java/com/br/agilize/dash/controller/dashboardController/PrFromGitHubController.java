@@ -25,8 +25,8 @@ public class PrFromGitHubController {
     // End-point de busca quantidade de PRs de um colaborador por id
     @GetMapping("/count/{colaboradorId}")
     public ResponseEntity<Map<String, Object>> getPrCountForColaborador(@PathVariable Long colaboradorId) {
-        Map<String, Object> Count = service.getPrCountForColaborador(colaboradorId);
-        return ResponseEntity.ok(Count);
+        Map<String, Object> prCount = service.getPrCountForColaborador(colaboradorId);
+        return ResponseEntity.ok(prCount);
     }
 
     // End-point de busca quantidade de PRs de um colaborador por id nos últimos 90 dias
