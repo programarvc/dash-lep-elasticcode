@@ -53,7 +53,8 @@ public class PrsGitHubApiService  implements CommandLineRunner{
             String RepoOwner = dotenv.get("REPO_OWNER");
             String RepoName = dotenv.get("REPO_NAME");
             String url = "https://api.github.com/repos/" + RepoOwner + "/" + RepoName + "/pulls?state=all&per_page=100";
-    
+            String token = dotenv.get("GITHUB_TOKEN");
+
             ResponseEntity<List> response = restTemplate.exchange(url, HttpMethod.GET, null, List.class);
     
             List<Map<String, Object>> pullRequests = response.getBody();
