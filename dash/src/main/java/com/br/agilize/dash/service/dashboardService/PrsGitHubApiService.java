@@ -10,11 +10,13 @@ import com.br.agilize.dash.repository.dashboardRepository.PrFromGitHubRepository
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpHeaders;
 
 import java.util.List;
 import java.util.Map;
@@ -52,10 +54,17 @@ public class PrsGitHubApiService  implements CommandLineRunner{
             RestTemplate restTemplate = new RestTemplate();
             String RepoOwner = dotenv.get("REPO_OWNER");
             String RepoName = dotenv.get("REPO_NAME");
-            String url = "https://api.github.com/repos/" + RepoOwner + "/" + RepoName + "/pulls?state=all&per_page=100";
             String token = dotenv.get("GITHUB_TOKEN");
+            String url = "https://api.github.com/repos/" + RepoOwner + "/" + RepoName + "/pulls?state=all&per_page=100";
 
-            ResponseEntity<List> response = restTemplate.exchange(url, HttpMethod.GET, null, List.class);
+            // Adicionando o token de autenticação no header da requisição
+            HttpHeaders headers = new HttpHeaders();
+
+            headers.set("Authorization", "Bearer " + token);
+
+            HttpEntity<String> request = new HttpEntity<>(headers);
+
+            ResponseEntity<List> response = restTemplate.exchange(url, HttpMethod.GET, request, List.class);
     
             List<Map<String, Object>> pullRequests = response.getBody();
     
