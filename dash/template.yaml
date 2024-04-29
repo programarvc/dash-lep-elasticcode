@@ -20,6 +20,7 @@ Globals:
         SECRET_ACESS_KEY: !Ref SecretAcessKey
         REPO_OWNER: !Ref RepoOwner
         REPO_NAME: !Ref RepoName
+        GITHUB_TOKEN: !Ref GitHubToken
 
 Parameters:
   SecurityGroupId:
@@ -50,6 +51,8 @@ Parameters:
   RepoOwner:
     Type: String
   RepoName:
+    Type: String
+  GitHubToken:
     Type: String
 
 Resources:
