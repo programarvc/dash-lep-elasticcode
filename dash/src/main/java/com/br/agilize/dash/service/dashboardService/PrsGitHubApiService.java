@@ -50,9 +50,9 @@ public class PrsGitHubApiService  implements CommandLineRunner{
             String githubUsername = colaborador.getGithub();
     
             RestTemplate restTemplate = new RestTemplate();
-            String repoOwner = dotenv.get("REPO_OWNER");
-            String repoName = dotenv.get("REPO_NAME");
-            String url = "https://api.github.com/repos/" + repoOwner + "/" + repoName + "/pulls?state=all&per_page=100";
+            String RepoOwner = dotenv.get("REPO_OWNER");
+            String RepoName = dotenv.get("REPO_NAME");
+            String url = "https://api.github.com/repos/" + RepoOwner + "/" + RepoName + "/pulls?state=all&per_page=100";
     
             ResponseEntity<List> response = restTemplate.exchange(url, HttpMethod.GET, null, List.class);
     
