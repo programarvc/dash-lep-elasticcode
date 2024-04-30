@@ -1,5 +1,6 @@
 package com.br.agilize.dash.service.dashboardService;
 
+/* 
 //Service que busca os dados de pr da API do GitHub e salva no banco de dados
 import com.br.agilize.dash.mapper.dashboardMapper.PrFromGitHubMapper;
 import com.br.agilize.dash.model.dto.dashboardDto.PrFromGitHubDto;
@@ -23,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import io.github.cdimascio.dotenv.Dotenv;
- 
+
 @Service
 public class PrsGitHubApiService  implements CommandLineRunner{
 
@@ -38,14 +39,16 @@ public class PrsGitHubApiService  implements CommandLineRunner{
     @Autowired
     private PrFromGitHubMapper prFromGitHubMapper;
    
-   
-
+   */
+ /* 
     @Override
     public void run(String... args) throws Exception {
         getPrCountByUser();
     }
-    
-    @Scheduled(cron = "0 0 */12 * * ?")
+    */
+    //@Scheduled(cron = "0 0 */12 * * ?")
+   
+    /* 
     public void getPrCountByUser() {
         List<ColaboradorEntity> colaboradores = colaboradorRepository.findAll();
     
@@ -108,7 +111,8 @@ public class PrsGitHubApiService  implements CommandLineRunner{
             }
         }
     }
-
+    */
+/*
     // Query para buscar a quantidade total de PRs de um dev por id
     public Map<String, Object> getPrCountForColaborador(Long colaboradorId) {
         return prFromGitHubRepository.countByColaboradorId(colaboradorId);
@@ -129,5 +133,5 @@ public class PrsGitHubApiService  implements CommandLineRunner{
         return prFromGitHubRepository.countPrsLast7DaysByColaboradorId(colaboradorId);
     }
 
-    
 }
+*/
