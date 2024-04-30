@@ -53,8 +53,8 @@ public class PrsGitHubApiService  implements CommandLineRunner{
             String githubUsername = colaborador.getGithub();
 
             HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
-            requestFactory.setConnectTimeout(5000); // Tempo em milissegundos
-            requestFactory.setReadTimeout(5000); // Tempo em milissegundos
+            requestFactory.setConnectTimeout(100000); // Tempo em milissegundos
+            requestFactory.setReadTimeout(100000); // Tempo em milissegundos
 
             RestTemplate restTemplate = new RestTemplate(requestFactory);
             String RepoOwner = dotenv.get("REPO_OWNER");
