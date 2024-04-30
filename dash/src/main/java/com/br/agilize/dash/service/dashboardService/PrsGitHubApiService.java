@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -50,12 +51,16 @@ public class PrsGitHubApiService  implements CommandLineRunner{
     
         for (ColaboradorEntity colaborador : colaboradores) {
             String githubUsername = colaborador.getGithub();
-    
-            RestTemplate restTemplate = new RestTemplate();
+
+            HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+            requestFactory.setConnectTimeout(5000); // Tempo em milissegundos
+            requestFactory.setReadTimeout(5000); // Tempo em milissegundos
+
+            RestTemplate restTemplate = new RestTemplate(requestFactory);
             String RepoOwner = dotenv.get("REPO_OWNER");
             String RepoName = dotenv.get("REPO_NAME");
             String token = dotenv.get("GITHUB_TOKEN");
-            String url = "https://api.github.com/repos/" + RepoOwner + "/" + RepoName + "/pulls?state=all&per_page=100";
+            String url = "https://api.github.com/repos/" + RepoOwner + "/" + RepoName + "/pulls?state=all";
 
             // Adicionando o token de autenticação no header da requisição
             HttpHeaders headers = new HttpHeaders();
