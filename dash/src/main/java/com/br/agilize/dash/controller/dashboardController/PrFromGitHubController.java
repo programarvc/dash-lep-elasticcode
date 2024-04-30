@@ -1,5 +1,5 @@
 package com.br.agilize.dash.controller.dashboardController;
-
+/* 
 //End point para buscar dados de PRs do GitHub total, últimos 90, 30 e 7 dias
 import java.util.List;
 import java.util.Map;
@@ -49,3 +49,4 @@ public class PrFromGitHubController {
         return ResponseEntity.ok(prCount);
     } 
 }
+*/
