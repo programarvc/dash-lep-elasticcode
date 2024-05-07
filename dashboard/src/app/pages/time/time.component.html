@@ -1,36 +1,37 @@
 <header>
     <div class="row">
         <div class="col-md-6">
-            <div class="user-identification">
-                <div class="photo">
-                    <img src="{{'https://github.com/' + currentColaborador.github + '.png'}}" alt="foto do colaborador">
-                </div>
-                <div class="personal-data">
-                  <span class="name">{{currentColaborador.nome}} -
-                    <span *ngFor="let time of time; let isFirst = first" >
-                      {{ isFirst ? '' : ', ' }} {{time.nomeTime}}
-                    </span>
-                  </span>
-  
-                  <span class="occupation">
-                    <span *ngFor="let habilidade of habilidadesByColaborador; let isFirst = first">{{ isFirst ? '' : ' - ' }} {{habilidade.habilidade.nome}}</span>
-                  </span>
-                </div>
-                <div class="filter-dev-data">
-                  <div ngbDropdown>
-                    <button type="button" class="dropdown-dev-toggle" id="dropdownMaturidades" ngbDropdownToggle>
-                      {{ currentMetasColaborador ? (formattedDate | date: 'dd/MM/yyyy') : 'Selecione'}}
-                    </button>
-                    <div ngbDropdownMenu aria-labelledby="dropdownMaturidades">
-                      <button ngbDropdownItem *ngFor="let metasCData of allLatestMetaByColaboradorId" (click)="selecionarMetaColaborador(metasCData.id)">
-                          {{metasCData.data | date: 'dd/MM/yyyy'}}
-                      </button>
+                <div class="user-identification">
+                    <div class="user-personal-content">
+                        <div class="photo">
+                            <img src="{{'https://github.com/' + currentColaborador.github + '.png'}}" alt="foto do colaborador">
+                        </div>
+                        <div class="personal-data">
+                            <span class="name">{{currentColaborador.nome}} -
+                                <span *ngFor="let time of time; let isFirst = first" >
+                                    {{ isFirst ? '' : ', ' }} {{time.nomeTime}}
+                                </span>
+                            </span>
+                            <span class="occupation">
+                                <span *ngFor="let habilidade of habilidadesByColaborador; let isFirst = first">{{ isFirst ? '' : ' - ' }} {{habilidade.habilidade.nome}}</span>
+                            </span>
+                        </div>
                     </div>
-                  </div>
+                    <div class="filter-dev-data">
+                        <div ngbDropdown>
+                            <button type="button" class="dropdown-dev-toggle" id="dropdownMaturidades" ngbDropdownToggle>
+                                {{ currentMetasColaborador ? ('Medição das Metas - ' + (formattedDate | date: 'dd/MM/yyyy')) : 'Selecione'}}
+                            </button>
+                            <div ngbDropdownMenu aria-labelledby="dropdownMaturidades">
+                                <button ngbDropdownItem *ngFor="let metasCData of allLatestMetaByColaboradorId" (click)="selecionarMetaColaborador(metasCData.id)">
+                                    Medição das Metas - {{metasCData.data | date: 'dd/MM/yyyy'}}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-6">
             <div class="search">
                 <div class="filters-display">
                     <div class="filter">
