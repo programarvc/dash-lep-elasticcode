@@ -44,6 +44,7 @@
                         <span [ngStyle]="{'font-size': this.getFontSize(currentMaturidade?.frequencyDeployment)}">
                           {{currentMaturidade?.frequencyDeployment !== null ? currentMaturidade?.frequencyDeployment : 'sem dado'}}
                         </span>
+                          {{currentMaturidade.frequencyDeployment !== null ? 'por semana' : ''}}
                       </p>
                     </div>
                   </div>
