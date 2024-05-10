@@ -54,7 +54,7 @@
                     <div class="card estabilidade">
                       <p class="titulo-card">Change Failure Rate</p>
                       <p class="text-porcent" [ngStyle]="{'font-size': this.getFontSizeFailureRate(currentMaturidade?.changeFailureRate)}">
-                        {{currentMaturidade?.changeFailureRate !== null ?  currentMaturidade?.changeFailureRate : 'sem dado' }}
+                        {{currentMaturidade?.changeFailureRate !== null ?  (currentMaturidade?.changeFailureRate + '%') : 'sem dado' }}
                       </p>
                     </div>
                     <div class="card estabilidade">

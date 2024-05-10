@@ -34,7 +34,6 @@ public class VcsPullRequestEntity {
 
 
     @ManyToOne
-    @JoinColumn(name = "colaborador_id")
     private ColaboradorEntity colaborador;
 
 }

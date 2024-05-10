@@ -43,12 +43,9 @@ public class MaturidadeService extends ServiceCrudBase<MaturidadeDto> {
         Optional<MaturidadeEntity> existente = this.repository.findTopByEsteiraIdOrderByNumeroDesc(payload.getEsteira().getId());
         MaturidadeEntity maturidade = this.mapper.dtoToModel(payload);
            
-        //Multiplicando valores especificos por 100 antes de salvar
         maturidade.setLeadTime(multiplicarPor100(calcularMetrica(maturidade.getLeadTime(), maturidade.getLeadTimeEsperado())));
         maturidade.setFrequencyDeployment(multiplicarPor100(calcularMetrica(maturidade.getFrequencyDeployment(), maturidade.getFrequencyDeploymentEsperado())));
-       //Dividir por 100 para obter o valor real
-        double changeFailureRate = multiplicarPor100(calcularMetrica(maturidade.getChangeFailureRate(), maturidade.getChangeFailureRateEsperado())) / 100.0;
-        maturidade.setChangeFailureRate(changeFailureRate);
+        maturidade.setChangeFailureRate(multiplicarPor100(calcularMetrica(maturidade.getChangeFailureRate(), maturidade.getChangeFailureRateEsperado())));
         maturidade.setTimeToRecovery(multiplicarPor100(calcularMetrica(maturidade.getTimeToRecovery(), maturidade.getTimeToRecoveryEsperado())) );
         maturidade.setMediaDeJornada(multiplicarPor100(maturidade.getMediaDeJornada()));
         maturidade.setSaude(multiplicarPor100(maturidade.getSaude()));
