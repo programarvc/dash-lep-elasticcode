@@ -338,8 +338,8 @@ getColaboradorEsteiraId(esteiraId: number) {
       this.getHabilidades(colaborador.id);
       this.getTimesByColaboradorId(colaborador.id);
       this.getLatestMetaByColaboradorId(colaborador.id);
+      this.getAllLatestMetaByColaboradorId(colaborador.id);
       this.getPrFromGithubByColaboradorId(colaborador.id);
-      
       this.getValorIndicePorIdColaborador(colaborador.id);
     }
   }
