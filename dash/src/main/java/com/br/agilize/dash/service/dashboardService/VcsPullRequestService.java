@@ -48,7 +48,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class VcsPullRequestService implements CommandLineRunner {
 
     @Autowired
-    private VcsPullRequestRepository metaBaseRepository;
+    private VcsPullRequestRepository vcsPullRequestRepository;
 
     @Autowired
     private VcsPullRequestMapper metaBaseMapper;
@@ -73,7 +73,7 @@ public class VcsPullRequestService implements CommandLineRunner {
 
     public void getPRDataAndSave() {
 
-       /*  RestTemplate restTemplate = new RestTemplate();
+        /* RestTemplate restTemplate = new RestTemplate();
 
         Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
 
@@ -148,7 +148,8 @@ public class VcsPullRequestService implements CommandLineRunner {
                 e.printStackTrace();
             }
         }*/
-    }
+    } 
+    /*
     @Transactional
     public PrCountDto getPrCountByColaboradorId(Long colaboradorId) {
         PrCountEntity prCountEntity = this.prCountRepository.findByColaboradorId(colaboradorId);
@@ -159,5 +160,41 @@ public class VcsPullRequestService implements CommandLineRunner {
         } else {
             return prCountMapper.modelToDTO(prCountEntity);
         }
+    }*/
+    
+    // Query para buscar a quantidade  de PRs de um dev por id dentro de 1 ano 
+    public Map<String, Object> getPrCountLast1YearForColaborador(Long colaboradorId) {
+        return vcsPullRequestRepository.countPrsLast1YearByColaboradorId(colaboradorId);
     }
+
+    // Query para buscar a quantidade de PRs de um dev por id esse ano
+    public Map<String, Object> getPrCountThisYearForColaborador(Long colaboradorId) {
+        return vcsPullRequestRepository.countPrsThisYearByColaboradorId(colaboradorId);
+    }
+
+    // Query para buscar a quantidade de PRs de um dev por id ano passado
+    public Map<String, Object> getPrCountLastYearForColaborador(Long colaboradorId) {
+        return vcsPullRequestRepository.countPrsLastYearByColaboradorId(colaboradorId);
+    }
+    
+    // Query para buscar a quantidade de PRs de um dev por id nos últimos 90 dias
+    public Map<String, Object> getPrCountLast90DaysForColaborador(Long colaboradorId) {
+        return vcsPullRequestRepository.countPrsLast90DaysByColaboradorId(colaboradorId);
+    }
+    
+    // Query para buscar a quantidade de PRs de um dev por id nos últimos 30 dias
+    public Map<String, Object> getPrCountLast30DaysForColaborador(Long colaboradorId) {
+        return vcsPullRequestRepository.countPrsLast30DaysByColaboradorId(colaboradorId);
+    }
+    
+    // Query para buscar a quantidade de PRs de um dev por id nos últimos 7 dias
+    public Map<String, Object> getPrCountLast7DaysForColaborador(Long colaboradorId) {
+        return vcsPullRequestRepository.countPrsLast7DaysByColaboradorId(colaboradorId);
+    }
+
+    // Query para buscar a todos de PRs de um dev por id 
+    public Map<String, Object> getAllPrCountForColaborador(Long colaboradorId) {
+        return vcsPullRequestRepository.countAllPrsByColaboradorId(colaboradorId);
+    }
+
 }

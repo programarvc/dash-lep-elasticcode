@@ -11,7 +11,7 @@ import {
           AllLatestMetaByColaboradorId,
           PrCount,
           IndiceDeSobrevivenciaDev,
-          PrFromGithub
+          VcsPullRequest
          } from 'src/app/types/time-types';
 import { TimeService } from 'src/services/time/time.service';
 import {  Habilidade,
@@ -155,6 +155,23 @@ export class TimeComponent implements OnInit {
   };
   */
 
+  //variavel com dados para armazenar a quantidade total de prs por colaborador Hasura
+  currentVcsPullRequest: VcsPullRequest = {
+    id: 0,
+    title: '',
+    mergedAt: '',
+    author: '',
+    colaborador: {
+      id: 0,
+      nome: '',
+      email: '',
+      github: '',
+      miniBio: '',
+      habilidades: [],
+    },
+    countpr: 0
+  };
+
   public  currentValorIndiceDeSobrevivencia: IndiceDeSobrevivenciaDev = {
     id: 0,
     timeColaborador: {
@@ -184,9 +201,9 @@ export class TimeComponent implements OnInit {
     valorIndice: 0
   }
 
-  public PrCountLast7DaysForColaborador: PrFromGithub[] = [];
-  public PrCountLast30DaysForColaborador: PrFromGithub[] = [];
-  public PrCountLast90DaysForColaborador: PrFromGithub[] = [];
+  public PrCountLast7DaysForColaborador: VcsPullRequest[] = [];
+  public PrCountLast30DaysForColaborador: VcsPullRequest[] = [];
+  public PrCountLast90DaysForColaborador: VcsPullRequest[] = [];
   public prCount: PrCount[] = [];
   public metasOneAOne: MetasOneAOne[] = [];
   public allLatestMetaByColaboradorId: AllLatestMetaByColaboradorId[] = []; 
@@ -321,8 +338,8 @@ getColaboradorEsteiraId(esteiraId: number) {
       this.getHabilidades(colaborador.id);
       this.getTimesByColaboradorId(colaborador.id);
       this.getLatestMetaByColaboradorId(colaborador.id);
-      this.getPrCountByColaboradorId(colaborador.id);
       this.getAllLatestMetaByColaboradorId(colaborador.id);
+      this.getPrFromGithubByColaboradorId(colaborador.id);
       this.getValorIndicePorIdColaborador(colaborador.id);
     }
   }
@@ -372,9 +389,11 @@ public selecionarColaborador(colaboradorId: number) {
     this.currentColaborador = colaborador; // atualiza o colaborador atual
     this.getTimesAcoesHabilidades(colaborador.id);
     this.getTimesByColaboradorId(colaborador.id);
-    this.getPrCountByColaboradorId(colaborador.id);
+    this.getPrFromGithubByColaboradorId(colaborador.id);
     this.getColaboradorEsteiraId(this.currentEsteira.id);
     this.getTimesByEsteira(this.currentEsteira.id);
+   
+    this.selectedTimePr = 'Todos';
   });
 }
 
@@ -442,41 +461,55 @@ public selecionarMetaColaborador (id?: number) {
     }
   }
 
+ /*
   //metodo anterior x
   getPrCountByColaboradorId( colaboradorId: number) {
     this.timeService.getPrCountByColaboradorId(colaboradorId).subscribe((response) => {
       this.currentPrCount = response;
     });
-  }
+  }*/
 
-/*
-  //Metodos para retornar a quantidade de prs em tempo determinado github API
+
+  //Metodos para retornar a quantidade de prs em tempo determinado Hasura API
 
   //metodo para retornar o total de prs por colaborador
   getPrFromGithubByColaboradorId(colaboradorId: number) {
     this.timeService.getPrCountForColaboradorId(colaboradorId).subscribe((response) => {
-      this.currentPrFromGithub = response;
+      this.currentVcsPullRequest.countpr = response.countpr || 0;
     });
   }
 
   //metodo para retornar a quantidade de pr nos ultimos 7 dias por colaborador
   getPrCountLast7DaysForColaborador(colaboradorId: number) {
     this.timeService.getPrCountLast7DaysForColaborador(colaboradorId).subscribe((response) => {
-       this.currentPrFromGithub.countPr = response.countpr || 0; // Atualiza diretamente a quantidade de PRs
+       this.currentVcsPullRequest.countpr = response.countpr || 0; // Atualiza diretamente a quantidade de PRs
     });
   }
    //metodo para retornar a quantidade de pr nos ultimos 30 dias por colaborador
   getPrCountLast30DaysForColaborador(colaboradorId: number) {
     this.timeService.getPrCountLast30DaysForColaborador(colaboradorId).subscribe((response) => {
-      this.currentPrFromGithub.countPr = response.countpr || 0; // Atualiza diretamente a quantidade de PRs
+      this.currentVcsPullRequest.countpr = response.countpr || 0; // Atualiza diretamente a quantidade de PRs
    });
   }
 
     //metodo para retornar a quantidade de pr nos ultimos 90 dias por colaborador
   getPrCountLast90DaysForColaborador(colaboradorId: number) {
       this.timeService.getPrCountLast90DaysForColaborador(colaboradorId).subscribe((response) => {
-        this.currentPrFromGithub.countPr = response.countpr || 0; // Atualiza diretamente a quantidade de PRs
+        this.currentVcsPullRequest.countpr = response.countpr || 0; // Atualiza diretamente a quantidade de PRs
      });
+  }
+
+  //metodo para retornar a quantidade de prs no ano corente por colaboradorId
+  getPrCountThisYearForColaborador(colaboradorId: number){
+    this.timeService.getPrCountThisYearForColaborador(colaboradorId).subscribe((response) => {
+      this.currentVcsPullRequest.countpr = response.countpr || 0; // Atualiza diretamente a quantidade de PRs
+    });
+  }
+
+  getPrCountLastYearForColaborador(colaboradorId: number){
+    this.timeService.getPrCountLastYearForColaborador(colaboradorId).subscribe((response) => {
+      this.currentVcsPullRequest.countpr = response.countpr || 0; // Atualiza diretamente a quantidade de PRs
+    });
   }
 
    //garante que o select Todos retorne o total de prs
@@ -500,13 +533,26 @@ public selecionarMetaColaborador (id?: number) {
     this.getPrCountLast30DaysForColaborador(colaboradorId);
   }
 
-  //garante que o select 30 dias retorne a quantidade de prs dos ultimos 30 dias
+  //garante que o select 90 dias retorne a quantidade de prs dos ultimos 90 dias
   updatePrCountToLast90Days() {
     this.selectedTimePr = '90 d';
     const colaboradorId = this.currentColaborador.id;
     this.getPrCountLast90DaysForColaborador(colaboradorId);
   }
-  */
+  
+  //garante que o select de Ano Anterior retorne a quantidade de prs do Dev referente ao Ano anterior 
+  updatePrCountToLastYear() {
+    this.selectedTimePr = 'Ano anterior';
+    const colaboradorId = this.currentColaborador.id;
+    this.getPrCountLastYearForColaborador(colaboradorId);
+  }
+
+  //garante que o select de Este Ano retorne a quantidade de prs do Dev referente ao Ano corrente 
+  updatePrCountToThisYear() {
+    this.selectedTimePr = 'Este ano';
+    const colaboradorId = this.currentColaborador.id;
+    this.getPrCountThisYearForColaborador(colaboradorId);
+  }
 
 }
 

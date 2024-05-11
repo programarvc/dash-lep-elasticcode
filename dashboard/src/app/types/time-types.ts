@@ -73,6 +73,7 @@ export interface Habilidade {
       count: number;
     }
 
+    /*
     export interface PrFromGithub {
       id: number;
       prAuthor: string;
@@ -84,9 +85,19 @@ export interface Habilidade {
       nome: string;
 
     }
+    */
 
     export interface IndiceDeSobrevivenciaDev {
       id: number;
       timeColaborador: TimeColaborador;
       valorIndice: number;
     }
+
+    export interface  VcsPullRequest {
+      id: number;
+      title: string;
+      mergedAt: string;
+      author: string;
+      colaborador: Colaborador;
+      countpr: number;
+   }
