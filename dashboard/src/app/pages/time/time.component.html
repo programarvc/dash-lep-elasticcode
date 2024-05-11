@@ -231,7 +231,12 @@
           <div class="card">
               <div class="pr-count-header">
                 <h2>Pull Requests<br><span>(do github)</span></h2>
-                 <div ngbDropdown>
+              </div> 
+              <div class="pr-count">
+                <p><b>{{currentVcsPullRequest.countpr}}</b></p>
+              </div>
+            <div class="pr-count-selector">
+                <div ngbDropdown>
                     <button type="button" class="dropdown-pr-toggle" id="dropdownPr" ngbDropdownToggle>
                         {{selectedTimePr}}
                     </button>
@@ -256,10 +261,7 @@
                         </button>
                     </div> 
                 </div> 
-              </div> 
-              <div class="pr-count">
-                <p><b>{{currentVcsPullRequest.countpr}}</b></p>
-              </div>
+            </div>
           </div>
           <div class="card">
             <h2>Indice de Sobrevivência do Dev</h2>
