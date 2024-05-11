@@ -74,4 +74,12 @@ public interface VcsPullRequestRepository extends JpaRepository<VcsPullRequestEn
         "AND c.id = :colaboradorId " +
         "GROUP BY c.id, c.nome", nativeQuery = true)
     Map<String, Object> countPrsLast7DaysByColaboradorId(@Param("colaboradorId") Long colaboradorId);
+
+    @Query(value = "SELECT c.id as id, c.nome as nome, COUNT(p.id) as countPr " +
+        "FROM vcs_pull_request p " +
+        "JOIN colaboradorentity c ON p.colaborador_id = c.id " +
+        "WHERE p.merged_at IS NOT NULL " +
+        "AND c.id = :colaboradorId " +
+        "GROUP BY c.id, c.nome", nativeQuery = true)
+    Map<String, Object> countAllPrsByColaboradorId(@Param("colaboradorId") Long colaboradorId);
 }

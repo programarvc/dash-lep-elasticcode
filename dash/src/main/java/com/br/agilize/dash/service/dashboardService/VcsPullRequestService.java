@@ -192,4 +192,9 @@ public class VcsPullRequestService implements CommandLineRunner {
         return vcsPullRequestRepository.countPrsLast7DaysByColaboradorId(colaboradorId);
     }
 
+    // Query para buscar a todos de PRs de um dev por id 
+    public Map<String, Object> getAllPrCountForColaborador(Long colaboradorId) {
+        return vcsPullRequestRepository.countAllPrsByColaboradorId(colaboradorId);
+    }
+
 }

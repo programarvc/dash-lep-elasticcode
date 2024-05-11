@@ -30,33 +30,52 @@ public class VcsPullRequestController {
     }
     */
 
+    // Query para buscar a quantidade total de PRs de um colaborador por id dentro de um ano
     @GetMapping("/last1year/{colaboradorId}")
     public ResponseEntity<Map<String, Object>> getPrCountLast1YearForColaborador(@PathVariable Long colaboradorId) {
         Map<String, Object> prCount = service.getPrCountLast1YearForColaborador(colaboradorId);
         return ResponseEntity.ok(prCount);
     }
     
+    // Query para buscar a quantidade total de PRs de um colaborador por id esse ano
     @GetMapping("/thisyear/{colaboradorId}")
     public ResponseEntity<Map<String, Object>> getPrCountThisYearForColaborador(@PathVariable Long colaboradorId) {
         Map<String, Object> prCount = service.getPrCountThisYearForColaborador(colaboradorId);
         return ResponseEntity.ok(prCount);
     }
     
+    // Query para buscar a quantidade total de PRs de um colaborador por id ano passado
     @GetMapping("/lastyear/{colaboradorId}")
     public ResponseEntity<Map<String, Object>> getPrCountLastYearForColaborador(@PathVariable Long colaboradorId) {
         Map<String, Object> prCount = service.getPrCountLastYearForColaborador(colaboradorId);
         return ResponseEntity.ok(prCount);
     }
+
+    // Query para buscar a quantidade de PRs de um colaborador por id nos últimos 90 dias
+    @GetMapping("/last90days/{colaboradorId}")
+    public ResponseEntity<Map<String, Object>> getPrCountLast90DaysForColaborador(@PathVariable Long colaboradorId) {
+        Map<String, Object> prCount = service.getPrCountLast90DaysForColaborador(colaboradorId);
+        return ResponseEntity.ok(prCount);
+    }
     
+    // Query para buscar a quantidade de PRs de um colaborador por id nos últimos 30 dias
     @GetMapping("/last30days/{colaboradorId}")
     public ResponseEntity<Map<String, Object>> getPrCountLast30DaysForColaborador(@PathVariable Long colaboradorId) {
         Map<String, Object> prCount = service.getPrCountLast30DaysForColaborador(colaboradorId);
         return ResponseEntity.ok(prCount);
     }
     
+    // Query para buscar a quantidade de PRs de um colaborador por id nos últimos 7 dias
     @GetMapping("/last7days/{colaboradorId}")
     public ResponseEntity<Map<String, Object>> getPrCountLast7DaysForColaborador(@PathVariable Long colaboradorId) {
         Map<String, Object> prCount = service.getPrCountLast7DaysForColaborador(colaboradorId);
+        return ResponseEntity.ok(prCount);
+    }
+
+    // Query para buscar a todos  PRs de um colaborador por id 
+    @GetMapping("/allprs/{colaboradorId}")
+    public ResponseEntity<Map<String, Object>> getAllPrCountForColaborador(@PathVariable Long colaboradorId) {
+        Map<String, Object> prCount = service.getAllPrCountForColaborador(colaboradorId);
         return ResponseEntity.ok(prCount);
     }
 
