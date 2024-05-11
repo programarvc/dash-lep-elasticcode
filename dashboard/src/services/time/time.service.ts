@@ -112,25 +112,53 @@ export class TimeService {
       .get<any>(url)
       .pipe(catchError(this.handleError<any>("getMetas")));
   }
+ /*
   //metodo antigo
   getPrCountByColaboradorId( colaboradorId: number): Observable<any> {
     const url: string = `${environment.api}/prcount/colaborador/${colaboradorId}`;
     return this.http
       .get<any>(url)
       .pipe(catchError(this.handleError<any>("getPrCountByColaboradorId")));
-  }
+  } */
 
   //metodo novo busca quantidade de PRs por colaboradorId
   getPrCountForColaboradorId( colaboradorId: number): Observable<any> {
-    const url: string = `${environment.api}/prgithub/count/${colaboradorId}`;
+    const url: string = `${environment.api}/prcount/allprs/${colaboradorId}`;
     return this.http
       .get<any>(url)
       .pipe(catchError(this.handleError<any>("getPrCountForColaboradorId")));
   }
 
+  //
+  //metdo busca quantidade de PRs por colaboradorId no ano corrente
+  getPrCountLast1YearForColaborador (colaboradorId: number): Observable<any> {
+    const url: string = `${environment.api}/prcount/last1year/${colaboradorId}`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>("getPrCountLast90DaysForColaborador")));
+  }
+
+
+  //metodo busca quantidade de PRs por colaboradorId no ano anterior
+  getPrCountLastYearForColaborador (colaboradorId: number): Observable<any> {
+    const url: string = `${environment.api}/prcount/lastyear/${colaboradorId}`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>("getPrCountLast90DaysForColaborador")));
+  }
+
+
+  //metdo busca quantidade de PRs por colaboradorId no ano corrente
+  getPrCountThisYearForColaborador (colaboradorId: number): Observable<any> {
+    const url: string = `${environment.api}/prcount/thisyear/${colaboradorId}`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>("getPrCountLast90DaysForColaborador")));
+  }
+
   //metodo busca quantidade de PRs por colaboradorId nos ultimos 90 dias
   getPrCountLast90DaysForColaborador (colaboradorId: number): Observable<any> {
-    const url: string = `${environment.api}/prgithub/last90days/${colaboradorId}`;
+    const url: string = `${environment.api}/prcount/last90days/${colaboradorId}`;
     return this.http
       .get<any>(url)
       .pipe(catchError(this.handleError<any>("getPrCountLast90DaysForColaborador")));
@@ -138,7 +166,7 @@ export class TimeService {
 
   //metodo busca quantidade de PRs por colaboradorId nos ultimos 30 dias
   getPrCountLast30DaysForColaborador (colaboradorId: number): Observable<any> {
-    const url: string = `${environment.api}/prgithub/last30days/${colaboradorId}`;
+    const url: string = `${environment.api}/prcount/last30days/${colaboradorId}`;
     return this.http
       .get<any>(url)
       .pipe(catchError(this.handleError<any>("getPrCountLast30DaysForColaborador")));
@@ -146,7 +174,7 @@ export class TimeService {
 
   //metodo busca quantidade de PRs por colaboradorId nos ultimos 7 dias
   getPrCountLast7DaysForColaborador (colaboradorId: number): Observable<any> {
-    const url: string = `${environment.api}/prgithub/last7days/${colaboradorId}`;
+    const url: string = `${environment.api}/prcount/last7days/${colaboradorId}`;
     return this.http
       .get<any>(url)
       .pipe(catchError(this.handleError<any>("getPrCountLast7DaysForColaborador")));
