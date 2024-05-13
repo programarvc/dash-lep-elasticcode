@@ -1,15 +1,18 @@
 package com.br.agilize.dash.controller.dashboardController;
 
-import java.util.List;
+import java.util.Date;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import com.br.agilize.dash.model.dto.dashboardDto.PrCountDto;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.br.agilize.dash.service.dashboardService.VcsPullRequestService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -77,6 +80,15 @@ public class VcsPullRequestController {
     public ResponseEntity<Map<String, Object>> getAllPrCountForColaborador(@PathVariable Long colaboradorId) {
         Map<String, Object> prCount = service.getAllPrCountForColaborador(colaboradorId);
         return ResponseEntity.ok(prCount);
+    }
+
+    @GetMapping("/dates/{colaboradorId}")
+    @ResponseBody
+    public Map<String, Object> getPrCountForColaborador(
+            @PathVariable Long colaboradorId,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
+        return service.getPrCountForColaborador(colaboradorId, startDate, endDate);
     }
 
 }

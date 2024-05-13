@@ -23,6 +23,12 @@ public class MetasColaboradorEntity {
     @JoinColumn(name = "meta_id" )
     private MetasOneAOneEntity meta;
 
+    /*
+     @ManyToOne
+    @JoinColumn(name = "meta_id" )
+    private List<MetasOneAOneEntity> metasNotas;
+     */
+
     @ManyToOne
     @JoinColumn(name = "colaborador_id")
     private ColaboradorEntity colaborador;  
@@ -34,10 +40,5 @@ public class MetasColaboradorEntity {
     public void prePersist() {
        data = LocalDateTime.now();
     } 
-
-    @PreUpdate
-    public void preUpdate() {
-       data = LocalDateTime.now();
-    }
 
 }

@@ -197,4 +197,14 @@ public class VcsPullRequestService implements CommandLineRunner {
         return vcsPullRequestRepository.countAllPrsByColaboradorId(colaboradorId);
     }
 
+    // Query para buscar a quantidade de PRs de um dev por id em um intervalo de datas
+    public Map<String, Object> getPrCountForColaborador(Long colaboradorId, Date startDate, Date endDate) {
+        if (startDate != null && endDate != null) {
+            return vcsPullRequestRepository.countPrsInDateRangeByColaboradorId(colaboradorId, startDate, endDate);
+        } else {
+            // Se as datas não forem fornecidas, retorne a contagem total de PRs
+            return vcsPullRequestRepository.countAllPrsByColaboradorId(colaboradorId);
+        }
+    }
+
 }

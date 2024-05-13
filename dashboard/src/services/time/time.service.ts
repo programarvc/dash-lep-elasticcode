@@ -180,6 +180,15 @@ export class TimeService {
       .pipe(catchError(this.handleError<any>("getPrCountLast7DaysForColaborador")));
   }
 
+  //metodo busca quantidade de PRs por colaboradorId dentro de uma data especifica
+  getPrCountDateForColaborador (colaboradorId: number): Observable<any> {
+    const url: string = `${environment.api}/dates/${colaboradorId}`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>("getPrCountDateForColaborador")));
+  }
+
+
   getValorIndicePorIdColaborador(colaboradorId: number): Observable<any> {
     const url: string = `${environment.api}/indiceDeSobrevivencia/colaborador/${colaboradorId}`;
     return this.http

@@ -4,6 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
 
@@ -75,6 +77,7 @@ public interface VcsPullRequestRepository extends JpaRepository<VcsPullRequestEn
         "GROUP BY c.id, c.nome", nativeQuery = true)
     Map<String, Object> countPrsLast7DaysByColaboradorId(@Param("colaboradorId") Long colaboradorId);
 
+    //Querry para buscar a quantidade total de PRs de um colaborador por id
     @Query(value = "SELECT c.id as id, c.nome as nome, COUNT(p.id) as countPr " +
         "FROM vcs_pull_request p " +
         "JOIN colaboradorentity c ON p.colaborador_id = c.id " +
@@ -82,4 +85,14 @@ public interface VcsPullRequestRepository extends JpaRepository<VcsPullRequestEn
         "AND c.id = :colaboradorId " +
         "GROUP BY c.id, c.nome", nativeQuery = true)
     Map<String, Object> countAllPrsByColaboradorId(@Param("colaboradorId") Long colaboradorId);
+
+    // Query para buscar a quantidade de PRs de um colaborador por id em um intervalo de datas
+    @Query(value = "SELECT c.id as id, c.nome as nome, COUNT(p.id) as countPr " +
+        "FROM vcs_pull_request p " +
+        "JOIN colaboradorentity c ON p.colaborador_id = c.id " +
+        "WHERE p.merged_at IS NOT NULL " +
+        "AND TO_DATE(p.merged_at, 'YYYY-MM-DD') BETWEEN :startDate AND :endDate " +
+        "AND c.id = :colaboradorId " +
+        "GROUP BY c.id, c.nome", nativeQuery = true)
+    Map<String, Object> countPrsInDateRangeByColaboradorId(@Param("colaboradorId") Long colaboradorId, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
 }
