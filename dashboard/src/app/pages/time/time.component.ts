@@ -217,11 +217,6 @@ export class TimeComponent implements OnInit {
   public habilidadesByColaborador: HabilidadeByColaborador[] = [];
   public formattedDate: string | null = null;
   public selectedTimePr: string = 'Todos';
-  public today = new Date();
-  public model: {start: NgbDateStruct, end: NgbDateStruct} = {
-    start: {year: 0, month: 0, day: 0},
-    end: {year: this.today.getFullYear(), month: this.today.getMonth() + 1, day: this.today.getDate()}
-  };
   private isSelectingStart = true;
   public selectedDates = [];
   public dataInicio: string = '';
@@ -237,8 +232,6 @@ export class TimeComponent implements OnInit {
     private habilidadeService: HabilidadeService,
     private timeService: TimeService,
     private modalService: NgbModal,
-    private renderer: Renderer2,
-    private el: ElementRef
   ) { 
 
       this.dataFim = new Date().toISOString().substring(0, 10);
