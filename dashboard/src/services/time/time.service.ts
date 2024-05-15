@@ -182,7 +182,7 @@ export class TimeService {
 
   //metodo busca quantidade de PRs por colaboradorId dentro de uma data especifica
 getPrCountDateForColaborador (colaboradorId: number, startDate: string, endDate: string): Observable<any> {
-  const url: string = `${environment.api}prcount/dates/${colaboradorId}`;
+  const url: string = `${environment.api}/prcount/dates/${colaboradorId}`;
   const params = new HttpParams().set('startDate', startDate).set('endDate', endDate);
   return this.http
     .get<any>(url, { params })
