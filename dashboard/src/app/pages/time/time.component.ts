@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
           Time,
@@ -28,6 +28,7 @@ import { ColaboradorService } from 'src/services/colaborador/colaborador.service
 import { CompetenciaService } from 'src/services/competencia/competencia.service';
 import { EsteiraService } from 'src/services/esteira/esteira.service';
 import { HabilidadeService } from 'src/services/habilidade/habilidade.service';
+import { NgbModal, NgbDateStruct, NgbDate } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-time',
@@ -216,6 +217,15 @@ export class TimeComponent implements OnInit {
   public habilidadesByColaborador: HabilidadeByColaborador[] = [];
   public formattedDate: string | null = null;
   public selectedTimePr: string = 'Todos';
+  public today = new Date();
+  public model: {start: NgbDateStruct, end: NgbDateStruct} = {
+    start: {year: 0, month: 0, day: 0},
+    end: {year: this.today.getFullYear(), month: this.today.getMonth() + 1, day: this.today.getDate()}
+  };
+  private isSelectingStart = true;
+  public selectedDates = [];
+  public dataInicio: string = '';
+  public dataFim: string = '';
 
   constructor(
     private router: Router,
@@ -225,8 +235,15 @@ export class TimeComponent implements OnInit {
     private acoesService: AcaoService,
     private esteiraService: EsteiraService,
     private habilidadeService: HabilidadeService,
-    private timeService: TimeService
-  ) { }
+    private timeService: TimeService,
+    private modalService: NgbModal,
+    private renderer: Renderer2,
+    private el: ElementRef
+  ) { 
+
+      this.dataFim = new Date().toISOString().substring(0, 10);
+
+  }
 
   async ngOnInit(): Promise<void> {
     this.route.paramMap.subscribe((params) => {
@@ -553,8 +570,21 @@ public selecionarMetaColaborador (id?: number) {
     const colaboradorId = this.currentColaborador.id;
     this.getPrCountThisYearForColaborador(colaboradorId);
   }
-
   
+  //Modal para Data Personalizada
+  open(content: any) {
+    this.modalService.open(content)
+  }
+
+  //Atualização dos valores das variáveis dataInicio dataFim e Fechar Modal
+  updateDates() {
+    this.dataInicio = new Date(this.dataInicio).toISOString().substring(0, 10);
+    this.dataFim = new Date(this.dataFim).toISOString().substring(0, 10);
+    this.modalService.dismissAll();
+
+    console.log(this.dataInicio, this.dataFim);
+  }
+
 }
 
 
