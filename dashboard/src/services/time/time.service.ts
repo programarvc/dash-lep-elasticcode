@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 
 import { Observable, of } from "rxjs";
@@ -181,12 +181,13 @@ export class TimeService {
   }
 
   //metodo busca quantidade de PRs por colaboradorId dentro de uma data especifica
-  getPrCountDateForColaborador (colaboradorId: number): Observable<any> {
-    const url: string = `${environment.api}/dates/${colaboradorId}`;
-    return this.http
-      .get<any>(url)
-      .pipe(catchError(this.handleError<any>("getPrCountDateForColaborador")));
-  }
+getPrCountDateForColaborador (colaboradorId: number, startDate: string, endDate: string): Observable<any> {
+  const url: string = `${environment.api}prcount/dates/${colaboradorId}`;
+  const params = new HttpParams().set('startDate', startDate).set('endDate', endDate);
+  return this.http
+    .get<any>(url, { params })
+    .pipe(catchError(this.handleError<any>("getPrCountDateForColaborador")));
+}
 
 
   getValorIndicePorIdColaborador(colaboradorId: number): Observable<any> {

@@ -571,11 +571,17 @@ public selecionarMetaColaborador (id?: number) {
 
   //Atualização dos valores das variáveis dataInicio dataFim e Fechar Modal
   updateDates() {
+    this.selectedTimePr = 'Data personalizada';
     this.dataInicio = new Date(this.dataInicio).toISOString().substring(0, 10);
     this.dataFim = new Date(this.dataFim).toISOString().substring(0, 10);
     this.modalService.dismissAll();
 
-    console.log(this.dataInicio, this.dataFim);
+    const colaboradorId = this.currentColaborador.id;
+    this.timeService.getPrCountDateForColaborador(colaboradorId, this.dataInicio, this.dataFim).subscribe(data => {
+      this.currentVcsPullRequest.countpr = data.countpr || 0;
+    });
+
+    console.log('data de inicio',this.dataInicio, 'data de fim', this.dataFim);
   }
 
 }
