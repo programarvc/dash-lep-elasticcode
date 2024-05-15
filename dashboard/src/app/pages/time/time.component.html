@@ -259,17 +259,46 @@
                         <button ngbDropdownItem (click)="updatePrCountToLast90Days()">
                             90 d
                         </button>
+                        <button ngbDropdownItem (click)="open(content)">
+                            Data personalizada
+                        </button>
+
+                        <ng-template #content let-c="close" let-d="dismiss">
+                            <div class="modal-header modal-prs-header">
+                                <h4 class="modal-title">
+                                    Selecione as datas
+                                </h4>
+                                <button type="button" class="close button-modal" aria-label="Close" (click)="d('Cross click')">
+                                    <span aria-hidden="true">X</span>
+                                </button>
+                            </div>
+                            <div class="modal-body modal-prs-body">
+                                <div class="campo-data campo-1">
+                                    <label for="data-inicio">Data Inicial</label>
+                                    <input type="date" [(ngModel)]="dataInicio">
+                                </div>
+                                <div class="campo-data">
+                                    <label for="data-fim">Data Final</label>
+                                    <input type="date" [(ngModel)]="dataFim">
+                                </div>
+                            </div>
+                            <div class="modal-footer modal-prs-footer">
+                                <button class="button-modal" type="button" (click)="updateDates()">
+                                    Ok
+                                </button>
+                            </div>
+                        </ng-template>
                     </div> 
                 </div> 
             </div>
-          </div>
-          <div class="card">
-            <h2>Indice de Sobrevivência do Dev</h2>
-            <div class="pr-count">
-              <p><b>{{currentValorIndiceDeSobrevivencia.valorIndice}}</b></p>
             </div>
-          </div>
-      </div>
+            <div class="card">
+                <h2>Indice de Sobrevivência do Dev</h2>
+                <div class="pr-count">
+                    <p><b>{{currentValorIndiceDeSobrevivencia.valorIndice}}</b></p>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="row">
         <div class="col-md-12">
@@ -348,5 +377,5 @@
             </div>
         </div>
     </section>
-  </div>
+    </div>
 </main>  
