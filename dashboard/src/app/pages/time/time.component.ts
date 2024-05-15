@@ -571,18 +571,20 @@ public selecionarMetaColaborador (id?: number) {
 
   //Formata as datas
   formatDate(date: string): string {
-    const d = new Date(date);
-    let month = '' + (d.getMonth() + 1);
-    let day = '' + d.getDate();
-    const year = d.getFullYear();
+  const [year, month, day] = date.split('-').map(Number);
+  const d = new Date(year, month - 1, day);
   
-    if (month.length < 2) 
-      month = '0' + month;
-    if (day.length < 2) 
-      day = '0' + day;
+  let formattedMonth = '' + (d.getMonth() + 1);
+  let formattedDay = '' + d.getDate();
+  const formattedYear = d.getFullYear();
   
-    return [day, month, year].join('/');
-  }
+  if (formattedMonth.length < 2) 
+    formattedMonth = '0' + formattedMonth;
+  if (formattedDay.length < 2) 
+    formattedDay = '0' + formattedDay;
+  
+  return [formattedDay, formattedMonth, formattedYear].join('/');
+}
 
   //Atualização dos valores das variáveis dataInicio dataFim e Fechar Modal
   updateDates() {
