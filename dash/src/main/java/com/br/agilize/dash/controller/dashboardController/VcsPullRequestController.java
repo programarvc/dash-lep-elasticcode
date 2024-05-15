@@ -91,5 +91,4 @@ public class VcsPullRequestController {
         return service.getPrCountForColaborador(colaboradorId, startDate, endDate);
     }
 
-    
 }
