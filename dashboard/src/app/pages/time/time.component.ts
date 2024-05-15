@@ -569,13 +569,36 @@ public selecionarMetaColaborador (id?: number) {
     this.modalService.open(content)
   }
 
+  //Formata as datas
+  formatDate(date: string): string {
+    const d = new Date(date);
+    let month = '' + (d.getMonth() + 1);
+    let day = '' + d.getDate();
+    const year = d.getFullYear();
+  
+    if (month.length < 2) 
+      month = '0' + month;
+    if (day.length < 2) 
+      day = '0' + day;
+  
+    return [day, month, year].join('/');
+  }
+
   //Atualização dos valores das variáveis dataInicio dataFim e Fechar Modal
   updateDates() {
+    this.selectedTimePr = 'Data personalizada';
     this.dataInicio = new Date(this.dataInicio).toISOString().substring(0, 10);
     this.dataFim = new Date(this.dataFim).toISOString().substring(0, 10);
     this.modalService.dismissAll();
 
-    console.log(this.dataInicio, this.dataFim);
+    const colaboradorId = this.currentColaborador.id;
+    this.timeService.getPrCountDateForColaborador(colaboradorId, this.dataInicio, this.dataFim).subscribe(data => {
+      this.currentVcsPullRequest.countpr = data.countpr || 0;
+    });
+  
+    this.selectedTimePr = this.formatDate(this.dataInicio) + ' - ' + this.formatDate(this.dataFim);
+
+    console.log('data de inicio',this.dataInicio, 'data de fim', this.dataFim);
   }
 
 }

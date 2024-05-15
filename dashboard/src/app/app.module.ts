@@ -9,9 +9,6 @@ import { AppComponent } from './app.component';
 import { Amplify } from 'aws-amplify';
 import awsconfig from 'aws-exports';
 
-import { NgbDatepickerI18n } from '@ng-bootstrap/ng-bootstrap';
-import { I18n, CustomDatepickerI18n } from './custom-datepicker-i18n'; 
-
 //Components
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { SidebarMenuComponent } from './components/sidebar-menu/sidebar-menu.component';
@@ -32,10 +29,7 @@ Amplify.configure(awsconfig);
 @NgModule({
   declarations: [AppComponent, SearchBarComponent, ColaboradorComponent, DashProjetoComponent, SidebarMenuComponent, TecnicaComponent, MaturidadeLgComponent, MaturidadeSmComponent, AmplifyUiLoginComponent, TimeComponent],
   imports: [HttpClientModule, BrowserModule, AppRoutingModule,FormsModule, NgbModule, AmplifyAuthenticatorModule],
-  providers: [
-    I18n,
-    { provide: NgbDatepickerI18n, useClass: CustomDatepickerI18n}
-  ],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
