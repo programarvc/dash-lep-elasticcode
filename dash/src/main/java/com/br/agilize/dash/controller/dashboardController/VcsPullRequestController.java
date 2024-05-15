@@ -90,6 +90,4 @@ public class VcsPullRequestController {
             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
         return service.getPrCountForColaborador(colaboradorId, startDate, endDate);
     }
-
-    //Corrigindo CORS
 }
