@@ -217,7 +217,7 @@ export class TimeComponent implements OnInit {
   public habilidadesByColaborador: HabilidadeByColaborador[] = [];
   public formattedDate: string | null = null;
   public selectedTimePr: string = 'Todos';
-  private isSelectingStart = true;
+  public selectedActivities: string = 'Todos';
   public selectedDates = [];
   public dataInicio: string = '';
   public dataFim: string = '';
