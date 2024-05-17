@@ -297,33 +297,34 @@
                 <div class="activities-count">
                     <p>
                         <b>
-                            5
+                            {{currentTasksCountJira.counttasks}}
                         </b>
                     </p>
                 </div>
                 <div class="pr-count-selector">
                     <div ngbDropdown>
                         <button type="button" class="dropdown-actv-toggle" id="dropdownActv" ngbDropdownToggle>
-                            {{selectedTimePr}}
+                            {{selectedActivities}}
                         </button>
                         <div ngbDropdownMenu aria-labelledby="dropdownActv">
-                            <button ngbDropdownItem>
+                            <button ngbDropdownItem (click)="updateTasksCount('Todos')">
                                 Todos
                             </button>
-                            <button ngbDropdownItem>
+                            <button ngbDropdownItem (click)="updateTasksCount('Ano anterior')">
                                 Ano anterior
                             </button>
-                            <button ngbDropdownItem>
+                            <button ngbDropdownItem (click)="updateTasksCount('Este ano')">
                                 Este ano
                             </button>
-                            <button ngbDropdownItem>
+                            <button ngbDropdownItem (click)="updateTasksCount('7 d')">
                                 7 d
                             </button>
-                            <button ngbDropdownItem>
+                            <button ngbDropdownItem (click)="updateTasksCount('30 d')">
                                 30 d
                             </button>
-                            <button ngbDropdownItem>
+                            <button ngbDropdownItem (click)="updateTasksCount('90 d')">
                                 90 d
+                       
                             </button>
                             <button ngbDropdownItem (click)="open(content)">
                                 Data personalizada

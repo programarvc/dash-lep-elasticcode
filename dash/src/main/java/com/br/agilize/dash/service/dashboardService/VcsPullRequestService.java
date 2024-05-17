@@ -89,7 +89,7 @@ public class VcsPullRequestService implements CommandLineRunner {
         headers.set("X-Hasura-Admin-Secret", dotenv.get("HASURA_ADMIN_SECRET")); // substitua  pelo seu admin secret
 
         for (String restApiUrl : restApiUrls) {
-            // Enviando a solicitação
+            // Enviando a solicitação  
             HttpEntity<String> request = new HttpEntity<>(headers);
             ResponseEntity<String> response = restTemplate.exchange(restApiUrl, HttpMethod.GET, request, String.class);
 
@@ -127,7 +127,7 @@ public class VcsPullRequestService implements CommandLineRunner {
                         // Salva o PrCountDto no banco de dados
                         prCountRepository.save(prCountMapper.dtoToModel(prCountDto));
                     }
-
+                
                     VcsPullRequestEntity prData = metaBaseMapper.dtoToModel(prDataDto);
 
 

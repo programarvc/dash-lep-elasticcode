@@ -1,6 +1,6 @@
 package com.br.agilize.dash.model.dto.dashboardDto;
 
-import java.time.LocalDateTime;
+import com.br.agilize.dash.model.dto.ColaboradorDto;
 
 import lombok.Data;
 
@@ -13,7 +13,5 @@ public class VcsPullRequestDto {
 
     private String mergedAt;
 
-    private String author;  
-
-    
+    private String author;    
 }
