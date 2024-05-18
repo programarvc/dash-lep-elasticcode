@@ -324,9 +324,8 @@
                             </button>
                             <button ngbDropdownItem (click)="updateTasksCount('90 d')">
                                 90 d
-                       
                             </button>
-                            <button ngbDropdownItem (click)="open(content)">
+                            <button ngbDropdownItem (click)="openActivity(contentActivity)">
                                 Data personalizada
                             </button>
     
@@ -342,15 +341,39 @@
                                 <div class="modal-body modal-prs-body">
                                     <div class="campo-data campo-1">
                                         <label for="data-inicio">Data Inicial</label>
-                                        <input type="date" [(ngModel)]="dataInicio">
+                                        <input type="date" [(ngModel)]="dataInicioActivity">
                                     </div>
                                     <div class="campo-data">
                                         <label for="data-fim">Data Final</label>
-                                        <input type="date" [(ngModel)]="dataFim">
+                                        <input type="date" [(ngModel)]="dataFimActivity">
                                     </div>
                                 </div>
                                 <div class="modal-footer modal-prs-footer">
-                                    <button class="button-modal" type="button" (click)="updateDates()">
+                                    <button class="button-modal" type="button" (click)="updateDatesActivity()">
+                                        Ok
+                                    </button>
+                                </div>
+                            </ng-template> <ng-template #contentActivity let-c="close" let-d="dismiss">
+                                <div class="modal-header modal-activities-header">
+                                    <h4 class="modal-title">
+                                        Selecione as datas
+                                    </h4>
+                                    <button type="button" class="close button-modal" aria-label="Close" (click)="d('Cross click')">
+                                        <span aria-hidden="true">X</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body modal-activities-body">
+                                    <div class="campo-data campo-1">
+                                        <label for="data-inicio-activity">Data Inicial</label>
+                                        <input type="date" [(ngModel)]="dataInicioActivity">
+                                    </div>
+                                    <div class="campo-data">
+                                        <label for="data-fim-activity">Data Final</label>
+                                        <input type="date" [(ngModel)]="dataFimActivity">
+                                    </div>
+                                </div>
+                                <div class="modal-footer modal-activities-footer">
+                                    <button class="button-modal" type="button" (click)="updateDatesActivity()">
                                         Ok
                                     </button>
                                 </div>

@@ -23,6 +23,7 @@ import com.br.agilize.dash.repository.ColaboradorRepository;
 
 import com.br.agilize.dash.repository.dashboardRepository.TasksCountJiraRepository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -131,6 +132,16 @@ public class TasksCountJiraService implements CommandLineRunner {
 
     public Map<String, Object> countCompletedTasksLast90DaysByColaboradorId(Long colaboradorId) {
         return repository.countCompletedTasksLast90DaysByColaboradorId(colaboradorId);
+    }
+
+    // Query para buscar a quantidade de tarefas concluídas de um colaborador por id em um intervalo de datas
+    public Map<String, Object> getTasksCountForColaborador(Long colaboradorId, Date startDate, Date endDate) {
+        if (startDate != null && endDate != null) {
+            return repository.countCompletedTasksInDateRangeByColaboradorId(colaboradorId, startDate, endDate);
+        } else {
+            // Se as datas não forem fornecidas, retorne a contagem total de tarefas concluídas
+            return repository.countAllCompletedTasksByColaboradorId(colaboradorId);
+        }
     }
 
 }

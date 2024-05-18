@@ -77,5 +77,14 @@ TasksCountJiraEntity findByAuthorAndStatusDetailAndMergedAt(String author, Strin
     Map<String, Object> countCompletedTasksLast90DaysByColaboradorId(@Param("colaboradorId") Long colaboradorId);
 
     
+    // Query para buscar a quantidade de tasks concluídas de um colaborador por id em um intervalo de datas
+    @Query(value = "SELECT c.id as id, c.nome as nome, COUNT(t.id) as countTasks " +
+        "FROM tasks_count_jira t " +
+        "JOIN colaboradorentity c ON t.colaborador_id = c.id " +
+        "WHERE t.status_detail = 'concluido' " +
+        "AND DATE(t.merged_at) BETWEEN :startDate AND :endDate " +
+        "AND c.id = :colaboradorId " +
+        "GROUP BY c.id, c.nome", nativeQuery = true)
+    Map<String, Object> countCompletedTasksInDateRangeByColaboradorId(@Param("colaboradorId") Long colaboradorId, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
 }

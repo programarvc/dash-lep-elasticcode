@@ -231,6 +231,14 @@ getPrCountDateForColaborador (colaboradorId: number, startDate: string, endDate:
       .pipe(catchError(this.handleError<any>("getCountCompletedTasksLastYearByColaboradorId")));
   }
 
+  getTasksCountForColaboradorId (colaboradorId: number, startDate: string, endDate: string): Observable<any> {
+      const url: string = `${environment.api}/taskscount/dates/${colaboradorId}`;
+      const params = new HttpParams().set('startDate', startDate).set('endDate', endDate);
+      return this.http
+        .get<any>(url, { params })
+        .pipe(catchError(this.handleError<any>("getTasksCountForColaboradorId")));
+  }
+
   //metodo busca quantidade de tasks concluidas total por colaboradorId 
   getCountAllCompletedTasksByColaboradorId (colaboradorId: number): Observable<any> {
     const url: string = `${environment.api}/taskscount/all/${colaboradorId}`;

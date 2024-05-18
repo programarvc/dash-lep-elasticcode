@@ -239,6 +239,8 @@ export class TimeComponent implements OnInit {
   public selectedDates = [];
   public dataInicio: string = '';
   public dataFim: string = '';
+  public dataInicioActivity: string = '';
+  public dataFimActivity : string = '';
 
   constructor(
     private router: Router,
@@ -694,6 +696,31 @@ export class TimeComponent implements OnInit {
         break;
     }
   }
+
+  //Modal para Data Personalizada
+  openActivity(contentActivity: any) {
+    this.modalService.open(contentActivity)
+  }
+
+  //Atualização dos valores das variáveis dataInicio dataFim e Fechar Modal
+  updateDatesActivity() {
+    this.selectedActivities = 'Data personalizada';
+    this.dataInicioActivity = new Date(this.dataInicioActivity).toISOString().substring(0, 10);
+    this.dataFimActivity = new Date(this.dataFimActivity).toISOString().substring(0, 10);
+    this.modalService.dismissAll();
+
+    const colaboradorId = this.currentColaborador.id;
+    this.timeService.getTasksCountForColaboradorId(colaboradorId, this.dataInicioActivity, this.dataFimActivity).subscribe(data => {
+      this.currentTasksCountJira.counttasks = data.counttasks || 0;
+    });
+    
+    this.selectedActivities = this.formatDate(this.dataInicioActivity) + ' - ' + this.formatDate(this.dataFimActivity);
+
+    console.log('data de inicio Activity',this.dataInicioActivity, 'data de fim Activity', this.dataFimActivity);
+  }
+
+
+
 
 }
 

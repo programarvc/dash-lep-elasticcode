@@ -88,4 +88,13 @@ public class TasksCountJiraController {
         return ResponseEntity.ok(taskCount);
     }
 
+    @GetMapping("/dates/{colaboradorId}")
+    @ResponseBody
+    public Map<String, Object> getTasksCountForColaborador(
+            @PathVariable Long colaboradorId,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
+        return service.getTasksCountForColaborador(colaboradorId, startDate, endDate);
+    }
+
 }
