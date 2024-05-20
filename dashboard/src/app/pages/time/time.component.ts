@@ -13,7 +13,7 @@ import {
           IndiceDeSobrevivenciaDev,
           VcsPullRequest,
           TasksCountJira
-         } from 'src/app/types/time-types';
+} from 'src/app/types/time-types';
 import { TimeService } from 'src/services/time/time.service';
 import {  Habilidade,
           HabilidadeByColaborador,
@@ -23,7 +23,7 @@ import {  Habilidade,
           Empresa,
           Competencia,
           Acao
-          } from 'src/app/types/colaborador-types';
+} from 'src/app/types/colaborador-types';
 import { AcaoService } from 'src/services/acao/acao.service';
 import { ColaboradorService } from 'src/services/colaborador/colaborador.service';
 import { CompetenciaService } from 'src/services/competencia/competencia.service';
@@ -255,6 +255,7 @@ export class TimeComponent implements OnInit {
   ) { 
 
       this.dataFim = new Date().toISOString().substring(0, 10);
+      this.dataFimActivity = new Date().toISOString().substring(0, 10);
 
   }
 
