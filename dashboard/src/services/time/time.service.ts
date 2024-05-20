@@ -189,6 +189,64 @@ getPrCountDateForColaborador (colaboradorId: number, startDate: string, endDate:
     .pipe(catchError(this.handleError<any>("getPrCountDateForColaborador")));
 }
 
+  //-------metodos para quantidade de tasks concluidas por colaboradorid-------
+
+  //metodo busca quantidade de tasks concluidas por colaboradorId nos ultimos 90 dias
+  getCountCompletedTasksLast90DaysByColaboradorId (colaboradorId: number): Observable<any> {
+    const url: string = `${environment.api}/taskscount/last90days/${colaboradorId}`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>("getPrCountLast90DaysForColaborador")));
+  }
+
+  //metodo busca quantidade de tasks concluidas por colaboradorId nos ultimos 30 dias
+  getCountCompletedTasksLast30DaysByColaboradorId (colaboradorId: number): Observable<any> {
+    const url: string = `${environment.api}/taskscount/last30days/${colaboradorId}`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>("getPrCountLast30DaysForColaborador")));
+  }
+
+  //metodo busca quantidade de tasks concluidas por colaboradorId nos ultimos 7 dias
+  getCountCompletedTasksLast7DaysByColaboradorId (colaboradorId: number): Observable<any> {
+    const url: string = `${environment.api}/taskscount/last7days/${colaboradorId}`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>("getPrCountLast7DaysForColaborador")));
+  }
+
+   //metdo busca quantidade de PRs por colaboradorId no ano corrente
+   getCountCompletedTasksThisYearByColaboradorId (colaboradorId: number): Observable<any> {
+    const url: string = `${environment.api}/taskscount/thisyear/${colaboradorId}`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>("getCountCompletedTasksThisYearByColaboradorId")));
+  }
+
+  //metdo busca quantidade de PRs por colaboradorId no ano corrente
+  getCountCompletedTasksLastYearByColaboradorId (colaboradorId: number): Observable<any> {
+    const url: string = `${environment.api}/taskscount/lastyear/${colaboradorId}`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>("getCountCompletedTasksLastYearByColaboradorId")));
+  }
+
+  getTasksCountForColaboradorId (colaboradorId: number, startDate: string, endDate: string): Observable<any> {
+      const url: string = `${environment.api}/taskscount/dates/${colaboradorId}`;
+      const params = new HttpParams().set('startDate', startDate).set('endDate', endDate);
+      return this.http
+        .get<any>(url, { params })
+        .pipe(catchError(this.handleError<any>("getTasksCountForColaboradorId")));
+  }
+
+  //metodo busca quantidade de tasks concluidas total por colaboradorId 
+  getCountAllCompletedTasksByColaboradorId (colaboradorId: number): Observable<any> {
+    const url: string = `${environment.api}/taskscount/all/${colaboradorId}`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>("getCountAllCompletedTasksByColaboradorId")));
+  }
+
 
   getValorIndicePorIdColaborador(colaboradorId: number): Observable<any> {
     const url: string = `${environment.api}/indiceDeSobrevivencia/colaborador/${colaboradorId}`;

@@ -87,17 +87,27 @@ export interface Habilidade {
     }
     */
 
-    export interface IndiceDeSobrevivenciaDev {
-      id: number;
-      timeColaborador: TimeColaborador;
-      valorIndice: number;
-    }
+  export interface IndiceDeSobrevivenciaDev {
+    id: number;
+    timeColaborador: TimeColaborador;
+    valorIndice: number;
+  }
 
-    export interface  VcsPullRequest {
-      id: number;
-      title: string;
-      mergedAt: string;
-      author: string;
-      colaborador: Colaborador;
-      countpr: number;
+  export interface  VcsPullRequest {
+    id: number;
+    title: string;
+    mergedAt: string;
+    author: string;
+    colaborador: Colaborador;
+    countpr: number;
+   }
+
+  export interface TasksCountJira{
+    id: number;
+    taskName: string; 
+    statusDetail: string;
+    mergedAt: string;
+    author: string;
+    colaborador: Colaborador;
+    counttasks: number;
    }

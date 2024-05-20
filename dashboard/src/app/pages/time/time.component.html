@@ -225,17 +225,17 @@
               </div>
           </div>
           <div class="card">
-              <h2>Metas estabelecidas</h2>
+              <h2>Metas Estabelecidas</h2>
               <p class="card-colaborador-content">{{currentMetasColaborador?.meta?.metas}}</p>
           </div>
           <div class="card">
               <div class="pr-count-header">
                 <h2>Pull Requests<br><span>(do github)</span></h2>
               </div> 
-              <div class="pr-count">
+                <div class="pr-count">
                 <p><b>{{currentVcsPullRequest.countpr}}</b></p>
-              </div>
-             <div class="pr-count-selector">
+                </div>
+                <div class="pr-count-selector">
                 <div ngbDropdown>
                     <button type="button" class="dropdown-pr-toggle" id="dropdownPr" ngbDropdownToggle>
                         {{selectedTimePr}}
@@ -292,6 +292,96 @@
                 </div> 
             </div>
             </div>
+            <div class="card">
+                <h2>Atividades Concluídas<br><span>(do jira)</span></h2>
+                <div class="activities-count">
+                    <p>
+                        <b>
+                            {{currentTasksCountJira.counttasks}}
+                        </b>
+                    </p>
+                </div>
+                <div class="pr-count-selector">
+                    <div ngbDropdown>
+                        <button type="button" class="dropdown-actv-toggle" id="dropdownActv" ngbDropdownToggle>
+                            {{selectedActivities}}
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownActv">
+                            <button ngbDropdownItem (click)="updateTasksCount('Todos')">
+                                Todos
+                            </button>
+                            <button ngbDropdownItem (click)="updateTasksCount('Ano anterior')">
+                                Ano anterior
+                            </button>
+                            <button ngbDropdownItem (click)="updateTasksCount('Este ano')">
+                                Este ano
+                            </button>
+                            <button ngbDropdownItem (click)="updateTasksCount('7 d')">
+                                7 d
+                            </button>
+                            <button ngbDropdownItem (click)="updateTasksCount('30 d')">
+                                30 d
+                            </button>
+                            <button ngbDropdownItem (click)="updateTasksCount('90 d')">
+                                90 d
+                            </button>
+                            <button ngbDropdownItem (click)="openActivity(contentActivity)">
+                                Data personalizada
+                            </button>
+    
+                            <ng-template #content let-c="close" let-d="dismiss">
+                                <div class="modal-header modal-prs-header">
+                                    <h4 class="modal-title">
+                                        Selecione as datas
+                                    </h4>
+                                    <button type="button" class="close button-modal" aria-label="Close" (click)="d('Cross click')">
+                                        <span aria-hidden="true">X</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body modal-prs-body">
+                                    <div class="campo-data campo-1">
+                                        <label for="data-inicio">Data Inicial</label>
+                                        <input type="date" [(ngModel)]="dataInicioActivity">
+                                    </div>
+                                    <div class="campo-data">
+                                        <label for="data-fim">Data Final</label>
+                                        <input type="date" [(ngModel)]="dataFimActivity">
+                                    </div>
+                                </div>
+                                <div class="modal-footer modal-prs-footer">
+                                    <button class="button-modal" type="button" (click)="updateDatesActivity()">
+                                        Ok
+                                    </button>
+                                </div>
+                            </ng-template> <ng-template #contentActivity let-c="close" let-d="dismiss">
+                                <div class="modal-header modal-activities-header">
+                                    <h4 class="modal-title">
+                                        Selecione as datas
+                                    </h4>
+                                    <button type="button" class="close button-modal" aria-label="Close" (click)="d('Cross click')">
+                                        <span aria-hidden="true">X</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body modal-activities-body">
+                                    <div class="campo-data campo-1">
+                                        <label for="data-inicio-activity">Data Inicial</label>
+                                        <input type="date" [(ngModel)]="dataInicioActivity">
+                                    </div>
+                                    <div class="campo-data">
+                                        <label for="data-fim-activity">Data Final</label>
+                                        <input type="date" [(ngModel)]="dataFimActivity">
+                                    </div>
+                                </div>
+                                <div class="modal-footer modal-activities-footer">
+                                    <button class="button-modal" type="button" (click)="updateDatesActivity()">
+                                        Ok
+                                    </button>
+                                </div>
+                            </ng-template>
+                        </div> 
+                    </div> 
+                </div>
+            </div> 
             <div class="card">
                 <h2>Indice de Sobrevivência do Dev</h2>
                 <div class="pr-count">
