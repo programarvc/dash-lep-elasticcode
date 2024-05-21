@@ -632,7 +632,6 @@ export class TimeComponent implements OnInit {
   getTasksCountByColaboradorId(colaboradorId: number){
     this.timeService.getCountAllCompletedTasksByColaboradorId(colaboradorId).subscribe((response) => {
       this.currentTasksCountJira.counttasks = response.counttasks || 0;
-      console.log('tasks concluidas', this.currentTasksCountJira.counttasks);
     });
   }
 

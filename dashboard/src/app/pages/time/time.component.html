@@ -296,13 +296,33 @@
                 </div>
             </div> 
             <div class="card">
-                <h2>Pontos de atividade</h2>
+                <h2>Story Points<br><span>(do jira)</span></h2>
                 <div class="pr-count">
-                    <p><b>5</b></p>
+                    <p>
+                        <b>
+                            {{currentTasksCountJira.counttasks * 3}}
+                        </b>
+                    </p>
+                </div>
+            </div>
+            <div class="card">
+                <h2>Biografia</h2>
+                <div class="bio-content">
+                    <p class="card-colaborador-content">{{ currentColaborador.miniBio}}</p>
+                </div>
+            </div>
+            <div class="card">
+                <h2>Metas Estabelecidas</h2>
+                <p class="card-colaborador-content">{{currentMetasColaborador?.meta?.metas}}</p>
+            </div>
+            <div class="card">
+                <h2>Indice de Sobrevivência do Dev</h2>
+                <div class="pr-count">
+                    <p><b>{{currentValorIndiceDeSobrevivencia.valorIndice}}</b></p>
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-9">
             <section class="table-time">
                 <div class="table-responsive">
                     <table class="competencies">
@@ -376,24 +396,6 @@
                     </table>
                 </div>
             </section>
-        </div>
-        <div class="col-md-3">
-            <div class="card">
-                <h2>Biografia</h2>
-                <div class="bio-content">
-                    <p class="card-colaborador-content">{{ currentColaborador.miniBio}}</p>
-                </div>
-            </div>
-            <div class="card">
-                <h2>Metas Estabelecidas</h2>
-                <p class="card-colaborador-content">{{currentMetasColaborador?.meta?.metas}}</p>
-            </div>
-            <div class="card">
-                <h2>Indice de Sobrevivência do Dev</h2>
-                <div class="pr-count">
-                    <p><b>{{currentValorIndiceDeSobrevivencia.valorIndice}}</b></p>
-                </div>
-            </div>
         </div>
     </div>
     <div class="row">
