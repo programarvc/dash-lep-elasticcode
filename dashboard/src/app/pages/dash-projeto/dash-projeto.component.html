@@ -10,11 +10,11 @@
               <div class="filter">
                 <div ngbDropdown>
                   <button type="button" id="dropdownMaturidades" ngbDropdownToggle>
-                    {{ currentMaturidade ? (formattedDate | date: 'dd/MM/yyyy HH:mm') : 'Selecione'}}
+                    {{ currentMaturidade ? ('Dash.Ops - ' + (formattedDate | date: 'dd/MM/yyyy HH:mm')) : 'Selecione'}}
                   </button>
                   <div ngbDropdownMenu aria-labelledby="dropdownMaturidades">
                     <button ngbDropdownItem *ngFor="let maturidadeData of maturidadeByEsteiraId; let i = index" (click)="selecionarMaturidade(maturidadeData.id)">
-                      {{maturidadeData.dataHora | date: 'dd/MM/yyyy HH:mm'}}
+                      {{'Dash.Ops - ' + (maturidadeData.dataHora | date: 'dd/MM/yyyy HH:mm')}}
                     </button>
                   </div>
                 </div>
@@ -110,7 +110,7 @@
               <div class="jornada-cards-space">
                 <div class="jornada-card">
                   <h3>
-                    Métrica 4 Key
+                    Pontos Entregues
                   </h3>
                   <div class="rate-value-4key">
                     <span>
@@ -118,7 +118,7 @@
                     </span>
                     <span class="rate-saude" [ngStyle]="{'font-size': this.getFontSizeMetricas(currentMaturidade?.metricas4)}">
                       {{currentMaturidade?.metricas4 !== null ? currentMaturidade.metricas4 : ''}}
-                      {{currentMaturidade?.metricas4 !== null ? '%' : ''}}
+                      <!--{{currentMaturidade?.metricas4 !== null ? '%' : ''}} -->
                     </span>
                   </div>
                   <div class="jornada-card-bar-content"
