@@ -10,11 +10,11 @@
               <div class="filter">
                 <div ngbDropdown>
                   <button type="button" id="dropdownMaturidades" ngbDropdownToggle>
-                    {{ currentMaturidade ? (formattedDate | date: 'dd/MM/yyyy HH:mm') : 'Selecione'}}
+                    {{ currentMaturidade ? ('Dash.Ops - ' + (formattedDate | date: 'dd/MM/yyyy HH:mm')) : 'Selecione'}}
                   </button>
                   <div ngbDropdownMenu aria-labelledby="dropdownMaturidades">
                     <button ngbDropdownItem *ngFor="let maturidadeData of maturidadeByEsteiraId; let i = index" (click)="selecionarMaturidade(maturidadeData.id)">
-                      {{maturidadeData.dataHora | date: 'dd/MM/yyyy HH:mm'}}
+                      {{'Dash.Ops - ' + (maturidadeData.dataHora | date: 'dd/MM/yyyy HH:mm')}}
                     </button>
                   </div>
                 </div>
@@ -108,41 +108,20 @@
             </div>
             <div class="bloco-inferior">
               <div class="jornada-cards-space">
-                <div class="jornada-card">
-                  <h3>
-                    Métrica 4 Key
-                  </h3>
-                  <div class="rate-value-4key">
-                    <span>
-                      {{ this.getNivel(currentMaturidade?.metricas4)}}
-                    </span>
-                    <span class="rate-saude" [ngStyle]="{'font-size': this.getFontSizeMetricas(currentMaturidade?.metricas4)}">
-                      {{currentMaturidade?.metricas4 !== null ? currentMaturidade.metricas4 : ''}}
-                      {{currentMaturidade?.metricas4 !== null ? '%' : ''}}
-                    </span>
-                  </div>
-                  <div class="jornada-card-bar-content"
-                  [style.display]="(currentMaturidade?.metricas4 === null) ? 'none' : 'block'"
-                  >
-                    <div class="jornada-card-bar">
-                        <div class="jornada-card-goal"
-                            [ngStyle]="{'width': (currentMaturidade?.metricas4 !== null ? currentMaturidade?.metricas4 : 0) + '%'}"
-                        >
-                        </div>
-                    </div>
-                </div>
-              </div>
               <div class="jornada-card">
                 <h3>
-                  Capacidade DORA
+                  Atividades<br>
+                  <span class="story-points-dash">
+                    (últimos 60 dias - jira)
+                  </span>
                 </h3>
                 <div class="rate-value-4key">
                   <span>
-                    {{ this.getNivel(currentMaturidade?.capacidadeDora)}}
+                    {{16}}
                   </span>
                   <span class="rate-saude" [ngStyle]="{'font-size': this.getFontSizeMetricas(currentMaturidade?.capacidadeDora)}">
-                    {{currentMaturidade?.capacidadeDora !== null ? currentMaturidade.capacidadeDora : ''}}
-                    {{currentMaturidade?.capacidadeDora !== null ? '%' : ''}}
+                    {{20}}
+                    <!--{{currentMaturidade?.capacidadeDora !== null ? '%' : ''}}-->
                   </span>
                 </div>
                 <div class="jornada-card-bar-content"
@@ -154,15 +133,47 @@
                 </div>
               </div>
             </div>
+            <div class="jornada-card">
+              <h3>
+                Story Points 
+                <span class="story-points-dash">
+                  (últimos 60 dias - jira)
+                </span>
+              </h3>
+              <div class="rate-value-4key">
+                <span>
+                  {{36}}
+                </span>
+                <span class="rate-saude" [ngStyle]="{'font-size': this.getFontSizeMetricas(currentMaturidade?.metricas4)}">
+                  {{156}}
+                  <!--{{currentMaturidade?.metricas4 !== null ? '%' : ''}} -->
+                </span>
+              </div>
+              <div class="jornada-card-bar-content"
+              [style.display]="(currentMaturidade?.metricas4 === null) ? 'none' : 'block'"
+              >
+                <div class="jornada-card-bar">
+                    <div class="jornada-card-goal"
+                        [ngStyle]="{'width': (currentMaturidade?.metricas4 !== null ? currentMaturidade?.metricas4 : 0) + '%'}"
+                    >
+                    </div>
+                </div>
+            </div>
+            </div>
           </div>
           <div class="espaco-capacidades-recomendadas">
-            <h3>Capacidades Recomendadas</h3>
             <div class="capacidades-recomendadas-card">
-              <ul>
+              <div class="prs-dashboard">
+                <h3>Pull Requests</h3><span>(últimos 60 dias - git)</span>
+                <p>
+                  18
+                </p>
+              </div>
+              <!--<ul>
                 <li *ngFor="let capacidadeNome of capacidade">
                   {{(capacidadeNome.itemDeMaturidade.nome).toString()}}
                 </li>
-              </ul>
+              </ul>-->
             </div>
           </div>
         </div>
