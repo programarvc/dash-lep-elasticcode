@@ -1,10 +1,9 @@
 package com.br.agilize.dash.model.entity.dashboardEntity;
 
-
 import com.br.agilize.dash.model.entity.ColaboradorEntity;
+import com.br.agilize.dash.model.entity.CompetenciaEntity;
 
 import java.time.LocalDateTime;
-import java.util.*;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,24 +13,21 @@ import lombok.ToString;
 @Data
 @ToString
 @Entity
-public class MetasColaboradorEntity {
+public class MetaColaboradorEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "meta_id" )
-    private MetasOneAOneEntity meta;
-
-    /*
-     @ManyToOne
-    @JoinColumn(name = "meta_id" )
-    private List<MetasOneAOneEntity> metasNotas;
-     */
+    @Column(name = "nota" )
+    private Integer nota;
 
     @ManyToOne
-    @JoinColumn(name = "colaborador_id")
-    private ColaboradorEntity colaborador;  
+    @JoinColumn(name = "competencia_id")
+    private CompetenciaEntity competencia; 
+    
+    @ManyToOne
+    @JoinColumn(name = "colaborador_id" )
+    private ColaboradorEntity colaborador;
 
     @Column( nullable = false, name = "data")
     private LocalDateTime data;

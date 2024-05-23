@@ -13,41 +13,44 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.br.agilize.dash.controller.ControllerCrudBase;
-import com.br.agilize.dash.model.dto.dashboardDto.MetasOneAOneDto;
-import com.br.agilize.dash.model.entity.dashboardEntity.MetasColaboradorEntity;
-import com.br.agilize.dash.model.dto.dashboardDto.MetasColaboradorDto;
-import com.br.agilize.dash.service.dashboardService.MetasOneAOneService;
+import com.br.agilize.dash.model.entity.dashboardEntity.MetaColaboradorEntity;
+import com.br.agilize.dash.model.dto.dashboardDto.MetaColaboradorDto;
+import com.br.agilize.dash.service.dashboardService.MetaColaboradorService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "MetasOneAOneController", description = "Api para gerenciar os MetasOneAOne")
 @Controller
 @RequestMapping("/metas")
-public class MetasOneAOneController extends ControllerCrudBase<MetasOneAOneDto> {
+public class MetaColaboradorController extends ControllerCrudBase<MetaColaboradorDto> {
      
     @Autowired 
-    MetasOneAOneService service;
+    MetaColaboradorService service;
 
-    public MetasOneAOneController(@Autowired MetasOneAOneService service) {
+    public MetaColaboradorController(@Autowired MetaColaboradorService service) {
         super(service);
     }
 
+
+/* 
      @PostMapping("/colaborador")
-    public ResponseEntity<MetasColaboradorDto> salvarMetasColaborador(@RequestBody MetasColaboradorDto payload) {
-        MetasColaboradorDto savedMetasColaborador = service.salvarMetasColaborador(payload);
+    public ResponseEntity<MetaColaboradorDto> salvarMetasColaborador(@RequestBody MetaColaboradorDto payload) {
+        MetaColaboradorDto savedMetasColaborador = service.salvarMetasColaborador(payload);
         return ResponseEntity.ok(savedMetasColaborador);
     }
 
 
     @GetMapping("/colaborador/{colaboradorId}")
-  public ResponseEntity<MetasColaboradorDto> getLatestMetaByColaboradorId(@PathVariable Long colaboradorId) {
-    MetasColaboradorDto recentMeta = service.findRecentMetaByColaboradorId(colaboradorId);
+  public ResponseEntity<MetaColaboradorDto> getLatestMetaByColaboradorId(@PathVariable Long colaboradorId) {
+    MetaColaboradorDto recentMeta = service.findRecentMetaByColaboradorId(colaboradorId);
     return new ResponseEntity<>(recentMeta, HttpStatus.OK);
     }
 
     @GetMapping("/colaborador/{colaboradorId}/all")
-    public ResponseEntity<List<MetasColaboradorDto>> getAllMetasByColaboradorId(@PathVariable Long colaboradorId) {
+    public ResponseEntity<List<MetaColaboradorDto>> getAllMetasByColaboradorId(@PathVariable Long colaboradorId) {
         List<MetasColaboradorDto> metas = service.findAllMetasByColaboradorId(colaboradorId);
         return new ResponseEntity<>(metas, HttpStatus.OK);
     }
+
+    */
 }
