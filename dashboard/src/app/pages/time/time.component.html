@@ -83,7 +83,7 @@
                             </span>
                         </span>
                         <span class="occupation">
-                            <span *ngFor="let habilidade of habilidadesByColaborador; let isFirst = first">{{ isFirst ? '' : ' - ' }} {{habilidade.habilidade.nome}}</span>
+                            <span *ngFor="let habilidade of duasHabilidadesByColaborador; let isFirst = first">{{ isFirst ? '' : ' - ' }} {{habilidade.habilidade.nome}}</span>
                         </span>
                     </div>
                 </div>
@@ -309,6 +309,15 @@
                 <h2>Biografia</h2>
                 <div class="bio-content">
                     <p class="card-colaborador-content">{{ currentColaborador.miniBio}}</p>
+                    <div class="tecnologias-bio">
+                        <span>Tecnologias:</span>
+                        <p 
+                            *ngFor="let habilidade of habilidadesByColaborador; 
+                            let isLast = last"
+                        >
+                            {{ habilidade.habilidade.nome }}{{ isLast ? ' ' : ',' }}
+                        </p>
+                    </div>
                 </div>
             </div>
             <div class="card">
@@ -320,6 +329,9 @@
                 <div class="pr-count">
                     <p><b>{{currentValorIndiceDeSobrevivencia.valorIndice}}</b></p>
                 </div>
+                    <div *ngFor="let habilidade of duasHabilidadesByColaborador">
+                        {{ habilidade.habilidade.nome }}
+                    </div>
             </div>
         </div>
         <div class="col-md-9">

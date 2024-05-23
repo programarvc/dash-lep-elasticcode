@@ -233,6 +233,7 @@ export class TimeComponent implements OnInit {
   public searchResultsAcoes: AcaoByColaborador[] = [];
   public searchResultsCompetencias:  CompetenciaByColaborador[] = [];
   public habilidadesByColaborador: HabilidadeByColaborador[] = [];
+  public duasHabilidadesByColaborador: HabilidadeByColaborador[] = [];
   public formattedDate: string | null = null;
   public selectedTimePr: string = 'Todos';
   public selectedActivities: string = 'Todos';
@@ -352,6 +353,13 @@ export class TimeComponent implements OnInit {
     });
   }
 
+  public getDuasHabilidades(id: number): void {
+    this.habilidadeService.getPrimeirasHabilidadesByColaborador(id).subscribe((response) => {
+      this.duasHabilidadesByColaborador = response;
+    
+    })
+  }
+
   public getMetas () {
     this.timeService.getMetas().subscribe((response) => {
       this.metasOneAOne = response;
@@ -373,6 +381,7 @@ export class TimeComponent implements OnInit {
       this.getPrFromGithubByColaboradorId(colaborador.id);
       this.getTasksCountByColaboradorId(colaborador.id);
       this.getValorIndicePorIdColaborador(colaborador.id);
+      this.getDuasHabilidades(colaborador.id);
     }
   }
 
