@@ -25,4 +25,11 @@ export class HabilidadeService {
       .get<any>(url)
       .pipe(catchError(this.handleError<any>('getHabilidadesByColaborador')));
   }
+
+  getPrimeirasHabilidadesByColaborador(id: number): Observable<any> {
+    const url: string = `${environment.api}/habilidades/colaborador/${id}/primeiras-habilidades`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>('getPrimeirasHabilidadesByColaborador')));
+  }
 }
