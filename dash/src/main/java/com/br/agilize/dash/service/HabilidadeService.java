@@ -15,6 +15,7 @@ import com.br.agilize.dash.model.entity.HabilidadeEntity;
 import com.br.agilize.dash.repository.HabilidadeColaboradorRepository;
 import com.br.agilize.dash.repository.HabilidadeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -109,6 +110,18 @@ public class HabilidadeService extends ServiceCrudBase<HabilidadeDto> {
                     ids.put("habilidade_id", habilidadeAssociacao.getHabilidade().getId());
                     ids.put("id", habilidadeAssociacao.getId());
                     return ids;
+                })
+                .collect(Collectors.toList());
+    }
+
+    // Novo método para obter as duas primeiras habilidades de um colaborador
+    public List<HabilidadeColaboradorDto> obterPrimeirasHabilidadesColaborador(Long colaboradorId) {
+        List<HabilidadeEntity> habilidades = habilidadeColaboradorRepository.findTop2HabilidadesByColaboradorId(colaboradorId, PageRequest.of(0, 2));
+        return habilidades.stream()
+                .map(habilidade -> {
+                    HabilidadeColaboradorDto dto = new HabilidadeColaboradorDto();
+                    dto.setHabilidade(mapper.modelToDTO(habilidade));
+                    return dto;
                 })
                 .collect(Collectors.toList());
     }
