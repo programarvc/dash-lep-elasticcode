@@ -81,6 +81,13 @@ public class TasksCountJiraController {
         Map<String, Object> taskCount = service.countCompletedTasksLast30DaysByColaboradorId(colaboradorId);
         return ResponseEntity.ok(taskCount);
     }
+
+     // Endpoint para buscar a quantidade de tasks concluidas de um colaborador por id nos últimos 60 dias
+     @GetMapping("/last60days/{colaboradorId}")
+     public ResponseEntity<Map<String, Object>> getCompletedTasksCountLast60DaysForColaborador(@PathVariable Long colaboradorId) {
+         Map<String, Object> tasksCount = service.getCompletedTasksCountLast60DaysForColaborador(colaboradorId);
+         return ResponseEntity.ok(tasksCount);
+     }
     
     @GetMapping("/last90days/{colaboradorId}")
     public ResponseEntity<Map<String, Object>> countCompletedTasksLast90DaysByColaboradorId(@PathVariable Long colaboradorId) {

@@ -60,6 +60,13 @@ public class VcsPullRequestController {
         Map<String, Object> prCount = service.getPrCountLast90DaysForColaborador(colaboradorId);
         return ResponseEntity.ok(prCount);
     }
+
+    // Query para buscar a quantidade de PRs de um colaborador por id nos últimos 60 dias
+    @GetMapping("/last60days/{colaboradorId}")
+    public ResponseEntity<Map<String, Object>> getPrCountLast60DaysForColaborador(@PathVariable Long colaboradorId) {
+        Map<String, Object> prCount = service.getPrCountLast60DaysForColaborador(colaboradorId);
+        return ResponseEntity.ok(prCount);
+    }
     
     // Query para buscar a quantidade de PRs de um colaborador por id nos últimos 30 dias
     @GetMapping("/last30days/{colaboradorId}")
@@ -67,6 +74,7 @@ public class VcsPullRequestController {
         Map<String, Object> prCount = service.getPrCountLast30DaysForColaborador(colaboradorId);
         return ResponseEntity.ok(prCount);
     }
+
     
     // Query para buscar a quantidade de PRs de um colaborador por id nos últimos 7 dias
     @GetMapping("/last7days/{colaboradorId}")
@@ -91,4 +99,10 @@ public class VcsPullRequestController {
         return service.getPrCountForColaborador(colaboradorId, startDate, endDate);
     }
 
+      // Endpoint para buscar a quantidade total de PRs nos últimos 30, 60 e 90 dias
+      @GetMapping("/allprsdays")
+      public ResponseEntity<Map<String, Object>> getPrCountLast30And60And90Days() {
+          Map<String, Object> prCount = service.getPrCountLast30And60And90Days();
+          return ResponseEntity.ok(prCount);
+      }
 }

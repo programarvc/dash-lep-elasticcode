@@ -82,4 +82,11 @@ export class MaturidadeService {
       .pipe(catchError(this.handleError<any>('getLatestMaturidadeByEsteiraId')));
   }
 
+  getPrCountLast30And60And90Days(): Observable<any> {
+    const url: string = `${environment.api}/prcount/allprsdays`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>('getPrCountLast30And60And90Days')));
+  }
+
 }

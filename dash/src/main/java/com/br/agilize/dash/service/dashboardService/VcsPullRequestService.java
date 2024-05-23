@@ -181,6 +181,11 @@ public class VcsPullRequestService implements CommandLineRunner {
     public Map<String, Object> getPrCountLast90DaysForColaborador(Long colaboradorId) {
         return vcsPullRequestRepository.countPrsLast90DaysByColaboradorId(colaboradorId);
     }
+
+     // Query para buscar a quantidade de PRs de um colaborador por id nos últimos 60 dias
+     public Map<String, Object> getPrCountLast60DaysForColaborador(Long colaboradorId) {
+        return vcsPullRequestRepository.countPrsLast60DaysByColaboradorId(colaboradorId);
+    }
     
     // Query para buscar a quantidade de PRs de um dev por id nos últimos 30 dias
     public Map<String, Object> getPrCountLast30DaysForColaborador(Long colaboradorId) {
@@ -205,6 +210,11 @@ public class VcsPullRequestService implements CommandLineRunner {
             // Se as datas não forem fornecidas, retorne a contagem total de PRs
             return vcsPullRequestRepository.countAllPrsByColaboradorId(colaboradorId);
         }
+    }
+
+    // Query para buscar a quantidade total de PRs nos últimos 30, 60 e 90 dias
+    public Map<String, Object> getPrCountLast30And60And90Days() {
+        return vcsPullRequestRepository.countPrsLast30And60And90Days();
     }
 
 }
