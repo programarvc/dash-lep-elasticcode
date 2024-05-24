@@ -1,7 +1,7 @@
 package com.br.agilize.dash.model.dto.dashboardDto;
 
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import com.br.agilize.dash.model.dto.ColaboradorDto;
 import com.br.agilize.dash.model.dto.CompetenciaDto;
@@ -19,5 +19,5 @@ public class MetaColaboradorDto {
     
     private ColaboradorDto colaborador;
 
-    private LocalDateTime data;
+    private LocalDate data;
 }

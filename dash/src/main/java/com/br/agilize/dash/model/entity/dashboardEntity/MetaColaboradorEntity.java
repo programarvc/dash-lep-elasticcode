@@ -3,7 +3,7 @@ package com.br.agilize.dash.model.entity.dashboardEntity;
 import com.br.agilize.dash.model.entity.ColaboradorEntity;
 import com.br.agilize.dash.model.entity.CompetenciaEntity;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,11 +30,11 @@ public class MetaColaboradorEntity {
     private ColaboradorEntity colaborador;
 
     @Column( nullable = false, name = "data")
-    private LocalDateTime data;
+    private LocalDate data;
 
     @PrePersist
     public void prePersist() {
-       data = LocalDateTime.now();
+       data = LocalDate.now();
     } 
 
 }
