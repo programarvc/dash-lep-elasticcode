@@ -14,7 +14,4 @@ public interface CompetenciaColaboradorRepository extends JpaRepository<Competen
     List<CompetenciaColaboradorEntity> findByColaborador(ColaboradorEntity colaborador);
 
     CompetenciaColaboradorEntity findByColaboradorIdAndCompetenciaId(Long colaboradorId, Long competenciaId);
-
-        // Método para buscar uma competência de um colaborador por id do colaborador e id da competência
-        Optional<CompetenciaColaboradorEntity> findByColaboradorIdAndCompetenciasId(Long colaboradorId, Long competenciaId);
 }
