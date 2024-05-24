@@ -356,11 +356,17 @@ export class TimeComponent implements OnInit {
     );
     if (colaborador) {
       this.currentColaborador = colaborador;
+      this.currentMetasColaborador = {
+        id: 0, // ou outro valor padrão para número
+        nota: [], // array vazio para número
+        colaborador: {} as Colaborador, // objeto vazio do tipo Colaborador
+        competencia: [], // array vazio para CompetenciaNota
+        data: [] // array vazio para string
+      };
       this.getCompetencias(colaborador.id);
       this.getAcoes(colaborador.id);
       this.getHabilidades(colaborador.id);
       this.getTimesByColaboradorId(colaborador.id);
-
       this.getAllLatestMetaByColaboradorId(colaborador.id);
       this.getPrFromGithubByColaboradorId(colaborador.id);
       this.getTasksCountByColaboradorId(colaborador.id);

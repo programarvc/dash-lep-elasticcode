@@ -98,31 +98,29 @@ public class MetaColaboradorService extends ServiceCrudBase<MetaColaboradorDto> 
         return repository.findTop3CompetenciasByColaborador(colaboradorId);
     }
 
-    //Metodo para buscar lista de competencias e  notas de um colaborador em uma data
     public Map<LocalDate, List<Map<String, Object>>> getCompetenciasWithAtLeast3Competencias(Long colaboradorId) {
         List<Object[]> datasObjects = repository.findDatasWithAtLeast3Competencias(colaboradorId);
         List<LocalDate> datas = datasObjects.stream()
-            .map(dateObj -> LocalDate.parse(dateObj[0].toString()))
-            .collect(Collectors.toList());
-        
+                .map(dateObj -> LocalDate.parse(dateObj[0].toString()))
+                .collect(Collectors.toList());
+
         Map<LocalDate, List<Map<String, Object>>> competenciasPorData = new HashMap<>();
-        
+
         for (LocalDate data : datas) {
             List<Map<String, Object>> competencias = repository.findTop3CompetenciasByColaboradorAndData(colaboradorId, data);
             competenciasPorData.put(data, competencias);
         }
-        
+
         return competenciasPorData;
     }
-    //Metodo para buscar as datas com pelo menos 3 competencias de um colaborador
+
     public List<LocalDate> getDatasWithAtLeast3Competencias(Long colaboradorId) {
         List<Object[]> datasObjects = repository.findDatasWithAtLeast3Competencias(colaboradorId);
         return datasObjects.stream()
-            .map(dateObj -> LocalDate.parse(dateObj[0].toString()))
-            .collect(Collectors.toList());
+                .map(dateObj -> LocalDate.parse(dateObj[0].toString()))
+                .collect(Collectors.toList());
     }
 
-    //Metodo para buscar as competencias com as notas de um colaborador em uma data
     public Map<String, List<Map<String, Object>>> getTop3CompetenciasByColaboradorAndData(Long colaboradorId, LocalDate data) {
         List<Map<String, Object>> results = repository.findTop3CompetenciasByColaboradorAndData(colaboradorId, data);
         Map<String, List<Map<String, Object>>> groupedResults = new HashMap<>();

@@ -70,7 +70,7 @@ public class MetaColaboradorController extends ControllerCrudBase<MetaColaborado
     @GetMapping("/competencias/{colaboradorId}")
     @ResponseBody
     public Map<String, List<Map<String, Object>>> getTop3CompetenciasByColaboradorAndData(
-            @PathVariable Long colaboradorId, 
+            @PathVariable Long colaboradorId,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate data) {
         return service.getTop3CompetenciasByColaboradorAndData(colaboradorId, data);
     }
