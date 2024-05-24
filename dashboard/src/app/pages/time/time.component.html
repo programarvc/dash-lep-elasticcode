@@ -320,10 +320,20 @@
                     </div>
                 </div>
             </div>
-            <div class="card">
+            <div class="card list-metas">
                 <h2>Metas Estabelecidas</h2>
-                <div class="card-colaborador-content" *ngFor="let competenciaNota of currentMetasColaborador.competencia">
-                    <p><span class="bullet">-</span> {{competenciaNota.competencia}} - <strong>Nota:{{competenciaNota.nota}}</strong></p>
+                <div class="card-colaborador-content list-content">
+                    <ul  *ngFor="let competenciaNota of currentMetasColaborador.competencia;">
+                        <li>
+                    <p>{{competenciaNota.competencia}} - <span>{{competenciaNota.nota}}</span></p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card">
+                <h2>Indice de Sobrevivência do Dev</h2>
+                <div class="pr-count">
+                    <p><b>{{currentValorIndiceDeSobrevivencia.valorIndice}}</b></p>
                 </div>
             </div>
         </div>
