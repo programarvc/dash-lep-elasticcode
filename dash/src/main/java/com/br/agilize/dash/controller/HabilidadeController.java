@@ -74,4 +74,9 @@ public class HabilidadeController extends ControllerCrudBase<HabilidadeDto> {
         return ResponseEntity.ok(service.obterTodasHabilidadesColaborador());
     }
 
+    @Operation(summary = "Obtem as duas primeiras habilidades do colaborador pelo id", description = "Retorna as duas primeiras habilidades de um colaborador pelo id", tags = {"id", "get"})
+    @GetMapping("/colaborador/{colaboradorId}/primeiras-habilidades")
+    public ResponseEntity<List<HabilidadeColaboradorDto>> obterPrimeirasHabilidadesColaborador(@PathVariable Long colaboradorId) {
+        return ResponseEntity.ok(service.obterPrimeirasHabilidadesColaborador(colaboradorId));
+    }
 }
