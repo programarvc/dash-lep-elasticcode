@@ -28,10 +28,10 @@ public interface MetaColaboradorRepository extends JpaRepository<MetaColaborador
       "FROM metacolaboradorentity mc " +
       "WHERE mc.colaborador_id = :colaboradorId " +
       "GROUP BY mc.data " +
-      "HAVING COUNT(DISTINCT mc.competencia_id) >= 1",
+      "HAVING COUNT(DISTINCT mc.competencia_id) >= 1 " +
+      "ORDER BY mc.data DESC",
        nativeQuery = true)
    List<Object[]> findDatasWithAtLeast3Competencias(@Param("colaboradorId") Long colaboradorId);
-
    //Query para buscar as competencias com as notas de um colaborador em uma data
    @Query(value = "SELECT c.nome AS competencia, mc.nota AS nota, mc.data AS data " +
       "FROM metacolaboradorentity mc " +
