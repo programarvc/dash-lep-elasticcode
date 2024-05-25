@@ -61,6 +61,16 @@ public interface VcsPullRequestRepository extends JpaRepository<VcsPullRequestEn
         "FROM vcs_pull_request p " +
         "JOIN colaboradorentity c ON p.colaborador_id = c.id " +
         "WHERE p.merged_at IS NOT NULL " +
+        "AND TO_DATE(p.merged_at, 'YYYY-MM-DD') >= CURRENT_DATE - INTERVAL '60 days' " +
+        "AND c.id = :colaboradorId " +
+        "GROUP BY c.id, c.nome", nativeQuery = true)
+    Map<String, Object> countPrsLast60DaysByColaboradorId(@Param("colaboradorId") Long colaboradorId);
+
+    // Query para buscar a quantidade de PRs de um colaborador por id nos últimos 30 dias
+    @Query(value = "SELECT c.id as id, c.nome as nome, COUNT(p.id) as countPr " +
+        "FROM vcs_pull_request p " +
+        "JOIN colaboradorentity c ON p.colaborador_id = c.id " +
+        "WHERE p.merged_at IS NOT NULL " +
         "AND TO_DATE(p.merged_at, 'YYYY-MM-DD') >= CURRENT_DATE - INTERVAL '30 days' " +
         "AND c.id = :colaboradorId " +
         "GROUP BY c.id, c.nome", nativeQuery = true)
@@ -95,4 +105,14 @@ public interface VcsPullRequestRepository extends JpaRepository<VcsPullRequestEn
         "AND c.id = :colaboradorId " +
         "GROUP BY c.id, c.nome", nativeQuery = true)
     Map<String, Object> countPrsInDateRangeByColaboradorId(@Param("colaboradorId") Long colaboradorId, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
+
+    // Query para buscar a quantidade total de PRs nos últimos 30, 60 e 90 dias
+    @Query(value = "SELECT " +
+        "COUNT(p.id) FILTER (WHERE TO_DATE(p.merged_at, 'YYYY-MM-DD') >= CURRENT_DATE - INTERVAL '30 days') as countPr30Days, " +
+        "COUNT(p.id) FILTER (WHERE TO_DATE(p.merged_at, 'YYYY-MM-DD') >= CURRENT_DATE - INTERVAL '60 days') as countPr60Days, " +
+        "COUNT(p.id) FILTER (WHERE TO_DATE(p.merged_at, 'YYYY-MM-DD') >= CURRENT_DATE - INTERVAL '90 days') as countPr90Days " +
+        "FROM vcs_pull_request p " +
+        "WHERE p.merged_at IS NOT NULL", nativeQuery = true)
+    Map<String, Object> countPrsLast30And60And90Days();
+    
 }

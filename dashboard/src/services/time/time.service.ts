@@ -4,7 +4,7 @@ import { Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
 import { catchError } from "rxjs/operators";
 import { environment } from "src/environments/environment";
-import { MetasColaborador } from "src/app/types/time-types";
+import { CompetenciasPorData, DataArray, MetasColaborador } from "src/app/types/time-types";
 
 @Injectable({
     providedIn: "root",
@@ -14,6 +14,7 @@ export class TimeService {
 
   public currentMetasColaborador: MetasColaborador = {
     id: 0,
+    nota: [],
     colaborador: {
       id: 0,
       nome: '',
@@ -22,12 +23,10 @@ export class TimeService {
       miniBio: '',
       habilidades: [],
     },
-    meta: {
-      id: 0,
-      metas: '',
-    },
-    data: [],
+    competencia: [],
+    data: []
   };
+
 
   getUserById() {
     throw new Error('Method not implemented.');
@@ -91,7 +90,7 @@ export class TimeService {
       .get<any>(url)
       .pipe(catchError(this.handleError<any>("getTimesAndEsteiraByColaboradorId")));
   }
-
+ /*
   getLatestMetaByColaboradorId(colaboradorId: number){
     const url: string = `${environment.api}/metas/colaborador/${colaboradorId}`;
     return this.http
@@ -104,7 +103,32 @@ export class TimeService {
     return this.http
       .get<any>(url)
       .pipe(catchError(this.handleError<any>("getLatestMetaByColaboradorId")));
-  }
+  }*/
+
+
+getTop3CompetenciasByColaboradorAndData(colaboradorId: number, data: string){
+    const formattedDate = new Date(data).toISOString().split('T')[0];
+    const url: string = `${environment.api}/metas/competencias/${colaboradorId}?data=${formattedDate}`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>("getTop3CompetenciasByColaboradorAndData")));
+}
+
+
+getMetaWithAtLeast3metas(colaboradorId: number): Observable<CompetenciasPorData> {
+  const url: string = `${environment.api}/metas/datameta/${colaboradorId}`;
+  return this.http
+    .get<CompetenciasPorData>(url)
+    .pipe(catchError(this.handleError<CompetenciasPorData>("getMetaWithAtLeast3metas")));
+}
+
+getAllLatestMetaByColaboradorId(colaboradorId: number): Observable<DataArray[]> {
+  const url: string = `${environment.api}/metas/datas/${colaboradorId}`;
+  return this.http
+    .get<DataArray[]>(url)
+    .pipe(catchError(this.handleError<DataArray[]>("getAllLatestMetaByColaboradorId")));
+}
+
 
   getMetas(): Observable <any> {
     const url: string = `${environment.api}/metas`;

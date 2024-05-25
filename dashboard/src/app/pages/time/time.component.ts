@@ -7,12 +7,12 @@ import {
           TiposEnum,
           Colaborador,
           MetasColaborador,
-          MetasOneAOne,
-          AllLatestMetaByColaboradorId,
-          PrCount,
           IndiceDeSobrevivenciaDev,
           VcsPullRequest,
-          TasksCountJira
+          TasksCountJira,
+          DataArray,
+          CompetenciasPorData,
+          AllLatestMetaByColaboradorId
 } from 'src/app/types/time-types';
 import { TimeService } from 'src/services/time/time.service';
 import {  Habilidade,
@@ -107,6 +107,7 @@ export class TimeComponent implements OnInit {
   public metasColaborador: MetasColaborador[] = [];
   public currentMetasColaborador: MetasColaborador = {
     id: 0,
+    nota: [],
     colaborador: {
       id: 0,
       nome: '',
@@ -115,26 +116,11 @@ export class TimeComponent implements OnInit {
       miniBio: '',
       habilidades: [],
     },
-    meta: {
-      id: 0,
-      metas: '',
-    },
-    data: [],
+    competencia: [],
+    data: []
   };
 
- // metodo anterior
-  public currentPrCount: PrCount = { 
-    id: 0,
-    colaborador: {
-      id: 0,
-      nome: '',
-      email: '',
-      github: '',
-      miniBio: '',
-      habilidades: [],
-    },
-    count: 0
-  };
+ 
 
   /*
   //variavel com dados para armazenar a quantidade total de prs por colaborador github API
@@ -223,8 +209,6 @@ export class TimeComponent implements OnInit {
   public PrCountLast7DaysForColaborador: VcsPullRequest[] = [];
   public PrCountLast30DaysForColaborador: VcsPullRequest[] = [];
   public PrCountLast90DaysForColaborador: VcsPullRequest[] = [];
-  public prCount: PrCount[] = [];
-  public metasOneAOne: MetasOneAOne[] = [];
   public allLatestMetaByColaboradorId: AllLatestMetaByColaboradorId[] = []; 
   public competencias: CompetenciaByColaborador[] = [];
   public acoes: AcaoByColaborador[] = [];
@@ -362,7 +346,7 @@ export class TimeComponent implements OnInit {
 
   public getMetas () {
     this.timeService.getMetas().subscribe((response) => {
-      this.metasOneAOne = response;
+      this.metasColaborador = response;
     });
   }
 
@@ -372,11 +356,17 @@ export class TimeComponent implements OnInit {
     );
     if (colaborador) {
       this.currentColaborador = colaborador;
+      this.currentMetasColaborador = {
+        id: 0, // ou outro valor padrão para número
+        nota: [], // array vazio para número
+        colaborador: {} as Colaborador, // objeto vazio do tipo Colaborador
+        competencia: [], // array vazio para CompetenciaNota
+        data: [] // array vazio para string
+      };
       this.getCompetencias(colaborador.id);
       this.getAcoes(colaborador.id);
       this.getHabilidades(colaborador.id);
       this.getTimesByColaboradorId(colaborador.id);
-      this.getLatestMetaByColaboradorId(colaborador.id);
       this.getAllLatestMetaByColaboradorId(colaborador.id);
       this.getPrFromGithubByColaboradorId(colaborador.id);
       this.getTasksCountByColaboradorId(colaborador.id);
@@ -438,12 +428,15 @@ export class TimeComponent implements OnInit {
       this.selectedTimePr = 'Todos';
     });
   }
-
+  
+  
+ /*
   getLatestMetaByColaboradorId(colaboradorId: number){
     this.timeService.getLatestMetaByColaboradorId(colaboradorId).subscribe((response) => {
       this.currentMetasColaborador = response;
     });
-  }
+
+  }*/
 
   getAllTimesAndDevs() {
     this.getTimesByEsteira(this.currentEsteira.id);
@@ -452,56 +445,60 @@ export class TimeComponent implements OnInit {
   }
 
   getAllLatestMetaByColaboradorId(id: number): void {
-    this.timeService
-      .getAllLatestMetaByColaboradorId(id)
-      .subscribe((metasColaboradorArray: AllLatestMetaByColaboradorId[]) => {
-        metasColaboradorArray.forEach((metasColaboradorData: AllLatestMetaByColaboradorId) => {
-          let dateParts = metasColaboradorData.data;
-          let milliseconds = Number(dateParts[6]) / 1000000; // Convert nanoseconds to milliseconds
-          let date = new Date(Number(dateParts[0]), Number(dateParts[1]) - 1, Number(dateParts[2]), Number(dateParts[3]), Number(dateParts[4]), Number(dateParts[5]), milliseconds);
-          metasColaboradorData.data = date.toISOString();
-        });
-        this.allLatestMetaByColaboradorId = metasColaboradorArray;
-        if(this.allLatestMetaByColaboradorId.length > 0) {
-          this.selecionarMetaColaborador(this.allLatestMetaByColaboradorId[0].id);
-        }
+  this.timeService
+    .getAllLatestMetaByColaboradorId(id)
+    .subscribe((datas: DataArray[]) => {
+      this.allLatestMetaByColaboradorId = datas.map(data => {
+        return {
+          id: id,
+          data: new Date(data.join('-')).toISOString()
+        };
       });
+      if(this.allLatestMetaByColaboradorId.length > 0) {
+        this.selecionarMetaColaborador(this.allLatestMetaByColaboradorId[0].id);
+      }
+    });
   }
 
-
-  public selecionarMetaColaborador (id?: number) {
-    if (id) {
-      const metas = this.allLatestMetaByColaboradorId.find((metas) => metas.id === id);
-      if (metas) {
-        let date = new Date(metas.data);
-        let timestamp = date.getTime();
-        this.currentMetasColaborador = {
-          ...metas,
-          data: [timestamp]
-        };
-        this.timeService.setCurrentMetasColaborador(this.currentMetasColaborador);
-        this.formattedDate = this.currentMetasColaborador.data[0].toString();                                             
-      }
-    } else {
-        this.getMetas();
-        this.currentMetasColaborador = {
-          id: 0,
-          colaborador: {
-            id: 0,
-            nome: '',
-            email: '',
-            github: '',
-            miniBio: '',
-            habilidades: [],
-          },
-          meta: {
-            id: 0,
-            metas: '',
-          },
-          data: [],
-        };
-      }
+public selecionarMetaColaborador (id?: number, selectedDate?: string) {
+  if (id) {
+    const meta = this.allLatestMetaByColaboradorId.find((meta) => meta.id === id);
+    if (meta) {
+      let date = selectedDate ? new Date(selectedDate) : new Date(meta.data);
+      let timestamp = date.getTime();
+      this.currentMetasColaborador = {
+        ...this.currentMetasColaborador,
+        id: id,
+        data: [timestamp.toString()]
+      };
+      this.timeService.setCurrentMetasColaborador(this.currentMetasColaborador);
+      this.formattedDate = this.currentMetasColaborador.data[0].toString();
+      this.timeService.getTop3CompetenciasByColaboradorAndData(id, date.toISOString())
+      .subscribe((competenciasPorData: CompetenciasPorData) => {
+        const dataKey = date.toISOString().split('T')[0];
+        this.currentMetasColaborador.competencia = competenciasPorData[dataKey];
+        this.currentMetasColaborador.nota = this.currentMetasColaborador.competencia.map(c => c.nota);
+        console.log(this.currentMetasColaborador.competencia, this.currentMetasColaborador.nota);
+      });
+    }
+  } else {
+    this.getMetas();
+    this.currentMetasColaborador = {
+      id: 0,
+      nota: [],
+      colaborador: {
+        id: 0,
+        nome: '',
+        email: '',
+        github: '',
+        miniBio: '',
+        habilidades: [],
+      },
+      data: [],
+      competencia: []
+    };
   }
+}
 
  /*
   //metodo anterior x

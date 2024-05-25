@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Map;
-import java.util.Optional;
 
 import com.br.agilize.dash.model.entity.dashboardEntity.TasksCountJiraEntity;
 
@@ -65,6 +64,16 @@ TasksCountJiraEntity findByAuthorAndStatusDetailAndMergedAt(String author, Strin
         "AND c.id = :colaboradorId " +
         "GROUP BY c.id, c.nome", nativeQuery = true)
     Map<String, Object> countCompletedTasksLast30DaysByColaboradorId(@Param("colaboradorId") Long colaboradorId);
+
+    // Query para buscar a quantidade de tasks concluidas de um colaborador por id nos últimos 60 dias
+    @Query(value = "SELECT c.id as id, c.nome as nome, COUNT(t.id) as countTasks " +
+        "FROM tasks_count_jira t " +
+        "JOIN colaboradorentity c ON t.colaborador_id = c.id " +
+        "WHERE t.status_detail = 'concluido' " +
+        "AND t.merged_at >= current_date - interval '60 days' " +
+        "AND c.id = :colaboradorId " +
+        "GROUP BY c.id, c.nome", nativeQuery = true)
+    Map<String, Object> countCompletedTasksLast60DaysByColaboradorId(@Param("colaboradorId") Long colaboradorId);
 
     // Query para buscar a quantidade de tasks concluidas de um colaborador por id nos últimos 30 dias
     @Query(value = "SELECT c.id as id, c.nome as nome, COUNT(t.id) as countTasks " +

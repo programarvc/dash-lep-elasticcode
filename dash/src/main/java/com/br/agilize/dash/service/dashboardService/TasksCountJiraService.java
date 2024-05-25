@@ -144,4 +144,9 @@ public class TasksCountJiraService implements CommandLineRunner {
         }
     }
 
+     // Query para buscar a quantidade de tasks concluidas de um colaborador por id nos últimos 60 dias
+     public Map<String, Object> getCompletedTasksCountLast60DaysForColaborador(Long colaboradorId) {
+        return repository.countCompletedTasksLast60DaysByColaboradorId(colaboradorId);
+    }
+
 }

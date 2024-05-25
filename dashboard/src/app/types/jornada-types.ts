@@ -73,3 +73,9 @@ export enum TiposMaturidadeEnum {
   CULTURA = 'CULTURA',
 }
 
+
+export interface VcsPullRequest60Days {
+    countpr90days: number;
+    countpr60days: number;
+    countpr30days: number;
+}

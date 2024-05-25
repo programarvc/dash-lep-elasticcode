@@ -17,6 +17,7 @@ import {
   CapacidadesRecomendadas,
   ItemDeMaturidade,
   TiposMaturidadeEnum,
+  VcsPullRequest60Days
 } from 'src/app/types/jornada-types';
 
 import {
@@ -182,6 +183,12 @@ export class DashProjetoComponent implements OnInit {
     tipoMaturidade: '',
     nome: '',
     dataHora: []
+  };
+
+  public currentVcsPullRequest60Days: VcsPullRequest60Days = {
+    countpr60days: 0,
+    countpr90days: 0,
+    countpr30days: 0
   }
 
 
@@ -245,6 +252,7 @@ public async setCurrent(id: number) {
   this.getValorMaturidadesByEsteiraIdAndTecnica(id);
   this.getValorMaturidadesByEsteiraIdAndCultura(id);
   this.getMaturidadeByEsteiraId(id);
+  this.getPrCountLast30And60And90Days();
 
 }
 
@@ -458,5 +466,15 @@ public async setCurrentMaturidade (id: number) {
       };
       }
     }
+
+    getPrCountLast30And60And90Days(): void {
+      this.maturidadeService.getPrCountLast30And60And90Days().subscribe((response) => {
+        this.currentVcsPullRequest60Days = response;
+        console.log(this.currentVcsPullRequest60Days);
+      });
+    }
+
+
+
 
 }

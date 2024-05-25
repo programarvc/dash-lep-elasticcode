@@ -12,10 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.br.agilize.dash.model.dto.ColaboradorDto;
-import com.br.agilize.dash.model.dto.dashboardDto.MetasOneAOneDto;
-import com.br.agilize.dash.model.dto.dashboardDto.PrCountDto;
 import com.br.agilize.dash.service.ColaboradorService;
-import com.br.agilize.dash.service.dashboardService.MetasOneAOneService;
+import com.br.agilize.dash.service.dashboardService.MetaColaboradorService;
 import com.br.agilize.dash.service.dashboardService.VcsPullRequestService;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
@@ -28,7 +26,7 @@ public class ColaboradorController extends ControllerCrudBase<ColaboradorDto> {
     @Autowired ColaboradorService service;
 
     @Autowired
-    MetasOneAOneService metasOneAOneService;
+    MetaColaboradorService metasOneAOneService;
 
     @Autowired
     private VcsPullRequestService vcsPullRequestService;

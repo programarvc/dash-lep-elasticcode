@@ -90,11 +90,11 @@
                 <div class="filter-dev-data">
                     <div ngbDropdown>
                         <button type="button" class="dropdown-dev-toggle" id="dropdownMaturidades" ngbDropdownToggle>
-                            {{ currentMetasColaborador ? ('Medição das Metas - ' + (formattedDate | date: 'dd/MM/yyyy HH:mm')) : 'Selecione'}}
+                            {{ currentMetasColaborador ? ('Medição das Metas - ' + (formattedDate | date: 'dd/MM/yyyy')) : 'Selecione'}}
                         </button>
                         <div ngbDropdownMenu aria-labelledby="dropdownMaturidades">
-                            <button ngbDropdownItem *ngFor="let metasCData of allLatestMetaByColaboradorId" (click)="selecionarMetaColaborador(metasCData.id)">
-                                Medição das Metas - {{metasCData.data | date: 'dd/MM/yyyy HH:mm'}}
+                            <button ngbDropdownItem *ngFor="let metasCData of allLatestMetaByColaboradorId" (click)="selecionarMetaColaborador(metasCData.id,  metasCData.data)">
+                                Medição das Metas - {{metasCData.data | date: 'dd/MM/yyyy'}}
                             </button>
                         </div>
                     </div>
@@ -320,9 +320,15 @@
                     </div>
                 </div>
             </div>
-            <div class="card">
+            <div class="card list-metas">
                 <h2>Metas Estabelecidas</h2>
-                <p class="card-colaborador-content">{{currentMetasColaborador?.meta?.metas}}</p>
+                <div class="card-colaborador-content list-content">
+                    <ul  *ngFor="let competenciaNota of currentMetasColaborador.competencia;">
+                        <li>
+                            <p>{{competenciaNota.competencia}} - <span>{{competenciaNota.nota}}</span></p>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div class="card">
                 <h2>Indice de Sobrevivência do Dev</h2>

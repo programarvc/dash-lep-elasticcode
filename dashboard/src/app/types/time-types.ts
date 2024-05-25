@@ -1,17 +1,19 @@
-export interface Time {
+import { Competencia } from "./colaborador-types";
+
+  export interface Time {
     id: number;
     nomeTime: string;
     esteira: EsteiraDeDesenvolvimento;
-}
+  }
 
-export interface TimeColaborador {
+  export interface TimeColaborador {
     id: number;
     time: Time;
     colaborador: Colaborador;
 
-}
+  }
 
-export interface Colaborador {
+  export interface Colaborador {
     id: number;
     nome: string;
     email: string;
@@ -21,7 +23,7 @@ export interface Colaborador {
 
   }
 
-export interface Habilidade {
+  export interface Habilidade {
     id: number;
     nome: string;
     backend: boolean;
@@ -43,35 +45,43 @@ export interface Habilidade {
     MONITORAMENTO = "MONITORAMENTO",
   }
 
-    export interface Empresa {
-        id: number;
-        nome: string;
-    }
+  export interface Empresa {
+    id: number;
+    nome: string;
+  }
+    
 
-    export interface MetasOneAOne{
-      id: number;
-      metas: string;
-    }
 
-    export interface MetasColaborador{
-      id: number;
-      colaborador: Colaborador;
-      meta: MetasOneAOne;
-      data: number [];
-    }
+  export interface MetasColaborador {
+    id: number;
+    nota: number[];
+    colaborador: Colaborador;
+    competencia: CompetenciaNota[];
+    data: string[];
+  }
 
-    export interface AllLatestMetaByColaboradorId{
-      id: number;
-      colaborador: Colaborador;
-      meta: MetasOneAOne;
-      data: string;
-    }
+export interface MetasColaboradorPorData {
+  data: string; // ou Date
+  metasColaborador: MetasColaborador[];
+}
 
-    export interface PrCount {
-      id: number;
-      colaborador: Colaborador;
-      count: number;
-    }
+export interface CompetenciaNota {
+  id: number;
+  competencia: string;
+  nota: number;
+}
+
+export interface CompetenciasPorData {
+  [data: string]: CompetenciaNota[];
+}
+
+export type DataArray = number[];
+
+export interface AllLatestMetaByColaboradorId {
+  id: number;
+  data: string;
+}
+
 
     /*
     export interface PrFromGithub {
