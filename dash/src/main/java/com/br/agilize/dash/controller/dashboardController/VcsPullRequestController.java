@@ -106,10 +106,10 @@ public class VcsPullRequestController {
           Map<String, Object> prCount = service.getPrCountLast30And60And90Days();
           return ResponseEntity.ok(prCount);
       }
-
-      //End poit para buscar os 5 colaboradores com mais PRs
-      @GetMapping("/top5Colaboradores")
-      public List<Map<String, Object>> getTop5ColaboradoresByPrs() {
-          return service.getTop5ColaboradoresByPrs();
-      }
+    // End poit para buscar os 5 colaboradores com mais PRs
+    @GetMapping("/top5Colaboradores")
+    public ResponseEntity<List<Map<String, Object>>> getTop5ColaboradoresByPrs() {
+        List<Map<String, Object>> top5Colaboradores = service.getTop5ColaboradoresByPrs();
+        return ResponseEntity.ok(top5Colaboradores);
+    }
 }
