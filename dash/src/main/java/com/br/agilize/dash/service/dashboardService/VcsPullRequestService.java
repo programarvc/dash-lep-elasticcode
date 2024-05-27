@@ -10,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import com.amazonaws.lambda.thirdparty.org.json.JSONObject;
@@ -93,11 +94,11 @@ public class VcsPullRequestService implements CommandLineRunner {
         List<ColaboradorEntity> colaboradores = colaboradorRepository.findAll();
         
         for (String restApiUrl : restApiUrls) {
-            // Enviando a solicitação  
-            HttpEntity<String> request = new HttpEntity<>(headers);
-            ResponseEntity<String> response = restTemplate.exchange(restApiUrl, HttpMethod.GET, request, String.class);
+           try{
+                // Enviando a solicitação  
+                HttpEntity<String> request = new HttpEntity<>(headers);
+                ResponseEntity<String> response = restTemplate.exchange(restApiUrl, HttpMethod.GET, request, String.class);
         
-            try {
                 // Altere a desserialização para uma lista de VcsPullRequestResponse
                 VcsPullRequestResponse responseDto = mapper.readValue(response.getBody(), VcsPullRequestResponse.class);
                 List<VcsPullRequestDto> prDataDtos = responseDto.getVcs_PullRequest();
@@ -142,13 +143,13 @@ public class VcsPullRequestService implements CommandLineRunner {
                         }
                     }
                 }
-        
-            } catch (JsonProcessingException e) {
+            } catch (RestClientException | JsonProcessingException e) {
+                System.err.println("Não foi possível acessar ou processar a URL: " + restApiUrl);
                 e.printStackTrace();
-            }
-        }
+        }  
+     }
               
-    } 
+     } 
     /*
     @Transactional
     public PrCountDto getPrCountByColaboradorId(Long colaboradorId) {
