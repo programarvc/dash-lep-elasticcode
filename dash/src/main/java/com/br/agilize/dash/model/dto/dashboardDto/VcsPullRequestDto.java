@@ -13,5 +13,9 @@ public class VcsPullRequestDto {
 
     private String mergedAt;
 
-    private String author;    
+    private String author;
+    
+    private String stateDetail;
+
+    private String repository;
 }
