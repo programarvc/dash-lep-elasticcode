@@ -1,3 +1,5 @@
+import { Colaborador } from "./colaborador-types";
+
 export interface ValorDosIndicesDeMaturidade {
     id: number;
     maturidade: Maturidade;
@@ -98,3 +100,14 @@ export interface ValorDosIndicesDeMaturidadeFilter {
   itemDeMaturidade: ItemDeMaturidade;
   maturidade: Maturidade;
 }
+
+export interface  VcsPullRequestTop5 {
+  id: number;
+  title: string;
+  mergedAt: string;
+  author: string;
+  colaborador: Colaborador;
+  countpr: number;
+  repository: string;
+  stateDetail: string;
+ }

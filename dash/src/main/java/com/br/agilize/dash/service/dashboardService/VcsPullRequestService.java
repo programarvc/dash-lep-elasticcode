@@ -150,18 +150,6 @@ public class VcsPullRequestService implements CommandLineRunner {
      }
               
      } 
-    /*
-    @Transactional
-    public PrCountDto getPrCountByColaboradorId(Long colaboradorId) {
-        PrCountEntity prCountEntity = this.prCountRepository.findByColaboradorId(colaboradorId);
-        if (prCountEntity == null) {
-            PrCountDto prCountDto = new PrCountDto();
-            prCountDto.setCount(0);
-            return prCountDto;
-        } else {
-            return prCountMapper.modelToDTO(prCountEntity);
-        }
-    }*/
     
     // Query para buscar a quantidade  de PRs de um dev por id dentro de 1 ano 
     public Map<String, Object> getPrCountLast1YearForColaborador(Long colaboradorId) {
