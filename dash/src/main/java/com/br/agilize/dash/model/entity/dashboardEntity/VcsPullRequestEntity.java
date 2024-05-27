@@ -29,8 +29,15 @@ public class VcsPullRequestEntity {
 
     @Column(name = "merged_at")
     private String mergedAt;
+
     @Column(name = "author", columnDefinition = "TEXT")
     private String author;
+
+    @Column(name = "state_detail")       
+    private String stateDetail;
+
+    @Column(name = "repository", columnDefinition = "TEXT")
+    private String repository;
 
 
     @ManyToOne

@@ -51,7 +51,7 @@ public class VcsPullRequestService implements CommandLineRunner {
     private VcsPullRequestRepository vcsPullRequestRepository;
 
     @Autowired
-    private VcsPullRequestMapper metaBaseMapper;
+    private VcsPullRequestMapper vcsPullRequestMapper;
 
     @Autowired
     private PrCountRepository prCountRepository;
@@ -70,84 +70,84 @@ public class VcsPullRequestService implements CommandLineRunner {
     public void run(String... args) throws Exception {
         getPRDataAndSave();
     }
-
+    
     public void getPRDataAndSave() {
-
-        /* RestTemplate restTemplate = new RestTemplate();
+        RestTemplate restTemplate = new RestTemplate();
 
         Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
-
+        
         // Endpoints da API REST
         List<String> restApiUrls = Arrays.asList(
                 dotenv.get("API_URL_ELASTIC_PR"),
                 dotenv.get("API_URL_NB_PR")
         );
-
-
+        
         // Definindo os cabeçalhos
         HttpHeaders headers = new HttpHeaders();
-        headers.set("X-Hasura-Admin-Secret", dotenv.get("HASURA_ADMIN_SECRET")); // substitua  pelo seu admin secret
-
+        headers.set("X-Hasura-Admin-Secret", dotenv.get("HASURA_ADMIN_SECRET")); // substitua pelo seu admin secret
+        
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        
+        List<ColaboradorEntity> colaboradores = colaboradorRepository.findAll();
+        
         for (String restApiUrl : restApiUrls) {
             // Enviando a solicitação  
             HttpEntity<String> request = new HttpEntity<>(headers);
             ResponseEntity<String> response = restTemplate.exchange(restApiUrl, HttpMethod.GET, request, String.class);
-
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.registerModule(new JavaTimeModule());
-            mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        
             try {
                 // Altere a desserialização para uma lista de VcsPullRequestResponse
                 VcsPullRequestResponse responseDto = mapper.readValue(response.getBody(), VcsPullRequestResponse.class);
                 List<VcsPullRequestDto> prDataDtos = responseDto.getVcs_PullRequest();
-
-                Map<String, Integer> authorPrCount = new HashMap<>();
-
-                // Itere sobre a lista de DTOs
+        
                 for (VcsPullRequestDto prDataDto : prDataDtos) {
-                    String authorName = prDataDto.getAuthor().split("\\|")[1];
-                    prDataDto.setAuthor(authorName);
+                    String author = prDataDto.getAuthor().split("\\|")[1];
+        
+                    for (ColaboradorEntity colaborador : colaboradores) {
+                        String githubUsername = colaborador.getGithub();
+        
+                        if (author.equals(githubUsername)) {
+                            
+                            String mergedAt = prDataDto.getMergedAt();
+                            String title = prDataDto.getTitle();
+                            String stateDetail = prDataDto.getStateDetail();
+                            String repository = prDataDto.getRepository();
+                            
+                            // Verificar se a PR já existe no banco de dados
+                            Optional<VcsPullRequestEntity> existingPr = vcsPullRequestRepository.findByAuthorAndTitleAndMergedAt(author, title, mergedAt);
+                                  
+                            // Se a PR não existir no banco de dados, salvá-la
+                            if (!existingPr.isPresent()) {
+                                VcsPullRequestDto vcsPullRequestDto = new VcsPullRequestDto();
+                                vcsPullRequestDto.setMergedAt(mergedAt);
+                                vcsPullRequestDto.setAuthor(author);
+                                vcsPullRequestDto.setTitle(title);
+                                vcsPullRequestDto.setStateDetail(stateDetail);
+                                vcsPullRequestDto.setRepository(repository);
 
-                    // Incrementa a contagem para o autor no mapa
-                    authorPrCount.put(authorName, authorPrCount.getOrDefault(authorName, 0) + 1);
+                                VcsPullRequestEntity vcsPullRequestEntity = vcsPullRequestMapper.dtoToModel(vcsPullRequestDto);
 
-                    // Cria ou atualiza um PrCountDto para o autor
-                    ColaboradorEntity colaborador = colaboradorRepository.findByGithub(authorName);
-                    if (colaborador != null && colaborador.getId() != null) {
-                        PrCountEntity prCountEntity = prCountRepository.findByColaborador(colaborador);
-                        PrCountDto prCountDto;
-                        if (prCountEntity == null) {
-                            prCountDto = new PrCountDto();
-                            prCountDto.setColaborador(colaboradorMapper.modelToDTO(colaborador));
-                        } else {
-                            prCountDto = prCountMapper.modelToDTO(prCountEntity);
-                        }
-                        prCountDto.setCount(authorPrCount.get(authorName));
+                                // Buscar o ColaboradorEntity com o nome de usuário do GitHub igual ao autor do PR
+                                ColaboradorEntity colaboradorEntity = colaboradorRepository.findByGithub(githubUsername);
 
-                        // Salva o PrCountDto no banco de dados
-                        prCountRepository.save(prCountMapper.dtoToModel(prCountDto));
-                    }
-                
-                    VcsPullRequestEntity prData = metaBaseMapper.dtoToModel(prDataDto);
+                                // Se o ColaboradorEntity for encontrado, definir o campo colaborador do VcsPullRequestEntity para esse ColaboradorEntity
+                                if (colaboradorEntity != null) {
+                                    vcsPullRequestEntity.setColaborador(colaboradorEntity);
+                                }
 
-
-                    if(prData.getMergedAt() != null && prData.getAuthor() != null && prData.getTitle() != null) {
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'+00:00'");
-                        LocalDateTime dateTime = LocalDateTime.parse(prData.getMergedAt(), formatter);
-                        // Verifica se já existe um registro com o mesmo author, title e mergedAt
-                        Optional<VcsPullRequestEntity> existingPrData = metaBaseRepository.findByAuthorAndTitleAndMergedAt(prData.getAuthor(), prData.getTitle(), prData.getMergedAt());
-
-                        // Se o registro não existir, salva no banco de dados
-                        if (!existingPrData.isPresent()) {
-                            metaBaseRepository.save(prData);
+                                vcsPullRequestRepository.save(vcsPullRequestEntity);
+                            }
                         }
                     }
                 }
-
+        
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
-        }*/
+        }
+              
     } 
     /*
     @Transactional
@@ -217,4 +217,7 @@ public class VcsPullRequestService implements CommandLineRunner {
         return vcsPullRequestRepository.countPrsLast30And60And90Days();
     }
 
+    public List<Map<String, Object>> getTop5ColaboradoresByPrs() {
+        return vcsPullRequestRepository.findTop5ColaboradoresByPrs();
+    }
 }
