@@ -173,9 +173,32 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="row">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="bloco-top-contribuidores">
+              <h2>Top Contribuidores</h2>
+              <div id="top-contribuidores" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                  <div *ngFor="let contribuidor of topContribuidores; let i = index" class="carousel-item" [class.active]="i == 0">
+                    <div class="top-contribuidores-space">
+                      <div class="top-contribuidores-graphic">
+                        <img class="d-block" src="https://github.com/{{contribuidor.github}}.png" alt="Imagem de {{contribuidor.nome}}">
+                          <h5>{{contribuidor.nome}}</h5>
+                      </div>
+                      <div class="top-contribuidores-content">
+                        <h2>PRs<span><br>(durante todo o projeto - git)</span></h2>
+                        <p>{{contribuidor.prs}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
     <div class="col-md-8">
         <div class="bloco-tecnica">
                 <div class="tituloLegenda">

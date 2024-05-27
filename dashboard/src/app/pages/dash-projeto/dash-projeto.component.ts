@@ -1,5 +1,5 @@
 import { ValorDosIndicesDeMaturidadeByEsteiraIdAndCultura } from './../../types/valorMaturidade-types';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 
@@ -207,8 +207,26 @@ export class DashProjetoComponent implements OnInit {
   public filterValorMaturidade: ValorDosIndicesDeMaturidadeFilter[] = [];
   public valorMaturidadeDate: Date;
   public formattedDate: string | null = null;
-
-
+  public topContribuidores = [
+    {
+      id: 1,
+      nome: 'Mavis',
+      github: 'mavis-martins',
+      prs: 10,
+    },
+    {
+      id: 2,
+      nome: 'Tiago Santos',
+      github: 'Tiago-Santosz',
+      prs: 18,
+    },
+    {
+      id: 3,
+      nome: 'Monaliza',
+      github: 'monalizaloren',
+      prs: 11,
+    }
+  ];
 
   constructor(
     private router: Router,
@@ -243,6 +261,24 @@ export class DashProjetoComponent implements OnInit {
 
       }
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.adjustCarouselHeight();
+  }
+
+  adjustCarouselHeight(): void {
+    const carouselInner = document.querySelector('.carousel-inner') as HTMLElement;
+    const items = document.querySelectorAll('.carousel-item');
+    let maxHeight = 0;
+
+    items.forEach(item => {
+      maxHeight = Math.max(maxHeight, (item as HTMLElement).clientHeight);
+    });
+
+    if (carouselInner) {
+      carouselInner.style.height = `${maxHeight}px`;
+    }
   }
 
 
@@ -473,8 +509,4 @@ public async setCurrentMaturidade (id: number) {
         console.log(this.currentVcsPullRequest60Days);
       });
     }
-
-
-
-
 }
