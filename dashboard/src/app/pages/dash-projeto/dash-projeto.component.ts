@@ -213,18 +213,28 @@ export class DashProjetoComponent implements OnInit {
       nome: 'Mavis',
       github: 'mavis-martins',
       prs: 10,
+      totalPrs: 54,
     },
     {
       id: 2,
       nome: 'Tiago Santos',
       github: 'Tiago-Santosz',
       prs: 18,
+      totalPrs: 54,
     },
     {
       id: 3,
       nome: 'Monaliza',
       github: 'monalizaloren',
       prs: 11,
+      totalPrs: 54,
+    },
+    {
+      id: 4,
+      nome: 'Vinicius',
+      github: 'spillinha',
+      prs: 15,
+      totalPrs: 54,
     }
   ];
 

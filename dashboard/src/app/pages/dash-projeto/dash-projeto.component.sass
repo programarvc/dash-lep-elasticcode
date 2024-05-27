@@ -354,56 +354,78 @@ body
     text-align: center
 
 .bloco-top-contribuidores
-    align-items: center
     border-radius: 15px
     background: #F6F8FF
+    box-shadow: 0px 3.352px 3.352px 0px rgba(0, 0, 0, 0.05)
+    height: 290px
+    width: 100%
     display: flex
     flex-direction: column
-    margin-top: 15px
-    padding: 26px 32px 30px
+    margin-top: 30px
 
-.bloco-top-contribuidores h2
-    margin-bottom: 10px
-
-.carousel
+.titulo-legenda-top-contribuidores
+    display: flex
     width: 100%
 
-.carousel-item
-    height: 180px
-    min-height: 180px
-    overflow: hidden
+.titulo-top-contribuidores
+    width: 30%
 
-.top-contribuidores-space
-    display: flex
-
-.top-contribuidores-graphic,
-.top-contribuidores-content
-    align-items: center
-    display: flex
-    flex-direction: column
-    gap: 15px
-    justify-content: center
-    width: 50%
-
-.top-contribuidores-graphic img
-    border-radius: 50px
-    height: 100px
-    width: 100px
-
-.top-contribuidores-content
-    text-align: center
-    
-.top-contribuidores-content h2
-    font-size: 20px
+.titulo-top-contribuidores h2
+    color: #141414
+    font-size: 18px
     font-weight: 600
-    margin-bottom: 10px
+    padding: 35px 39px
+    text-transform: capitalize
 
-.top-contribuidores-content span
-    font-size: 11px
+.legenda-top-contribuidores
+    display: flex
+    width: 70%
+    justify-content: center
+    align-items: center
 
-.top-contribuidores-content p 
-    font-size: 30px
-    font-weight: bold
+.legenda-top-contribuidores p
+    color: #141414
+    font-size: 14px
+    font-weight: 400
+    margin-bottom: 0px
+    margin-right: 40px
+
+.pontilhados-top-contribuidores
+    left: 450px
+    width: 42%
+    position: absolute
+    margin-top: 110px
+
+.top-contribuidores-geral
+    display: flex
+    overflow: auto
+    justify-content: center
+    height: 120px
+    scrollbar-width: none
+
+.nome-top-contribuidores
+    margin-top: 20px
+    margin-left: 90px
+    text-align: right
+
+.nome-top-contribuidores p
+    color: #141414
+    font-size: 14px
+    font-weight: 400
+    margin-bottom: 17px
+
+.processo-top-contribuidores
+    position: relative
+    width: 70%
+    top: 20px
+    left: 32px
+
+.numero-top-contribuidores
+    display: flex
+    flex-direction: row
+    z-index: 2
+    position: absolute
+    margin-top: 130px
 
 .bloco-tecnica
     border-radius: 15px
@@ -1009,8 +1031,6 @@ body
     bottom: 100px
     right: 70px
 
-
-
 .texto-boostrap
     text-align: right
     max-width: 290px
@@ -1070,10 +1090,7 @@ body
     background: #6A5FFF
     z-index: 1
 
-
-
 .tecnicas-num
-
     color: #141414
     text-align: center
     font-family: Poppins
@@ -1224,6 +1241,16 @@ body
         margin-left: 128px    
 
 @media(min-width: 1400px)
+
+    .nome-top-contribuidores
+        margin-left: 110px
+
+    .numero-top-contribuidores
+        margin-right: 32%
+
+    .top-contribuidores-num
+        margin-left: 18.5%
+
     .pontilhados
         margin-left: 250px
         width: 40%
@@ -1270,6 +1297,15 @@ body
 
 @media(min-width: 1600px)
 
+    .nome-top-contribuidores
+        margin-left: 50px
+
+    .numero-top-contribuidores
+        margin-right: 41%
+
+    .top-contribuidores-num
+        margin-left: 22%
+
     .pontilhados
         margin-left: 280px
 
@@ -1314,6 +1350,15 @@ body
 
 @media(min-width: 1920px)
 
+    .nome-top-contribuidores
+        margin-left: 112px
+
+    .numero-top-contribuidores
+        margin-right: 43%
+
+    .top-contribuidores-num
+        margin-left: 24.5%
+
     .pontilhados-metrica
         margin-left: 9.3%
         width: 18.3%
@@ -1352,6 +1397,15 @@ body
         margin-left: 32%
 
 @media(min-width: 2560px)
+
+    .nome-top-contribuidores
+        margin-left: 95px
+
+    .numero-top-contribuidores
+        margin-right: 34%
+
+    .top-contribuidores-num
+        margin-left: 19.25%
 
     .pontilhados
         width: 43.8%
