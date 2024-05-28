@@ -21,6 +21,7 @@ Globals:
         REPO_OWNER: !Ref RepoOwner
         REPO_NAME: !Ref RepoName
         GITHUB_TOKEN: !Ref GitHubToken
+        API_URL_ELASTIC_PR: !Ref ApiUrlElasticPr
 
 Parameters:
   SecurityGroupId:
@@ -53,6 +54,8 @@ Parameters:
   RepoName:
     Type: String
   GitHubToken:
+    Type: String
+  ApiUrlElasticPr:
     Type: String
 
 Resources:
