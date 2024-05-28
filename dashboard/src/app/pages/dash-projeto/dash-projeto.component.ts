@@ -24,7 +24,8 @@ import {
   ValorDosIndicesDeMaturidade,
   ValorDosIndicesDeMaturidadeByEsteiraIdAndTecnica,
   ValorDosIndicesDeMaturidadeFilter,
-  VcsPullRequestTop5
+  VcsPullRequestTop5,
+  PullRequest
 } from 'src/app/types/valorMaturidade-types';
 
 
@@ -190,11 +191,15 @@ export class DashProjetoComponent implements OnInit {
     countpr60days: 0,
     countpr90days: 0,
     countpr30days: 0
-  }
+  };
+
+  public pullRequest: PullRequest = {
+    totalprs: 0
+  };
 
   //variavel com dados para armazenar a quantidade total de prs por colaborador Hasura
   currentVcsPullRequestTop5: VcsPullRequestTop5[] = [];
-  
+
   public empresas: Empresa[] = [];
   public maturidade: Maturidade[] = [];
   public capacidade: CapacidadesRecomendadas[] = [];
@@ -283,6 +288,7 @@ public async setCurrent(id: number) {
   this.getMaturidadeByEsteiraId(id);
   this.getPrCountLast30And60And90Days();
   this.getTop5ColaboradoresByPrs();
+  this.getTotalPrs();
 }
 
 public async setCurrentMaturidade (id: number) {
@@ -504,4 +510,10 @@ public async setCurrentMaturidade (id: number) {
       this.currentVcsPullRequestTop5 = response;
     });
   }
+
+  getTotalPrs(): void {
+    this.valorMaturidadeService.getTotalPrs().subscribe((response) => {
+      this.pullRequest = response[0];
+    });
+}
 }

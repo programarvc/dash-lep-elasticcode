@@ -125,4 +125,7 @@ public interface VcsPullRequestRepository extends JpaRepository<VcsPullRequestEn
         "ORDER BY countPr DESC " +
         "LIMIT 5", nativeQuery = true)
     List<Map<String, Object>> findTop5ColaboradoresAndTotalPrs();
+
+    @Query(value = "SELECT COUNT(p.id) as totalPrs FROM vcs_pull_request p WHERE p.merged_at IS NOT NULL", nativeQuery = true)
+    List<Map<String, Object>> getTotalPrs();
 }

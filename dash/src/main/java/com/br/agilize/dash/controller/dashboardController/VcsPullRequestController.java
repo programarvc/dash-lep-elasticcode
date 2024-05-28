@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -111,5 +112,12 @@ public class VcsPullRequestController {
     public ResponseEntity<List<Map<String, Object>>> getTop5ColaboradoresByPrs() {
         List<Map<String, Object>> top5Colaboradores = service.getTop5ColaboradoresByPrs();
         return ResponseEntity.ok(top5Colaboradores);
+    }
+
+    // End point para buscar a quantidade total de PRs
+    @GetMapping("/totalprs")
+    public ResponseEntity<List<Map<String, Object>>> getTotalPrs() {
+        List<Map<String, Object>> totalPrs = service.getTotalPrs();
+        return new ResponseEntity<>(totalPrs, HttpStatus.OK);
     }
 }
