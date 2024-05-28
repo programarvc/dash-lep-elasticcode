@@ -113,3 +113,7 @@ export interface  VcsPullRequestTop5 {
   stateDetail: string;
   nome: string;
  }
+
+ export interface PullRequest{
+  totalprs: number;
+ }

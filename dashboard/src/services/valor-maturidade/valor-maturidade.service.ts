@@ -118,11 +118,19 @@ export class valorMaturidadeService {
         )
       );
   }
-
+  //endpoint para retornar top 5 colaboradores com mais PRs
   getTop5ColaboradoresByPrs(): Observable<any> {
     const url: string = `${environment.api}/prcount/top5Colaboradores`;
     return this.http
       .get<any>(url)
       .pipe(catchError(this.handleError<any>('getTop5ColaboradoresByPrs')));
+  }
+
+  //endpoint para retornar a quantidade total de PRs
+  getTotalPrs(): Observable<any> {
+    const url: string = `${environment.api}/prcount/totalprs`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>('getTotalPrs')));
   }
 }

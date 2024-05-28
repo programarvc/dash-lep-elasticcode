@@ -188,7 +188,7 @@
                   <div class="ellipse-roxa"></div>
                   <p class="metricas-texto-cultura">Prs Concluídas</p>
                   <div class="ellipse-cinza"></div>
-                  <p class="metricas-texto-esperado-cultura">Prs Totais Projeto</p>
+                  <p class="metricas-texto-esperado-cultura">Prs Totais Projeto ({{pullRequest.totalprs}})</p>
                 </div>
             </div>
             <div class="pontilhados-top-contribuidores">
@@ -214,8 +214,8 @@
                 <div class="processo-top-contribuidores">
                     <div class="barras-cultura">
                       <ng-container *ngFor="let topContribuidor of currentVcsPullRequestTop5">
-                          <div class="cultura-barra-meta" [ngStyle]="{'width': topContribuidor.totalprs  + '%'}">
-                            <div class="cultura-barra" [ngStyle]="{'width': topContribuidor.countpr  + '%'}"></div>
+                          <div class="cultura-barra-meta" [ngStyle]="{'width': '100%'}">
+                            <div class="cultura-barra" [ngStyle]="{'width': (topContribuidor.countpr * 100 / topContribuidor.totalprs)  + '%'}"></div>
                           </div>
                       </ng-container>
                     </div>
@@ -256,7 +256,7 @@
                         <p class="metricas-texto-esperado">Esperado</p>
                     </div>
                 </div>
-                <div class="pontilhados">
+               <div class="pontilhados">
                     <div class="pontilhados2">
                         <div class="pontilhado"></div>
                         <div class="pontilhado"></div>

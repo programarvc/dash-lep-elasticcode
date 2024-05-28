@@ -206,7 +206,14 @@ public class VcsPullRequestService implements CommandLineRunner {
         return vcsPullRequestRepository.countPrsLast30And60And90Days();
     }
 
+    //metodo para buscar o top 5 colaboradores com mais PRs
     public List<Map<String, Object>> getTop5ColaboradoresByPrs() {
         return vcsPullRequestRepository.findTop5ColaboradoresAndTotalPrs();
     }
+
+    //metodo para buscar a quantidade total de PRs
+    public List<Map<String, Object>> getTotalPrs() {
+        return vcsPullRequestRepository.getTotalPrs();
+    }
+    
 }
