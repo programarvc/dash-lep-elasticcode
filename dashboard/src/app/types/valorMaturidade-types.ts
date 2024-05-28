@@ -108,6 +108,8 @@ export interface  VcsPullRequestTop5 {
   author: string;
   colaborador: Colaborador;
   countpr: number;
+  totalprs: number;
   repository: string;
   stateDetail: string;
+  nome: string;
  }

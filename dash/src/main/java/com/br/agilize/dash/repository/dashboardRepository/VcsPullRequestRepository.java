@@ -116,13 +116,13 @@ public interface VcsPullRequestRepository extends JpaRepository<VcsPullRequestEn
         "WHERE p.merged_at IS NOT NULL", nativeQuery = true)
     Map<String, Object> countPrsLast30And60And90Days();
 
-    // Query para buscar os top 5 colaboradores com mais PRs realizadas
-    @Query(value = "SELECT c.id as id, c.nome as nome, COUNT(p.id) as countPr " +
+    // Query para buscar os top 5 colaboradores com mais PRs realizadas e a quantidade total de PRs
+    @Query(value = "SELECT c.id as id, c.nome as nome, COUNT(p.id) as countPr, (SELECT COUNT(*) FROM vcs_pull_request) as totalPrs " +
         "FROM vcs_pull_request p " +
         "JOIN colaboradorentity c ON p.colaborador_id = c.id " +
         "WHERE p.merged_at IS NOT NULL " +
         "GROUP BY c.id, c.nome " +
         "ORDER BY countPr DESC " +
         "LIMIT 5", nativeQuery = true)
-    List<Map<String, Object>> findTop5ColaboradoresByPrs();
+    List<Map<String, Object>> findTop5ColaboradoresAndTotalPrs();
 }

@@ -207,15 +207,15 @@
             </div>
               <div class="top-contribuidores-geral">
                 <div class="nome-top-contribuidores">
-                  <p *ngFor="let topContribuidor of topContribuidores">
+                  <p *ngFor="let topContribuidor of currentVcsPullRequestTop5">
                         {{topContribuidor.nome}}
                   </p>
                 </div>
                 <div class="processo-top-contribuidores">
                     <div class="barras-cultura">
-                      <ng-container *ngFor="let topContribuidor of topContribuidores">
-                          <div class="cultura-barra-meta" [ngStyle]="{'width': topContribuidor.totalPrs  + '%'}">
-                            <div class="cultura-barra" [ngStyle]="{'width': topContribuidor.prs  + '%'}"></div>
+                      <ng-container *ngFor="let topContribuidor of currentVcsPullRequestTop5">
+                          <div class="cultura-barra-meta" [ngStyle]="{'width': topContribuidor.totalprs  + '%'}">
+                            <div class="cultura-barra" [ngStyle]="{'width': topContribuidor.countpr  + '%'}"></div>
                           </div>
                       </ng-container>
                     </div>

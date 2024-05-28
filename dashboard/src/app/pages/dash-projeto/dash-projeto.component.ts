@@ -193,26 +193,8 @@ export class DashProjetoComponent implements OnInit {
   }
 
   //variavel com dados para armazenar a quantidade total de prs por colaborador Hasura
-  currentVcsPullRequestTop5: VcsPullRequestTop5 = {
-    id: 0,
-    title: '',
-    mergedAt: '',
-    author: '',
-    repository: '',
-    stateDetail: '',
-    colaborador: {
-      id: 0,
-      nome: '',
-      email: '',
-      github: '',
-      miniBio: '',
-      habilidades: [],
-    },
-    countpr: 0
-  };
-
-
-
+  currentVcsPullRequestTop5: VcsPullRequestTop5[] = [];
+  
   public empresas: Empresa[] = [];
   public maturidade: Maturidade[] = [];
   public capacidade: CapacidadesRecomendadas[] = [];

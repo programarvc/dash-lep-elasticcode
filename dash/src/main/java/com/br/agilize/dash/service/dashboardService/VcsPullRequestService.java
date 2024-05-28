@@ -207,6 +207,6 @@ public class VcsPullRequestService implements CommandLineRunner {
     }
 
     public List<Map<String, Object>> getTop5ColaboradoresByPrs() {
-        return vcsPullRequestRepository.findTop5ColaboradoresByPrs();
+        return vcsPullRequestRepository.findTop5ColaboradoresAndTotalPrs();
     }
 }
