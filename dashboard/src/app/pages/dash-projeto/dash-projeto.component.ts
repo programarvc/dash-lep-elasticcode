@@ -1,5 +1,5 @@
 import { ValorDosIndicesDeMaturidadeByEsteiraIdAndCultura } from './../../types/valorMaturidade-types';
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 
@@ -275,25 +275,6 @@ export class DashProjetoComponent implements OnInit {
     });
   }
 
-  ngAfterViewInit(): void {
-    this.adjustCarouselHeight();
-  }
-
-  adjustCarouselHeight(): void {
-    const carouselInner = document.querySelector('.carousel-inner') as HTMLElement;
-    const items = document.querySelectorAll('.carousel-item');
-    let maxHeight = 0;
-
-    items.forEach(item => {
-      maxHeight = Math.max(maxHeight, (item as HTMLElement).clientHeight);
-    });
-
-    if (carouselInner) {
-      carouselInner.style.height = `${maxHeight}px`;
-    }
-  }
-
-
 public async setCurrent(id: number) {
   this.getLatestMaturidadeByEsteiraId(id);
   this.getLatestCapacidadesByEsteiraId(id);
@@ -302,7 +283,6 @@ public async setCurrent(id: number) {
   this.getMaturidadeByEsteiraId(id);
   this.getPrCountLast30And60And90Days();
   this.getTop5ColaboradoresByPrs();
-
 }
 
 public async setCurrentMaturidade (id: number) {
@@ -312,7 +292,6 @@ public async setCurrentMaturidade (id: number) {
   if (maturidade) {
     this.currentValorMaturidade = maturidade;
     this.getValorDoIndicesByMaturidadeId(maturidade.id);
-    
   }
 
 }
@@ -407,8 +386,6 @@ public async setCurrentMaturidade (id: number) {
       this.currentCapacidade = capacidade;
     });
   }
-
-
 
   getCorJornada(jornadaGoal: number | undefined, nivel: string): string | undefined {
     if (jornadaGoal === null || jornadaGoal === undefined) {
@@ -516,18 +493,15 @@ public async setCurrentMaturidade (id: number) {
       }
     }
 
-    getPrCountLast30And60And90Days(): void {
-      this.maturidadeService.getPrCountLast30And60And90Days().subscribe((response) => {
-        this.currentVcsPullRequest60Days = response;
-        console.log(this.currentVcsPullRequest60Days);
-      });
-    }
+  getPrCountLast30And60And90Days(): void {
+    this.maturidadeService.getPrCountLast30And60And90Days().subscribe((response) => {
+      this.currentVcsPullRequest60Days = response;
+    });
+  }
 
-    getTop5ColaboradoresByPrs(): void {
-      this.valorMaturidadeService.getTop5ColaboradoresByPrs().subscribe((response) => {
-        this.currentVcsPullRequestTop5 = response;
-        console.log(this.currentVcsPullRequestTop5);
-      });
-    }
-   
+  getTop5ColaboradoresByPrs(): void {
+    this.valorMaturidadeService.getTop5ColaboradoresByPrs().subscribe((response) => {
+      this.currentVcsPullRequestTop5 = response;
+    });
+  }
 }

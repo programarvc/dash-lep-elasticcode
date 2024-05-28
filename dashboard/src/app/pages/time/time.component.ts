@@ -478,7 +478,6 @@ public selecionarMetaColaborador (id?: number, selectedDate?: string) {
         const dataKey = date.toISOString().split('T')[0];
         this.currentMetasColaborador.competencia = competenciasPorData[dataKey];
         this.currentMetasColaborador.nota = this.currentMetasColaborador.competencia.map(c => c.nota);
-        console.log(this.currentMetasColaborador.competencia, this.currentMetasColaborador.nota);
       });
     }
   } else {
@@ -628,8 +627,6 @@ public selecionarMetaColaborador (id?: number, selectedDate?: string) {
     });
     
     this.selectedTimePr = this.formatDate(this.dataInicio) + ' - ' + this.formatDate(this.dataFim);
-
-    console.log('data de inicio',this.dataInicio, 'data de fim', this.dataFim);
   }
 
   //-------metodos para quantidade de tasks concluidas por colaboradorid-------
@@ -721,13 +718,7 @@ public selecionarMetaColaborador (id?: number, selectedDate?: string) {
     });
     
     this.selectedActivities = this.formatDate(this.dataInicioActivity) + ' - ' + this.formatDate(this.dataFimActivity);
-
-    console.log('data de inicio Activity',this.dataInicioActivity, 'data de fim Activity', this.dataFimActivity);
   }
-
-
-
-
 }
 
 
