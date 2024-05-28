@@ -1,6 +1,7 @@
 package com.br.agilize.dash.controller.dashboardController;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,4 +106,10 @@ public class VcsPullRequestController {
           Map<String, Object> prCount = service.getPrCountLast30And60And90Days();
           return ResponseEntity.ok(prCount);
       }
+    // End poit para buscar os 5 colaboradores com mais PRs
+    @GetMapping("/top5Colaboradores")
+    public ResponseEntity<List<Map<String, Object>>> getTop5ColaboradoresByPrs() {
+        List<Map<String, Object>> top5Colaboradores = service.getTop5ColaboradoresByPrs();
+        return ResponseEntity.ok(top5Colaboradores);
+    }
 }

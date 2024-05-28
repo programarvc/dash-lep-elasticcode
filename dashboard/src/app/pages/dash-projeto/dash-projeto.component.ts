@@ -1,5 +1,5 @@
 import { ValorDosIndicesDeMaturidadeByEsteiraIdAndCultura } from './../../types/valorMaturidade-types';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 
@@ -23,7 +23,8 @@ import {
 import {
   ValorDosIndicesDeMaturidade,
   ValorDosIndicesDeMaturidadeByEsteiraIdAndTecnica,
-  ValorDosIndicesDeMaturidadeFilter
+  ValorDosIndicesDeMaturidadeFilter,
+  VcsPullRequestTop5
 } from 'src/app/types/valorMaturidade-types';
 
 
@@ -191,8 +192,9 @@ export class DashProjetoComponent implements OnInit {
     countpr30days: 0
   }
 
-
-
+  //variavel com dados para armazenar a quantidade total de prs por colaborador Hasura
+  currentVcsPullRequestTop5: VcsPullRequestTop5[] = [];
+  
   public empresas: Empresa[] = [];
   public maturidade: Maturidade[] = [];
   public capacidade: CapacidadesRecomendadas[] = [];
@@ -207,8 +209,36 @@ export class DashProjetoComponent implements OnInit {
   public filterValorMaturidade: ValorDosIndicesDeMaturidadeFilter[] = [];
   public valorMaturidadeDate: Date;
   public formattedDate: string | null = null;
-
-
+  public topContribuidores = [
+    {
+      id: 1,
+      nome: 'Mavis',
+      github: 'mavis-martins',
+      prs: 10,
+      totalPrs: 54,
+    },
+    {
+      id: 2,
+      nome: 'Tiago Santos',
+      github: 'Tiago-Santosz',
+      prs: 18,
+      totalPrs: 54,
+    },
+    {
+      id: 3,
+      nome: 'Monaliza',
+      github: 'monalizaloren',
+      prs: 11,
+      totalPrs: 54,
+    },
+    {
+      id: 4,
+      nome: 'Vinicius',
+      github: 'spillinha',
+      prs: 15,
+      totalPrs: 54,
+    }
+  ];
 
   constructor(
     private router: Router,
@@ -245,6 +275,24 @@ export class DashProjetoComponent implements OnInit {
     });
   }
 
+  ngAfterViewInit(): void {
+    this.adjustCarouselHeight();
+  }
+
+  adjustCarouselHeight(): void {
+    const carouselInner = document.querySelector('.carousel-inner') as HTMLElement;
+    const items = document.querySelectorAll('.carousel-item');
+    let maxHeight = 0;
+
+    items.forEach(item => {
+      maxHeight = Math.max(maxHeight, (item as HTMLElement).clientHeight);
+    });
+
+    if (carouselInner) {
+      carouselInner.style.height = `${maxHeight}px`;
+    }
+  }
+
 
 public async setCurrent(id: number) {
   this.getLatestMaturidadeByEsteiraId(id);
@@ -253,6 +301,7 @@ public async setCurrent(id: number) {
   this.getValorMaturidadesByEsteiraIdAndCultura(id);
   this.getMaturidadeByEsteiraId(id);
   this.getPrCountLast30And60And90Days();
+  this.getTop5ColaboradoresByPrs();
 
 }
 
@@ -474,7 +523,11 @@ public async setCurrentMaturidade (id: number) {
       });
     }
 
-
-
-
+    getTop5ColaboradoresByPrs(): void {
+      this.valorMaturidadeService.getTop5ColaboradoresByPrs().subscribe((response) => {
+        this.currentVcsPullRequestTop5 = response;
+        console.log(this.currentVcsPullRequestTop5);
+      });
+    }
+   
 }

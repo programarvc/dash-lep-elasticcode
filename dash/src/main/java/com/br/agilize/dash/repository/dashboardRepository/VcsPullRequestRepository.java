@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -114,5 +115,14 @@ public interface VcsPullRequestRepository extends JpaRepository<VcsPullRequestEn
         "FROM vcs_pull_request p " +
         "WHERE p.merged_at IS NOT NULL", nativeQuery = true)
     Map<String, Object> countPrsLast30And60And90Days();
-    
+
+    // Query para buscar os top 5 colaboradores com mais PRs realizadas e a quantidade total de PRs
+    @Query(value = "SELECT c.id as id, c.nome as nome, COUNT(p.id) as countPr, (SELECT COUNT(*) FROM vcs_pull_request) as totalPrs " +
+        "FROM vcs_pull_request p " +
+        "JOIN colaboradorentity c ON p.colaborador_id = c.id " +
+        "WHERE p.merged_at IS NOT NULL " +
+        "GROUP BY c.id, c.nome " +
+        "ORDER BY countPr DESC " +
+        "LIMIT 5", nativeQuery = true)
+    List<Map<String, Object>> findTop5ColaboradoresAndTotalPrs();
 }

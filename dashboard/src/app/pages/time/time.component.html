@@ -323,8 +323,8 @@
             <div class="card list-metas">
                 <h2>Metas Estabelecidas</h2>
                 <div class="card-colaborador-content list-content">
-                    <ul  *ngFor="let competenciaNota of currentMetasColaborador.competencia;">
-                        <li>
+                    <ul>
+                        <li *ngFor="let competenciaNota of currentMetasColaborador.competencia;">
                             <p>{{competenciaNota.competencia}} - <span>{{competenciaNota.nota}}</span></p>
                         </li>
                     </ul>

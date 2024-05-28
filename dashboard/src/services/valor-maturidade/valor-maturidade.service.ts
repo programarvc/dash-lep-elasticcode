@@ -118,4 +118,11 @@ export class valorMaturidadeService {
         )
       );
   }
+
+  getTop5ColaboradoresByPrs(): Observable<any> {
+    const url: string = `${environment.api}/prcount/top5Colaboradores`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>('getTop5ColaboradoresByPrs')));
+  }
 }
