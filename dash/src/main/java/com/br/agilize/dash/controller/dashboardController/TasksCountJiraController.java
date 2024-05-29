@@ -34,14 +34,6 @@ public class TasksCountJiraController {
         super();
     }
 
-    /* 
-    @GetMapping("/colaborador/{colaboradorId}")
-    public ResponseEntity <PrCountDto> getPrCountByColaboradorId(@PathVariable Long colaboradorId) {
-        PrCountDto prCountDto = service.getPrCountByColaboradorId(colaboradorId);
-        return ResponseEntity.ok(prCountDto);
-    }
-    */
-
     @PostMapping("/create")
     public ResponseEntity<TasksCountJiraDto> salvartaskColaborador(@RequestBody TasksCountJiraDto tasksCountJiraDto) {
         try {
