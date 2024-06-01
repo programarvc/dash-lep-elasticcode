@@ -237,6 +237,74 @@
             </div>
           </div>
         </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="bloco-jira-story-epics">
+            <div class="titulo-legenda-jira-story-epics">
+              <div class="titulo-top-contribuidores">
+                <h2>
+                  Histórias e Épicos Jira
+                </h2>
+              </div>
+              <div class="legenda-top-contribuidores">
+                <div class="ellipse-roxa"></div>
+                <p class="metricas-texto-cultura">Total Histórias ({{jiraActivities.story_count}})</p>
+                <div class="ellipse-azul-epic"></div>
+                <div *ngFor="let epic of jiraEpics">
+                  <p class="metricas-texto-esperado-cultura">Épicos Totais Projeto ({{epic.count_epics}})</p>
+                </div>
+              </div>
+            </div>
+            <div class="pontilhados-top-contribuidores">
+              <div class="pontilhados-cultura2">
+                <div class="pontilhado-cultura"></div>
+                <div class="pontilhado-cultura"></div>
+                <div class="pontilhado-cultura"></div>
+                <div class="pontilhado-cultura"></div>
+                <div class="pontilhado-cultura"></div>
+                <div class="pontilhado-cultura"></div>
+                <div class="pontilhado-cultura"></div>
+                <div class="pontilhado-cultura"></div>
+                <div class="pontilhado-cultura"></div>
+                <div class="pontilhado-cultura"></div>
+              </div>
+            </div>
+            <div class="top-contribuidores-geral">
+              <div class="nome-top-contribuidores">
+                <p>Histórias:</p>
+                <div *ngFor="let epic of jiraEpics">
+                  <p>Épicos:</p>
+                </div>
+              </div>
+              <div class="processo-top-contribuidores">
+                <div class="barras-cultura">
+                  <div class="cultura-barra-meta" [ngStyle]="{'width': jiraActivities.story_count + '%'}">
+                    <div class="cultura-barra"></div>
+                  </div>
+                  <div *ngFor="let epic of jiraEpics">
+                    <div class="cultura-barra-meta" [ngStyle]="{'width': epic.count_epics + '%'}">
+                      <div class="jira-epic-barra"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="numero-top-contribuidores">
+                <p class="top-contribuidores-num">0</p>
+                <p class="top-contribuidores-num">10</p>
+                <p class="top-contribuidores-num">20</p>
+                <p class="top-contribuidores-num">30</p>
+                <p class="top-contribuidores-num">40</p>
+                <p class="top-contribuidores-num">50</p>
+                <p class="top-contribuidores-num">60</p>
+                <p class="top-contribuidores-num">70</p>
+                <p class="top-contribuidores-num">80</p>
+                <p class="top-contribuidores-num">90</p>
+                <p class="top-contribuidores-num">100</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
         <div class="row">
     <div class="col-md-8">
         <div class="bloco-tecnica">
