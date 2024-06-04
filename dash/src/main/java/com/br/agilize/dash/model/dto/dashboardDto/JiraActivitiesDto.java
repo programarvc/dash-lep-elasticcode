@@ -21,5 +21,6 @@ public class JiraActivitiesDto {
 
     private String typeDetail;
 
+    private String statusModifided;
 
 }

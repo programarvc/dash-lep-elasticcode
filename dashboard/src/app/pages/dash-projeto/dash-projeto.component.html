@@ -13,7 +13,8 @@
                     {{ currentMaturidade ? ('Dash.Ops - ' + (formattedDate | date: 'dd/MM/yyyy HH:mm')) : 'Selecione'}}
                   </button>
                   <div ngbDropdownMenu aria-labelledby="dropdownMaturidades">
-                    <button ngbDropdownItem *ngFor="let maturidadeData of maturidadeByEsteiraId; let i = index" (click)="selecionarMaturidade(maturidadeData.id)">
+                    <button ngbDropdownItem *ngFor="let maturidadeData of maturidadeByEsteiraId; let i = index"
+                      (click)="selecionarMaturidade(maturidadeData.id)">
                       {{'Dash.Ops - ' + (maturidadeData.dataHora | date: 'dd/MM/yyyy HH:mm')}}
                     </button>
                   </div>
@@ -32,7 +33,8 @@
                     <div class="card velocidade">
                       <p class="titulo-card">Lead Time for Changes</p>
                       <p class="text-number">
-                        <span class="texto-metricas" [ngStyle]="{'font-size': this.getFontSize(currentMaturidade?.leadTime)}">
+                        <span class="texto-metricas"
+                          [ngStyle]="{'font-size': this.getFontSize(currentMaturidade?.leadTime)}">
                           {{currentMaturidade?.leadTime !== null ? currentMaturidade?.leadTime : 'sem dado'}}
                         </span>
                         {{currentMaturidade.leadTime !== null ? 'dias' : ''}}
@@ -41,10 +43,12 @@
                     <div class="card velocidade">
                       <p class="titulo-card">Deployment Frequency</p>
                       <p class="text-number">
-                        <span class="texto-metricas" [ngStyle]="{'font-size': this.getFontSize(currentMaturidade?.frequencyDeployment)}">
-                          {{currentMaturidade?.frequencyDeployment !== null ? currentMaturidade?.frequencyDeployment : 'sem dado'}}
+                        <span class="texto-metricas"
+                          [ngStyle]="{'font-size': this.getFontSize(currentMaturidade?.frequencyDeployment)}">
+                          {{currentMaturidade?.frequencyDeployment !== null ? currentMaturidade?.frequencyDeployment :
+                          'sem dado'}}
                         </span>
-                          {{currentMaturidade.frequencyDeployment !== null ? 'por semana' : ''}}
+                        {{currentMaturidade.frequencyDeployment !== null ? 'por semana' : ''}}
                       </p>
                     </div>
                   </div>
@@ -55,15 +59,18 @@
                     <div class="card estabilidade">
                       <p class="titulo-card">Change Failure Rate</p>
                       <p class="text-number">
-                        <span class="texto-metricas" [ngStyle]="{'font-size': this.getFontSizeFailureRate(currentMaturidade?.changeFailureRate)}">
-                            {{currentMaturidade?.changeFailureRate !== null ?  currentMaturidade?.changeFailureRate + '%': 'sem dado' }}
+                        <span class="texto-metricas"
+                          [ngStyle]="{'font-size': this.getFontSizeFailureRate(currentMaturidade?.changeFailureRate)}">
+                          {{currentMaturidade?.changeFailureRate !== null ? currentMaturidade?.changeFailureRate + '%':
+                          'sem dado' }}
                         </span>
                       </p>
                     </div>
                     <div class="card estabilidade">
                       <p class="titulo-card">Mean Time to Recovery</p>
-                      <p class="text-number" >
-                        <span class="texto-metricas" [ngStyle]="{'font-size': this.getFontSize(currentMaturidade?.timeToRecovery)}">
+                      <p class="text-number">
+                        <span class="texto-metricas"
+                          [ngStyle]="{'font-size': this.getFontSize(currentMaturidade?.timeToRecovery)}">
                           {{currentMaturidade?.timeToRecovery ?? 'sem dado' }}
                         </span>
                         {{currentMaturidade?.timeToRecovery !== null ? 'horas' : ''}}
@@ -80,100 +87,143 @@
               <h2>Jornada de Transformação</h2>
               <div class="jornada-progress">
                 <div class="jornada-level">
-                  <span [ngStyle]="{'color': this.getCorJornada(currentMaturidade?.mediaDeJornada, 'Baixa')}">Baixa</span>
-                  <span [ngStyle]="{'color': this.getCorJornada(currentMaturidade?.mediaDeJornada, 'Média')}">Média</span>
+                  <span
+                    [ngStyle]="{'color': this.getCorJornada(currentMaturidade?.mediaDeJornada, 'Baixa')}">Baixa</span>
+                  <span
+                    [ngStyle]="{'color': this.getCorJornada(currentMaturidade?.mediaDeJornada, 'Média')}">Média</span>
                   <span [ngStyle]="{'color': this.getCorJornada(currentMaturidade?.mediaDeJornada, 'Alta')}">Alta</span>
-                  <span [ngStyle]="{'color': this.getCorJornada(currentMaturidade?.mediaDeJornada, 'Elite')}">Elite</span>
+                  <span
+                    [ngStyle]="{'color': this.getCorJornada(currentMaturidade?.mediaDeJornada, 'Elite')}">Elite</span>
                 </div>
                 <div class="jornada-bar-content">
                   <div class="jornada-bar">
-                    <div class="jornada-goal"
-                    [ngStyle]="{'width': currentMaturidade?.mediaDeJornada + '%'}"
-                    >
+                    <div class="jornada-goal" [ngStyle]="{'width': currentMaturidade?.mediaDeJornada + '%'}">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="saude-operacao">
+                <h3>Saúde da Operação</h3>
+                <div class="saude-operacao-content">
+                  <span class="nivel-saude">
+                    {{this.getNivel(currentMaturidade?.saude)}}
+                  </span>
+                  <span class="rate-saude" [ngStyle]="{'font-size': this.getFontSizeSaude(currentMaturidade?.saude)}">
+                    {{currentMaturidade?.saude !== null ? currentMaturidade.saude : ''}}
+                    {{currentMaturidade?.saude !== null ? '%' : ''}}
+                  </span>
+                </div>
+              </div>
+              <div class="bloco-inferior">
+                <div class="jornada-cards-space">
+                  <div class="jornada-card">
+                    <h3>
+                      Atividades<br>
+                      <span class="story-points-dash">
+                        (últimos 60 dias - jira)
+                      </span>
+                    </h3>
+                    <div class="rate-value-4key">
+                      <span>
+                        {{16}}
+                      </span>
+                      <span class="rate-saude"
+                        [ngStyle]="{'font-size': this.getFontSizeMetricas(currentMaturidade?.capacidadeDora)}">
+                        {{20}}
+                        <!--{{currentMaturidade?.capacidadeDora !== null ? '%' : ''}}-->
+                      </span>
+                    </div>
+                    <div class="jornada-card-bar-content"
+                      [style.display]="(currentMaturidade?.capacidadeDora === null) ? 'none' : 'block'">
+                      <div class="jornada-card-bar">
+                        <div class="jornada-card-goal"
+                          [ngStyle]="{'width': (currentMaturidade?.capacidadeDora !== null ? currentMaturidade?.capacidadeDora : 0) + '%'}">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="jornada-card">
+                    <h3>
+                      Story Points<br>
+                      <span class="story-points-dash">
+                        (últimos 60 dias - jira)
+                      </span>
+                    </h3>
+                    <div class="rate-value-4key">
+                      <span>
+                        {{36}}
+                      </span>
+                      <span class="rate-saude"
+                        [ngStyle]="{'font-size': this.getFontSizeMetricas(currentMaturidade?.metricas4)}">
+                        {{156}}
+                        <!--{{currentMaturidade?.metricas4 !== null ? '%' : ''}} -->
+                      </span>
+                    </div>
+                    <div class="jornada-card-bar-content"
+                      [style.display]="(currentMaturidade?.metricas4 === null) ? 'none' : 'block'">
+                      <div class="jornada-card-bar">
+                        <div class="jornada-card-goal"
+                          [ngStyle]="{'width': (currentMaturidade?.metricas4 !== null ? currentMaturidade?.metricas4 : 0) + '%'}">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="espaco-capacidades-recomendadas">
+                  <div class="capacidades-recomendadas-card">
+                    <div class="prs-dashboard">
+                      <h3>Pull Requests</h3><span>(últimos 60 dias - git)</span>
+                      <p>
+                        {{currentVcsPullRequest60Days.countpr60days}}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="saude-operacao">
-              <h3>Saúde da Operação</h3>
-              <div class="saude-operacao-content">
-                <span class="nivel-saude">
-                  {{this.getNivel(currentMaturidade?.saude)}}
-                </span>
-                <span class="rate-saude" [ngStyle]="{'font-size': this.getFontSizeSaude(currentMaturidade?.saude)}">
-                  {{currentMaturidade?.saude !== null ? currentMaturidade.saude : ''}}
-                  {{currentMaturidade?.saude !== null ? '%' : ''}}
-                </span>
-              </div>
-            </div>
-            <div class="bloco-inferior">
-              <div class="jornada-cards-space">
-              <div class="jornada-card">
-                <h3>
-                  Atividades<br>
-                  <span class="story-points-dash">
-                    (últimos 60 dias - jira)
-                  </span>
-                </h3>
-                <div class="rate-value-4key">
-                  <span>
-                    {{16}}
-                  </span>
-                  <span class="rate-saude" [ngStyle]="{'font-size': this.getFontSizeMetricas(currentMaturidade?.capacidadeDora)}">
-                    {{20}}
-                    <!--{{currentMaturidade?.capacidadeDora !== null ? '%' : ''}}-->
-                  </span>
-                </div>
-                <div class="jornada-card-bar-content"
-                [style.display]="(currentMaturidade?.capacidadeDora === null) ? 'none' : 'block'">
-                <div class="jornada-card-bar">
-                    <div class="jornada-card-goal"
-                        [ngStyle]="{'width': (currentMaturidade?.capacidadeDora !== null ? currentMaturidade?.capacidadeDora : 0) + '%'}">
-                    </div>
-                </div>
-              </div>
-            </div>
-            <div class="jornada-card">
-              <h3>
-                Story Points<br>
-                <span class="story-points-dash">
-                  (últimos 60 dias - jira)
-                </span>
-              </h3>
-              <div class="rate-value-4key">
-                <span>
-                  {{36}}
-                </span>
-                <span class="rate-saude" [ngStyle]="{'font-size': this.getFontSizeMetricas(currentMaturidade?.metricas4)}">
-                  {{156}}
-                  <!--{{currentMaturidade?.metricas4 !== null ? '%' : ''}} -->
-                </span>
-              </div>
-              <div class="jornada-card-bar-content"
-              [style.display]="(currentMaturidade?.metricas4 === null) ? 'none' : 'block'"
-              >
-                <div class="jornada-card-bar">
-                    <div class="jornada-card-goal"
-                        [ngStyle]="{'width': (currentMaturidade?.metricas4 !== null ? currentMaturidade?.metricas4 : 0) + '%'}"
-                    >
-                    </div>
-                </div>
-            </div>
-            </div>
-          </div>
-          <div class="espaco-capacidades-recomendadas">
-            <div class="capacidades-recomendadas-card">
-              <div class="prs-dashboard">
-                <h3>Pull Requests</h3><span>(últimos 60 dias - git)</span>
-                <p>
-                  {{currentVcsPullRequest60Days.countpr60days}}
-                </p>
-              </div>
-            </div>
           </div>
         </div>
-      </div>
+        <div class="row">
+          <!-- Card para a quantidade de épicos nos últimos 60 dias -->
+          <div class="col-md-4">
+            <div class="historias-epicos-card">
+              <div class="historias-epicos-card-content">
+                <div class="historias-epicos-card-text">
+                  <h2>Épicos</h2><span>(últimos 60 dias)</span>
+                  <p>
+                      {{1}}
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
+        <!-- Card para o total de histórias -->
+        <div class="col-md-4">
+            <div class="historias-epicos-card">
+                <div class="historias-epicos-card-content">
+                    <div class="historias-epicos-card-text">
+                        <h2>Histórias</h2><span>(total)</span>
+                        <p>
+                                {{67}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Card para a quantidade média de histórias por épico -->
+        <div class="col-md-4">
+            <div class="historias-epicos-card">
+                <div class="historias-epicos-card-content">
+                    <div class="historias-epicos-card-text">
+                        <h2>Histórias por Épico</h2><span>(média)</span>
+                        <p>
+                                {{26}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
         <div class="row">
           <div class="col-md-12">
@@ -190,35 +240,37 @@
                   <div class="ellipse-cinza"></div>
                   <p class="metricas-texto-esperado-cultura">Prs Totais Projeto ({{pullRequest.totalprs}})</p>
                 </div>
-            </div>
-            <div class="pontilhados-top-contribuidores">
-              <div class="pontilhados-cultura2">
-                <div class="pontilhado-cultura"></div>
-                <div class="pontilhado-cultura"></div>
-                <div class="pontilhado-cultura"></div>
-                <div class="pontilhado-cultura"></div>
-                <div class="pontilhado-cultura"></div>
-                <div class="pontilhado-cultura"></div>
-                <div class="pontilhado-cultura"></div>
-                <div class="pontilhado-cultura"></div>
-                <div class="pontilhado-cultura"></div>
-                <div class="pontilhado-cultura"></div>
               </div>
-            </div>
+              <div class="pontilhados-top-contribuidores">
+                <div class="pontilhados-cultura2">
+                  <div class="pontilhado-cultura"></div>
+                  <div class="pontilhado-cultura"></div>
+                  <div class="pontilhado-cultura"></div>
+                  <div class="pontilhado-cultura"></div>
+                  <div class="pontilhado-cultura"></div>
+                  <div class="pontilhado-cultura"></div>
+                  <div class="pontilhado-cultura"></div>
+                  <div class="pontilhado-cultura"></div>
+                  <div class="pontilhado-cultura"></div>
+                  <div class="pontilhado-cultura"></div>
+                </div>
+              </div>
               <div class="top-contribuidores-geral">
                 <div class="nome-top-contribuidores">
                   <p *ngFor="let topContribuidor of currentVcsPullRequestTop5">
-                        {{topContribuidor.nome}}
+                    {{topContribuidor.nome}}
                   </p>
                 </div>
                 <div class="processo-top-contribuidores">
-                    <div class="barras-cultura">
-                      <ng-container *ngFor="let topContribuidor of currentVcsPullRequestTop5">
-                          <div class="cultura-barra-meta" [ngStyle]="{'width': '100%'}">
-                            <div class="cultura-barra" [ngStyle]="{'width': (topContribuidor.countpr * 100 / topContribuidor.totalprs)  + '%'}"></div>
-                          </div>
-                      </ng-container>
-                    </div>
+                  <div class="barras-cultura">
+                    <ng-container *ngFor="let topContribuidor of currentVcsPullRequestTop5">
+                      <div class="cultura-barra-meta" [ngStyle]="{'width': '100%'}">
+                        <div class="cultura-barra"
+                          [ngStyle]="{'width': (topContribuidor.countpr * 100 / topContribuidor.totalprs)  + '%'}">
+                        </div>
+                      </div>
+                    </ng-container>
+                  </div>
                 </div>
                 <div class="numero-top-contribuidores">
                   <p class="top-contribuidores-num">0</p>
@@ -237,318 +289,250 @@
             </div>
           </div>
         </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="bloco-top-contribuidores">
-            <div class="titulo-legenda-top-contribuidores">
-              <div class="titulo-top-contribuidores">
-                <h2>
-                  Histórias e Épicos Jira
-                </h2>
-              </div>
-              <div class="legenda-top-contribuidores">
-                <div class="ellipse-roxa"></div>
-                <p class="metricas-texto-cultura">Total Histórias ({{jiraActivities.story_count}})</p>
-                <div class="ellipse-azul-epic"></div>
-                <div *ngFor="let epic of jiraEpics">
-                  <p class="metricas-texto-esperado-cultura">Épicos Totais Projeto ({{epic.count_epics}})</p>
-                </div>
-              </div>
-            </div>
-            <div class="pontilhados-top-contribuidores">
-              <div class="pontilhados-cultura2">
-                <div class="pontilhado-cultura"></div>
-                <div class="pontilhado-cultura"></div>
-                <div class="pontilhado-cultura"></div>
-                <div class="pontilhado-cultura"></div>
-                <div class="pontilhado-cultura"></div>
-                <div class="pontilhado-cultura"></div>
-                <div class="pontilhado-cultura"></div>
-                <div class="pontilhado-cultura"></div>
-                <div class="pontilhado-cultura"></div>
-                <div class="pontilhado-cultura"></div>
-              </div>
-            </div>
-            <div class="jira-story-epics-geral">
-              <div class="nome-jira-story-epics">
-                <p>Histórias:</p>
-                <div *ngFor="let epic of jiraEpics">
-                  <p>Épicos:</p>
-                </div>
-              </div>
-              <div class="processo-top-contribuidores">
-                <div class="barras-cultura">
-                  <div class="cultura-barra-meta" [ngStyle]="{'width': jiraActivities.story_count + '%'}">
-                    <div class="cultura-barra"></div>
-                  </div>
-                  <div *ngFor="let epic of jiraEpics">
-                    <div class="cultura-barra-meta" [ngStyle]="{'width': epic.count_epics + '%'}">
-                      <div class="jira-epic-barra"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="numero-top-contribuidores">
-                <p class="top-contribuidores-num">0</p>
-                <p class="top-contribuidores-num">10</p>
-                <p class="top-contribuidores-num">20</p>
-                <p class="top-contribuidores-num">30</p>
-                <p class="top-contribuidores-num">40</p>
-                <p class="top-contribuidores-num">50</p>
-                <p class="top-contribuidores-num">60</p>
-                <p class="top-contribuidores-num">70</p>
-                <p class="top-contribuidores-num">80</p>
-                <p class="top-contribuidores-num">90</p>
-                <p class="top-contribuidores-num">100</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
         <div class="row">
-    <div class="col-md-8">
-        <div class="bloco-tecnica">
-                <div class="tituloLegenda">
-                    <div class="titulo-tecnica1">
-                        <h2 class="titulo-tecnica">Técnica</h2>
-                        <!-- <ng-container *ngFor="let valor of uniqueTiposMaturidade; let i = index">
+          <div class="col-md-8">
+            <div class="bloco-tecnica">
+              <div class="tituloLegenda">
+                <div class="titulo-tecnica1">
+                  <h2 class="titulo-tecnica">Técnica</h2>
+                  <!-- <ng-container *ngFor="let valor of uniqueTiposMaturidade; let i = index">
                             <p class="titulo-tecnica" *ngIf="i === 0">
                               {{ valor }}
                             </p>
                           </ng-container> -->
-                    </div>
-                    <div class="metricas-ellipse">
-                        <div class="ellipse-roxa"></div>
-                        <p class="metricas-texto">Atingido</p>
-                        <div class="ellipse-cinza"></div>
-                        <p class="metricas-texto-esperado">Esperado</p>
-                    </div>
                 </div>
-               <div class="pontilhados">
-                    <div class="pontilhados2">
-                        <div class="pontilhado"></div>
-                        <div class="pontilhado"></div>
-                        <div class="pontilhado"></div>
-                        <div class="pontilhado"></div>
-                        <div class="pontilhado"></div>
-                        <div class="pontilhado"></div>
-                        <div class="pontilhado"></div>
-                        <div class="pontilhado"></div>
-                        <div class="pontilhado"></div>
-                        <div class="pontilhado"></div>
-                        <div class="pontilhado"></div>
-                    </div>
+                <div class="metricas-ellipse">
+                  <div class="ellipse-roxa"></div>
+                  <p class="metricas-texto">Atingido</p>
+                  <div class="ellipse-cinza"></div>
+                  <p class="metricas-texto-esperado">Esperado</p>
                 </div>
-                <div class="processos-geral">
-                    <div class="tecnicas-textos">
-                        <p class="tecnicas-texto" *ngFor="let valor of valorMaturidadeC">
-                            <ng-container *ngIf="valor.itemDeMaturidade.tipoMaturidade === 'TECNICA'">
-                               {{valor.itemDeMaturidade.nome}}
-                            </ng-container>
-                        </p>
-                    </div>
-                    <div class="processo">
-                        <div class="barras">
-                            <ng-container *ngFor="let valor of valorMaturidadeC; let i = index">
-                            <ng-container  *ngIf="valor.itemDeMaturidade.tipoMaturidade === 'TECNICA'">
-                                <div [ngStyle]="{'width': valor.valorEsperado  + '%'}" class="barra-arq">
-                                    <div class="barra" [ngStyle]="{'width': valor.valorAtingido  + '%'}"></div>
-                                </div>
-                            </ng-container>
-                             </ng-container>
+              </div>
+              <div class="pontilhados">
+                <div class="pontilhados2">
+                  <div class="pontilhado"></div>
+                  <div class="pontilhado"></div>
+                  <div class="pontilhado"></div>
+                  <div class="pontilhado"></div>
+                  <div class="pontilhado"></div>
+                  <div class="pontilhado"></div>
+                  <div class="pontilhado"></div>
+                  <div class="pontilhado"></div>
+                  <div class="pontilhado"></div>
+                  <div class="pontilhado"></div>
+                  <div class="pontilhado"></div>
+                </div>
+              </div>
+              <div class="processos-geral">
+                <div class="tecnicas-textos">
+                  <p class="tecnicas-texto" *ngFor="let valor of valorMaturidadeC">
+                    <ng-container *ngIf="valor.itemDeMaturidade.tipoMaturidade === 'TECNICA'">
+                      {{valor.itemDeMaturidade.nome}}
+                    </ng-container>
+                  </p>
+                </div>
+                <div class="processo">
+                  <div class="barras">
+                    <ng-container *ngFor="let valor of valorMaturidadeC; let i = index">
+                      <ng-container *ngIf="valor.itemDeMaturidade.tipoMaturidade === 'TECNICA'">
+                        <div [ngStyle]="{'width': valor.valorEsperado  + '%'}" class="barra-arq">
+                          <div class="barra" [ngStyle]="{'width': valor.valorAtingido  + '%'}"></div>
                         </div>
-                    </div>
+                      </ng-container>
+                    </ng-container>
+                  </div>
                 </div>
-                <div class="numeros">
-                    <p class="tecnicas-num">0</p>
-                    <p class="tecnicas-num">10</p>
-                    <p class="tecnicas-num">20</p>
-                    <p class="tecnicas-num">30</p>
-                    <p class="tecnicas-num">40</p>
-                    <p class="tecnicas-num">50</p>
-                    <p class="tecnicas-num">60</p>
-                    <p class="tecnicas-num">70</p>
-                    <p class="tecnicas-num">80</p>
-                    <p class="tecnicas-num">90</p>
-                    <p class="tecnicas-num">100</p>
-                </div>
-        </div>
-    </div>
-    <!--Bloco PROCESSO-->
-    <div class="col-md-4">
-        <div class="bloco-pequeno">
-            <div class="cabecalho-quadro">
+              </div>
+              <div class="numeros">
+                <p class="tecnicas-num">0</p>
+                <p class="tecnicas-num">10</p>
+                <p class="tecnicas-num">20</p>
+                <p class="tecnicas-num">30</p>
+                <p class="tecnicas-num">40</p>
+                <p class="tecnicas-num">50</p>
+                <p class="tecnicas-num">60</p>
+                <p class="tecnicas-num">70</p>
+                <p class="tecnicas-num">80</p>
+                <p class="tecnicas-num">90</p>
+                <p class="tecnicas-num">100</p>
+              </div>
+            </div>
+          </div>
+          <!--Bloco PROCESSO-->
+          <div class="col-md-4">
+            <div class="bloco-pequeno">
+              <div class="cabecalho-quadro">
                 <h2 class="titulo-processo col-md-4">Processo</h2>
-               <!-- <ng-container *ngFor="let valor of uniqueTiposMaturidade; let i = index">
+                <!-- <ng-container *ngFor="let valor of uniqueTiposMaturidade; let i = index">
                     <p class="titulo-processo col-md-4" *ngIf="i === 2">
                       {{ valor }}
                     </p>
                   </ng-container> -->
                 <div class="metricas-legenda col-md-8">
-                    <div class="ellipse-azul-processo"></div>
-                    <p class="cabecalho-texto">Atingido</p>
-                    <div class="ellipse-cinza-processo"></div>
-                    <p class="cabecalho-texto">Esperado</p>
+                  <div class="ellipse-azul-processo"></div>
+                  <p class="cabecalho-texto">Atingido</p>
+                  <div class="ellipse-cinza-processo"></div>
+                  <p class="cabecalho-texto">Esperado</p>
                 </div>
-            </div>
-            <div class="pontilhados-processo">
+              </div>
+              <div class="pontilhados-processo">
                 <div class="pontilhados-processo2">
-                    <div class="tracejado"></div>
-                    <div class="tracejado"></div>
-                    <div class="tracejado"></div>
-                    <div class="tracejado"></div>
-                    <div class="tracejado"></div>
-                    <div class="tracejado"></div>
-                    <div class="tracejado"></div>
-                    <div class="tracejado"></div>
+                  <div class="tracejado"></div>
+                  <div class="tracejado"></div>
+                  <div class="tracejado"></div>
+                  <div class="tracejado"></div>
+                  <div class="tracejado"></div>
+                  <div class="tracejado"></div>
+                  <div class="tracejado"></div>
+                  <div class="tracejado"></div>
                 </div>
-            </div>
-            <div class="processos-geral">
+              </div>
+              <div class="processos-geral">
                 <div class="processos-textos">
-                    <p class="tecnicas-texto" *ngFor="let valor of valorMaturidadeC">
-                        <ng-container *ngIf="valor.itemDeMaturidade.tipoMaturidade === 'PROCESSO'">
-                            {{valor.itemDeMaturidade.nome}}
-                        </ng-container>
-                    </p>
-                </div>
-            <div class="processo-progresso">
-                <div class="barras-processo">
-                    <ng-container *ngFor="let valor of valorMaturidadeC">
-                         <ng-container *ngIf="valor.itemDeMaturidade.tipoMaturidade === 'PROCESSO'">
-                        <div [ngStyle]="{'width': valor.valorEsperado + '%'}" class="processo-barra-meta">
-                        <div class="processo-barra" [ngStyle]="{'width': valor.valorAtingido + '%'}"></div>
-                        </div>
+                  <p class="tecnicas-texto" *ngFor="let valor of valorMaturidadeC">
+                    <ng-container *ngIf="valor.itemDeMaturidade.tipoMaturidade === 'PROCESSO'">
+                      {{valor.itemDeMaturidade.nome}}
                     </ng-container>
-                     </ng-container>
+                  </p>
                 </div>
+                <div class="processo-progresso">
+                  <div class="barras-processo">
+                    <ng-container *ngFor="let valor of valorMaturidadeC">
+                      <ng-container *ngIf="valor.itemDeMaturidade.tipoMaturidade === 'PROCESSO'">
+                        <div [ngStyle]="{'width': valor.valorEsperado + '%'}" class="processo-barra-meta">
+                          <div class="processo-barra" [ngStyle]="{'width': valor.valorAtingido + '%'}"></div>
+                        </div>
+                      </ng-container>
+                    </ng-container>
+                  </div>
                 </div>
+              </div>
             </div>
-       </div>
-        <!--Bloco METRICA-->
+            <!--Bloco METRICA-->
 
             <div class="bloco-pequeno">
-                <div class="cabecalho-quadro">
-                    <h2 class="titulo-processo col-md-4">Métricas</h2>
-                       <!--<ng-container *ngFor="let valor of uniqueTiposMaturidade; let i = index">
+              <div class="cabecalho-quadro">
+                <h2 class="titulo-processo col-md-4">Métricas</h2>
+                <!--<ng-container *ngFor="let valor of uniqueTiposMaturidade; let i = index">
                         <p class="titulo-processo col-md-4" *ngIf="i === 3">
                           {{ valor }}
                         </p>
                        </ng-container> -->
 
-                    <div class="metricas-legenda col-md-8">
-                        <div class="ellipse-azul-processo"></div>
-                        <p class="cabecalho-texto">Atingido</p>
-                        <div class="ellipse-cinza-processo"></div>
-                        <p class="cabecalho-texto">Esperado</p>
-                    </div>
+                <div class="metricas-legenda col-md-8">
+                  <div class="ellipse-azul-processo"></div>
+                  <p class="cabecalho-texto">Atingido</p>
+                  <div class="ellipse-cinza-processo"></div>
+                  <p class="cabecalho-texto">Esperado</p>
                 </div>
-                <div>
-                    <div class="pontilhados-metrica">
-                        <div class="pontilhados-metrica2">
-                            <div class="tracejado"></div>
-                            <div class="tracejado"></div>
-                            <div class="tracejado"></div>
-                            <div class="tracejado"></div>
-                            <div class="tracejado"></div>
-                            <div class="tracejado"></div>
-                            <div class="tracejado"></div>
-                            <div class="tracejado"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="metricas-geral">
-                    <div class="quadro-metricas-textos">
-                        <p class="tecnicas-texto" *ngFor="let valor of valorMaturidadeC">
-                            <ng-container *ngIf="valor.itemDeMaturidade.tipoMaturidade === 'METRICA'">
-                                {{valor.itemDeMaturidade.nome}}
-                            </ng-container>
-                        </p>
-                    </div>
-                    <div class="metrica-progresso">
-                        <div class="barras-metricas">
-                            <ng-container *ngFor="let valor of valorMaturidadeC">
-                              <ng-container *ngIf="valor.itemDeMaturidade.tipoMaturidade === 'METRICA'">
-                                <div [ngStyle]="{'width': valor.valorEsperado  + '%'}" class="metrica-barra-meta">
-                                    <div class="metrica-barra" [ngStyle]="{'width': valor.valorAtingido+ '%'}"></div>
-                                </div>
-                            </ng-container>
-                          </ng-container>
-                       </div>
-                    </div>
-        </div>
-      </div>
-    </div>
-        </div>
-  <div class="row">
-    <div class="col-md-12">
-      <div class="bloco-cultura">
-        <div class="tituloLegendaCultura">
-          <div class="tituloLegendaCultura1">
-            <h2 class="titulo-cultura">Cultura</h2>
-          </div>
-          <div class="metricas-cultura">
-            <div class="ellipse-roxa"></div>
-            <p class="metricas-texto-cultura">Atingido</p>
-            <div class="ellipse-cinza"></div>
-            <p class="metricas-texto-esperado-cultura">Esperado</p>
-          </div>
-      </div>
-      <div class="pontilhados-cultura">
-        <div class="pontilhados-cultura2">
-          <div class="pontilhado-cultura"></div>
-          <div class="pontilhado-cultura"></div>
-          <div class="pontilhado-cultura"></div>
-          <div class="pontilhado-cultura"></div>
-          <div class="pontilhado-cultura"></div>
-          <div class="pontilhado-cultura"></div>
-          <div class="pontilhado-cultura"></div>
-          <div class="pontilhado-cultura"></div>
-          <div class="pontilhado-cultura"></div>
-          <div class="pontilhado-cultura"></div>
-        </div>
-      </div>
-        <div class="cultura-geral">
-          <div class="cultura-textos">
-            <p class="tecnicas-texto" *ngFor="let valor of valorMaturidadeC">
-              <ng-container *ngIf="valor.itemDeMaturidade.tipoMaturidade === 'CULTURA'">
-                  {{valor.itemDeMaturidade.nome}}
-              </ng-container>
-            </p>
-          </div>
-          <div class="processo-cultura">
-              <div class="barras-cultura">
-                <ng-container *ngFor="let item of valorMaturidadeC">
-                  <ng-container *ngIf="item.itemDeMaturidade.tipoMaturidade === 'CULTURA'">
-                    <div class="cultura-barra-meta" [ngStyle]="{'width': item.valorEsperado  + '%'}">
-                      <div class="cultura-barra" [ngStyle]="{'width': item.valorAtingido  + '%'}"></div>
-                    </div>
-                  </ng-container>
-                </ng-container>
               </div>
+              <div>
+                <div class="pontilhados-metrica">
+                  <div class="pontilhados-metrica2">
+                    <div class="tracejado"></div>
+                    <div class="tracejado"></div>
+                    <div class="tracejado"></div>
+                    <div class="tracejado"></div>
+                    <div class="tracejado"></div>
+                    <div class="tracejado"></div>
+                    <div class="tracejado"></div>
+                    <div class="tracejado"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="metricas-geral">
+                <div class="quadro-metricas-textos">
+                  <p class="tecnicas-texto" *ngFor="let valor of valorMaturidadeC">
+                    <ng-container *ngIf="valor.itemDeMaturidade.tipoMaturidade === 'METRICA'">
+                      {{valor.itemDeMaturidade.nome}}
+                    </ng-container>
+                  </p>
+                </div>
+                <div class="metrica-progresso">
+                  <div class="barras-metricas">
+                    <ng-container *ngFor="let valor of valorMaturidadeC">
+                      <ng-container *ngIf="valor.itemDeMaturidade.tipoMaturidade === 'METRICA'">
+                        <div [ngStyle]="{'width': valor.valorEsperado  + '%'}" class="metrica-barra-meta">
+                          <div class="metrica-barra" [ngStyle]="{'width': valor.valorAtingido+ '%'}"></div>
+                        </div>
+                      </ng-container>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="numeros-cultura">
-            <p class="cultura-num">0</p>
-            <p class="cultura-num">10</p>
-            <p class="cultura-num">20</p>
-            <p class="cultura-num">30</p>
-            <p class="cultura-num">40</p>
-            <p class="cultura-num">50</p>
-            <p class="cultura-num">60</p>
-            <p class="cultura-num">70</p>
-            <p class="cultura-num">80</p>
-            <p class="cultura-num">90</p>
-            <p class="cultura-num">100</p>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="bloco-cultura">
+              <div class="tituloLegendaCultura">
+                <div class="tituloLegendaCultura1">
+                  <h2 class="titulo-cultura">Cultura</h2>
+                </div>
+                <div class="metricas-cultura">
+                  <div class="ellipse-roxa"></div>
+                  <p class="metricas-texto-cultura">Atingido</p>
+                  <div class="ellipse-cinza"></div>
+                  <p class="metricas-texto-esperado-cultura">Esperado</p>
+                </div>
+              </div>
+              <div class="pontilhados-cultura">
+                <div class="pontilhados-cultura2">
+                  <div class="pontilhado-cultura"></div>
+                  <div class="pontilhado-cultura"></div>
+                  <div class="pontilhado-cultura"></div>
+                  <div class="pontilhado-cultura"></div>
+                  <div class="pontilhado-cultura"></div>
+                  <div class="pontilhado-cultura"></div>
+                  <div class="pontilhado-cultura"></div>
+                  <div class="pontilhado-cultura"></div>
+                  <div class="pontilhado-cultura"></div>
+                  <div class="pontilhado-cultura"></div>
+                </div>
+              </div>
+              <div class="cultura-geral">
+                <div class="cultura-textos">
+                  <p class="tecnicas-texto" *ngFor="let valor of valorMaturidadeC">
+                    <ng-container *ngIf="valor.itemDeMaturidade.tipoMaturidade === 'CULTURA'">
+                      {{valor.itemDeMaturidade.nome}}
+                    </ng-container>
+                  </p>
+                </div>
+                <div class="processo-cultura">
+                  <div class="barras-cultura">
+                    <ng-container *ngFor="let item of valorMaturidadeC">
+                      <ng-container *ngIf="item.itemDeMaturidade.tipoMaturidade === 'CULTURA'">
+                        <div class="cultura-barra-meta" [ngStyle]="{'width': item.valorEsperado  + '%'}">
+                          <div class="cultura-barra" [ngStyle]="{'width': item.valorAtingido  + '%'}"></div>
+                        </div>
+                      </ng-container>
+                    </ng-container>
+                  </div>
+                </div>
+                <div class="numeros-cultura">
+                  <p class="cultura-num">0</p>
+                  <p class="cultura-num">10</p>
+                  <p class="cultura-num">20</p>
+                  <p class="cultura-num">30</p>
+                  <p class="cultura-num">40</p>
+                  <p class="cultura-num">50</p>
+                  <p class="cultura-num">60</p>
+                  <p class="cultura-num">70</p>
+                  <p class="cultura-num">80</p>
+                  <p class="cultura-num">90</p>
+                  <p class="cultura-num">100</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <app-maturidade-lg></app-maturidade-lg>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-12">
-      <app-maturidade-lg></app-maturidade-lg>
-    </div>
-  </div>
-</div>
-</div>
-</div>
 </section>

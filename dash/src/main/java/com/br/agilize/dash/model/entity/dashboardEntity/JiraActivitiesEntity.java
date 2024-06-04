@@ -42,4 +42,8 @@ public class JiraActivitiesEntity {
 
     @Column(name = "status_detail", columnDefinition = "TEXT")
     private String statusDetail;
+
+    @Column(name = "status_modifided", columnDefinition = "TEXT")
+    private String statusModifided;
+
 }

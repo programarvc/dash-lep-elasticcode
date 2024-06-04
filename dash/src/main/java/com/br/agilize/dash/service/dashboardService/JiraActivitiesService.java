@@ -89,6 +89,7 @@ public class JiraActivitiesService implements CommandLineRunner {
                 String sprint = jiraDataDto.getSprint();
                 String typeDetail = jiraDataDto.getTypeDetail();
                 String statusDetail = jiraDataDto.getStatusDetail();
+                String statusModifided = jiraDataDto.getStatusModifided();
                 
                 // Verificar se a atividade já existe no banco de dados
                 Optional<JiraActivitiesEntity> existingActivity = repository.findByNameAndSprintAndPriority(name, sprint, priority);
@@ -103,7 +104,7 @@ public class JiraActivitiesService implements CommandLineRunner {
                     jiraDataDto.setSprint(sprint);
                     jiraDataDto.setTypeDetail(typeDetail);
                     jiraDataDto.setStatusDetail(statusDetail);
-                
+                    jiraDataDto.setStatusModifided(statusModifided);
                     JiraActivitiesEntity jiraActivitiesEntity = jiraActivitiesMapper.dtoToModel(jiraDataDto);
                     repository.save(jiraActivitiesEntity);
                 }
@@ -139,5 +140,27 @@ public class JiraActivitiesService implements CommandLineRunner {
 
     public List<Map<String, Object>> countAndDetailsByTypeDetail() {
         return repository.countAndDetailsByTypeDetail();
+    }
+    
+    public List<Map<String, Object>> getCountAndDetailsByTypeDetailAndStatusDetailAndUpdatedAt() {
+        return repository.countAndDetailsByTypeDetailAndStatusDetailAndUpdatedAt();
+    }
+
+    public Map<String, Object> countAllStories() {
+        return repository.countAllStories();
+    }
+
+    public double averageStoriesPerEpic() {
+        Map<String, Object> storiesResult = repository.countAllStories();
+        Map<String, Object> epicsResult = repository.countAllEpics();
+
+        Long totalStories = ((Number) storiesResult.get("story_count")).longValue();
+        Long totalEpics = ((Number) epicsResult.get("count_epics")).longValue();
+
+        if (totalEpics == 0) {
+            return 0;
+        }
+
+        return (double) totalStories / totalEpics;
     }
 }

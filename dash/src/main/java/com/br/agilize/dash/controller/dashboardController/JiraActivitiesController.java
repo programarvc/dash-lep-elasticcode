@@ -48,4 +48,22 @@ public class JiraActivitiesController {
         return new ResponseEntity<>(details, HttpStatus.OK);
     }
 
+    @GetMapping("/countepicslast60days")
+    public ResponseEntity<List<Map<String, Object>>> getCountAndDetailsByTypeDetailAndStatusDetailAndUpdatedAt() {
+        List<Map<String, Object>> result = service.getCountAndDetailsByTypeDetailAndStatusDetailAndUpdatedAt();
+        return ResponseEntity.ok(result);
+    }
+    
+    @GetMapping("/countAllStories")
+    public ResponseEntity<Map<String, Object>> countAllStories() {
+        Map<String, Object> result = service.countAllStories();
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/mediastoryperepic")
+    public ResponseEntity<Double> getAverageStoriesPerEpic() {
+        double average = service.averageStoriesPerEpic();
+        return ResponseEntity.ok(average);
+    }
+
 }
