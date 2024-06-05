@@ -2,11 +2,11 @@ package com.br.agilize.dash.controller.dashboardController;
 
 import java.util.*;
 
-import org.checkerframework.checker.units.qual.C;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
