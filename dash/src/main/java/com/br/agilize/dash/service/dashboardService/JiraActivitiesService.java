@@ -62,7 +62,7 @@ public class JiraActivitiesService implements CommandLineRunner {
         Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
     
         // Endpoint da API REST
-        String restApiUrl = dotenv.get("API_URL_JIRA");
+        String restApiUrl = dotenv.get("API_URL_ELASTIC_JIRA");
     
         // Definindo os cabeçalhos
         HttpHeaders headers = new HttpHeaders();

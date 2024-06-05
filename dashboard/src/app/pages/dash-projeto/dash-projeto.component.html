@@ -191,7 +191,7 @@
                 <div class="historias-epicos-card-text">
                   <h2>Épicos</h2><span>(últimos 60 dias)</span>
                   <p>
-                      {{1}}
+                      {{jiraEpics[0].count_epics}}
                   </p>
                 </div>
               </div>
@@ -204,7 +204,7 @@
                     <div class="historias-epicos-card-text">
                         <h2>Histórias</h2><span>(total)</span>
                         <p>
-                                {{67}}
+                                {{jiraAllStories.story_count}}
                         </p>
                     </div>
                 </div>
@@ -218,7 +218,7 @@
                     <div class="historias-epicos-card-text">
                         <h2>Histórias por Épico</h2><span>(média)</span>
                         <p>
-                                {{26}}
+                                {{jiraMediaStories.media_stories}}
                         </p>
                     </div>
                 </div>

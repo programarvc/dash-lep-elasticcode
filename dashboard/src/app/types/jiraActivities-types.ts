@@ -10,6 +10,16 @@ export interface JiraActivities {
   story_count: number;
 }
 
+export interface AllStories {
+  epic: string;
+  name: string;
+  story_count: number;
+}
+
+export interface MediaStoriesPerEpic {
+  media_stories: number;
+}
+
 export interface JiraEpics {
   id: number;
   epic: string;

@@ -1,6 +1,7 @@
 package com.br.agilize.dash.controller.dashboardController;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -61,9 +62,11 @@ public class JiraActivitiesController {
     }
 
     @GetMapping("/mediastoryperepic")
-    public ResponseEntity<Double> getAverageStoriesPerEpic() {
+    public ResponseEntity<Map<String, Double>> getAverageStoriesPerEpic() {
         double average = service.averageStoriesPerEpic();
-        return ResponseEntity.ok(average);
+        Map<String, Double> response = new HashMap<>();
+        response.put("media_stories", average);
+        return ResponseEntity.ok(response);
     }
 
 }

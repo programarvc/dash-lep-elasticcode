@@ -30,7 +30,9 @@ import {
 
 import { 
   JiraActivities,
-  JiraEpics
+  JiraEpics,
+  AllStories,
+  MediaStoriesPerEpic
 } from 'src/app/types/jiraActivities-types';
 
 import { EsteiraService } from 'src/services/esteira/esteira.service';
@@ -213,8 +215,17 @@ export class DashProjetoComponent implements OnInit {
     story_count: 0
   };
 
-  public jiraEpics: JiraEpics[] = [];
+  public jiraAllStories: AllStories = {
+    epic: '',
+    name: '',
+    story_count: 0
+  };
 
+  public jiraMediaStories: MediaStoriesPerEpic = {
+    media_stories: 0
+  };
+
+  public jiraEpics: JiraEpics[] = [];
   //variavel com dados para armazenar a quantidade total de prs por colaborador Hasura
   currentVcsPullRequestTop5: VcsPullRequestTop5[] = [];
 
@@ -280,6 +291,8 @@ public async setCurrent(id: number) {
   this.getTotalPrs();
   this.getJiraStories();
   this.getJiraEpics();
+  this.getcountAllStories();
+  this.getAverageStoriesPerEpic();
 }
 
 public async setCurrentMaturidade (id: number) {
@@ -519,6 +532,24 @@ public async setCurrentMaturidade (id: number) {
     this.jiraActivitiesService.getCountEpics().subscribe((response) => {
       this.jiraEpics = response;
       console.log(this.jiraEpics);
+    });
+  }
+
+  public getcountAllStories(): void {
+    this.jiraActivitiesService.getcountAllStories().subscribe((response) => {
+      this.jiraAllStories = response;
+    });
+  }
+
+  public getAverageStoriesPerEpic(): void {
+    this.jiraActivitiesService.getAverageStoriesPerEpic().subscribe((response) => {
+      this.jiraMediaStories = response;
+    });
+  }
+
+  public getJiraEpicsLast60Days(): void {
+    this.jiraActivitiesService.getEpicsLast60Days().subscribe((response) => {
+      this.jiraEpics = response;
     });
   }
 
