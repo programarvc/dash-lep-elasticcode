@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 import { Amplify } from 'aws-amplify';
 import awsconfig from 'aws-exports';
 
-import { NgChartsModule } from 'ng2-charts';
+
 
 
 //Components
@@ -48,8 +48,7 @@ Amplify.configure(awsconfig);
     AppRoutingModule, 
     FormsModule, 
     NgbModule, 
-    AmplifyAuthenticatorModule, 
-    NgChartsModule
+    AmplifyAuthenticatorModule
   ],
   providers: [],
   bootstrap: [AppComponent],
