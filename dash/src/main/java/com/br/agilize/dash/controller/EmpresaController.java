@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = "https://dash.elasticcode.com.br")
 @RestController
 @RequestMapping("/empresas")
 public class EmpresaController extends ControllerCrudBase<EmpresaDto> {

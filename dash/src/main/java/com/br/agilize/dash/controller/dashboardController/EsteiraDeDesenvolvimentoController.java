@@ -2,6 +2,7 @@ package com.br.agilize.dash.controller.dashboardController;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.br.agilize.dash.controller.ControllerCrudBase;
@@ -11,6 +12,7 @@ import com.br.agilize.dash.service.dashboardService.EsteiraDeDesenvolvimentoServ
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "EsteiraDeDesenvolvimentoController", description = "Api para gerenciar os EsteiraDeDesenvolvimentos")
+@CrossOrigin(origins = "https://dash.elasticcode.com.br")
 @Controller
 @RequestMapping("/esteira")
 public class EsteiraDeDesenvolvimentoController extends ControllerCrudBase<EsteiraDeDesenvolvimentoDto> {
