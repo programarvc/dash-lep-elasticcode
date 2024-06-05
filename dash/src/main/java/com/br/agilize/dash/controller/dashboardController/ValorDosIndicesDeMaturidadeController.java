@@ -22,7 +22,6 @@ import com.br.agilize.dash.service.dashboardService.ValorDosIndicesDeMaturidadeS
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "ValorDosIndicesDeMaturidadeController", description = "Api para gerenciar os ValorDosIndicesDeMaturidade")
-@CrossOrigin(origins = "https://dash.elasticcode.com.br")
 @Controller
 @RequestMapping("/indicesdematuridade")
 public class ValorDosIndicesDeMaturidadeController extends ControllerCrudBase<ValorDosIndicesDeMaturidadeDto> {

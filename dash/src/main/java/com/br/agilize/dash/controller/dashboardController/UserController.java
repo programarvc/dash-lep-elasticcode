@@ -21,7 +21,6 @@ import com.br.agilize.dash.service.dashboardService.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "ColaboradorControoler", description = "Api para gerenciar os colaboradores")
-@CrossOrigin(origins = "https://dash.elasticcode.com.br")
 @Controller
 @RequestMapping("/user")
 public class UserController extends ControllerCrudBase<UserDto> {

@@ -12,7 +12,6 @@ import com.br.agilize.dash.service.dashboardService.ItemDeMaturidadeService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "ItemDeMaturidadeController", description = "Api para gerenciar os ItemDeMaturidades")
-@CrossOrigin(origins = "https://dash.elasticcode.com.br")
 @Controller
 @RequestMapping("/itemdematuridade")
 public class ItemDeMaturidadeController extends ControllerCrudBase<ItemDeMaturidadeDto> {

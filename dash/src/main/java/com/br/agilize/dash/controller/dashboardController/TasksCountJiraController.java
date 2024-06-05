@@ -26,7 +26,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.EntityNotFoundException;
 
 @Tag(name = "TasksCountJiraController", description = "Api para gerenciar as TasksCountJira")
-@CrossOrigin(origins = "https://dash.elasticcode.com.br")
 @Controller
 @RequestMapping("/taskscount")
 public class TasksCountJiraController {

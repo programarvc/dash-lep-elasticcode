@@ -21,7 +21,6 @@ import com.br.agilize.dash.service.dashboardService.VcsPullRequestService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "VcsPullRequestController", description = "Api para gerenciar os VcsPullRequests")
-@CrossOrigin(origins = "https://dash.elasticcode.com.br")
 @Controller
 @RequestMapping("/prcount")
 public class VcsPullRequestController {

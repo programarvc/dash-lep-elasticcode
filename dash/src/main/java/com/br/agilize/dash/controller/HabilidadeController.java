@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Map;
 
 @Tag(name = "HabilidadeController", description = "Api para gerenciar as habilidades")
-@CrossOrigin(origins = "https://dash.elasticcode.com.br")
 @Controller
 @RequestMapping("/habilidades")
 public class HabilidadeController extends ControllerCrudBase<HabilidadeDto> {

@@ -18,7 +18,6 @@ import com.br.agilize.dash.service.dashboardService.IndiceDeSobrevivenciaDevServ
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "IndiceDeSobrevivenciaDevController", description = "Api para gerenciar os IndiceDeSobrevivenciaDev")
-@CrossOrigin(origins = "https://dash.elasticcode.com.br")
 @Controller
 @RequestMapping("/indiceDeSobrevivencia")
 public class IndiceDeSobrevivenciaDevController extends ControllerCrudBase<IndiceDeSobrevivenciaDevDto> {

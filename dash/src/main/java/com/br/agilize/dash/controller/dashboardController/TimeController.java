@@ -24,7 +24,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "ColaboradorControoler", description = "Api para gerenciar os colaboradores")
-@CrossOrigin(origins = "https://dash.elasticcode.com.br")
 @Controller
 @RequestMapping("/time")
 public class TimeController extends ControllerCrudBase<TimeDto> {
