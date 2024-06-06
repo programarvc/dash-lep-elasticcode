@@ -100,7 +100,7 @@ export class SidebarMenuComponent {
       if(user) {
         const esteiraId = user.esteiraId || (user.esteira && user.esteira.id);
         if(esteiraId) {
-          this.router.navigate([`/genAi-for-devs/`]);
+          this.router.navigate(['/genAi-for-devs']);
         }
       }
     })
