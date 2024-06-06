@@ -23,6 +23,7 @@ Globals:
         GITHUB_TOKEN: !Ref GitHubToken
         API_URL_ELASTIC_PR: !Ref ApiUrlElasticPr
         API_URL_NB_PR: !Ref ApiUrlNbPr
+        API_URL_ELASTIC_JIRA: !Ref ApiUrlElasticJira
 
 Parameters:
   SecurityGroupId:
@@ -59,6 +60,8 @@ Parameters:
   ApiUrlElasticPr:
     Type: String
   ApiUrlNbPr:
+    Type: String
+  ApiUrlElasticJira:
     Type: String
 
 Resources:
