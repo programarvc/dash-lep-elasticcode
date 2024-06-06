@@ -34,26 +34,6 @@ Amplify.configure(awsconfig);
   declarations: [AppComponent, SearchBarComponent, ColaboradorComponent, DashProjetoComponent, SidebarMenuComponent, TecnicaComponent, MaturidadeLgComponent, MaturidadeSmComponent, AmplifyUiLoginComponent, TimeComponent, GenAiForDevsComponent],
   imports: [HttpClientModule, BrowserModule, AppRoutingModule,FormsModule, NgbModule, AmplifyAuthenticatorModule],
 
-  declarations: [
-    AppComponent,
-    SearchBarComponent, 
-    ColaboradorComponent, 
-    DashProjetoComponent, 
-    SidebarMenuComponent, 
-    TecnicaComponent, 
-    MaturidadeLgComponent, 
-    MaturidadeSmComponent, 
-    AmplifyUiLoginComponent, 
-    TimeComponent
-  ],
-  imports: [
-    HttpClientModule, 
-    BrowserModule, 
-    AppRoutingModule, 
-    FormsModule, 
-    NgbModule, 
-    AmplifyAuthenticatorModule
-  ],
   providers: [],
   bootstrap: [AppComponent],
 })
