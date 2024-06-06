@@ -3,9 +3,12 @@
         <img src="../../../assets/images/menu-dash-projeto.svg" alt="Menu Dashboard"/>
     </button>
     <button class="botao-dash botao-dois" title="Dash Devs" [ngClass]="{'selected': sidebarButtonService.getSelectedButton() === 'botao-dois'}" (click)="devDash()">
-        <img src="../../../assets/images/second-button-dash-projeto.svg" alt="Menu Dashboard"/>
+        <img src="../../../assets/images/second-button-dash-projeto.svg" alt="Menu Dev Dash"/>
     </button>
-    <button class="botao-dash botao-tres" title="Logout" (click)="signOut()">
+    <button class="botao-dash botao-tres" title="GEN.AI for Devs" [ngClass]="{'selected': sidebarButtonService.getSelectedButton() === 'botao-tres'}" (click)="genAi()">
+        <img src="../../../assets/images/menu-dash-genia.svg" alt="Menu GenAI"/>
+    </button>
+    <button class="botao-dash botao-quatro" title="Logout" (click)="signOut()">
         <img src="../../../assets/images/logout.svg" alt="Logout ElasticOps"/>
     </button>
 </div>

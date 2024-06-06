@@ -1,0 +1,89 @@
+<section class="secao-genai">
+    <div class="genai-page">
+        <app-sidebar-menu></app-sidebar-menu>
+        <div class="genai-content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>GEN.AI for Devs</h1>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="genai-menu-buttons">
+                            <button *ngFor="let button of genaiMenu" [title]="button.title"
+                                [disabled]="button.status === 'disabled'"
+                                [class.genai-btn-selected]="selectedButtonId === button.id"
+                                (click)="genAiButtonSelected(button.id)">
+                                <img [src]="button.icon" [alt]="button.title"
+                                    [class.disabled-img]="button.status === 'disabled'" />
+                                <span>{{ button.title }}</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-12" *ngIf="showCard">
+                        <div class="card genai-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Geração de Código</h5>
+                                <form (ngSubmit)="generateCode(
+                    entityName.value, 
+                    packageName.value, 
+                    additionalPackages.value, 
+                    dependencies.value, 
+                    additionalComments.value, 
+                    stackType.value
+                  )">
+                                    <div class="mb-3">
+                                        <label for="entityName" class="form-label">Nome da Entidade</label>
+                                        <input type="text" class="form-control" id="entityName" #entityName required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="packageName" class="form-label">Nome do Pacote Principal</label>
+                                        <input type="text" class="form-control" id="packageName" #packageName required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="additionalPackages" class="form-label">Pacotes Adicionais (separados
+                                            por vírgula)</label>
+                                        <input type="text" class="form-control" id="additionalPackages"
+                                            #additionalPackages>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="dependencies" class="form-label">Dependências (separadas por
+                                            vírgula)</label>
+                                        <input type="text" class="form-control" id="dependencies" #dependencies>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="additionalComments" class="form-label">Comentários
+                                            Adicionais</label>
+                                        <textarea class="form-control" id="additionalComments"
+                                            #additionalComments></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Tipo de Stack</label>
+                                        <div>
+                                            <input type="radio" id="frontend" name="stackType" value="Frontend"
+                                                #stackType required>
+                                            <label for="frontend">Frontend</label>
+                                        </div>
+                                        <div>
+                                            <input type="radio" id="backend" name="stackType" value="Backend" #stackType
+                                                required>
+                                            <label for="backend">Backend</label>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Gerar Código</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12" *ngIf="generatedCode">
+                        <div class="card genai-card mt-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Código Gerado</h5>
+                                <pre><code>{{ generatedCode }}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

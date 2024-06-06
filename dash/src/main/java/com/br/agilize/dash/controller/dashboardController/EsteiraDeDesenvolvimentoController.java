@@ -2,6 +2,7 @@ package com.br.agilize.dash.controller.dashboardController;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.br.agilize.dash.controller.ControllerCrudBase;
