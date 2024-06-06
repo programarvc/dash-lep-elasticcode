@@ -43,7 +43,16 @@ public class JiraActivitiesEntity {
     @Column(name = "status_detail", columnDefinition = "TEXT")
     private String statusDetail;
 
-    @Column(name = "status_modifided", columnDefinition = "TEXT")
-    private String statusModifided;
+    @Column(name = "points", columnDefinition = "TEXT")
+    private String points;
+
+    @Column(name = "created_at", columnDefinition = "TEXT")
+    private String createdAt;
+
+    @Column(name = "source", columnDefinition = "TEXT")
+    private String source;
+
+    @Column(name = "updated_at", columnDefinition = "TEXT")
+    private String updatedAt;
 
 }

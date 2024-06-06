@@ -30,7 +30,8 @@ public interface JiraActivitiesRepository extends JpaRepository<JiraActivitiesEn
     // Query para buscar a quantidade total de histórias
     @Query(value = "SELECT COUNT(j.id) AS story_count " +
         "FROM tms_task j " +
-        "WHERE j.type_detail = 'História'", nativeQuery = true)
+        "WHERE j.type_detail = 'História'" +
+        "AND source = 'Jira'", nativeQuery = true)
     Map<String, Object> countAllStories();
 
     // Query para buscar a quantidade total de epics mais o nome dos epicos
@@ -54,5 +55,21 @@ public interface JiraActivitiesRepository extends JpaRepository<JiraActivitiesEn
         "AND TO_DATE(j.updated_at, 'YYYY-MM-DD') >= CURRENT_DATE - INTERVAL '60 days' " +
         "GROUP BY j.name, j.epic", nativeQuery = true)
     List<Map<String, Object>> countAndDetailsByTypeDetailAndStatusDetailAndUpdatedAt();
+
+    // Query para calcular a média de pontos das histórias concluídas nos epicos da esteira
+    @Query(value = "SELECT COUNT(*) AS total_stories, SUM(CAST(points AS INT)) AS total_points, ROUND(AVG(CAST(points AS INT)), 2) AS average_points " +
+        "FROM tms_task " +
+        "WHERE type_detail = 'História' " +
+        "AND source = 'Jira' " +
+        "AND (status_detail = 'Concluido(Dev)' OR status_detail = 'DEPLOYED') " +
+        "AND points IS NOT NULL", nativeQuery = true)
+    Map<String, Object> calculateAveragePoints();
+
+    // Query para calcular a quantidade total de pontos das histórias totais
+    @Query(value = "SELECT SUM(CAST(points AS INT)) AS total_points " +
+        "FROM tms_task " +
+        "WHERE type_detail = 'História' " +
+        "AND source = 'Jira'", nativeQuery = true)
+    Map<String, Object> sumTotalPointsForJiraStories();
 
 }

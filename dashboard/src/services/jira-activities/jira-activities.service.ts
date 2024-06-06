@@ -57,5 +57,19 @@ export class jiraActivitieseService {
       .get<any>(url)
       .pipe(catchError(this.handleError<any>('getEpicsLast60Days')));
   }
+
+  getAveragePoints(): Observable<any> {
+    const url: string = `${environment.api}/jira/averagepoints`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>('getAveragePoints')));
+  }
+
+  getTotalPointsForJiraStories(): Observable<any> {
+    const url: string = `${environment.api}/jira/totalpoints`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>('getTotalPointsForJiraStories')));
+  }
  
 }

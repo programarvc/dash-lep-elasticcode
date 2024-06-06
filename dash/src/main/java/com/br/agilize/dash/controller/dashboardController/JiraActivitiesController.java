@@ -69,4 +69,13 @@ public class JiraActivitiesController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/averagepoints")
+    public ResponseEntity<Map<String, Object>> getAveragePoints() {
+        return ResponseEntity.ok(service.calculateAveragePoints());
+    }
+
+    @GetMapping("/totalpoints")
+    public ResponseEntity<Map<String, Object>> getTotalPointsForJiraStories() {
+        return ResponseEntity.ok(service.getSumTotalPointsForJiraStories());
+    }
 }

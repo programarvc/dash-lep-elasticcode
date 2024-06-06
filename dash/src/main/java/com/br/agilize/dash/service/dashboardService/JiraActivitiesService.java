@@ -3,6 +3,7 @@ package com.br.agilize.dash.service.dashboardService;
 import io.github.cdimascio.dotenv.Dotenv;
 import io.micrometer.observation.Observation;
 import jakarta.persistence.EntityNotFoundException;
+import software.amazon.awssdk.services.cognitoidentityprovider.endpoints.internal.Value.Str;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.http.HttpEntity;
@@ -89,7 +90,10 @@ public class JiraActivitiesService implements CommandLineRunner {
                 String sprint = jiraDataDto.getSprint();
                 String typeDetail = jiraDataDto.getTypeDetail();
                 String statusDetail = jiraDataDto.getStatusDetail();
-                String statusModifided = jiraDataDto.getStatusModifided();
+                String points = jiraDataDto.getPoints();
+                String createdAt = jiraDataDto.getCreatedAt();
+                String source = jiraDataDto.getSource();
+                String updatedAt = jiraDataDto.getUpdatedAt();
                 
                 // Verificar se a atividade já existe no banco de dados
                 Optional<JiraActivitiesEntity> existingActivity = repository.findByNameAndSprintAndPriority(name, sprint, priority);
@@ -104,7 +108,10 @@ public class JiraActivitiesService implements CommandLineRunner {
                     jiraDataDto.setSprint(sprint);
                     jiraDataDto.setTypeDetail(typeDetail);
                     jiraDataDto.setStatusDetail(statusDetail);
-                    jiraDataDto.setStatusModifided(statusModifided);
+                    jiraDataDto.setPoints(points);
+                    jiraDataDto.setCreatedAt(createdAt);
+                    jiraDataDto.setSource(source);
+                    jiraDataDto.setUpdatedAt(updatedAt);
                     JiraActivitiesEntity jiraActivitiesEntity = jiraActivitiesMapper.dtoToModel(jiraDataDto);
                     repository.save(jiraActivitiesEntity);
                 }
@@ -162,5 +169,13 @@ public class JiraActivitiesService implements CommandLineRunner {
         }
 
         return (double) totalStories / totalEpics;
+    }
+
+    public Map<String, Object> calculateAveragePoints() {
+        return repository.calculateAveragePoints();
+    }
+    
+    public Map<String, Object> getSumTotalPointsForJiraStories() {
+        return repository.sumTotalPointsForJiraStories();
     }
 }

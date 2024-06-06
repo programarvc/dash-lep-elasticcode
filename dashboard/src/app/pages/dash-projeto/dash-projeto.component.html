@@ -151,7 +151,7 @@
                     </h3>
                     <div class="rate-value-4key">
                       <span>
-                        {{36}}
+                        {{TotalPoints.total_points}}
                       </span>
                       <span class="rate-saude"
                         [ngStyle]="{'font-size': this.getFontSizeMetricas(currentMaturidade?.metricas4)}">
@@ -169,64 +169,12 @@
                     </div>
                   </div>
                 </div>
-                <div class="espaco-capacidades-recomendadas">
-                  <div class="capacidades-recomendadas-card">
-                    <div class="prs-dashboard">
-                      <h3>Pull Requests</h3><span>(últimos 60 dias - git)</span>
-                      <p>
-                        {{currentVcsPullRequest60Days.countpr60days}}
-                      </p>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
         </div>
         <div class="row">
-          <!-- Card para a quantidade de épicos nos últimos 60 dias -->
-          <div class="col-md-4">
-            <div class="historias-epicos-card">
-              <div class="historias-epicos-card-content">
-                <div class="historias-epicos-card-text">
-                  <h2>Épicos</h2><span>(últimos 60 dias)</span>
-                  <p>
-                      {{jiraEpics[0].count_epics}}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        <!-- Card para o total de histórias -->
-        <div class="col-md-4">
-            <div class="historias-epicos-card">
-                <div class="historias-epicos-card-content">
-                    <div class="historias-epicos-card-text">
-                        <h2>Histórias</h2><span>(total)</span>
-                        <p>
-                                {{jiraAllStories.story_count}}
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Card para a quantidade média de histórias por épico -->
-        <div class="col-md-4">
-            <div class="historias-epicos-card">
-                <div class="historias-epicos-card-content">
-                    <div class="historias-epicos-card-text">
-                        <h2>Histórias por Épico</h2><span>(média)</span>
-                        <p>
-                                {{jiraMediaStories.media_stories}}
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-6">
             <div class="bloco-top-contribuidores">
               <div class="titulo-legenda-top-contribuidores">
                 <div class="titulo-top-contribuidores">
@@ -288,6 +236,60 @@
               </div>
             </div>
           </div>
+          <div class="col-md-6">
+            <div class="espaco-capacidades-recomendadas">
+              <div class="capacidades-recomendadas-card">
+                <div class="prs-dashboard">
+                  <h3>Pull Requests</h3><span>(últimos 60 dias - git)</span>
+                  <p>
+                    {{currentVcsPullRequest60Days.countpr60days}}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <!-- Card para a quantidade de épicos nos últimos 60 dias -->
+          <div class="col-md-4">
+            <div class="historias-epicos-card">
+              <div class="historias-epicos-card-content">
+                <div class="historias-epicos-card-text">
+                  <h2>Épicos</h2><span>(últimos 60 dias)</span>
+                  <p>
+                      {{jiraEpics[0].count_epics}}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        <!-- Card para o total de histórias -->
+        <div class="col-md-4">
+            <div class="historias-epicos-card">
+                <div class="historias-epicos-card-content">
+                    <div class="historias-epicos-card-text">
+                        <h2>Histórias</h2><span>(total)</span>
+                        <p>
+                            {{storiesAndEpicsData.total_stories}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Card para a quantidade média de histórias por épico -->
+        <div class="col-md-4">
+            <div class="historias-epicos-card">
+                <div class="historias-epicos-card-content">
+                    <div class="historias-epicos-card-text">
+                        <h2>Story Points</h2><span>(média)</span>
+                        <p>
+                            {{storiesAndEpicsData.average_points}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
         <div class="row">
           <div class="col-md-8">

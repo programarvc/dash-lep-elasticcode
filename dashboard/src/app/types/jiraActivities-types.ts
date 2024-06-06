@@ -20,6 +20,17 @@ export interface MediaStoriesPerEpic {
   media_stories: number;
 }
 
+export interface StoriesAndEpicsData {
+    average_points: number;
+    total_points: number;
+    total_stories: number;
+}
+
+export interface TotalPoints {
+  total_points: number;
+
+}
+
 export interface JiraEpics {
   id: number;
   epic: string;
