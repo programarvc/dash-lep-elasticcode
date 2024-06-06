@@ -28,6 +28,14 @@ import {
   PullRequest
 } from 'src/app/types/valorMaturidade-types';
 
+import { 
+  JiraActivities,
+  JiraEpics,
+  AllStories,
+  MediaStoriesPerEpic,
+  StoriesAndEpicsData,
+  TotalPoints
+} from 'src/app/types/jiraActivities-types';
 
 import { EsteiraService } from 'src/services/esteira/esteira.service';
 import { EmpresaService } from 'src/services/empresa/empresa.service';
@@ -35,7 +43,7 @@ import { MaturidadeService } from 'src/services/maturidade/maturidade.service';
 import { CapacidadeService } from 'src/services/capacidade/capacidade.service';
 import { isInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
 import { valorMaturidadeService } from './../../../services/valor-maturidade/valor-maturidade.service';
-
+import { jiraActivitieseService } from 'src/services/jira-activities/jira-activities.service';
 @Component({
   selector: 'app-dash-projeto',
   templateUrl: './dash-projeto.component.html',
@@ -197,6 +205,39 @@ export class DashProjetoComponent implements OnInit {
     totalprs: 0
   };
 
+  public jiraActivities: JiraActivities = {
+    id: 0,
+    epic: '',
+    parent: '',
+    name: '',
+    priority: '',
+    sprint: '',
+    typeDetail: '',
+    statusDetail: '',
+    story_count: 0
+  };
+
+  public jiraAllStories: AllStories = {
+    epic: '',
+    name: '',
+    story_count: 0
+  };
+
+  public jiraMediaStories: MediaStoriesPerEpic = {
+    media_stories: 0
+  };
+
+  public storiesAndEpicsData: StoriesAndEpicsData = {
+    average_points: 0,
+    total_points: 0,
+    total_stories: 0
+  };
+
+  public TotalPoints: TotalPoints = {
+    total_points: 0
+  };
+
+  public jiraEpics: JiraEpics[] = [];
   //variavel com dados para armazenar a quantidade total de prs por colaborador Hasura
   currentVcsPullRequestTop5: VcsPullRequestTop5[] = [];
 
@@ -214,44 +255,15 @@ export class DashProjetoComponent implements OnInit {
   public filterValorMaturidade: ValorDosIndicesDeMaturidadeFilter[] = [];
   public valorMaturidadeDate: Date;
   public formattedDate: string | null = null;
-  public topContribuidores = [
-    {
-      id: 1,
-      nome: 'Mavis',
-      github: 'mavis-martins',
-      prs: 10,
-      totalPrs: 54,
-    },
-    {
-      id: 2,
-      nome: 'Tiago Santos',
-      github: 'Tiago-Santosz',
-      prs: 18,
-      totalPrs: 54,
-    },
-    {
-      id: 3,
-      nome: 'Monaliza',
-      github: 'monalizaloren',
-      prs: 11,
-      totalPrs: 54,
-    },
-    {
-      id: 4,
-      nome: 'Vinicius',
-      github: 'spillinha',
-      prs: 15,
-      totalPrs: 54,
-    }
-  ];
-
+ 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private esteiraService: EsteiraService,
     private maturidadeService: MaturidadeService,
     private capacidadeService: CapacidadeService,
-    private valorMaturidadeService: valorMaturidadeService
+    private valorMaturidadeService: valorMaturidadeService,
+    private jiraActivitiesService: jiraActivitieseService
   ) {
     this.selectedOption = 0;
     this.valorMaturidadeDate = new Date();
@@ -289,6 +301,12 @@ public async setCurrent(id: number) {
   this.getPrCountLast30And60And90Days();
   this.getTop5ColaboradoresByPrs();
   this.getTotalPrs();
+  this.getJiraStories();
+  this.getJiraEpics();
+  this.getcountAllStories();
+  this.getAverageStoriesPerEpic();
+  this.getAveragePoints();
+  this.getTotalPointsForJiraStories();
 }
 
 public async setCurrentMaturidade (id: number) {
@@ -515,5 +533,50 @@ public async setCurrentMaturidade (id: number) {
     this.valorMaturidadeService.getTotalPrs().subscribe((response) => {
       this.pullRequest = response[0];
     });
-}
+  }
+
+  public getJiraStories(): void {
+    this.jiraActivitiesService.getCountStories().subscribe((response) => {
+      this.jiraActivities = response;
+      console.log(this.jiraActivities);
+    });
+  }
+
+  public getJiraEpics(): void {
+    this.jiraActivitiesService.getCountEpics().subscribe((response) => {
+      this.jiraEpics = response;
+      console.log(this.jiraEpics);
+    });
+  }
+
+  public getcountAllStories(): void {
+    this.jiraActivitiesService.getcountAllStories().subscribe((response) => {
+      this.jiraAllStories = response;
+    });
+  }
+
+  public getAverageStoriesPerEpic(): void {
+    this.jiraActivitiesService.getAverageStoriesPerEpic().subscribe((response) => {
+      this.jiraMediaStories = response;
+    });
+  }
+
+  public getJiraEpicsLast60Days(): void {
+    this.jiraActivitiesService.getEpicsLast60Days().subscribe((response) => {
+      this.jiraEpics = response;
+    });
+  }
+
+  public getAveragePoints(): void {
+    this.jiraActivitiesService.getAveragePoints().subscribe((response) => {
+      this.storiesAndEpicsData = response;
+    });
+  }
+
+  getTotalPointsForJiraStories(): void {
+    this.jiraActivitiesService.getTotalPointsForJiraStories().subscribe((response) => {
+      this.TotalPoints = response;
+    });
+  }
+
 }

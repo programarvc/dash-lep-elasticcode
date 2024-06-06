@@ -9,6 +9,9 @@ import { AppComponent } from './app.component';
 import { Amplify } from 'aws-amplify';
 import awsconfig from 'aws-exports';
 
+
+
+
 //Components
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { SidebarMenuComponent } from './components/sidebar-menu/sidebar-menu.component';
@@ -23,12 +26,34 @@ import { ColaboradorComponent } from './pages/colaborador/colaborador.component'
 import { DashProjetoComponent } from './pages/dash-projeto/dash-projeto.component';
 import { AmplifyUiLoginComponent } from './pages/amplify-ui-login/amplify-ui-login.component';
 import { TimeComponent } from './pages/time/time.component';
+import { GenAiForDevsComponent } from './pages/gen-ai-for-devs/gen-ai-for-devs.component';
 
 Amplify.configure(awsconfig);
 
 @NgModule({
-  declarations: [AppComponent, SearchBarComponent, ColaboradorComponent, DashProjetoComponent, SidebarMenuComponent, TecnicaComponent, MaturidadeLgComponent, MaturidadeSmComponent, AmplifyUiLoginComponent, TimeComponent],
+  declarations: [AppComponent, SearchBarComponent, ColaboradorComponent, DashProjetoComponent, SidebarMenuComponent, TecnicaComponent, MaturidadeLgComponent, MaturidadeSmComponent, AmplifyUiLoginComponent, TimeComponent, GenAiForDevsComponent],
   imports: [HttpClientModule, BrowserModule, AppRoutingModule,FormsModule, NgbModule, AmplifyAuthenticatorModule],
+
+  declarations: [
+    AppComponent,
+    SearchBarComponent, 
+    ColaboradorComponent, 
+    DashProjetoComponent, 
+    SidebarMenuComponent, 
+    TecnicaComponent, 
+    MaturidadeLgComponent, 
+    MaturidadeSmComponent, 
+    AmplifyUiLoginComponent, 
+    TimeComponent
+  ],
+  imports: [
+    HttpClientModule, 
+    BrowserModule, 
+    AppRoutingModule, 
+    FormsModule, 
+    NgbModule, 
+    AmplifyAuthenticatorModule
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
