@@ -9,6 +9,9 @@ import { AppComponent } from './app.component';
 import { Amplify } from 'aws-amplify';
 import awsconfig from 'aws-exports';
 
+
+
+
 //Components
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { SidebarMenuComponent } from './components/sidebar-menu/sidebar-menu.component';
@@ -30,6 +33,27 @@ Amplify.configure(awsconfig);
 @NgModule({
   declarations: [AppComponent, SearchBarComponent, ColaboradorComponent, DashProjetoComponent, SidebarMenuComponent, TecnicaComponent, MaturidadeLgComponent, MaturidadeSmComponent, AmplifyUiLoginComponent, TimeComponent, GenAiForDevsComponent],
   imports: [HttpClientModule, BrowserModule, AppRoutingModule,FormsModule, NgbModule, AmplifyAuthenticatorModule],
+
+  declarations: [
+    AppComponent,
+    SearchBarComponent, 
+    ColaboradorComponent, 
+    DashProjetoComponent, 
+    SidebarMenuComponent, 
+    TecnicaComponent, 
+    MaturidadeLgComponent, 
+    MaturidadeSmComponent, 
+    AmplifyUiLoginComponent, 
+    TimeComponent
+  ],
+  imports: [
+    HttpClientModule, 
+    BrowserModule, 
+    AppRoutingModule, 
+    FormsModule, 
+    NgbModule, 
+    AmplifyAuthenticatorModule
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
