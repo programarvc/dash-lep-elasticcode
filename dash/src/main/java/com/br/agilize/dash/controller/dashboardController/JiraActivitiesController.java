@@ -55,10 +55,16 @@ public class JiraActivitiesController {
         return ResponseEntity.ok(result);
     }
     
-    @GetMapping("/countAllStories")
+    @GetMapping("/countAllActivities")
     public ResponseEntity<Map<String, Object>> countAllStories() {
         Map<String, Object> result = service.countAllStories();
         return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/countAllActivities/last60days")
+    public ResponseEntity<Map<String, Object>> getAllStoriesLast60Days() {
+        Map<String, Object> result = service.countAllStoriesLast60Days();
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @GetMapping("/mediastoryperepic")

@@ -26,7 +26,9 @@ import com.br.agilize.dash.repository.ColaboradorRepository;
 
 import com.br.agilize.dash.repository.dashboardRepository.JiraActivitiesRepository;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -142,43 +144,96 @@ public class JiraActivitiesService implements CommandLineRunner {
 
     // Método quantidade de historias de um epico especifico
     public Map<String, Object> countStories() {
+        try{
         return repository.countStories();
+        } catch  (Exception e) {
+            System.out.println("Erro ao contar histórias: " + e.getMessage());
+            return new HashMap<>();
+        }
     }
+
 
     public List<Map<String, Object>> countAndDetailsByTypeDetail() {
+        try {
         return repository.countAndDetailsByTypeDetail();
-    }
-    public Map<String, Object> getCountEpics() {
-        return repository.countEpics();
+        } catch (Exception e) {
+        System.out.println("Erro ao contar e detalhar por tipo: " + e.getMessage());
+        return new ArrayList<>();
+        }
     }
 
+    public Map<String, Object> getCountEpics() {
+        try {
+            return repository.countEpics();
+        } catch (Exception e) {
+            System.out.println("Erro ao contar épicos: " + e.getMessage());
+            return new HashMap<>();
+        }
+    }
+
+    // Método para contar todas as tarefas
     public Map<String, Object> countAllStories() {
-        return repository.countAllStories();
+        try {
+            return repository.countAllStories();
+        } catch (Exception e) {
+            System.out.println("Erro ao contar todas as histórias: " + e.getMessage());
+            return new HashMap<>();
+        }
+    }
+
+    // Método para contar todas as tarefas dos últimos 60 dias
+    public Map<String, Object> countAllStoriesLast60Days() {
+        try {
+            return repository.countAllStoriesLast60Days();
+        } catch (Exception e) {
+            System.out.println("Erro ao contar todas as histórias dos últimos 60 dias: " + e.getMessage());
+            return new HashMap<>();
+        }
     }
 
     public double averageStoriesPerEpic() {
-        Map<String, Object> storiesResult = repository.countAllStories();
-        Map<String, Object> epicsResult = repository.countAllEpics();
-
-        Long totalStories = ((Number) storiesResult.get("story_count")).longValue();
-        Long totalEpics = ((Number) epicsResult.get("count_epics")).longValue();
-
-        if (totalEpics == 0) {
+        try {
+            Map<String, Object> storiesResult = repository.countAllStories();
+            Map<String, Object> epicsResult = repository.countAllEpics();
+    
+            Long totalStories = ((Number) storiesResult.get("story_count")).longValue();
+            Long totalEpics = ((Number) epicsResult.get("count_epics")).longValue();
+    
+            if (totalEpics == 0) {
+                return 0;
+            }
+    
+            return (double) totalStories / totalEpics;
+        } catch (Exception e) {
+            System.out.println("Erro ao calcular a média de histórias por épico: " + e.getMessage());
             return 0;
         }
-
-        return (double) totalStories / totalEpics;
     }
 
     public Map<String, Object> calculateAveragePoints() {
-        return repository.calculateTotalAndAveragePoints();
+        try {
+            return repository.calculateTotalAndAveragePoints();
+        } catch (Exception e) {
+            System.out.println("Erro ao calcular pontos médios: " + e.getMessage());
+            return new HashMap<>();
+        }
     }
     
     public Map<String, Object> getSumTotalPointsForJiraStories() {
-        return repository.sumTotalPointsForJiraStories();
+        try {
+            return repository.sumTotalPointsForJiraStories();
+        } catch (Exception e) {
+            System.out.println("Erro ao buscar total de pontos: " + e.getMessage());
+            return new HashMap<>();
+        }
     }
 
     public Map<String, Object> getTotalPointsForJiraStoriesLast60Days() {
-        return repository.sumTotalPointsForJiraStoriesLast60Days();
+        try {
+            return repository.sumTotalPointsForJiraStoriesLast60Days();
+        } catch (Exception e) {
+            System.out.println("Erro ao buscar total de pontos nos últimos 60 dias: " + e.getMessage());
+            return new HashMap<>();
+        }
     }
 }

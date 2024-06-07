@@ -35,12 +35,19 @@ export class jiraActivitieseService {
       .pipe(catchError(this.handleError<any>('getCountEpics')));
   }
  
-  //Endpoint retorna a quantidade total de historias na  esteira  jira 
+  //Endpoint retorna a quantidade total de atividades na  esteira  jira 
   getcountAllStories(): Observable<any> {
-    const url: string = `${environment.api}/jira/countAllStories`;
+    const url: string = `${environment.api}/jira/countAllActivities`;
     return this.http
       .get<any>(url)
       .pipe(catchError(this.handleError<any>('getcountAllStories')));
+  }
+
+  getAllActivitiesLast60Days(): Observable<any> {
+    const url: string = `${environment.api}/jira/countAllActivities/last60days`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>('getAllActivitiesLast60Days')));
   }
 
   //Endpoint retorna a media de hitorias por epico jira
@@ -65,6 +72,7 @@ export class jiraActivitieseService {
       .pipe(catchError(this.handleError<any>('getAveragePoints')));
   }
 
+  //Endpoint retorna a quantidade total de story points na  esteira  jira
   getTotalPointsForJiraStories(): Observable<any> {
     const url: string = `${environment.api}/jira/allStoryPoints`;
     return this.http
@@ -72,6 +80,7 @@ export class jiraActivitieseService {
       .pipe(catchError(this.handleError<any>('getTotalPointsForJiraStories')));
   }
 
+  // Endpoint retorna a quantidade total de story points na  esteira  jira nos ultimos 60 dias
   getTotalPointsForJiraStoriesLast60Days(): Observable<any> {
     const url: string = `${environment.api}/jira/allStoryPointsLast60days`;
     return this.http

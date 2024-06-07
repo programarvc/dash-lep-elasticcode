@@ -31,7 +31,8 @@ import {
 import { 
   JiraActivities,
   JiraEpics,
-  AllStories,
+  AllActivities,
+  AllActivitiesLast60Days,
   MediaStoriesPerEpic,
   StoriesAndEpicsData,
   TotalPoints,
@@ -220,7 +221,7 @@ export class DashProjetoComponent implements OnInit {
     story_count: 0
   };
 
-  public jiraAllStories: AllStories = {
+  public jiraAllActivities: AllActivities = {
     epic: '',
     name: '',
     story_count: 0
@@ -243,6 +244,11 @@ export class DashProjetoComponent implements OnInit {
   public TotalPointsLast60Days: TotalPointsLast60Days = {
     total_points_last60days: 0
   };
+
+  public allActivities60days: AllActivitiesLast60Days = {
+    story_count_last60days: 0
+  };
+
 
   public jiraEpics: JiraEpics = {
     id: 0,
@@ -296,14 +302,7 @@ export class DashProjetoComponent implements OnInit {
         this.getValorMaturidadesByEsteiraIdAndTecnica(parseInt(id));
         this.getValorMaturidadesByEsteiraIdAndCultura(parseInt(id));
         this.getMaturidadeByEsteiraId(parseInt(id));
-        this.getTotalPrs();
-        this.getJiraStories();
-        this.getcountAllStories();
-        this.getTotalPointsForJiraStoriesLast60Days();
-        this.getAveragePoints();
-        this.getTotalPointsForJiraStories();
-        this.getJiraEpicsLast60Days();
-
+        
       }
       const maturidadeId = params.get('maturidadeId');
       if (maturidadeId ) {
@@ -321,7 +320,14 @@ public async setCurrent(id: number) {
   this.getMaturidadeByEsteiraId(id);
   this.getPrCountLast30And60And90Days();
   this.getTop5ColaboradoresByPrs();
- 
+  this.getTotalPrs();
+  this.getJiraStories();
+  this.getcountAllStories();
+  this.getAllActivitiesLast60Days();
+  this.getTotalPointsForJiraStoriesLast60Days();
+  this.getAveragePoints();
+  this.getTotalPointsForJiraStories();
+  this.getJiraEpicsLast60Days();
 }
 
 public async setCurrentMaturidade (id: number) {
@@ -561,7 +567,13 @@ public async setCurrentMaturidade (id: number) {
 
   public getcountAllStories(): void {
     this.jiraActivitiesService.getcountAllStories().subscribe((response) => {
-      this.jiraAllStories = response;
+      this.jiraAllActivities = response;
+    });
+  }
+
+  public getAllActivitiesLast60Days(): void {
+    this.jiraActivitiesService.getAllActivitiesLast60Days().subscribe((response) => {
+      this.allActivities60days = response;
     });
   }
 

@@ -139,19 +139,19 @@
                     </h3>
                     <div class="rate-value-4key">
                       <span>
-                        {{16}}
+                        {{allActivities60days.story_count_last60days}}
                       </span>
                       <span class="rate-saude"
-                        [ngStyle]="{'font-size': this.getFontSizeMetricas(currentMaturidade?.capacidadeDora)}">
-                        {{20}}
+                        [ngStyle]="{'font-size': this.getFontSizeMetricas(jiraAllActivities?.story_count)}">
+                        {{jiraAllActivities.story_count}}
                         <!--{{currentMaturidade?.capacidadeDora !== null ? '%' : ''}}-->
                       </span>
                     </div>
                     <div class="jornada-card-bar-content"
-                      [style.display]="(currentMaturidade?.capacidadeDora === null) ? 'none' : 'block'">
+                      [style.display]="(jiraAllActivities?.story_count === null) ? 'none' : 'block'">
                       <div class="jornada-card-bar">
                         <div class="jornada-card-goal"
-                          [ngStyle]="{'width': (currentMaturidade?.capacidadeDora !== null ? currentMaturidade?.capacidadeDora : 0) + '%'}">
+                          [ngStyle]="{'width': (allActivities60days?.story_count_last60days !== null ? allActivities60days?.story_count_last60days : 0) + '%'}">
                         </div>
                       </div>
                     </div>
@@ -168,7 +168,7 @@
                         {{TotalPointsLast60Days.total_points_last60days}}
                       </span>
                       <span class="rate-saude"
-                        [ngStyle]="{'font-size': this.getFontSizeMetricas(TotalPoints.total_points)}">
+                        [ngStyle]="{'font-size': this.getFontSizeMetricas(TotalPoints?.total_points)}">
                         {{TotalPoints.total_points}}
                       </span>
                     </div>

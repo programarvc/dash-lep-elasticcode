@@ -10,10 +10,14 @@ export interface JiraActivities {
   story_count: number;
 }
 
-export interface AllStories {
+export interface AllActivities {
   epic: string;
   name: string;
   story_count: number;
+}
+
+export interface AllActivitiesLast60Days {
+  story_count_last60days: number;
 }
 
 export interface MediaStoriesPerEpic {
