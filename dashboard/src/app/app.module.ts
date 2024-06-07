@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import { AmplifyAuthenticatorModule } from '@aws-amplify/ui-angular';
+import { ReactiveFormsModule } from '@angular/forms'; 
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -31,10 +32,31 @@ import { GenAiForDevsComponent } from './pages/gen-ai-for-devs/gen-ai-for-devs.c
 Amplify.configure(awsconfig);
 
 @NgModule({
-  declarations: [AppComponent, SearchBarComponent, ColaboradorComponent, DashProjetoComponent, SidebarMenuComponent, TecnicaComponent, MaturidadeLgComponent, MaturidadeSmComponent, AmplifyUiLoginComponent, TimeComponent, GenAiForDevsComponent],
-  imports: [HttpClientModule, BrowserModule, AppRoutingModule,FormsModule, NgbModule, AmplifyAuthenticatorModule],
-
+  
+  declarations: [
+    AppComponent,
+    SearchBarComponent, 
+    ColaboradorComponent, 
+    DashProjetoComponent, 
+    SidebarMenuComponent, 
+    TecnicaComponent, 
+    MaturidadeLgComponent, 
+    MaturidadeSmComponent, 
+    AmplifyUiLoginComponent, 
+    TimeComponent,
+    GenAiForDevsComponent
+  ],
+  imports: [
+    HttpClientModule, 
+    BrowserModule, 
+    AppRoutingModule, 
+    FormsModule, 
+    NgbModule, 
+    AmplifyAuthenticatorModule,
+    ReactiveFormsModule
+  ],
   providers: [],
   bootstrap: [AppComponent],
+
 })
 export class AppModule {}
