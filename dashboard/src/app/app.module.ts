@@ -32,6 +32,7 @@ import { GenAiForDevsComponent } from './pages/gen-ai-for-devs/gen-ai-for-devs.c
 Amplify.configure(awsconfig);
 
 @NgModule({
+  
   declarations: [
     AppComponent,
     SearchBarComponent, 
@@ -56,5 +57,6 @@ Amplify.configure(awsconfig);
   ],
   providers: [],
   bootstrap: [AppComponent],
+
 })
 export class AppModule {}

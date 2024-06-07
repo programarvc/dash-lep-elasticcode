@@ -50,8 +50,8 @@ public class JiraActivitiesController {
     }
 
     @GetMapping("/countepicslast60days")
-    public ResponseEntity<List<Map<String, Object>>> getCountAndDetailsByTypeDetailAndStatusDetailAndUpdatedAt() {
-        List<Map<String, Object>> result = service.getCountAndDetailsByTypeDetailAndStatusDetailAndUpdatedAt();
+    public ResponseEntity<Map<String, Object>> getCountEpics() {
+        Map<String, Object> result = service.getCountEpics();
         return ResponseEntity.ok(result);
     }
     
@@ -74,8 +74,14 @@ public class JiraActivitiesController {
         return ResponseEntity.ok(service.calculateAveragePoints());
     }
 
-    @GetMapping("/totalpoints")
+    @GetMapping("/allStoryPoints")
     public ResponseEntity<Map<String, Object>> getTotalPointsForJiraStories() {
         return ResponseEntity.ok(service.getSumTotalPointsForJiraStories());
     }
+
+    @GetMapping("/allStoryPointsLast60days")
+    public ResponseEntity<Map<String, Object>> getTotalPointsForJiraStoriesLast60Days() {
+        return ResponseEntity.ok(service.getTotalPointsForJiraStoriesLast60Days());
+    }
+
 }

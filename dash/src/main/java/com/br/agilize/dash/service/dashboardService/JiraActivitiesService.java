@@ -148,9 +148,8 @@ public class JiraActivitiesService implements CommandLineRunner {
     public List<Map<String, Object>> countAndDetailsByTypeDetail() {
         return repository.countAndDetailsByTypeDetail();
     }
-    
-    public List<Map<String, Object>> getCountAndDetailsByTypeDetailAndStatusDetailAndUpdatedAt() {
-        return repository.countAndDetailsByTypeDetailAndStatusDetailAndUpdatedAt();
+    public Map<String, Object> getCountEpics() {
+        return repository.countEpics();
     }
 
     public Map<String, Object> countAllStories() {
@@ -172,10 +171,14 @@ public class JiraActivitiesService implements CommandLineRunner {
     }
 
     public Map<String, Object> calculateAveragePoints() {
-        return repository.calculateAveragePoints();
+        return repository.calculateTotalAndAveragePoints();
     }
     
     public Map<String, Object> getSumTotalPointsForJiraStories() {
         return repository.sumTotalPointsForJiraStories();
+    }
+
+    public Map<String, Object> getTotalPointsForJiraStoriesLast60Days() {
+        return repository.sumTotalPointsForJiraStoriesLast60Days();
     }
 }
