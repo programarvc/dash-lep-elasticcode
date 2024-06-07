@@ -55,20 +55,6 @@ public class TasksCountJiraService implements CommandLineRunner {
     public void getPRDataAndSave() {
 
     }
-     
-    /*public TasksCountJiraDto salvartaskColaborador(TasksCountJiraDto tasksCountJiraDto) {
-        // Buscar o ColaboradorEntity com o nome de usuário do GitHub igual ao autor do PR
-        ColaboradorEntity colaboradorEntity = colaboradorRepository.findByGithub(tasksCountJiraDto.getAuthor());
-    
-        // Se o ColaboradorEntity for encontrado, definir o campo colaborador do TasksCountJiraEntity para esse ColaboradorEntity
-        if (colaboradorEntity != null) {
-            TasksCountJiraEntity tasksCountJiraEntity = this.mapper.dtoToModel(tasksCountJiraDto);
-            tasksCountJiraEntity.setColaborador(colaboradorEntity);
-            return this.mapper.modelToDTO(this.repository.save(tasksCountJiraEntity));
-        } else {
-            throw new EntityNotFoundException("Não existe colaborador com esse GitHub username: " + tasksCountJiraDto.getAuthor());
-        }
-    }*/
 
     public TasksCountJiraDto salvartaskColaborador(TasksCountJiraDto tasksCountJiraDto) {
         // Buscar o ColaboradorEntity com o nome de usuário do GitHub igual ao autor do PR
