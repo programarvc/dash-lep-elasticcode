@@ -18,7 +18,7 @@ public interface JiraActivitiesRepository extends JpaRepository<JiraActivitiesEn
     
     JiraActivitiesEntity findByStatusDetail( String statusDetail);
 
-    Optional<JiraActivitiesEntity> findByNameAndSprintAndPriority(String name, String sprint, String priority, String updated_at, String type_detail, String source);
+    Optional<JiraActivitiesEntity> findByNameAndSprintAndPriorityAndUpdatedAtAndTypeDetailAndSource(String name, String sprint, String priority, String updated_at, String type_detail, String source);
 
     //Query para buscar a quantidade de histórias por epic especifico.
     @Query(value = "SELECT COUNT(j.id) AS story_count " +

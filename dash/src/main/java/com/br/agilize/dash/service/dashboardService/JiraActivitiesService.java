@@ -93,7 +93,7 @@ public void getJiraDataAndSave() {
             String source = jiraDataDto.getSource();
             String updatedAt = jiraDataDto.getUpdatedAt();
 
-            Optional<JiraActivitiesEntity> existingActivity = repository.findByNameAndSprintAndPriority(name, sprint, priority, updatedAt, typeDetail, source);
+            Optional<JiraActivitiesEntity> existingActivity = repository.findByNameAndSprintAndPriorityAndUpdatedAtAndTypeDetailAndSource(name, sprint, priority, updatedAt, typeDetail, source);
 
             if (!existingActivity.isPresent()) {
                 JiraActivitiesEntity jiraActivitiesEntity = new JiraActivitiesEntity();
