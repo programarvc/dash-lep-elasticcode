@@ -136,7 +136,7 @@ aja como um copiloto de desenvolvimento, sua função é gerar o código em java
 \n`;
 
     if (inputTable) {
-      this.generatedCode += `O nome da tabela no banco de dados é ${inputTable} no modelo relacional do banco de dados.\n`;
+      this.generatedCode += `O nome da tabela no banco de dados é ${inputTable} no modelo relacional.\n`;
     }
 
     this.generatedCode += `
