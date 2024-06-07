@@ -59,70 +59,63 @@ public class JiraActivitiesService implements CommandLineRunner {
     }
 
 // Método para salvar uma atividade
-    public void getJiraDataAndSave() {
-        RestTemplate restTemplate = new RestTemplate();
-    
-        Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
-    
-        // Endpoint da API REST
-        String restApiUrl = dotenv.get("API_URL_ELASTIC_JIRA");
-    
-        // Definindo os cabeçalhos
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("X-Hasura-Admin-Secret", dotenv.get("HASURA_ADMIN_SECRET")); // substitua pelo seu admin secret
-    
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-    
-        try {
-            // Enviando a solicitação  
-            HttpEntity<String> request = new HttpEntity<>(headers);
-            ResponseEntity<String> response = restTemplate.exchange(restApiUrl, HttpMethod.GET, request, String.class);
-    
-            // Desserializar a resposta para uma lista de JiraActivitiesDto
-            JiraActivitiesResponse responseDto = mapper.readValue(response.getBody(), JiraActivitiesResponse.class);
-            List<JiraActivitiesDto> jiraDataDtos = responseDto.getTms_Task();
-    
-            for (JiraActivitiesDto jiraDataDto : jiraDataDtos) {
-                String epic = jiraDataDto.getEpic();
-                String name = jiraDataDto.getName();
-                String parent = jiraDataDto.getParent();
-                String priority = jiraDataDto.getPriority();
-                String sprint = jiraDataDto.getSprint();
-                String typeDetail = jiraDataDto.getTypeDetail();
-                String statusDetail = jiraDataDto.getStatusDetail();
-                String points = jiraDataDto.getPoints();
-                String createdAt = jiraDataDto.getCreatedAt();
-                String source = jiraDataDto.getSource();
-                String updatedAt = jiraDataDto.getUpdatedAt();
-                
-                // Verificar se a atividade já existe no banco de dados
-                Optional<JiraActivitiesEntity> existingActivity = repository.findByNameAndSprintAndPriority(name, sprint, priority);
-                
-                // Se a atividade não existir no banco de dados, salvá-la
-                if (!existingActivity.isPresent()) {
-                    jiraDataDto = new JiraActivitiesDto();
-                    jiraDataDto.setEpic(epic);
-                    jiraDataDto.setName(name);
-                    jiraDataDto.setParent(parent);
-                    jiraDataDto.setPriority(priority);
-                    jiraDataDto.setSprint(sprint);
-                    jiraDataDto.setTypeDetail(typeDetail);
-                    jiraDataDto.setStatusDetail(statusDetail);
-                    jiraDataDto.setPoints(points);
-                    jiraDataDto.setCreatedAt(createdAt);
-                    jiraDataDto.setSource(source);
-                    jiraDataDto.setUpdatedAt(updatedAt);
-                    JiraActivitiesEntity jiraActivitiesEntity = jiraActivitiesMapper.dtoToModel(jiraDataDto);
-                    repository.save(jiraActivitiesEntity);
-                }
+public void getJiraDataAndSave() {
+    RestTemplate restTemplate = new RestTemplate();
+
+    Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
+
+    String restApiUrl = dotenv.get("API_URL_ELASTIC_JIRA");
+
+    HttpHeaders headers = new HttpHeaders();
+    headers.set("X-Hasura-Admin-Secret", dotenv.get("HASURA_ADMIN_SECRET"));
+
+    ObjectMapper mapper = new ObjectMapper();
+    mapper.registerModule(new JavaTimeModule());
+    mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
+    try {
+        HttpEntity<String> request = new HttpEntity<>(headers);
+        ResponseEntity<String> response = restTemplate.exchange(restApiUrl, HttpMethod.GET, request, String.class);
+
+        JiraActivitiesResponse responseDto = mapper.readValue(response.getBody(), JiraActivitiesResponse.class);
+        List<JiraActivitiesDto> jiraDataDtos = responseDto.getTms_Task();
+
+        for (JiraActivitiesDto jiraDataDto : jiraDataDtos) {
+            String epic = jiraDataDto.getEpic();
+            String name = jiraDataDto.getName();
+            String parent = jiraDataDto.getParent();
+            String priority = jiraDataDto.getPriority();
+            String sprint = jiraDataDto.getSprint();
+            String typeDetail = jiraDataDto.getTypeDetail();
+            String statusDetail = jiraDataDto.getStatusDetail();
+            String points = jiraDataDto.getPoints();
+            String createdAt = jiraDataDto.getCreatedAt();
+            String source = jiraDataDto.getSource();
+            String updatedAt = jiraDataDto.getUpdatedAt();
+
+            Optional<JiraActivitiesEntity> existingActivity = repository.findByNameAndSprintAndPriority(name, sprint, priority, updatedAt, typeDetail, source);
+
+            if (!existingActivity.isPresent()) {
+                JiraActivitiesEntity jiraActivitiesEntity = new JiraActivitiesEntity();
+                jiraActivitiesEntity.setEpic(epic);
+                jiraActivitiesEntity.setName(name);
+                jiraActivitiesEntity.setParent(parent);
+                jiraActivitiesEntity.setPriority(priority);
+                jiraActivitiesEntity.setSprint(sprint);
+                jiraActivitiesEntity.setTypeDetail(typeDetail);
+                jiraActivitiesEntity.setStatusDetail(statusDetail);
+                jiraActivitiesEntity.setPoints(points);
+                jiraActivitiesEntity.setCreatedAt(createdAt);
+                jiraActivitiesEntity.setSource(source);
+                jiraActivitiesEntity.setUpdatedAt(updatedAt);
+                repository.save(jiraActivitiesEntity);
             }
-        } catch (RestClientException | JsonProcessingException e) {
-            System.err.println("Não foi possível acessar ou processar a URL: " + restApiUrl);
-            e.printStackTrace();
         }
+    } catch (RestClientException | JsonProcessingException e) {
+        System.err.println("Não foi possível acessar ou processar a URL: " + restApiUrl);
+        e.printStackTrace();
     }
+}
 
     // Método para deletar uma atividade
     public void delete(Long id) {
