@@ -1,82 +1,92 @@
 <section class="secao-genai">
     <div class="genai-page">
-      <app-sidebar-menu></app-sidebar-menu>
-      <div class="genai-content">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-12">
-              <h1>GEN.AI for Devs</h1>
-            </div>
-            <div class="col-md-12">
-              <div class="genai-menu-buttons">
-                <button *ngFor="let button of genaiMenu" [title]="button.title"
-                  [disabled]="button.status === 'disabled'"
-                  [class.genai-btn-selected]="selectedButtonId === button.id"
-                  (click)="genAiButtonSelected(button.id)">
-                  <img [src]="button.icon" [alt]="button.title"
-                    [class.disabled-img]="button.status === 'disabled'" />
-                  <span>{{ button.title }}</span>
-                </button>
-              </div>
-            </div>
-            <div class="col-md-12" *ngIf="showCard">
-              <div class="card genai-card">
-                <div class="card-body">
-                  <h5 class="card-title">Geração de Código</h5>
-                  <form (ngSubmit)="generateCode()">
-                    <div class="mb-3">
-                      <label class="form-label">Tipo de Stack</label>
-                      <div class="stack-type-options">
-                        <div>
-                          <input type="radio" id="frontend" name="stackType" value="Frontend"
-                            [(ngModel)]="stackType" (change)="filterCodeTypes(); checkFormValidity()" required>
-                          <label for="frontend">Frontend</label>
+        <app-sidebar-menu></app-sidebar-menu>
+        <div class="genai-content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>GEN.AI for Devs</h1>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="genai-menu-buttons">
+                            <button *ngFor="let button of genaiMenu" [title]="button.title"
+                                [disabled]="button.status === 'disabled'"
+                                [class.genai-btn-selected]="selectedButtonId === button.id"
+                                (click)="genAiButtonSelected(button.id)">
+                                <img [src]="button.icon" [alt]="button.title"
+                                    [class.disabled-img]="button.status === 'disabled'" />
+                                <span>{{ button.title }}</span>
+                            </button>
                         </div>
-                        <div>
-                          <input type="radio" id="backend" name="stackType" value="Backend"
-                            [(ngModel)]="stackType" (change)="filterCodeTypes(); checkFormValidity()" required>
-                          <label for="backend">Backend</label>
+                    </div>
+                    <div class="col-md-12" *ngIf="showCard">
+                        <div class="card genai-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Geração de Código</h5>
+                                <form (ngSubmit)="generateCode()">
+                                    <div class="mb-3">
+                                        <label class="form-label">Tipo de Stack</label>
+                                        <div class="stack-type-options">
+                                            <div>
+                                                <input type="radio" id="frontend" name="stackType" value="Frontend"
+                                                    [(ngModel)]="stackType"
+                                                    (change)="filterCodeTypes(); checkFormValidity()" required>
+                                                <label for="frontend">Frontend</label>
+                                            </div>
+                                            <div>
+                                                <input type="radio" id="backend" name="stackType" value="Backend"
+                                                    [(ngModel)]="stackType"
+                                                    (change)="filterCodeTypes(); checkFormValidity()" required>
+                                                <label for="backend">Backend</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="codeType" class="form-label">Tipo de Código</label>
+                                        <input type="text" class="form-control" id="codeType" [(ngModel)]="codeType"
+                                            name="codeType"
+                                            (input)="updateSuggestions(codeType || ''); clearGeneratedCode(); checkFormValidity()"
+                                            (focus)="showSuggestions()" (blur)="hideSuggestions()" autocomplete="off"
+                                            placeholder="Informe o tipo de código" required>
+                                        <ul class="suggestions"
+                                            *ngIf="filteredCodeTypes.length > 0 && suggestionsVisible">
+                                            <li *ngFor="let suggestion of filteredCodeTypes"
+                                                (click)="selectSuggestion(suggestion)">
+                                                {{ suggestion.tipo_de_codigo }}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="goal" class="form-label">Entidade</label>
+                                        <input class="form-control" id="goal" [(ngModel)]="goal" name="goal"
+                                            (input)="clearGeneratedCode(); checkFormValidity()"
+                                            placeholder="Informe a entidade do projeto" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="table" class="form-label">Tabela</label>
+                                        <input class="form-control" id="table" [(ngModel)]="table" name="table"
+                                            (input)="clearGeneratedCode()"
+                                            placeholder="Informe a tabela para referência">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary" [disabled]="!isFormValid">Gerar
+                                        Prompt</button>
+                                </form>
+                            </div>
                         </div>
-                      </div>
                     </div>
-                    <div class="mb-3">
-                      <label for="codeType" class="form-label">Tipo de Código</label>
-                      <input type="text" class="form-control" id="codeType" [(ngModel)]="codeType" name="codeType"
-                        (input)="updateSuggestions(codeType || ''); clearGeneratedCode(); checkFormValidity()" (focus)="showSuggestions()"
-                        (blur)="hideSuggestions()" autocomplete="off" placeholder="Informe o tipo de código" required>
-                      <ul class="suggestions" *ngIf="filteredCodeTypes.length > 0 && suggestionsVisible">
-                        <li *ngFor="let suggestion of filteredCodeTypes" (click)="selectSuggestion(suggestion)">
-                          {{ suggestion.tipo_de_codigo }}
-                        </li>
-                      </ul>
+                    <div class="col-md-12" *ngIf="generatedCode">
+                        <div class="card genai-card mt-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Prompt Gerado</h5>
+                                <div class="copy-container">
+                                    <pre><code>{{ generatedCode }}</code></pre>
+                                    <button class="btn btn-secondary" (click)="copyToClipboard()">Copiar</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                      <label for="goal" class="form-label">Entidade</label>
-                      <input class="form-control" id="goal" [(ngModel)]="goal" name="goal" (input)="clearGeneratedCode(); checkFormValidity()" placeholder="Informe a entidade do projeto" required>
-                    </div>
-                    <div class="mb-3">
-                      <label for="table" class="form-label">Tabela</label>
-                      <input class="form-control" id="table" [(ngModel)]="table" name="table" (input)="clearGeneratedCode()" placeholder="Informe a tabela para referência">
-                    </div>
-                    <button type="submit" class="btn btn-primary" [disabled]="!isFormValid">Gerar Prompt</button>
-                  </form>
                 </div>
-              </div>
             </div>
-            <div class="col-md-12" *ngIf="generatedCode">
-              <div class="card genai-card mt-3">
-                <div class="card-body">
-                  <h5 class="card-title">Prompt Gerado</h5>
-                  <div class="copy-container">
-                    <pre><code>{{ generatedCode }}</code></pre>
-                    <button class="btn btn-secondary" (click)="copyToClipboard()">Copiar</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
     </div>
-  </section>
-  
+</section>

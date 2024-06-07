@@ -11,6 +11,7 @@ interface CodeType {
   id: number;
   tipo_de_codigo: string;
   stack: string;
+  disabled?: boolean;
 }
 
 @Component({
@@ -43,21 +44,21 @@ export class GenAiForDevsComponent implements OnInit {
     { id: 4, tipo_de_codigo: 'Código de Integração', stack: 'backend' },
     { id: 5, tipo_de_codigo: 'Código de Validação', stack: 'backend' },
     { id: 6, tipo_de_codigo: 'Código de Autenticação e Autorização', stack: 'backend' },
-    { id: 7, tipo_de_codigo: 'Código de Interface de Usuário', stack: 'frontend' },
+    { id: 7, tipo_de_codigo: 'Código de Interface de Usuário', stack: 'frontend', disabled: true },
     { id: 8, tipo_de_codigo: 'Código de Manipulação de Arquivos', stack: 'backend' },
     { id: 9, tipo_de_codigo: 'Código de Testes Automatizados', stack: 'backend' },
     { id: 10, tipo_de_codigo: 'Código de Manipulação de Banco de Dados', stack: 'backend' },
     { id: 11, tipo_de_codigo: 'Código de Processamento de Dados', stack: 'backend' },
     { id: 12, tipo_de_codigo: 'Código de Redes e Comunicação', stack: 'backend' },
-    { id: 13, tipo_de_codigo: 'Código de Estilização', stack: 'frontend' },
-    { id: 14, tipo_de_codigo: 'Código de Animação', stack: 'frontend' },
-    { id: 15, tipo_de_codigo: 'Código de Gerenciamento de Estado', stack: 'frontend' },
-    { id: 16, tipo_de_codigo: 'Código de Interação com o Usuário', stack: 'frontend' },
-    { id: 17, tipo_de_codigo: 'Código de Renderização', stack: 'frontend' },
-    { id: 18, tipo_de_codigo: 'Código de Responsividade', stack: 'frontend' },
-    { id: 19, tipo_de_codigo: 'Código de Manipulação do DOM', stack: 'frontend' },
-    { id: 20, tipo_de_codigo: 'Código de Acessibilidade', stack: 'frontend' },
-    { id: 21, tipo_de_codigo: 'Código de Otimização de Performance', stack: 'frontend' }
+    { id: 13, tipo_de_codigo: 'Código de Estilização', stack: 'frontend', disabled: true },
+    { id: 14, tipo_de_codigo: 'Código de Animação', stack: 'frontend', disabled: true },
+    { id: 15, tipo_de_codigo: 'Código de Gerenciamento de Estado', stack: 'frontend', disabled: true },
+    { id: 16, tipo_de_codigo: 'Código de Interação com o Usuário', stack: 'frontend', disabled: true },
+    { id: 17, tipo_de_codigo: 'Código de Renderização', stack: 'frontend', disabled: true },
+    { id: 18, tipo_de_codigo: 'Código de Responsividade', stack: 'frontend', disabled: true },
+    { id: 19, tipo_de_codigo: 'Código de Manipulação do DOM', stack: 'frontend', disabled: true },
+    { id: 20, tipo_de_codigo: 'Código de Acessibilidade', stack: 'frontend', disabled: true },
+    { id: 21, tipo_de_codigo: 'Código de Otimização de Performance', stack: 'frontend', disabled: true }
   ];
 
   public selectedButtonId: number | null = null;
@@ -68,9 +69,9 @@ export class GenAiForDevsComponent implements OnInit {
   private selectedStack: string | null = null;
   private inputTimeout: any;
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   genAiButtonSelected(buttonId: number): void {
     this.selectedButtonId = buttonId;
@@ -135,7 +136,7 @@ aja como um copiloto de desenvolvimento, sua função é gerar o código em java
 \n`;
 
     if (inputTable) {
-      this.generatedCode += `O nome da tabela no banco de dados é ${inputTable} no modelo relacional no banco de dados.\n`;
+      this.generatedCode += `O nome da tabela no banco de dados é ${inputTable} no modelo relacional do banco de dados.\n`;
     }
 
     this.generatedCode += `
