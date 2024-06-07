@@ -66,10 +66,19 @@ export class jiraActivitieseService {
   }
 
   getTotalPointsForJiraStories(): Observable<any> {
-    const url: string = `${environment.api}/jira/totalpoints`;
+    const url: string = `${environment.api}/jira/allStoryPoints`;
     return this.http
       .get<any>(url)
       .pipe(catchError(this.handleError<any>('getTotalPointsForJiraStories')));
+  }
+
+  getTotalPointsForJiraStoriesLast60Days(): Observable<any> {
+    const url: string = `${environment.api}/jira/allStoryPointsLast60days`;
+    return this.http
+      .get<any>(url)
+      .pipe(
+        catchError(this.handleError<any>('getTotalPointsForJiraStoriesLast60Days'))
+      );
   }
  
 }

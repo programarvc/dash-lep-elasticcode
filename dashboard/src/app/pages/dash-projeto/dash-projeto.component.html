@@ -25,7 +25,7 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-            <div class="bloco-metricas">
+            <div class="bloco-metricas" > <!-- adicione dentro da tag para reativar o modal (click)="open(content)" -->
               <div class="caixa-metricas">
                 <div class="metricas">
                   <h2 class="titulo-velocidade">Métricas de Velocidade</h2>
@@ -80,6 +80,20 @@
                 </div>
               </div>
               <p class="text-resumo"></p>
+             <!-- <ng-template #content let-modal>
+                <div class="modal-header">
+                  <h4 class="modal-title">Título do Modal</h4>
+                  <button type="button" class="close" aria-label="Fechar" (click)="modal.dismiss('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body custom-modal">
+                  Seu conteúdo aqui
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Fechar</button>
+                </div>
+              </ng-template> -->
             </div>
           </div>
           <div class="col-md-6">
@@ -151,19 +165,18 @@
                     </h3>
                     <div class="rate-value-4key">
                       <span>
-                        {{TotalPoints.total_points}}
+                        {{TotalPointsLast60Days.total_points_last60days}}
                       </span>
                       <span class="rate-saude"
-                        [ngStyle]="{'font-size': this.getFontSizeMetricas(currentMaturidade?.metricas4)}">
-                        {{156}}
-                        <!--{{currentMaturidade?.metricas4 !== null ? '%' : ''}} -->
+                        [ngStyle]="{'font-size': this.getFontSizeMetricas(TotalPoints.total_points)}">
+                        {{TotalPoints.total_points}}
                       </span>
                     </div>
                     <div class="jornada-card-bar-content"
-                      [style.display]="(currentMaturidade?.metricas4 === null) ? 'none' : 'block'">
+                      [style.display]="(TotalPoints.total_points === null) ? 'none' : 'block'">
                       <div class="jornada-card-bar">
                         <div class="jornada-card-goal"
-                          [ngStyle]="{'width': (currentMaturidade?.metricas4 !== null ? currentMaturidade?.metricas4 : 0) + '%'}">
+                          [ngStyle]="{'width': ((TotalPointsLast60Days.total_points_last60days / TotalPoints.total_points) * 100) + '%'}">
                         </div>
                       </div>
                     </div>
@@ -186,7 +199,7 @@
                   <div class="ellipse-roxa"></div>
                   <p class="metricas-texto-cultura">Prs Concluídas</p>
                   <div class="ellipse-cinza"></div>
-                  <p class="metricas-texto-esperado-cultura">Prs Totais Projeto ({{pullRequest.totalprs}})</p>
+                  <p class="metricas-texto-esperado-cultura">Prs Totais Projeto ({{currentVcsPullRequest60Days.countpr60days}})</p>
                 </div>
               </div>
               <div class="pontilhados-top-contribuidores">
@@ -257,7 +270,7 @@
                 <div class="historias-epicos-card-text">
                   <h2>Épicos</h2><span>(últimos 60 dias)</span>
                   <p>
-                      {{jiraEpics[0].count_epics}}
+                      {{jiraEpics.count_epics}}
                   </p>
                 </div>
               </div>
@@ -268,7 +281,7 @@
             <div class="historias-epicos-card">
                 <div class="historias-epicos-card-content">
                     <div class="historias-epicos-card-text">
-                        <h2>Histórias</h2><span>(total)</span>
+                        <h2>Tarefas Concluidas</h2><span>(total)</span>
                         <p>
                             {{storiesAndEpicsData.total_stories}}
                         </p>
