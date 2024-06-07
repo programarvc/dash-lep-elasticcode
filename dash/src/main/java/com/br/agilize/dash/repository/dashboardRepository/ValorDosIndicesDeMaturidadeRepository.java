@@ -26,9 +26,6 @@ public interface ValorDosIndicesDeMaturidadeRepository extends JpaRepository<Val
     @Query("SELECT v.itemDeMaturidade.nome FROM ValorDosIndicesDeMaturidadeEntity v WHERE v.maturidade.esteira.id = :esteiraId AND v.maturidade.dataHora = :dataHora")
     List<String> findItemDeMaturidadeByEsteiraIdAndDataHora(@Param("esteiraId") Long esteiraId, @Param("dataHora") LocalDateTime dataHora);
 
-  
-  
-  
     @Query("SELECT v FROM ValorDosIndicesDeMaturidadeEntity v WHERE v.maturidade.esteira.id = :esteiraId AND v.itemDeMaturidade.tipoMaturidade = :tipoMaturidade ")
     List<ValorDosIndicesDeMaturidadeEntity> findLatestByEsteiraIdAndTipoMaturidade(@Param("esteiraId") Long esteiraId, @Param("tipoMaturidade") TiposMaturidadeEnum tipoMaturidade);
 

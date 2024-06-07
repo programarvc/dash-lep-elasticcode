@@ -31,10 +31,12 @@ import {
 import { 
   JiraActivities,
   JiraEpics,
-  AllStories,
+  AllActivities,
+  AllActivitiesLast60Days,
   MediaStoriesPerEpic,
   StoriesAndEpicsData,
-  TotalPoints
+  TotalPoints,
+  TotalPointsLast60Days
 } from 'src/app/types/jiraActivities-types';
 
 import { EsteiraService } from 'src/services/esteira/esteira.service';
@@ -44,6 +46,8 @@ import { CapacidadeService } from 'src/services/capacidade/capacidade.service';
 import { isInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
 import { valorMaturidadeService } from './../../../services/valor-maturidade/valor-maturidade.service';
 import { jiraActivitieseService } from 'src/services/jira-activities/jira-activities.service';
+import { NgbModal, NgbDateStruct, NgbDate } from '@ng-bootstrap/ng-bootstrap';
+
 @Component({
   selector: 'app-dash-projeto',
   templateUrl: './dash-projeto.component.html',
@@ -217,7 +221,7 @@ export class DashProjetoComponent implements OnInit {
     story_count: 0
   };
 
-  public jiraAllStories: AllStories = {
+  public jiraAllActivities: AllActivities = {
     epic: '',
     name: '',
     story_count: 0
@@ -234,10 +238,25 @@ export class DashProjetoComponent implements OnInit {
   };
 
   public TotalPoints: TotalPoints = {
-    total_points: 0
+    total_points: 0,
   };
 
-  public jiraEpics: JiraEpics[] = [];
+  public TotalPointsLast60Days: TotalPointsLast60Days = {
+    total_points_last60days: 0
+  };
+
+  public allActivities60days: AllActivitiesLast60Days = {
+    story_count_last60days: 0
+  };
+
+
+  public jiraEpics: JiraEpics = {
+    id: 0,
+    epic: '',
+    name: '',
+    count_epics: 0
+  };
+
   //variavel com dados para armazenar a quantidade total de prs por colaborador Hasura
   currentVcsPullRequestTop5: VcsPullRequestTop5[] = [];
 
@@ -263,7 +282,8 @@ export class DashProjetoComponent implements OnInit {
     private maturidadeService: MaturidadeService,
     private capacidadeService: CapacidadeService,
     private valorMaturidadeService: valorMaturidadeService,
-    private jiraActivitiesService: jiraActivitieseService
+    private jiraActivitiesService: jiraActivitieseService,
+    private modalService: NgbModal
   ) {
     this.selectedOption = 0;
     this.valorMaturidadeDate = new Date();
@@ -282,7 +302,7 @@ export class DashProjetoComponent implements OnInit {
         this.getValorMaturidadesByEsteiraIdAndTecnica(parseInt(id));
         this.getValorMaturidadesByEsteiraIdAndCultura(parseInt(id));
         this.getMaturidadeByEsteiraId(parseInt(id));
-
+        
       }
       const maturidadeId = params.get('maturidadeId');
       if (maturidadeId ) {
@@ -302,11 +322,12 @@ public async setCurrent(id: number) {
   this.getTop5ColaboradoresByPrs();
   this.getTotalPrs();
   this.getJiraStories();
-  this.getJiraEpics();
   this.getcountAllStories();
-  this.getAverageStoriesPerEpic();
+  this.getAllActivitiesLast60Days();
+  this.getTotalPointsForJiraStoriesLast60Days();
   this.getAveragePoints();
   this.getTotalPointsForJiraStories();
+  this.getJiraEpicsLast60Days();
 }
 
 public async setCurrentMaturidade (id: number) {
@@ -542,24 +563,20 @@ public async setCurrentMaturidade (id: number) {
     });
   }
 
-  public getJiraEpics(): void {
-    this.jiraActivitiesService.getCountEpics().subscribe((response) => {
-      this.jiraEpics = response;
-      console.log(this.jiraEpics);
-    });
-  }
+
 
   public getcountAllStories(): void {
     this.jiraActivitiesService.getcountAllStories().subscribe((response) => {
-      this.jiraAllStories = response;
+      this.jiraAllActivities = response;
     });
   }
 
-  public getAverageStoriesPerEpic(): void {
-    this.jiraActivitiesService.getAverageStoriesPerEpic().subscribe((response) => {
-      this.jiraMediaStories = response;
+  public getAllActivitiesLast60Days(): void {
+    this.jiraActivitiesService.getAllActivitiesLast60Days().subscribe((response) => {
+      this.allActivities60days = response;
     });
   }
+
 
   public getJiraEpicsLast60Days(): void {
     this.jiraActivitiesService.getEpicsLast60Days().subscribe((response) => {
@@ -573,11 +590,21 @@ public async setCurrentMaturidade (id: number) {
     });
   }
 
-  getTotalPointsForJiraStories(): void {
+  public getTotalPointsForJiraStories(): void {
     this.jiraActivitiesService.getTotalPointsForJiraStories().subscribe((response) => {
       this.TotalPoints = response;
     });
   }
 
+
+  public getTotalPointsForJiraStoriesLast60Days(): void {
+    this.jiraActivitiesService.getTotalPointsForJiraStoriesLast60Days().subscribe((response) => {
+      this.TotalPointsLast60Days = response;
+    });
+  }
+
+  open(content: any) {
+    this.modalService.open(content);
+  }
   
 }
