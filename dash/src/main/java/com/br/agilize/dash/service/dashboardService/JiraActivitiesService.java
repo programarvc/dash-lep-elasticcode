@@ -53,12 +53,14 @@ public class JiraActivitiesService implements CommandLineRunner {
 
 
     @Override
-    @Transactional
+   
     public void run(String... args) throws Exception {
         getJiraDataAndSave();
     }
 
 // Método para salvar uma atividade
+
+    @Transactional
     public void getJiraDataAndSave() {
         RestTemplate restTemplate = new RestTemplate();
     
