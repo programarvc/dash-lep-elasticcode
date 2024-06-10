@@ -53,12 +53,13 @@ public class JiraActivitiesService implements CommandLineRunner {
 
 
     @Override
-    @Transactional
+   
     public void run(String... args) throws Exception {
         getJiraDataAndSave();
     }
 
 
+    @Transactional
     public void getJiraDataAndSave() {
         RestTemplate restTemplate = new RestTemplate();
 
@@ -92,9 +93,11 @@ public class JiraActivitiesService implements CommandLineRunner {
                 String createdAt = jiraDataDto.getCreatedAt();
                 String source = jiraDataDto.getSource();
                 String updatedAt = jiraDataDto.getUpdatedAt();
-
+                
+                // Verificar se a atividade já existe no banco de dados
                 Optional<JiraActivitiesEntity> existingActivity = repository.findByNameAndSprintAndPriorityAndUpdatedAtAndTypeDetailAndSource(name, sprint, priority, updatedAt, typeDetail, source);
-
+                
+                // Se a atividade não existir no banco de dados, salvá-la
                 if (!existingActivity.isPresent()) {
                     JiraActivitiesEntity jiraActivitiesEntity = new JiraActivitiesEntity();
                     jiraActivitiesEntity.setEpic(epic);
