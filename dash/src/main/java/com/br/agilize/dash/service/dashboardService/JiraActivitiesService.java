@@ -100,7 +100,8 @@ public class JiraActivitiesService implements CommandLineRunner {
                 String updatedAt = jiraDataDto.getUpdatedAt();
                 
                 // Verificar se a atividade já existe no banco de dados
-                Optional<JiraActivitiesEntity> existingActivity = repository.findByNameAndSprintAndPriority(name, sprint, priority);
+                Optional<JiraActivitiesEntity> existingActivity = repository.findByNameAndSprintAndPriorityAndUpdatedAtAndTypeDetailAndSource(name, sprint, priority, updatedAt, typeDetail, source);
+
                 
                 // Se a atividade não existir no banco de dados, salvá-la
                 if (!existingActivity.isPresent()) {
