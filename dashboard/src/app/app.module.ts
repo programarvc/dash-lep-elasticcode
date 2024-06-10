@@ -28,6 +28,7 @@ import { DashProjetoComponent } from './pages/dash-projeto/dash-projeto.componen
 import { AmplifyUiLoginComponent } from './pages/amplify-ui-login/amplify-ui-login.component';
 import { TimeComponent } from './pages/time/time.component';
 import { GenAiForDevsComponent } from './pages/gen-ai-for-devs/gen-ai-for-devs.component';
+import { RegistroNovoDevComponent } from './pages/registro-novo-dev/registro-novo-dev.component';
 
 Amplify.configure(awsconfig);
 
@@ -44,7 +45,8 @@ Amplify.configure(awsconfig);
     MaturidadeSmComponent, 
     AmplifyUiLoginComponent, 
     TimeComponent,
-    GenAiForDevsComponent
+    GenAiForDevsComponent,
+    RegistroNovoDevComponent
   ],
   imports: [
     HttpClientModule, 
