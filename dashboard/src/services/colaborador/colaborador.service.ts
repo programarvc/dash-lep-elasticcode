@@ -41,7 +41,7 @@ export class ColaboradorService {
   }
 
   postNovoColaborador(novoColaborador: any): Observable<any>{
-    const url: string = `${environment.api}/colaborador/novo-colaborador`;
+    const url: string = `${environment.api}/colaborador`;
     return this.http
       .post<any>(url, novoColaborador)
       .pipe(catchError(this.handleError<any>('postNovoColaborador')));

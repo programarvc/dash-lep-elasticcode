@@ -59,12 +59,7 @@ public class ColaboradorService extends ServiceCrudBase<ColaboradorDto> {
 
     
 
-   /* public MetasOneAOneDto findLatestByColaboradorId(Long colaboradorId) {
-        MetasOneAOneEntity metasOneAOne = this.metasOneAOneRepository.findLatestByColaboradorId(colaboradorId)
-                .orElseThrow(DashNotFoundException::new);
-        return this.metasOneAOneMapper.modelToDTO(metasOneAOne);
-    }*/
-
+    /* 
     public ColaboradorDto criarNovoColaborador(ColaboradorDto novoColaborador) {
         ColaboradorEntity entity = this.mapper.dtoToModel(novoColaborador);
         if (entity == null) {
@@ -72,5 +67,5 @@ public class ColaboradorService extends ServiceCrudBase<ColaboradorDto> {
         }
         ColaboradorEntity colaboradorSalvo = this.repository.save(entity);
         return this.mapper.modelToDTO(colaboradorSalvo);
-    }
+    }*/
 }
