@@ -53,4 +53,10 @@ public class ColaboradorController extends ControllerCrudBase<ColaboradorDto> {
     public MetasOneAOneDto getLatestByColaboradorId(@PathVariable Long colaboradorId) {
         return service.findLatestByColaboradorId(colaboradorId);
     }*/
+
+    @PostMapping("/novo-colaborador")
+    public ResponseEntity<ColaboradorDto> criarNovoColaborador(@RequestBody ColaboradorDto novoColaborador) {
+        ColaboradorDto colaboradorSalvo = this.service.criarNovoColaborador(novoColaborador);
+        return ResponseEntity.ok(colaboradorSalvo);
+    }
 }

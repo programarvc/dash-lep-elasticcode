@@ -6,7 +6,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h1>
-                            Cadastrar Desenvolvedor
+                            Registrar Desenvolvedor
                         </h1>
                     </div>
                     <div class="col-md-12">
@@ -41,6 +41,15 @@
                                         placeholder="Informe o Jira do desenvolvedor" required>
                                 </div>
                                 <div class="mb-3">
+                                    <label for="bio" class="form-label">
+                                        Mini Bio
+                                    </label>
+                                    <textarea class="form-control" id="bio" [(ngModel)]="bio" name="bio"
+                                        placeholder="Informe uma mini bio do desenvolvedor">
+                                    </textarea>
+                                </div>
+                                <hr>
+                                <div class="mb-3">
                                     <label for="stacks" class="form-label">
                                         Stacks
                                     </label>
@@ -69,17 +78,28 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="bio" class="form-label">
-                                        Mini Bio
-                                    </label>
-                                    <textarea class="form-control" id="bio" [(ngModel)]="bio" name="bio"
-                                        placeholder="Informe uma mini bio do desenvolvedor">
-                                    </textarea>
-                                </div>
                                 <hr>
-                                <div class="mb-3">
-                                    <!--<label for="empresa" class="form-label"></label> -->
+                                <div class="d-flex justify-content-between">
+                                    <div class="mb-3">
+                                        <label for="esteira" class="form-label">Esteira</label>
+                                        <select class="form-select" id="esteira" [(ngModel)]="esteiraSelecionada" name="esteira"
+                                            required (change)="onEsteiraChange($event)"
+                                        >
+                                            <option *ngFor="let esteira of userEsteiras" [value]="esteira.id">
+                                                {{esteira.nome}} - {{esteira.empresa.nome}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3" *ngIf="esteiraSelecionada">
+                                        <label for="times" class="form-label">Time</label>
+                                        <select class="form-select" id="times" [(ngModel)]="timeSelecionado" name="times"
+                                            required
+                                        >
+                                            <option *ngFor="let time of timesEsteira" value="{{time.id}}">
+                                                {{time.nomeTime}}
+                                            </option>
+                                    </select>
+                                    </div>
                                 </div>
                                 <div class="mb-3">
                                     <button type="submit" class="btn btn-primary">
