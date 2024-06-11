@@ -1,5 +1,5 @@
 <section id="secao-registro-dev">
-    <div class="registro-dev">
+    <div class="registro-dev-page">
         <app-sidebar-menu></app-sidebar-menu>
         <div class="registro-dev-content">
             <div class="container-fluid">
@@ -10,7 +10,84 @@
                         </h1>
                     </div>
                     <div class="col-md-12">
-                        
+                        <div class="card registro-dev-form">
+                            <form (ngSubmit)="cadastrarDev()">
+                                <div class="mb-3">
+                                    <label for="nome" class="form-label">
+                                        Nome
+                                    </label>
+                                    <input type="text" class="form-control" id="nome" [(ngModel)]="nome" name="nome"
+                                        placeholder="Informe o nome do desenvolvedor" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">
+                                        E-mail
+                                    </label>
+                                    <input type="email" class="form-control" id="email" [(ngModel)]="email" name="email"
+                                        placeholder="Informe o e-mail do desenvolvedor" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="github" class="form-label">
+                                        GitHub
+                                    </label>
+                                    <input type="text" class="form-control" id="github" [(ngModel)]="github"
+                                        name="github" placeholder="Informe o GitHub do desenvolvedor" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="jira" class="form-label">
+                                        Jira
+                                    </label>
+                                    <input type="text" class="form-control" id="jira" [(ngModel)]="jira" name="jira"
+                                        placeholder="Informe o Jira do desenvolvedor" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="stacks" class="form-label">
+                                        Stacks
+                                    </label>
+                                    <div class="stacks-space">
+                                        <div *ngFor="let stack of stacksDev;">
+                                            <input type="radio" id="{{stack.nome}}" [(ngModel)]="stackSelecionado"
+                                                name="stacks" value="{{stack.id}}" required>
+                                            <label for="{{stack.nome}}">
+                                                {{stack.nome}}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="tecnologias" class="form-label">
+                                        Tecnologias
+                                    </label>
+                                    <div class="tecnologias-space">
+                                        <div *ngFor="let tecnologia of tecnologiasDev;">
+                                            <input type="checkbox" id="{{tecnologia.nome}}"
+                                                [(ngModel)]="tecnologia.selecionada" name="tecnologias"
+                                                value="{{tecnologia.id}}" required>
+                                            <label for="{{tecnologia.nome}}">
+                                                {{tecnologia.nome}}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="bio" class="form-label">
+                                        Mini Bio
+                                    </label>
+                                    <textarea class="form-control" id="bio" [(ngModel)]="bio" name="bio"
+                                        placeholder="Informe uma mini bio do desenvolvedor">
+                                    </textarea>
+                                </div>
+                                <hr>
+                                <div class="mb-3">
+                                    <!--<label for="empresa" class="form-label"></label> -->
+                                </div>
+                                <div class="mb-3">
+                                    <button type="submit" class="btn btn-primary">
+                                        Cadastrar
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

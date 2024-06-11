@@ -7,6 +7,7 @@ import { DashProjetoComponent } from './pages/dash-projeto/dash-projeto.componen
 import { AmplifyUiLoginComponent } from './pages/amplify-ui-login/amplify-ui-login.component';
 import { TimeComponent } from './pages/time/time.component';
 import { GenAiForDevsComponent } from './pages/gen-ai-for-devs/gen-ai-for-devs.component';
+import { RegistroNovoDevComponent } from './pages/registro-novo-dev/registro-novo-dev.component';
 
 
 
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'time', title:'Dashboard Time', pathMatch:'full', component: TimeComponent, canActivate: [AuthGuard] },
   { path: 'time/:esteiraId', title:'Dashboard Time', pathMatch:'full', component: TimeComponent, canActivate: [AuthGuard] },
   { path: 'genAi-for-devs', title: 'GEN.AI for Devs', component: GenAiForDevsComponent, canActivate: [AuthGuard]},
+  { path: 'registrar-desenvolvedor', title: 'Registrar Desenvolvedor', component: RegistroNovoDevComponent, canActivate: [AuthGuard]},
   { path: ':colaboradorId', pathMatch: 'full',component: ColaboradorComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: 'login'}
 ];

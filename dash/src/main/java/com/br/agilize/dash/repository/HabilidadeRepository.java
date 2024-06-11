@@ -2,6 +2,7 @@ package com.br.agilize.dash.repository;
 
 import com.br.agilize.dash.model.entity.HabilidadeEntity;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -16,4 +17,10 @@ public interface HabilidadeRepository extends JpaRepository<HabilidadeEntity, Lo
     Page<HabilidadeEntity> findAllHab(Pageable pageable);
 
     Optional<HabilidadeEntity> findByNome(String nome);
+
+    @Query("SELECT h FROM HabilidadeEntity h WHERE h.nome IN ('Full Stack', 'Front End', 'Back End')")
+    List<HabilidadeEntity> getDevStacks();
+
+    @Query("SELECT h FROM HabilidadeEntity h WHERE h.nome NOT IN ('Full Stack', 'Front End', 'Back End')")
+    List<HabilidadeEntity> getDevTechnologies();
 }
