@@ -596,6 +596,7 @@ public async setCurrentMaturidade (id: number) {
     });
   }
 
+
   public getTotalPointsForJiraStoriesLast60Days(): void {
     this.jiraActivitiesService.getTotalPointsForJiraStoriesLast60Days().subscribe((response) => {
       this.TotalPointsLast60Days = response;
@@ -605,5 +606,5 @@ public async setCurrentMaturidade (id: number) {
   open(content: any) {
     this.modalService.open(content);
   }
-
+  
 }
