@@ -42,7 +42,9 @@ export class RegistroNovoDevComponent implements OnInit {
   public timesEsteira: any = [];
   public timeSelecionado: number = 0;
 
+  public habilidade: any = [];
 
+  public devCadastrado: any = {};
 
   constructor(
     private habilidadeService: HabilidadeService,
@@ -64,7 +66,6 @@ export class RegistroNovoDevComponent implements OnInit {
         //Obtém esteiras que o usuário está inserido
         this.userService.getEsteirasPorUsuarioId(this.userId).subscribe((userEsteiras: any) => {
           this.userEsteiras = userEsteiras;
-          console.log(this.userEsteiras);
         });
       });
     });
@@ -85,22 +86,43 @@ export class RegistroNovoDevComponent implements OnInit {
       .filter((tecnologia: any) => tecnologia.selecionada)
       .map((tecnologia: any) => tecnologia.id);
 
+    this.habilidade = this.stackSelecionado;
+    this.habilidade = [...this.habilidade, ...this.tecnologiaSelecionada]
+    console.log(this.habilidade);
+
     const devData = {
       nome: this.nome,
       email: this.email,
       github: this.github,
       jira: this.jira,
       miniBio: this.bio,
-      stack: this.stackSelecionado,
-      tecnologias: this.tecnologiaSelecionada,
+      habilidade: this.habilidade,
       esteira: this.esteiraSelecionada,
       time: this.timeSelecionado,
     };
-    console.log(devData);
 
+    //Registro novo colaborador
     this.colaboradorService.postNovoColaborador(devData).subscribe((response: any) => {
       console.log('Desenvolvedor cadastrado com sucesso!');
       console.log(response);
+      this.devCadastrado = response;
+
+      //Itera sobre a lista de habilidades selecionadas e cria um objeto para cada habilidade
+      for (let habilidade of this.habilidade) {
+        const habilidadesColaborador = {
+          colaborador: { id: this.devCadastrado.id },
+          habilidade: { id: habilidade }
+        }
+
+        //Requisição para cadastrar habilidades do novo colaborador
+        this.habilidadeService.postHabilidadesNovoColaborador(this.devCadastrado.id, habilidadesColaborador)
+          .subscribe((responseHabilidades: any) => {
+            console.log("Habilidade cadastrada com sucesso!");
+            console.log(responseHabilidades);
+          }, (erro: any) => {
+            console.log("Erro ao cadastrar habilidade", erro);
+          });
+      }
     }, (erro: any) => {
       console.log('Erro ao cadastrar desenvolvedor', erro);
     })
@@ -110,7 +132,6 @@ export class RegistroNovoDevComponent implements OnInit {
     this.esteiraSelecionada = eventy.target.value;
     this.timeService.getTimesByEsteiraId(this.esteiraSelecionada).subscribe((times: any) => {
       this.timesEsteira = times;
-      console.log(this.timesEsteira);
     })
   }
 }

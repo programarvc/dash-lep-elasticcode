@@ -53,5 +53,12 @@ export class HabilidadeService {
       .get<any>(url)
       .pipe(catchError(this.handleError<any>('getTecnologias')));
   }
+
+  postHabilidadesNovoColaborador(colaboradorId: number, habilidadesColaborador: any): Observable<any> {
+    const url: string = `${environment.api}/habilidades/colaborador`
+    return this.http
+      .post<any>(url, {colaboradorId, habilidadesColaborador})
+      .pipe(catchError(this.handleError<any>('postHabilidadesNovoColaborador')));
+  }
   
 }
