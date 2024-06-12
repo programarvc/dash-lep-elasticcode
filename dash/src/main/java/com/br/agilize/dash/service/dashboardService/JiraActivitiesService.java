@@ -54,76 +54,79 @@ public class JiraActivitiesService implements CommandLineRunner {
 
     @Override
    
+    @Transactional
     public void run(String... args) throws Exception {
         getJiraDataAndSave();
     }
 
-
-    @Transactional
     public void getJiraDataAndSave() {
         RestTemplate restTemplate = new RestTemplate();
-
+    
         Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
-
+    
         String restApiUrl = dotenv.get("API_URL_ELASTIC_JIRA");
-
+    
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-Hasura-Admin-Secret", dotenv.get("HASURA_ADMIN_SECRET"));
-
+    
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-
+    
         try {
             HttpEntity<String> request = new HttpEntity<>(headers);
             ResponseEntity<String> response = restTemplate.exchange(restApiUrl, HttpMethod.GET, request, String.class);
-
+    
             JiraActivitiesResponse responseDto = mapper.readValue(response.getBody(), JiraActivitiesResponse.class);
             List<JiraActivitiesDto> jiraDataDtos = responseDto.getTms_Task();
-
+    
             for (JiraActivitiesDto jiraDataDto : jiraDataDtos) {
-                String epic = jiraDataDto.getEpic();
-                String name = jiraDataDto.getName();
-                String parent = jiraDataDto.getParent();
-                String priority = jiraDataDto.getPriority();
-                String sprint = jiraDataDto.getSprint();
-                String typeDetail = jiraDataDto.getTypeDetail();
-                String statusDetail = jiraDataDto.getStatusDetail();
-                String points = jiraDataDto.getPoints();
-                String createdAt = jiraDataDto.getCreatedAt();
-                String source = jiraDataDto.getSource();
-                String updatedAt = jiraDataDto.getUpdatedAt();
-                
-                // Verificar se a atividade já existe no banco de dados
-                Optional<JiraActivitiesEntity> existingActivity = repository.findByNameAndSprintAndPriorityAndUpdatedAtAndTypeDetailAndSource(name, sprint, priority, updatedAt, typeDetail, source);
-                
-                // Se a atividade não existir no banco de dados, salvá-la
-                if (!existingActivity.isPresent()) {
-                    JiraActivitiesEntity jiraActivitiesEntity = new JiraActivitiesEntity();
-                    jiraActivitiesEntity.setEpic(epic);
-                    jiraActivitiesEntity.setName(name);
-                    jiraActivitiesEntity.setParent(parent);
-                    jiraActivitiesEntity.setPriority(priority);
-                    jiraActivitiesEntity.setSprint(sprint);
-                    jiraActivitiesEntity.setTypeDetail(typeDetail);
-                    jiraActivitiesEntity.setStatusDetail(statusDetail);
-                    jiraActivitiesEntity.setPoints(points);
-                    jiraActivitiesEntity.setCreatedAt(createdAt);
-                    jiraActivitiesEntity.setSource(source);
-                    jiraActivitiesEntity.setUpdatedAt(updatedAt);
-
-                    // Convertendo a entidade para DTO usando o Mapper
-                    JiraActivitiesDto newJiraDataDto = jiraActivitiesMapper.modelToDTO(jiraActivitiesEntity);
-
-                    // Convertendo o DTO de volta para a entidade para salvar no banco de dados
-                    JiraActivitiesEntity entityToSave = jiraActivitiesMapper.dtoToModel(newJiraDataDto);
-
-                    repository.save(entityToSave);
-                }
+                saveJiraActivityIfNotExists(jiraDataDto);
             }
         } catch (RestClientException | JsonProcessingException e) {
             System.err.println("Não foi possível acessar ou processar a URL: " + restApiUrl);
             e.printStackTrace();
+        }
+    }
+    
+    private void saveJiraActivityIfNotExists(JiraActivitiesDto jiraDataDto) {
+        String epic = jiraDataDto.getEpic();
+        String name = jiraDataDto.getName();
+        String parent = jiraDataDto.getParent();
+        String priority = jiraDataDto.getPriority();
+        String sprint = jiraDataDto.getSprint();
+        String typeDetail = jiraDataDto.getTypeDetail();
+        String statusDetail = jiraDataDto.getStatusDetail();
+        String points = jiraDataDto.getPoints();
+        String createdAt = jiraDataDto.getCreatedAt();
+        String source = jiraDataDto.getSource();
+        String updatedAt = jiraDataDto.getUpdatedAt();
+    
+        // Verificar se a atividade já existe no banco de dados
+        Optional<JiraActivitiesEntity> existingActivity = repository.findByNameAndSprintAndPriorityAndUpdatedAtAndTypeDetailAndSource(name, sprint, priority, updatedAt, typeDetail, source);
+    
+        // Se a atividade não existir no banco de dados, salvá-la
+        if (!existingActivity.isPresent()) {
+            JiraActivitiesEntity jiraActivitiesEntity = new JiraActivitiesEntity();
+            jiraActivitiesEntity.setEpic(epic);
+            jiraActivitiesEntity.setName(name);
+            jiraActivitiesEntity.setParent(parent);
+            jiraActivitiesEntity.setPriority(priority);
+            jiraActivitiesEntity.setSprint(sprint);
+            jiraActivitiesEntity.setTypeDetail(typeDetail);
+            jiraActivitiesEntity.setStatusDetail(statusDetail);
+            jiraActivitiesEntity.setPoints(points);
+            jiraActivitiesEntity.setCreatedAt(createdAt);
+            jiraActivitiesEntity.setSource(source);
+            jiraActivitiesEntity.setUpdatedAt(updatedAt);
+    
+            // Convertendo a entidade para DTO usando o Mapper
+            JiraActivitiesDto newJiraDataDto = jiraActivitiesMapper.modelToDTO(jiraActivitiesEntity);
+    
+            // Convertendo o DTO de volta para a entidade para salvar no banco de dados
+            JiraActivitiesEntity entityToSave = jiraActivitiesMapper.dtoToModel(newJiraDataDto);
+    
+            repository.save(entityToSave);
         }
     }
 
