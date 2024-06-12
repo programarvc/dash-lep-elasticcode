@@ -258,7 +258,7 @@ export class DashProjetoComponent implements OnInit {
   };
 
 
-
+  
   //variavel com dados para armazenar a quantidade total de prs por colaborador Hasura
   currentVcsPullRequestTop5: VcsPullRequestTop5[] = [];
 
