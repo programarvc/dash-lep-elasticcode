@@ -32,4 +32,33 @@ export class HabilidadeService {
       .get<any>(url)
       .pipe(catchError(this.handleError<any>('getPrimeirasHabilidadesByColaborador')));
   }
+
+  getHabilidades(): Observable<any> {
+    const url: string = `${environment.api}/habilidades`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>('getHabilidades')));
+  }
+
+  getStacks(): Observable<any> {
+    const url: string = `${environment.api}/habilidades/stacks`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>('getStacks')));
+  }
+
+  getTecnologias(): Observable<any> {
+    const url: string = `${environment.api}/habilidades/tecnologias`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>('getTecnologias')));
+  }
+
+  postHabilidadesNovoColaborador(colaboradorId: number, habilidadesColaborador: any): Observable<any> {
+    const url: string = `${environment.api}/habilidades/colaborador`
+    return this.http
+      .post<any>(url, {colaboradorId, habilidadesColaborador})
+      .pipe(catchError(this.handleError<any>('postHabilidadesNovoColaborador')));
+  }
+  
 }

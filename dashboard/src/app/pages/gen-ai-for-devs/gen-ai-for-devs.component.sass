@@ -3,6 +3,7 @@
 .genai-page
     display: flex
     width: 100%
+    overflow-x: hidden
 
 .genai-page h1
     color: #16233E
@@ -15,14 +16,14 @@
     padding-left: 30px
     padding-right: 20px
     margin-left: 60px
-    width: 100%
+    width: calc(100% - 90px)
 
 .genai-menu-buttons
     align-items: center
     display: flex
     gap: 15px
     justify-content: space-around
-    
+    flex-wrap: wrap 
 
 .genai-menu-buttons button
     align-items: center
@@ -34,14 +35,15 @@
     gap: 5px
     justify-content: center
     text-align: center
-    padding: 10px 25px
+    padding: 10px 15px
+    max-width: 100px 
 
 .genai-menu-buttons button img
     width: 1.75rem
     height: 1.75rem
 
 .disabled-img 
-  opacity: .5
+    opacity: .5
 
 .genai-btn-selected
     background: #6A5FFF !important
@@ -53,35 +55,34 @@
     margin-top: 20px
     height: auto !important
     max-height: none !important
+    width: 100% 
 
 .stack-type-options 
-  display: flex
-  gap: 10px
-
-  div 
     display: flex
-    align-items: center
+    gap: 10px
 
-    input 
-      margin-right: 5px
+    div 
+        display: flex
+        align-items: center
+
+        input 
+            margin-right: 5px
 
 .suggestions 
-  list-style: none
-  padding: 0
-  margin: 0
-  border: 1px solid #ccc
-  max-height: 150px
-  overflow-y: auto
-  background: #fff
-  position: absolute
-  z-index: 1000
-  width: inheirt
+    list-style: none
+    padding: 0
+    margin: 0
+    border: 1px solid #ccc
+    max-height: 150px
+    overflow-y: auto
+    background: #fff
+    position: absolute
+    z-index: 1000
+    width: inherit
 
-  li 
-    padding: 10px
-    cursor: pointer
+    li 
+        padding: 10px
+        cursor: pointer
 
-    &:hover 
-      background: #f0f0f0
-  
-
+        &:hover 
+            background: #f0f0f0
