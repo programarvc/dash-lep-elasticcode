@@ -67,11 +67,12 @@ public class VcsPullRequestService implements CommandLineRunner {
     private ColaboradorMapper colaboradorMapper;
 
     @Override
-    @Transactional
     public void run(String... args) throws Exception {
         getPRDataAndSave();
     }
-    
+
+
+    @Transactional
     public void getPRDataAndSave() {
         RestTemplate restTemplate = new RestTemplate();
 

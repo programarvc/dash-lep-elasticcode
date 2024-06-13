@@ -80,18 +80,63 @@
                 </div>
               </div>
               <p class="text-resumo"></p>
-             <!-- <ng-template #content let-modal>
+            <!-- <ng-template #content let-modal>
                 <div class="modal-header">
-                  <h4 class="modal-title">Título do Modal</h4>
+                  <h4 class="modal-title">Indicadores</h4>
                   <button type="button" class="close" aria-label="Fechar" (click)="modal.dismiss('Cross click')">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
                 <div class="modal-body custom-modal">
-                  Seu conteúdo aqui
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Fechar</button>
+                  <div class="painel-metricas-content">
+                    <div class="left-panel">
+                      <div class="card-modal ">
+                        <p>Lead Time</p>
+                        <p>este mês</p>
+                        <h2>20 dias</h2>
+                        <p>out. 16 dias</p>
+                        <p>nov. 43 dias</p>
+                      </div>
+                      <div class="card">
+                        <p>Freq. de Deploy</p>
+                        <p>este mês</p>
+                        <h2>6 deploys</h2>
+                        <p>out. 4 meses</p>
+                        <p>nov. 3 meses</p>
+                      </div>
+                      <div class="card">
+                        <p>MTTR</p>
+                        <p>este mês</p>
+                        <h2>8 horas</h2>
+                        <p>out. 16 horas</p>
+                        <p>nov. 27 horas</p>
+                      </div>
+                      <div class="card">
+                        <p>Taxa de Falhas</p>
+                        <p>este mês</p>
+                        <h2>11%</h2>
+                        <p>out. 12%</p>
+                        <p>nov. 14%</p>
+                      </div>
+                    </div>
+                    <div class="right-panel">
+                      <div class="potencial">
+                        <h3>Potencial</h3>
+                        <h2>20 dias</h2>
+                        <p>02 problemas a solucionar</p>
+                      </div>
+                      <div class="problemas">
+                        <p>Muito estoque para homologação</p>
+                        <p>Tempo alto de homologação</p>
+                      </div>
+                      <div class="throughput">
+                        <h3>Throughput</h3>
+                        <p>Baseados nos últimos 90 dias</p>
+                        <img src="/path/to/your/throughput-chart.png" alt="Throughput Chart">
+                        <p>este mês: 120 itens (+3.4%)</p>
+                      </div>
+                    </div>
+                  </div>  
                 </div>
               </ng-template> -->
             </div>
@@ -223,9 +268,9 @@
                   </p>
                 </div>
                 <div class="processo-top-contribuidores">
-                  <div class="barras-cultura">
+                  <div class="barras-top-contribuidores">
                     <ng-container *ngFor="let topContribuidor of currentVcsPullRequestTop5">
-                      <div class="cultura-barra-meta" [ngStyle]="{'width': '100%'}">
+                      <div class="top-contribuidores-barra-meta" [ngStyle]="{'width': '100%'}">
                         <div class="cultura-barra"
                           [ngStyle]="{'width': (topContribuidor.countpr * 100 / topContribuidor.totalprs)  + '%'}">
                         </div>
