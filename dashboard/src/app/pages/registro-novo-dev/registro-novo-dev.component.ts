@@ -86,8 +86,8 @@ export class RegistroNovoDevComponent implements OnInit {
       .filter((tecnologia: any) => tecnologia.selecionada)
       .map((tecnologia: any) => tecnologia.id);
 
-    this.habilidade = this.stackSelecionado;
-    this.habilidade = [...this.habilidade, ...this.tecnologiaSelecionada]
+    this.habilidade = [this.stackSelecionado];
+    this.habilidade = [...this.habilidade, ...this.tecnologiaSelecionada];
     console.log(this.habilidade);
 
     const devData = {
@@ -101,31 +101,40 @@ export class RegistroNovoDevComponent implements OnInit {
       time: this.timeSelecionado,
     };
 
-    //Registro novo colaborador
+    // Registro do novo colaborador
     this.colaboradorService.postNovoColaborador(devData).subscribe((response: any) => {
-      console.log('Desenvolvedor cadastrado com sucesso!');
-      console.log(response);
       this.devCadastrado = response;
 
-      //Itera sobre a lista de habilidades selecionadas e cria um objeto para cada habilidade
+      // Itera sobre a lista de habilidades selecionadas e cria um objeto para cada habilidade
       for (let habilidade of this.habilidade) {
         const habilidadesColaborador = {
           colaborador: { id: this.devCadastrado.id },
           habilidade: { id: habilidade }
-        }
+        };
 
-        //Requisição para cadastrar habilidades do novo colaborador
-        this.habilidadeService.postHabilidadesNovoColaborador(this.devCadastrado.id, habilidadesColaborador)
+        //POST para cadastrar habilidades do novo colaborador
+        this.habilidadeService.postHabilidadesNovoColaborador(habilidadesColaborador)
           .subscribe((responseHabilidades: any) => {
-            console.log("Habilidade cadastrada com sucesso!");
-            console.log(responseHabilidades);
           }, (erro: any) => {
             console.log("Erro ao cadastrar habilidade", erro);
           });
       }
+
+      //POST para relacionar novo colaborador com time selecionado
+      const devTimeData = {
+        time: { id: this.timeSelecionado },
+        colaborador: { id: this.devCadastrado.id }
+      };
+
+      this.timeService.postNovoColaboradorEsteira(devTimeData).subscribe((responseTime: any) => {
+      }, (erro: any) => {
+        console.log("Erro ao relacionar colaborador com time", erro);
+      });
+
+
     }, (erro: any) => {
       console.log('Erro ao cadastrar desenvolvedor', erro);
-    })
+    });
   }
 
   public onEsteiraChange(eventy: any): void {

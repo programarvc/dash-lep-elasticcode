@@ -90,6 +90,15 @@ export class TimeService {
       .get<any>(url)
       .pipe(catchError(this.handleError<any>("getTimesAndEsteiraByColaboradorId")));
   }
+
+  //Método para adicionar um novo colaborador a uma esteira
+  postNovoColaboradorEsteira(novoColaborador: any): Observable<any> {
+    const url: string = `${environment.api}/time/colaborador`;
+    return this.http
+      .post<any>(url, novoColaborador)
+      .pipe(catchError(this.handleError<any>("postNovoColaboradorEsteira")));
+  }
+
  /*
   getLatestMetaByColaboradorId(colaboradorId: number){
     const url: string = `${environment.api}/metas/colaborador/${colaboradorId}`;
