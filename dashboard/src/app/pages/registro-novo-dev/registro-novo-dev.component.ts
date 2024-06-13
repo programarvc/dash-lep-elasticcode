@@ -88,7 +88,6 @@ export class RegistroNovoDevComponent implements OnInit {
 
     this.habilidade = [this.stackSelecionado];
     this.habilidade = [...this.habilidade, ...this.tecnologiaSelecionada];
-    console.log(this.habilidade);
 
     const devData = {
       nome: this.nome,
