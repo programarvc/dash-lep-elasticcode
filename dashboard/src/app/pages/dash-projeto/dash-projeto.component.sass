@@ -85,9 +85,11 @@ body
     display: flex
     justify-content: space-between
 
-.left-panel, 
+.left-panel
+    width: 46%
+
 .right-panel
-    width: 50%
+    width: 60%
     
 .card-modal
     margin-top: 8px
@@ -101,6 +103,8 @@ body
     flex-direction: column
     justify-content: center
     align-items: center
+    border-left: 6px solid #5182FF
+
 
 .modal-title
     font-family: Poppins
@@ -212,6 +216,9 @@ body
 .deploy-frequency-time
     padding: 0rem 0rem 0.6rem 0
 
+.mttr-card
+    border-left: 6px solid #6A5FFF
+
 .mttr-titulo
     margin: 0rem 17.2rem 0 0
     color: #6A5FFF
@@ -225,6 +232,9 @@ body
 
 .mttr-time
     color: #6A5FFF
+
+.tx-falhas-card
+    border-left: 6px solid #6A5FFF
 
 .tx-falha-title
     margin: 0rem 13.2rem 0rem 0rem
@@ -240,8 +250,6 @@ body
 .tx-falha-conteiner
     color: #6A5FFF
 
-   
-
 .potencial-card
     width: 416px
     height: 130px
@@ -251,7 +259,14 @@ body
     display: flex
     justify-content: space-around
     margin-bottom: 17px
-    margin-top: 23px
+
+.title-secundary
+    font-family: Poppins
+    font-size: 16px
+    font-weight: 600
+    text-align: left
+    margin: 0 0 3px 3px
+
 
 .potencial-content-left
     display: flex
@@ -309,7 +324,10 @@ body
     height: 34px
     background: #ED6D1D
 
-
+.mini-card-estoque
+    border-left: 3px solid #ED6D1D
+    margin-bottom: 5px
+   
 
 .problemas-month
     width: 121px
@@ -320,9 +338,7 @@ body
     line-height: 18px
     text-align: left
     color: #6A6A6A
-
-
-
+    padding-left: 4px
 
 
 .throughput-card
@@ -330,10 +346,8 @@ body
     height: 245px
     border-radius: 10px 
     background: #FFFFFF
-    margin-bottom: 18px
+    margin-bottom: 9px
     box-shadow: 0px 1.92px 1.92px 0px #0000000D
-
-
 
 
 .caixa-metricas
