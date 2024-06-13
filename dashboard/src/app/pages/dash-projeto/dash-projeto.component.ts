@@ -260,7 +260,7 @@ export class DashProjetoComponent implements OnInit {
 
 public lineChartData: ChartDataset<'line'>[] = [
   { 
-    data: [99, 77, 80, 60, 65, 57, 40].reverse(), 
+    data: [65, 50, 40].reverse(), 
     label: 'Series A',
     borderColor: '#978FED',
     backgroundColor: 'rgba(255,0,0,0.3)',
@@ -269,7 +269,7 @@ public lineChartData: ChartDataset<'line'>[] = [
     type: 'line',
   },
 ];
-  public lineChartLabels: string[] = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul'];
+  public lineChartLabels: string[] = ['Abr', 'Mai', 'Jun'];
 public lineChartOptions: ChartOptions = {
   responsive: true,
   animation: false,
