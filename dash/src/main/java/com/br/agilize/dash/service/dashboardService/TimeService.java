@@ -79,12 +79,17 @@ public class TimeService extends ServiceCrudBase<TimeDto> {
         return this.mapper.modelToDTO(TimeSalvo);
     }
 
+
     @Override
     public void excluirPorId(Long id) {
         this.repository.deleteById(id);
     }
 
-   
+    //metodo para retornar os times por esteira id
+    public List<TimeDto> findTimesByEsteiraId(Long esteiraId) {
+        List<TimeEntity> times = this.repository.findTimesByEsteiraId(esteiraId);
+        return times.stream().map(this.mapper::modelToDTO).collect(Collectors.toList());
+    }
 
     public TimeColaboradorDto salvarTimeColaborador(TimeColaboradorDto payload) {
         TimeColaboradorEntity entity = this.timeColaboradorMapper.dtoToModel(payload);
