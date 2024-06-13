@@ -105,4 +105,23 @@ export class SidebarMenuComponent {
       }
     })
   }
+
+  public async registrarDev() {
+    this.sidebarButtonService.setSelectedButton('botao-quatro');
+
+    const username = await this.cognitoService.getLoggedInUsername();
+
+    this.userService.getEsteiraIdAndUsername().subscribe((response) => {
+      this.cognitoUser = response;
+
+      const user = this.cognitoUser.find(user => user.username === username);
+
+      if(user) {
+        const esteiraId = user.esteiraId || (user.esteira && user.esteira.id);
+        if(esteiraId) {
+          this.router.navigate(['/registrar-desenvolvedor']);
+        }
+      }
+    })
+  }
 }
