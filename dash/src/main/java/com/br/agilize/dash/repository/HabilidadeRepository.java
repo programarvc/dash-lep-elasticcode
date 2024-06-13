@@ -18,9 +18,9 @@ public interface HabilidadeRepository extends JpaRepository<HabilidadeEntity, Lo
 
     Optional<HabilidadeEntity> findByNome(String nome);
 
-    @Query("SELECT h FROM HabilidadeEntity h WHERE h.nome IN ('Full Stack', 'Front End', 'Back End')")
+    @Query(value = "SELECT * FROM habilidadeentity WHERE nome IN ('Full Stack', 'Front End', 'Back End')", nativeQuery = true)
     List<HabilidadeEntity> getDevStacks();
-
-    @Query("SELECT h FROM HabilidadeEntity h WHERE h.nome NOT IN ('Full Stack', 'Front End', 'Back End')")
+    
+    @Query(value = "SELECT * FROM habilidadeentity WHERE nome NOT IN ('Full Stack', 'Front End', 'Back End')", nativeQuery = true)
     List<HabilidadeEntity> getDevTechnologies();
 }
