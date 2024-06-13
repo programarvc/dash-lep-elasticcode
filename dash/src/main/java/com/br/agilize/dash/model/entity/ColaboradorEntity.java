@@ -30,7 +30,7 @@ public class ColaboradorEntity {
     @Column(unique = true)
     private String github;
 
-    @Column(unique = true, columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String miniBio;
 
     @ManyToMany
