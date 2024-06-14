@@ -138,7 +138,7 @@ export class RegistroNovoDevComponent implements OnInit {
 
   public onEsteiraChange(eventy: any): void {
     this.esteiraSelecionada = eventy.target.value;
-    this.timeService.getTimesByEsteiraId(this.esteiraSelecionada).subscribe((times: any) => {
+    this.timeService.getTimesPorEsteiraId(this.esteiraSelecionada).subscribe((times: any) => {
       this.timesEsteira = times;
     })
   }

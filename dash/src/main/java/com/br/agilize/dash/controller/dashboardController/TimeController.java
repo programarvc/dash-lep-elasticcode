@@ -18,6 +18,7 @@ import com.br.agilize.dash.controller.ControllerCrudBase;
 import com.br.agilize.dash.model.dto.ColaboradorDto;
 import com.br.agilize.dash.model.dto.dashboardDto.TimeColaboradorDto;
 import com.br.agilize.dash.model.dto.dashboardDto.TimeDto;
+import com.br.agilize.dash.model.entity.dashboardEntity.TimeEntity;
 import com.br.agilize.dash.service.dashboardService.TimeService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,13 +34,20 @@ public class TimeController extends ControllerCrudBase<TimeDto> {
         super(service);
     }
 
-   
+
    /* @GetMapping("/esteira/{esteiraId}/colaboradores")
     public ResponseEntity<List<TimeColaboradorDto>> findTimeAndColaboradorByEsteiraId(@PathVariable Long esteiraId) {
         List<TimeColaboradorDto> timeAndColaboradores = service.findTimeAndColaboradorByEsteiraId(esteiraId);
         return new ResponseEntity<>(timeAndColaboradores, HttpStatus.OK);
     }
     }*/
+
+    //Request retorna todos os times por esteiraId
+    @GetMapping("/esteira/{esteiraId}/alltimes")
+    public ResponseEntity<List<TimeDto>> findTimesByEsteiraId(@PathVariable Long esteiraId) {
+        List<TimeDto> times = service.findTimesByEsteiraId(esteiraId);
+        return new ResponseEntity<>(times, HttpStatus.OK);
+    }
 
     @PostMapping("/colaborador")
     public ResponseEntity<TimeColaboradorDto> salvarTimeColaborador(@RequestBody TimeColaboradorDto payload) {
@@ -48,11 +56,11 @@ public class TimeController extends ControllerCrudBase<TimeDto> {
     }
 
 
-@GetMapping("/colaborador/esteira/{esteiraId}")
-public ResponseEntity<List<TimeColaboradorDto>> getTimeAndColaboradorByEsteiraId(@PathVariable Long esteiraId) {
-    List<TimeColaboradorDto> timeColaborador = service.getTimeAndColaboradorByEsteiraId(esteiraId);
-    return ResponseEntity.ok(timeColaborador);
-}
+    @GetMapping("/colaborador/esteira/{esteiraId}")
+    public ResponseEntity<List<TimeColaboradorDto>> getTimeAndColaboradorByEsteiraId(@PathVariable Long esteiraId) {
+        List<TimeColaboradorDto> timeColaborador = service.getTimeAndColaboradorByEsteiraId(esteiraId);
+        return ResponseEntity.ok(timeColaborador);
+    }
 
 
     @GetMapping("/esteira/{esteiraId}")
@@ -66,6 +74,7 @@ public ResponseEntity<List<TimeColaboradorDto>> getTimeAndColaboradorByEsteiraId
         List<TimeDto> times = service.getTimesByEsteiraId(esteiraId);
         return ResponseEntity.ok(times);
     }
+
 
     @GetMapping("/{timeId}/colaboradores")
     public ResponseEntity<List<ColaboradorDto>> getColaboradoresByTimeId(@PathVariable Long timeId) {
@@ -86,4 +95,3 @@ public ResponseEntity<List<TimeColaboradorDto>> getTimeAndColaboradorByEsteiraId
     }
 
 }
-

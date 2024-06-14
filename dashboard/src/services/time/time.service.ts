@@ -99,6 +99,14 @@ export class TimeService {
       .pipe(catchError(this.handleError<any>("postNovoColaboradorEsteira")));
   }
 
+  //Obter time por esteiraId
+  getTimesPorEsteiraId(esteiraId: number): Observable<any> {
+    const url: string = `${environment.api}/time/esteira/${esteiraId}/alltimes`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>("getTimePorEsteiraId")));
+  }
+
  /*
   getLatestMetaByColaboradorId(colaboradorId: number){
     const url: string = `${environment.api}/metas/colaborador/${colaboradorId}`;
