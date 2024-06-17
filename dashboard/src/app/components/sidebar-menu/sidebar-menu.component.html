@@ -8,7 +8,10 @@
     <button class="botao-dash botao-tres" title="GEN.AI for Devs" [ngClass]="{'selected': sidebarButtonService.getSelectedButton() === 'botao-tres'}" (click)="genAi()">
         <img src="../../../assets/images/menu-dash-genia.svg" alt="Menu GenAI"/>
     </button>
-    <button class="botao-dash botao-quatro" title="Logout" (click)="signOut()">
+    <button class="botao-dash botao-quatro"  title="Registrar Desenvolvedor" [ngClass]="{'selected': sidebarButtonService.getSelectedButton() === 'botao-quatro'}" (click)="registrarDev()">
+        <img src="../../../assets/images/register-dev.svg" alt="Botão Registrar Desenvolvedor"/>
+    </button>
+    <button class="botao-dash botao-cinco" title="Logout" (click)="signOut()">
         <img src="../../../assets/images/logout.svg" alt="Logout ElasticOps"/>
     </button>
 </div>
