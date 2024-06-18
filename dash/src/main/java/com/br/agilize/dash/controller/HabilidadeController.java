@@ -79,4 +79,16 @@ public class HabilidadeController extends ControllerCrudBase<HabilidadeDto> {
     public ResponseEntity<List<HabilidadeColaboradorDto>> obterPrimeirasHabilidadesColaborador(@PathVariable Long colaboradorId) {
         return ResponseEntity.ok(service.obterPrimeirasHabilidadesColaborador(colaboradorId));
     }
+
+    @Operation(summary = "Obtem as habilidades de desenvolvedor", description = "Retorna as stacks 'Full Stack', 'Front End' e 'Back End'", tags = {"get"})
+    @GetMapping("/stacks")
+    public ResponseEntity<List<HabilidadeDto>> obterDevStacks() {
+        return ResponseEntity.ok(service.obterDevStacks());
+    }
+
+    @Operation(summary = "Obtem as tecnologias de desenvolvedor", description = "Retorna as tecnologias", tags = {"get"})
+    @GetMapping("/tecnologias")
+    public ResponseEntity<List<HabilidadeDto>> obterDevTechnologies() {
+        return ResponseEntity.ok(service.obterDevTechnologies());
+    }
 }

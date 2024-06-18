@@ -125,4 +125,16 @@ public class HabilidadeService extends ServiceCrudBase<HabilidadeDto> {
                 })
                 .collect(Collectors.toList());
     }
+
+    //Retornar Stacks para devs
+    public List<HabilidadeDto> obterDevStacks() {
+        List<HabilidadeEntity> devStacks = this.repository.getDevStacks();
+        return devStacks.stream().map(this.mapper::modelToDTO).collect(Collectors.toList());
+    }
+
+    //Retornar Tecnologias para devs
+    public List<HabilidadeDto> obterDevTechnologies() {
+        List<HabilidadeEntity> devTechnologies = this.repository.getDevTechnologies();
+        return devTechnologies.stream().map(this.mapper::modelToDTO).collect(Collectors.toList());
+    }
 }
