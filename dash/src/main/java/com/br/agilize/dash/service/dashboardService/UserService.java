@@ -1,4 +1,5 @@
 package com.br.agilize.dash.service.dashboardService;
+import com.br.agilize.dash.model.entity.dashboardEntity.EsteiraDeDesenvolvimentoEntity;
 
 import java.util.*;
 
@@ -77,4 +78,11 @@ public UserDto salvar(UserDto payload) {
         return userEsteiraRepository.findEsteiraIdAndUsername();
     }
 
+    public List<EsteiraDeDesenvolvimentoEntity> buscarEsteirasPorUserId(Long userId) {
+        return this.userEsteiraRepository.findEsteirasByUserId(userId);
+    }
+
+    public Optional<Long> buscarIdPorNome(String nome) {
+        return this.repository.findIdByNome(nome);
+    }
 }

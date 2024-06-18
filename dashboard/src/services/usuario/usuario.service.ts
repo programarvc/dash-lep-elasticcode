@@ -44,6 +44,18 @@ export class UserService {
       .pipe(catchError(this.handleError<any>('getEsteiraIdAndUsername')));
   }
 
+  getEsteirasPorUsuarioId(id: number): Observable<any> {
+    const url: string = `${environment.api}/user/${id}/esteiras`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>('getEsteirasPorUsuarioId')));
+  }
 
+  getUsuarioIdPorUsername(username: string): Observable<any> {
+    const url: string = `${environment.api}/user/${username}/id`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>('getUsuarioIdPorUsername')));
+  }
 
 }

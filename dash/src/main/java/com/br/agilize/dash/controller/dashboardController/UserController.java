@@ -1,4 +1,5 @@
 package com.br.agilize.dash.controller.dashboardController;
+import com.br.agilize.dash.model.entity.dashboardEntity.EsteiraDeDesenvolvimentoEntity;
 
 import java.util.*;
 
@@ -43,12 +44,21 @@ public class UserController extends ControllerCrudBase<UserDto> {
         return ResponseEntity.ok(nomesDosUsers);
     }
 
-    
-
     @GetMapping("/useresteira")
     public ResponseEntity<List<Map<String, Object>>> getEsteiraIdAndUsername() {
         List<Map<String, Object>> result = this.service.getEsteiraIdAndUsername();
         return ResponseEntity.ok(result);
     }
 
+    @GetMapping("/{userId}/esteiras")
+    public ResponseEntity<List<EsteiraDeDesenvolvimentoEntity>> buscarEsteirasPorUserId(@PathVariable Long userId) {
+        List<EsteiraDeDesenvolvimentoEntity> esteiras = this.service.buscarEsteirasPorUserId(userId);
+        return ResponseEntity.ok(esteiras);
+    }
+
+    @GetMapping("/{nome}/id")
+    public ResponseEntity<Optional<Long>> buscarIdPorNome(@PathVariable String nome) {
+        Optional<Long> userId = this.service.buscarIdPorNome(nome);
+        return ResponseEntity.ok(userId);
+    }
 }
