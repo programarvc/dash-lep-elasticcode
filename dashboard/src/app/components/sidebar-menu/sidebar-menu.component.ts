@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CognitoService } from 'src/app/cognito.service';
 import { SidebarButtonService } from 'src/services/sidedar-button/sidebar-button.service';
@@ -18,6 +18,7 @@ import {
 
 import { UserService } from 'src/services/usuario/usuario.service';
 import { TimeService } from 'src/services/time/time.service';
+import { EsteiraService } from 'src/services/esteira/esteira.service';
 
 @Component({
   selector: 'app-sidebar-menu',
@@ -34,13 +35,38 @@ export class SidebarMenuComponent {
   public empresa: Empresa[] = [];
   public selectedButton: string = '';
 
+  public modalId: string = "";
+  public username: string = '';
+  public userId: number = 0;
+  public userEsteiras: any = [];
+  public esteiraSelecionada: any = [];
+
   constructor(
     private cognitoService: CognitoService,
     private userService: UserService,
     private router: Router,
     private timeService: TimeService,
-    public sidebarButtonService: SidebarButtonService
+    public sidebarButtonService: SidebarButtonService,
+    private esteiraService: EsteiraService
   ) { }
+
+  ngOnInit(): void {
+        //Obtém username do usuário logado
+        this.cognitoService.getLoggedInUsername().then((username: any) => {
+          this.username = username;
+    
+          //Obtém id do usuário por username
+          this.userService.getUsuarioIdPorUsername(this.username).subscribe((userId: any) => {
+            this.userId = userId;
+    
+            //Obtém esteiras que o usuário está inserido
+            this.userService.getEsteirasPorUsuarioId(this.userId).subscribe((userEsteiras: any) => {
+              this.userEsteiras = userEsteiras;
+              console.log(this.userEsteiras);
+            });
+          });
+        });
+  }
 
   public signOut(){
     this.cognitoService.signOut()
@@ -123,5 +149,12 @@ export class SidebarMenuComponent {
         }
       }
     })
+  }
+
+  public onEsteiraChange(esteira: any): void {
+    this.esteiraSelecionada = esteira;
+    this.esteiraService.setEsteiraSelecionada(esteira);
+    console.log("repasse para componente ", this.esteiraService.esteiraSelecionada$)
+    console.log(this.esteiraSelecionada);
   }
 }
