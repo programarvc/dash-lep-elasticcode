@@ -25,7 +25,7 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-            <div class="bloco-metricas" > <!-- adicione dentro da tag para reativar o modal (click)="open(content)" -->
+            <div class="bloco-metricas" (click)="open(content)"> <!-- adicione dentro da tag para reativar o modal (click)="open(content)" -->
               <div class="caixa-metricas">
                 <div class="metricas">
                   <h2 class="titulo-velocidade">Métricas de Velocidade</h2>
@@ -80,65 +80,177 @@
                 </div>
               </div>
               <p class="text-resumo"></p>
-            <!-- <ng-template #content let-modal>
-                <div class="modal-header">
-                  <h4 class="modal-title">Indicadores</h4>
-                  <button type="button" class="close" aria-label="Fechar" (click)="modal.dismiss('Cross click')">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
+            <ng-template #content let-modal>
                 <div class="modal-body custom-modal">
+                  <h4 class="modal-title">Indicadores</h4>
                   <div class="painel-metricas-content">
                     <div class="left-panel">
                       <div class="card-modal ">
-                        <p>Lead Time</p>
-                        <p>este mês</p>
-                        <h2>20 dias</h2>
-                        <p>out. 16 dias</p>
-                        <p>nov. 43 dias</p>
+                        <div class="modal-card-title">
+                          <h2>Lead Time</h2>
+                        </div>
+                        <div class="modal-card-content">
+                          <div class="modal-card-content-smalltext">
+                            <div class="content-item">
+                              <span class="rectangle"></span>
+                              <div>
+                                  <span class="month">mar.</span>
+                                  <span class="days">16 dias</span>
+                              </div>
+                          </div>
+                          <div class="content-item">
+                              <span class="rectangle"></span>
+                              <div>
+                                  <span class="month">abr.</span>
+                                  <span class="days">43 dias</span>
+                              </div>
+                          </div>
+                          </div>
+                          <div class="time-container">
+                            <span class="time-month">este mês</span>
+                            <span class="time-days">20 dias</span>
+                          </div>
+                        </div>
                       </div>
-                      <div class="card">
-                        <p>Freq. de Deploy</p>
-                        <p>este mês</p>
-                        <h2>6 deploys</h2>
-                        <p>out. 4 meses</p>
-                        <p>nov. 3 meses</p>
+                      <div class="card-modal">
+                        <div class="modal-card-title deploy-fequency-title">
+                          <h2>Freq. de Deploy</h2>
+                        </div>
+                        <div class="modal-card-content">
+                          <div class="modal-card-content-smalltext deploy-frequency-smalltext">
+                            <div class="content-item">
+                              <span class="rectangle"></span>
+                              <div>
+                                <span class="month">mar.</span>
+                                <span class="days">15 deploys</span>
+                              </div>
+                            </div>
+                            <div class="content-item">
+                              <span class="rectangle"></span>
+                              <div>
+                                <span class="month">abr.</span>
+                                <span class="days">25 deploys</span>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="time-container deploy-frequency-time">
+                            <span class="time-month">este mês</span>
+                            <span class="time-days">6 deploys</span>
+                          </div>
+                        </div>
                       </div>
-                      <div class="card">
-                        <p>MTTR</p>
-                        <p>este mês</p>
-                        <h2>8 horas</h2>
-                        <p>out. 16 horas</p>
-                        <p>nov. 27 horas</p>
+                      <div class="card-modal mttr-card">
+                        <div class="modal-card-title mttr-titulo">
+                          <h2>MTTR</h2>
+                        </div>
+                        <div class="modal-card-content">
+                          <div class="modal-card-content-smalltext mttr-smalltext">
+                            <div class="content-item">
+                              <span class="rectangle mttr-retangle"></span>
+                              <div>
+                                <span class="month">mar.</span>
+                                <span class="days">16 horas</span>
+                              </div>
+                            </div>
+                            <div class="content-item">
+                              <span class="rectangle mttr-retangle"></span>
+                              <div>
+                                <span class="month">abr.</span>
+                                <span class="days">27 horas</span>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="time-container mttr-time">
+                            <span class="time-month">este mês</span>
+                            <span class="time-days">8 horas</span>
+                          </div>
+                        </div>
                       </div>
-                      <div class="card">
-                        <p>Taxa de Falhas</p>
-                        <p>este mês</p>
-                        <h2>11%</h2>
-                        <p>out. 12%</p>
-                        <p>nov. 14%</p>
+                      
+                      <div class="card-modal tx-falhas-card">
+                        <div class="modal-card-title tx-falha-title">
+                          <h2>Taxa de Falhas</h2>
+                        </div>
+                        <div class="modal-card-content">
+                          <div class="modal-card-content-smalltext tx-falha-smalltext">
+                            <div class="content-item">
+                              <span class="rectangle tx-falha-retangle"></span>
+                              <div>
+                                <span class="month">mar.</span>
+                                <span class="days">12%</span>
+                              </div>
+                            </div>
+                            <div class="content-item">
+                              <span class="rectangle tx-falha-retangle"></span>
+                              <div>
+                                <span class="month">abr.</span>
+                                <span class="days">14%</span>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="time-container tx-falha-conteiner">
+                            <span class="time-month">este mês</span>
+                            <span class="time-days">11%</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <div class="right-panel">
-                      <div class="potencial">
-                        <h3>Potencial</h3>
-                        <h2>20 dias</h2>
-                        <p>02 problemas a solucionar</p>
+                    <div class="right-panel ">
+                      <h2 class="title-secundary">Iniciativas e problemas</h2>
+                      <div class="potencial-card">
+                        <div class="content-item potencial-content">
+                          <div class="potencial-content-left">
+                            <span class="rectangle retangle-potencial-left"></span>
+                            <div>
+                                <span class="month potencial-month">Potencial</span>
+                                <span class="days potencial-days">20 dias</span>
+                            </div>
+                          </div>
+                            <div class="potencial-secundary-text">
+                              <span>02 problemas a solucionar</span>
+                            </div>
+                        </div>
+                        <div class="problemas-content">
+                          <div class="problemas-content-right">
+                            <div class="mini-card-estoque">
+                              <span class="rectangle"></span>
+                              <div class="month problemas-month">
+                                <span>Muito estoque para</span><br>
+                                <span>homologação</span>
+                              </div>
+                            </div>
+                            <div class="mini-card-estoque">
+                              <span class="rectangle"></span>
+                              <div class="month problemas-month">
+                                <span>Tempo alto de</span><br>
+                                <span>homologação</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <div class="problemas">
-                        <p>Muito estoque para homologação</p>
-                        <p>Tempo alto de homologação</p>
-                      </div>
-                      <div class="throughput">
-                        <h3>Throughput</h3>
-                        <p>Baseados nos últimos 90 dias</p>
-                        <img src="/path/to/your/throughput-chart.png" alt="Throughput Chart">
-                        <p>este mês: 120 itens (+3.4%)</p>
+                      <div class="throughput-card">
+                        <div class="throughput-content-text">
+                          <h3 class="throughput-title">Throughput</h3>
+                          <div class="throughput-subtext">
+                            <p>Baseados nos últimos 90 dias</p>
+                          </div>
+                        </div>
+                        <div class="throughput-grafico">
+                          <div style="display: block;">
+                            <canvas baseChart
+                                    [datasets]="lineChartData"
+                                    [labels]="lineChartLabels"
+                                    [options]="lineChartOptions"
+                                    [legend]="lineChartLegend">
+                            </canvas>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>  
                 </div>
-              </ng-template> -->
+              </ng-template> 
             </div>
           </div>
           <div class="col-md-6">
