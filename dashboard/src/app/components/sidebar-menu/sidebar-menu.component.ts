@@ -20,12 +20,14 @@ import { UserService } from 'src/services/usuario/usuario.service';
 import { TimeService } from 'src/services/time/time.service';
 import { EsteiraService } from 'src/services/esteira/esteira.service';
 
+declare var bootstrap: any; // Declare bootstrap
+
 @Component({
   selector: 'app-sidebar-menu',
   templateUrl: './sidebar-menu.component.html',
   styleUrls: ['./sidebar-menu.component.sass']
 })
-export class SidebarMenuComponent {
+export class SidebarMenuComponent implements OnInit {
   public cognitoUser: UserEsteira[] = [];
   public esteiras: EsteiraDeDesenvolvimento[] = [];
   public tipo: TiposEnum[] = [];
@@ -40,6 +42,7 @@ export class SidebarMenuComponent {
   public userId: number = 0;
   public userEsteiras: any = [];
   public esteiraSelecionada: any = [];
+  public isEsteiraSelected: boolean = false;
 
   constructor(
     private cognitoService: CognitoService,
@@ -51,110 +54,72 @@ export class SidebarMenuComponent {
   ) { }
 
   ngOnInit(): void {
-        //Obtém username do usuário logado
-        this.cognitoService.getLoggedInUsername().then((username: any) => {
-          this.username = username;
-    
-          //Obtém id do usuário por username
-          this.userService.getUsuarioIdPorUsername(this.username).subscribe((userId: any) => {
-            this.userId = userId;
-    
-            //Obtém esteiras que o usuário está inserido
-            this.userService.getEsteirasPorUsuarioId(this.userId).subscribe((userEsteiras: any) => {
-              this.userEsteiras = userEsteiras;
-              console.log(this.userEsteiras);
-            });
-          });
+    console.log("esteira selecionada ", this.esteiraSelecionada);
+    this.cognitoService.getLoggedInUsername().then((username: any) => {
+      this.username = username;
+
+      this.userService.getUsuarioIdPorUsername(this.username).subscribe((userId: any) => {
+        this.userId = userId;
+
+        this.userService.getEsteirasPorUsuarioId(this.userId).subscribe((userEsteiras: any) => {
+          this.userEsteiras = userEsteiras;
+          console.log(this.userEsteiras);
         });
+      });
+    });
   }
 
-  public signOut(){
+  public signOut() {
     this.cognitoService.signOut()
       .then(() => {
         this.router.navigate(['/login']);
-      })
+      });
   }
 
   public async devDash() {
     this.sidebarButtonService.setSelectedButton('botao-dois');
-
-    const username = await this.cognitoService.getLoggedInUsername();
-
-    this.userService.getEsteiraIdAndUsername().subscribe((response) => {
-      this.cognitoUser = response;
-
-      const user = this.cognitoUser.find(user => user.username === username);
-
-      if(user) {
-        const esteiraId = user.esteiraId || (user.esteira && user.esteira.id);
-        if(esteiraId) {
-          this.router.navigate([`/time/${esteiraId}`]);
-        }
-      }
-    })
+    if (!this.isEsteiraSelected) {
+      this.openModal();
+    } else {
+      this.router.navigate([`/time/${this.esteiraSelecionada.id}`]);
+    }
   }
 
-  public async getEsteiraIdAndUsername(){
+  public async dashboard() {
     this.sidebarButtonService.setSelectedButton('botao-um');
-
-    const username = await this.cognitoService.getLoggedInUsername();
-
-    this.userService.getEsteiraIdAndUsername().subscribe((response) => {
-      this.cognitoUser = response;
-
-      const user = this.cognitoUser.find(user => user.username === username);
-
-      if(user) {
-        const esteiraId = user.esteiraId || (user.esteira && user.esteira.id);
-        if(esteiraId) {
-          this.router.navigate([`/dashboard/${esteiraId}`]);
-        }
-      }
-    })
+    if (!this.isEsteiraSelected) {
+      this.openModal();
+    } else {
+      this.router.navigate([`/dashboard/${this.esteiraSelecionada.id}`]);
+    }
   }
 
   public async genAi() {
     this.sidebarButtonService.setSelectedButton('botao-tres');
-
     const username = await this.cognitoService.getLoggedInUsername();
-
     this.userService.getEsteiraIdAndUsername().subscribe((response) => {
       this.cognitoUser = response;
-
       const user = this.cognitoUser.find(user => user.username === username);
-
-      if(user) {
+      if (user) {
         const esteiraId = user.esteiraId || (user.esteira && user.esteira.id);
-        if(esteiraId) {
+        if (esteiraId) {
           this.router.navigate(['/genAi-for-devs']);
         }
       }
-    })
-  }
-
-  public async registrarDev() {
-    this.sidebarButtonService.setSelectedButton('botao-quatro');
-
-    const username = await this.cognitoService.getLoggedInUsername();
-
-    this.userService.getEsteiraIdAndUsername().subscribe((response) => {
-      this.cognitoUser = response;
-
-      const user = this.cognitoUser.find(user => user.username === username);
-
-      if(user) {
-        const esteiraId = user.esteiraId || (user.esteira && user.esteira.id);
-        if(esteiraId) {
-          this.router.navigate(['/registrar-desenvolvedor']);
-        }
-      }
-    })
+    });
   }
 
   public onEsteiraChange(esteira: any): void {
     this.esteiraSelecionada = esteira;
     this.esteiraService.setEsteiraSelecionada(esteira);
-    console.log("repasse para componente ", this.esteiraService.esteiraSelecionada$)
-    console.log(this.esteiraSelecionada);
+    this.isEsteiraSelected = true;
+    console.log("esteira está selecionada: ", this.isEsteiraSelected);
+    console.log("repasse para componente ", this.esteiraService.esteiraSelecionada$);
+    console.log(this.esteiraSelecionada.id);
+  }
+
+  private openModal() {
+    const modal = new bootstrap.Modal(document.getElementById('selecionarEsteira'));
+    modal.show();
   }
 }

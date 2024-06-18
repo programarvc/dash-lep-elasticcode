@@ -245,6 +245,14 @@ export class TimeComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    this.esteiraService.esteiraSelecionada$.subscribe((esteira) => {
+      this.currentEsteira = esteira;
+      this.router.navigate([`/time/${this.currentEsteira.id}`]);
+      this.getTimesByEsteira(this.currentEsteira.id);
+      this.getColaboradoresByEsteira(this.currentEsteira.id);
+      this.getTimeAndColaboradorByEsteiraId(this.currentEsteira.id);
+    });
+
     this.route.paramMap.subscribe((params) => {
 
       const esteiraId = params.get('esteiraId');
@@ -270,7 +278,7 @@ export class TimeComponent implements OnInit {
   }
 
    getColaboradoresByEsteira(esteiraId: number) {
-  this.timeService.getColaboradoresByEsteiraId(esteiraId).subscribe((response) => {
+  this.timeService.getColaboradoresByEsteiraId(this.currentEsteira.id).subscribe((response) => {
     // Aqui está o ajuste, usando [0] para pegar o primeiro colaborador da lista
     this.currentColaborador = response[0];
     this.colaboradores = response;

@@ -11,8 +11,6 @@ import { Amplify } from 'aws-amplify';
 import awsconfig from 'aws-exports';
 
 
-
-
 //Components
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { SidebarMenuComponent } from './components/sidebar-menu/sidebar-menu.component';
@@ -46,7 +44,7 @@ Amplify.configure(awsconfig);
     AmplifyUiLoginComponent, 
     TimeComponent,
     GenAiForDevsComponent,
-    RegistroNovoDevComponent
+    RegistroNovoDevComponent,
   ],
   imports: [
     HttpClientModule, 

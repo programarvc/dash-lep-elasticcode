@@ -290,6 +290,13 @@ export class DashProjetoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.esteiraService.esteiraSelecionada$.subscribe((esteira) => {
+      if(esteira) {
+        this.currentEsteira = esteira;
+        this.router.navigate([`dashboard/${this.currentEsteira.id}`]);
+      }
+    })
+
     this.getCapacidades();
     this.getValorMaturidades();
     this.getMaturidade();

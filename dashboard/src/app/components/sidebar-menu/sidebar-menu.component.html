@@ -5,21 +5,21 @@
     </button>
     <button class="botao-dash botao-um" title="Dashboard"
         [ngClass]="{'selected': sidebarButtonService.getSelectedButton() === 'botao-um'}"
-        (click)="getEsteiraIdAndUsername()">
+        (click)="dashboard()"
+        >
         <img src="../../../assets/images/menu-dash-projeto.svg" alt="Menu Dashboard" />
     </button>
     <button class="botao-dash botao-dois" title="Dash Devs"
-        [ngClass]="{'selected': sidebarButtonService.getSelectedButton() === 'botao-dois'}" (click)="devDash()">
+        [ngClass]="{'selected': sidebarButtonService.getSelectedButton() === 'botao-dois'}"
+        (click)="devDash()"
+        >
         <img src="../../../assets/images/second-button-dash-projeto.svg" alt="Menu Dev Dash" />
     </button>
     <button class="botao-dash botao-tres" title="GEN.AI for Devs"
-        [ngClass]="{'selected': sidebarButtonService.getSelectedButton() === 'botao-tres'}" (click)="genAi()">
+        [ngClass]="{'selected': sidebarButtonService.getSelectedButton() === 'botao-tres'}"
+        (click)="genAi()">
         <img src="../../../assets/images/menu-dash-genia.svg" alt="Menu GenAI" />
     </button>
-    <!-- <button class="botao-dash botao-quatro" title="Registrar Desenvolvedor"
-        [ngClass]="{'selected': sidebarButtonService.getSelectedButton() === 'botao-quatro'}" (click)="registrarDev()">
-        <img src="../../../assets/images/register-dev.svg" alt="Botão Registrar Desenvolvedor" />
-    </button> -->
     <button class="botao-dash botao-cinco" title="Logout" (click)="signOut()">
         <img src="../../../assets/images/logout.svg" alt="Logout ElasticOps" />
     </button>
@@ -29,9 +29,7 @@
         <div class="modal-content">
             <div class="modal-body">
                 <div class="modal-selecionar-esteira">
-                    <h5>
-                        Selecione a esteira
-                    </h5>
+                    <h5>Selecione a esteira</h5>
                     <select class="form-select" id="esteira" [(ngModel)]="esteiraSelecionada" name="esteira" required
                         (ngModelChange)="onEsteiraChange($event)">
                         <option *ngFor="let esteira of userEsteiras" [ngValue]="esteira">
