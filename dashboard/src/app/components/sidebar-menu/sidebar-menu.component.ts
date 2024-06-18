@@ -78,20 +78,12 @@ export class SidebarMenuComponent implements OnInit {
 
   public async devDash() {
     this.sidebarButtonService.setSelectedButton('botao-dois');
-    if (!this.isEsteiraSelected) {
-      this.openModal();
-    } else {
       this.router.navigate([`/time/${this.esteiraSelecionada.id}`]);
-    }
   }
 
   public async dashboard() {
     this.sidebarButtonService.setSelectedButton('botao-um');
-    if (!this.isEsteiraSelected) {
-      this.openModal();
-    } else {
       this.router.navigate([`/dashboard/${this.esteiraSelecionada.id}`]);
-    }
   }
 
   public async genAi() {
