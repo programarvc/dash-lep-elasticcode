@@ -269,7 +269,7 @@ public lineChartData: ChartDataset<'line'>[] = [
     type: 'line',
   },
 ];
-  public lineChartLabels: string[] = ['Abr', 'Mai', 'Jun'];
+  public lineChartLabels: string[] = ['Mar', 'Abr', 'Mai'];
 public lineChartOptions: ChartOptions = {
   responsive: true,
   animation: false,
