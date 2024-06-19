@@ -43,6 +43,7 @@ export class SidebarMenuComponent implements OnInit {
   public userEsteiras: any = [];
   public esteiraSelecionada: any = [];
   public isEsteiraSelected: boolean = false;
+  public esteiraSelecionadaId: number = 0;
 
   constructor(
     private cognitoService: CognitoService,
@@ -54,7 +55,6 @@ export class SidebarMenuComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log("esteira selecionada ", this.esteiraSelecionada);
     this.cognitoService.getLoggedInUsername().then((username: any) => {
       this.username = username;
 
@@ -63,7 +63,13 @@ export class SidebarMenuComponent implements OnInit {
 
         this.userService.getEsteirasPorUsuarioId(this.userId).subscribe((userEsteiras: any) => {
           this.userEsteiras = userEsteiras;
-          console.log(this.userEsteiras);
+
+          const savedEsteira = localStorage.getItem('selectedEsteira');
+          if (savedEsteira) {
+            this.esteiraSelecionada = JSON.parse(savedEsteira);
+            this.isEsteiraSelected = true;
+            this.esteiraSelecionadaId = this.esteiraSelecionada.id;
+          }
         });
       });
     });
@@ -78,12 +84,22 @@ export class SidebarMenuComponent implements OnInit {
 
   public async devDash() {
     this.sidebarButtonService.setSelectedButton('botao-dois');
-      this.router.navigate([`/time/${this.esteiraSelecionada.id}`]);
+      if(this.esteiraSelecionadaId) {
+        this.router.navigate([`/time/${this.esteiraSelecionadaId}`]);
+      } else {
+        this.openModal();
+        this.router.navigate([`/time/${this.esteiraSelecionadaId}`]);
+      }
   }
 
   public async dashboard() {
     this.sidebarButtonService.setSelectedButton('botao-um');
-      this.router.navigate([`/dashboard/${this.esteiraSelecionada.id}`]);
+      if(this.esteiraSelecionadaId) {
+        this.router.navigate([`/dashboard/${this.esteiraSelecionadaId}`]);
+      } else {
+        this.openModal();
+        this.router.navigate([`/dashboard/${this.esteiraSelecionadaId}`]);
+      }
   }
 
   public async genAi() {
@@ -103,15 +119,15 @@ export class SidebarMenuComponent implements OnInit {
 
   public onEsteiraChange(esteira: any): void {
     this.esteiraSelecionada = esteira;
-    this.esteiraService.setEsteiraSelecionada(esteira);
-    this.isEsteiraSelected = true;
-    console.log("esteira está selecionada: ", this.isEsteiraSelected);
-    console.log("repasse para componente ", this.esteiraService.esteiraSelecionada$);
-    console.log(this.esteiraSelecionada.id);
+    localStorage.setItem('selectedEsteira', JSON.stringify(esteira));
   }
 
   private openModal() {
-    const modal = new bootstrap.Modal(document.getElementById('selecionarEsteira'));
-    modal.show();
+    if (this.userEsteiras.length > 0) {
+      const modal = new bootstrap.Modal(document.getElementById('selecionarEsteira'));
+      modal.show();
+    } else {
+      console.error('Falha no carregamento de esteiras.');
+    }
   }
 }
