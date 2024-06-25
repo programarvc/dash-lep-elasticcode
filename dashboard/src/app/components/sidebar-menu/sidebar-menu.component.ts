@@ -104,17 +104,12 @@ export class SidebarMenuComponent implements OnInit {
 
   public async genAi() {
     this.sidebarButtonService.setSelectedButton('botao-tres');
-    const username = await this.cognitoService.getLoggedInUsername();
-    this.userService.getEsteiraIdAndUsername().subscribe((response) => {
-      this.cognitoUser = response;
-      const user = this.cognitoUser.find(user => user.username === username);
-      if (user) {
-        const esteiraId = user.esteiraId || (user.esteira && user.esteira.id);
-        if (esteiraId) {
-          this.router.navigate(['/genAi-for-devs']);
-        }
-      }
-    });
+    if(this.esteiraSelecionadaId) {
+      this.router.navigate([`/elastic-devs-ai/${this.esteiraSelecionadaId}`]);
+    } else {
+      this.openModal();
+      this.router.navigate([`/elastic-devs-ai/${this.esteiraSelecionadaId}`]);
+    }
   }
 
   public onEsteiraChange(esteira: any): void {
@@ -124,8 +119,16 @@ export class SidebarMenuComponent implements OnInit {
 
   private openModal() {
     if (this.userEsteiras.length > 0) {
-      const modal = new bootstrap.Modal(document.getElementById('selecionarEsteira'));
+      const modalElement = document.getElementById('selecionarEsteira');
+      const modal = new bootstrap.Modal(modalElement);
       modal.show();
+      
+      if(modalElement !== null) {
+        modalElement.addEventListener('hidden.bs.modal', () => {
+          window.location.reload();
+        });
+      }
+      
     } else {
       console.error('Falha no carregamento de esteiras.');
     }
