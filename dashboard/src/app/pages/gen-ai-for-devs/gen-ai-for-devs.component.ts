@@ -100,7 +100,7 @@ export class GenAiForDevsComponent implements OnInit {
         ).slice(0, 3);
         this.suggestionsVisible = this.filteredCodeTypes.length > 0;
       }
-    }, 1500); // Delay de 1,5 segundos
+    }, 500); // Delay de 0,5 segundos para reduzir o tempo de espera
     this.clearGeneratedCode();
   }
 
@@ -198,6 +198,7 @@ Como pode ver ele usa o jakarta persistence, então todas as entidades são gere
   }
 
   showSuggestions(): void {
+    this.updateSuggestions(this.codeType || '');
     this.suggestionsVisible = this.filteredCodeTypes.length > 0;
   }
 

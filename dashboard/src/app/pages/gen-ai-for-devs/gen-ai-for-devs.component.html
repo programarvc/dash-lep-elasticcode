@@ -43,11 +43,19 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="codeType" class="form-label">Tipo de Código</label>
-                                        <input type="text" class="form-control" id="codeType" [(ngModel)]="codeType"
+                                        <input 
+                                            type="text" 
+                                            class="form-control" 
+                                            id="codeType"
+                                            [(ngModel)]="codeType"
                                             name="codeType"
                                             (input)="updateSuggestions(codeType || ''); clearGeneratedCode(); checkFormValidity()"
-                                            (focus)="showSuggestions()" (blur)="hideSuggestions()" autocomplete="off"
-                                            placeholder="Informe o tipo de código" required>
+                                            (focus)="showSuggestions()" 
+                                            (blur)="hideSuggestions()" 
+                                            autocomplete="off"
+                                            placeholder="Informe o tipo de código" 
+                                            required
+                                        >
                                         <ul class="suggestions"
                                             *ngIf="filteredCodeTypes.length > 0 && suggestionsVisible">
                                             <li *ngFor="let suggestion of filteredCodeTypes"
