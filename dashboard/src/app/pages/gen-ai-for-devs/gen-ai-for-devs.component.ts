@@ -1,4 +1,5 @@
 import { Component, OnInit, HostListener } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 interface GenAiMenuItem {
   id: number;
@@ -25,6 +26,10 @@ export class GenAiForDevsComponent implements OnInit {
   public goal: string | null = null;
   public table: string | null = null;
   public isFormValid: boolean = false;
+
+  public esteiraSelecionada: any = [];
+  public isEsteiraSelected: boolean = false;
+  public esteiraSelecionadaId: number = 0;
 
   public genaiMenu: GenAiMenuItem[] = [
     { id: 1, title: 'Manipulação de Repositório', icon: 'assets/images/repository_manipulation.png', status: 'disabled' },
@@ -69,9 +74,22 @@ export class GenAiForDevsComponent implements OnInit {
   private selectedStack: string | null = null;
   private inputTimeout: any;
 
-  constructor() { }
+  constructor(
+    private router: Router,
+  ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+
+    const savedEsteira = localStorage.getItem('selectedEsteira');
+    if (savedEsteira) {
+      this.esteiraSelecionada = JSON.parse(savedEsteira);
+      this.isEsteiraSelected = true;
+      this.esteiraSelecionadaId = this.esteiraSelecionada.id;
+
+      this.router.navigate([`elastic-devs-ai/${this.esteiraSelecionada.id}`]);
+    }
+
+  }
 
   genAiButtonSelected(buttonId: number): void {
     this.selectedButtonId = buttonId;
