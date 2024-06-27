@@ -4,9 +4,10 @@ import {FormsModule} from '@angular/forms';
 import { AmplifyAuthenticatorModule } from '@aws-amplify/ui-angular';
 import { ReactiveFormsModule } from '@angular/forms'; 
 
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
+import { NgChartsModule } from 'ng2-charts';
 import { Amplify } from 'aws-amplify';
 import awsconfig from 'aws-exports';
 
@@ -53,7 +54,8 @@ Amplify.configure(awsconfig);
     FormsModule, 
     NgbModule, 
     AmplifyAuthenticatorModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

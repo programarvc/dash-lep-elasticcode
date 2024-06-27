@@ -60,13 +60,319 @@ body
     padding:45px 20px 31px
 
 .custom-modal
-    height: 35.25rem
+    height: 30.25rem
+    background: #F6F8FF
+    width: 56.25rem
+    height: 536px
+    border-radius: 15px 15px
+    position: fixed /* ou absolute, dependendo do seu caso */
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+    max-height: 100vh /* Isso garantirá que o modal nunca seja maior que a janela */
+    overflow-y: auto /* Isso permitirá a rolagem vertical se o conteúdo for maior que a altura */
+
+.custom-modal::-webkit-scrollbar
+    display: none
+
 
 .painel-metricas-content
+    display: flex
+    align-items: center
 
 
+.painel-metricas-content
+    display: flex
+    justify-content: space-between
+
+.left-panel
+    width: 46%
+
+.right-panel
+    width: 60%
+    
 .card-modal
-  
+    margin-top: 8px
+    padding: 10px 15px
+    border-radius: 5px
+    background: #FFFFFF
+    box-shadow: 0px 3.352px 3.352px 0px rgba(0, 0, 0, 0.05)
+    width: 340px
+    height: 90px
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    border-left: 6px solid #5182FF
+
+
+.modal-title
+    font-family: Poppins
+    font-size: 24px
+    font-weight: 600
+    line-height: 36px
+    text-align: left
+
+
+.modal-card-title
+    margin: 0rem 15rem 0 0
+    font-weight: 600
+    text-align: center
+    color: #5182FF
+
+.modal-card-title h2
+    font-size: 14px
+    font-family: Poppins
+    white-space: nowrap
+    
+
+
+.modal-card-content
+    display: flex
+    justify-content: space-between
+    margin-right: 4rem
+    gap: 1.25rem
+    margin-left: 1.5rem
+    margin-bottom: 0.25rem
+
+.modal-card-content span
+    margin-left: 4px
+
+
+.modal-card-content-smalltext
+    display: flex
+    justify-content: space-between
+    gap: 1.25rem
+    padding-top: 0.25rem
+
+.rectangle 
+    width: 2px
+    height: 29px
+    border-radius: 2px 0px 0px 2px
+    background: #5182FF
+
+
+.content-item
+    display: flex
+    flex-direction: row
+    align-items: center
+    font-family: Poppins
+    font-size: 14px
+    font-weight: 500
+    line-height: 18px
+    text-align: left
+    color: #141414
+
+
+
+.content-item span 
+    display: flex
+    flex-direction: column
+
+.month
+    font-size: 12px
+    width: 23px
+    height: 18px
+
+
+
+.days
+    font-size: 14px
+    width: 58px
+    height: 20px
+    opacity: 0px
+    white-space: nowrap
+
+.time-container 
+    display: flex
+    flex-direction: column
+    color: #5182FF
+
+
+.time-month
+    font-size: 14px
+    font-family: Poppins
+    font-size: 14px
+    font-weight: 500
+    line-height: 21px
+    text-align: left
+
+.time-days
+    font-size: 24px
+    font-family: Poppins
+    font-size: 28px
+    font-weight: 700
+    line-height: 29px
+    text-align: left
+    white-space: nowrap
+
+.deploy-fequency-title h2
+    margin: 1rem -2.3rem 0 0 
+
+.deploy-frequency-smalltext
+    margin-left: 2.2rem
+    padding: 0.3rem 0rem 0.6rem 0rem
+
+.deploy-frequency-time
+    padding: 0rem 0rem 0.6rem 0
+
+.mttr-card
+    border-left: 6px solid #6A5FFF
+
+.mttr-titulo
+    margin: 0rem 17.2rem 0 0
+    color: #6A5FFF
+
+.mttr-smalltext
+    margin-left: 0.2rem
+    padding: 0.5rem 0rem 0rem 0rem
+
+.mttr-retangle
+    background: #6A5FFF
+
+.mttr-time
+    color: #6A5FFF
+
+.tx-falhas-card
+    border-left: 6px solid #6A5FFF
+
+.tx-falha-title
+    margin: 0rem 13.2rem 0rem 0rem
+    color: #6A5FFF
+
+.tx-falha-smalltext
+    margin-left: -2.5rem
+    padding: 0rem 0rem 0rem 0rem
+
+.tx-falha-retangle
+   background: #6A5FFF
+
+.tx-falha-conteiner
+    color: #6A5FFF
+
+.potencial-card
+    width: 416px
+    height: 130px
+    border-radius: 10px 
+    background: #FFFFFF
+    box-shadow: 0px 1.92px 1.92px 0px #0000000D
+    display: flex
+    justify-content: space-around
+    margin-bottom: 17px
+
+.title-secundary
+    font-family: Poppins
+    font-size: 16px
+    font-weight: 600
+    text-align: left
+    margin: 0 0 3px 3px
+
+
+.potencial-content-left
+    display: flex
+    align-items: center
+    white-space: nowrap
+    width: 151px
+    height: 64px
+    margin-top: 20px
+    margin-left: 0px
+
+
+.potencial-content
+    display: flex
+    flex-direction: column
+
+
+.retangle-potencial-left
+    width: 4px
+    height: 52px
+    margin-right: 8px
+
+.potencial-month
+    width: 66px
+    height: 29px
+    font-family: Poppins
+    font-size: 14px
+    font-weight: 500
+    text-align: left
+
+
+.potencial-days
+    width: 132px
+    font-family: Poppins
+    font-size: 36px
+    font-weight: 700
+    text-align: left
+
+.potencial-secundary-text
+    white-space: nowrap
+    font-family: Poppins
+    font-size: 12px
+    font-weight: 400
+    line-height: 18px
+    text-align: left
+    color: #6A6A6A
+    margin-left: -5px
+
+
+.problemas-content
+    display: flex
+    align-items: center
+ 
+.retangle-content-problemas
+    width: 3px
+    height: 34px
+    background: #ED6D1D
+
+.mini-card-estoque
+    border-left: 3px solid #ED6D1D
+    margin-bottom: 5px
+   
+
+.problemas-month
+    width: 121px
+    height: 32px
+    font-family: Poppins
+    font-size: 12px
+    font-weight: 400
+    line-height: 18px
+    text-align: left
+    color: #6A6A6A
+    padding-left: 4px
+
+
+.throughput-card
+    width: 416px
+    height: 245px
+    border-radius: 10px 
+    background: #FFFFFF
+    margin-bottom: 9px
+    box-shadow: 0px 1.92px 1.92px 0px #0000000D
+
+.throughput-content-text
+    padding: 18px 0 18px 36px
+
+.throughput-title
+    font-family: Poppins
+    font-size: 16px
+    font-weight: 600
+    letter-spacing: -1.2889975309371948px
+    text-align: left
+
+.throughput-subtext
+    font-family: Poppins
+    font-size: 12px
+    font-weight: 400
+    line-height: 18px
+    text-align: left
+    color: #6A6A6A
+
+
+
+.throughput-grafico
+    width: 89%
+    padding: 0px 15px
+    margin-left: 15px
 
 
 .caixa-metricas
@@ -1352,14 +1658,15 @@ body
 @media(min-width: 1400px)
 
     .nome-top-contribuidores
-        margin-left: 81px
-        margin-top: 36px
+        margin-left: 111px
+        margin-top: 26px
     
     .nome-top-contribuidores p
-        margin-bottom: 29px
+        margin-bottom: 20px
+
 
     .numero-top-contribuidores
-        margin-right: 1%
+        margin-right: 2%
     
     .top-contribuidores-num
         margin-left: 5%
@@ -1426,7 +1733,7 @@ body
         margin-left: 40px
 
     .nome-top-contribuidores p
-        margin-bottom: 36px
+        margin-bottom: 42px
 
     .numero-top-contribuidores
         margin-right: 6.5%

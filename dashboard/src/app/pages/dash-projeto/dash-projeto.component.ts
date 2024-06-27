@@ -1,6 +1,7 @@
 import { ValorDosIndicesDeMaturidadeByEsteiraIdAndCultura } from './../../types/valorMaturidade-types';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ChartDataset, ChartOptions } from 'chart.js';
 
 
 import {
@@ -257,6 +258,39 @@ export class DashProjetoComponent implements OnInit {
     count_epics: 0
   };
 
+public lineChartData: ChartDataset<'line'>[] = [
+  { 
+    data: [65, 50, 40].reverse(), 
+    label: 'Series A',
+    borderColor: '#978FED',
+    backgroundColor: 'rgba(255,0,0,0.3)',
+    pointBackgroundColor: 'white',
+    pointBorderColor: '#978FED',
+    type: 'line',
+  },
+];
+  public lineChartLabels: string[] = ['Mar', 'Abr', 'Mai'];
+public lineChartOptions: ChartOptions = {
+  responsive: true,
+  animation: false,
+  scales: {
+    x: {
+      grid: {
+        drawOnChartArea: false,
+      },
+      ticks: {
+        color: '#242424', // altera a cor do texto dos ticks para #242424
+        font: {
+          weight: 'bold', // torna o texto dos ticks em negrito
+        },
+      },
+    },
+  },
+};
+  public lineChartLegend = false;
+  public lineChartType = 'line';
+  public lineChartPlugins = [];
+  
   //variavel com dados para armazenar a quantidade total de prs por colaborador Hasura
   currentVcsPullRequestTop5: VcsPullRequestTop5[] = [];
 
