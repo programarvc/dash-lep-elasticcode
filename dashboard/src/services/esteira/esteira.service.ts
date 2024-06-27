@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { BehaviorSubject } from "rxjs";
 
 import { Observable, of } from "rxjs";
 import { catchError } from "rxjs/operators";
@@ -10,6 +11,10 @@ import { environment } from "src/environments/environment";
 })
 
 export class EsteiraService {
+
+  private esteiraSelecionadaSource = new BehaviorSubject<any>(null);
+  esteiraSelecionada$ = this.esteiraSelecionadaSource.asObservable();
+
   getEsteirasById() {
     throw new Error('Method not implemented.');
   }
@@ -35,6 +40,11 @@ export class EsteiraService {
     return this.http
       .get<any>(url)
       .pipe(catchError(this.handleError<any>('getEsteiraById')));
+  }
+
+  //setter para a esteira selecionada
+  setEsteiraSelecionada(esteira: any) {
+    this.esteiraSelecionadaSource.next(esteira);
   }
 
 }

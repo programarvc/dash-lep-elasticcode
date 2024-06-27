@@ -48,7 +48,7 @@ public class ColaboradorController extends ControllerCrudBase<ColaboradorDto> {
         List<ColaboradorDto> colaboradores = service.getColaboradoresByEsteiraId(esteiraId);
         return new ResponseEntity<>(colaboradores, HttpStatus.OK);
     }*/
-
+    
 
     /* 
     @PostMapping("/novo-colaborador")

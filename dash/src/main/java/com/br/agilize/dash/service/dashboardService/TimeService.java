@@ -46,7 +46,7 @@ public class TimeService extends ServiceCrudBase<TimeDto> {
     private ColaboradorMapper colaboradorMapper;
 
 
-    @Autowired 
+    @Autowired
     private TimeColaboradorRepository timeColaboradorRepository;
 
     @Autowired
@@ -115,36 +115,36 @@ public class TimeService extends ServiceCrudBase<TimeDto> {
     
         }*/
 
-public List<TimeColaboradorDto> getTimeAndColaboradorByEsteiraId(Long esteiraId) {
-    List<TimeColaboradorEntity> timeAndColaboradores = this.timeColaboradorRepository.findTimeAndColaboradorByEsteiraId(esteiraId);
-    return timeAndColaboradores.stream().map(this.timeColaboradorMapper::modelToDTO).collect(Collectors.toList());
-}
-
-public List<ColaboradorDto> getColaboradoresByEsteiraId(Long esteiraId) {
-    List<ColaboradorEntity> colaboradores = this.timeColaboradorRepository.findColaboradoresByEsteiraId(esteiraId);
-    return colaboradores.stream().map(this.colaboradorMapper::modelToDTO).collect(Collectors.toList());
-}
-
-public List<TimeDto> getTimesByEsteiraId(Long esteiraId) {
-    List<TimeEntity> times = this.timeColaboradorRepository.findTimesByEsteiraId(esteiraId);
-    return times.stream().map(this.mapper::modelToDTO).collect(Collectors.toList());
-}
-
-public List<TimeDto> getTimesByColaboradorId(Long colaboradorId) {
-    List<TimeEntity> timesAndEsteira = this.timeColaboradorRepository.findTimesAndEsteiraByColaboradorId(colaboradorId);
-    return timesAndEsteira.stream().map(this.mapper::modelToDTO).collect(Collectors.toList());
-}
-
-public List<ColaboradorDto> findColaboradoresByTimeId(Long timeId) {
-    List<ColaboradorEntity> colaboradores = this.timeColaboradorRepository.findColaboradoresByTimeId(timeId);
-    return colaboradores.stream().map(this.colaboradorMapper::modelToDTO).collect(Collectors.toList());
-    
-}
-
-public List<TimeColaboradorDto> findTimeColaboradorByColaboradorId(Long colaboradorId) {
-    List<TimeColaboradorEntity> timeColaboradores = this.timeColaboradorRepository.findTimeColaboradorByColaboradorId(colaboradorId);
-    return timeColaboradores.stream().map(this.timeColaboradorMapper::modelToDTO).collect(Collectors.toList());
+    public List<TimeColaboradorDto> getTimeAndColaboradorByEsteiraId(Long esteiraId) {
+        List<TimeColaboradorEntity> timeAndColaboradores = this.timeColaboradorRepository.findTimeAndColaboradorByEsteiraId(esteiraId);
+        return timeAndColaboradores.stream().map(this.timeColaboradorMapper::modelToDTO).collect(Collectors.toList());
     }
 
-   
+    public List<ColaboradorDto> getColaboradoresByEsteiraId(Long esteiraId) {
+        List<ColaboradorEntity> colaboradores = this.timeColaboradorRepository.findColaboradoresByEsteiraId(esteiraId);
+        return colaboradores.stream().map(this.colaboradorMapper::modelToDTO).collect(Collectors.toList());
+    }
+
+    public List<TimeDto> getTimesByEsteiraId(Long esteiraId) {
+        List<TimeEntity> times = this.timeColaboradorRepository.findTimesByEsteiraId(esteiraId);
+        return times.stream().map(this.mapper::modelToDTO).collect(Collectors.toList());
+    }
+
+    public List<TimeDto> getTimesByColaboradorId(Long colaboradorId) {
+        List<TimeEntity> timesAndEsteira = this.timeColaboradorRepository.findTimesAndEsteiraByColaboradorId(colaboradorId);
+        return timesAndEsteira.stream().map(this.mapper::modelToDTO).collect(Collectors.toList());
+    }
+
+    public List<ColaboradorDto> findColaboradoresByTimeId(Long timeId) {
+        List<ColaboradorEntity> colaboradores = this.timeColaboradorRepository.findColaboradoresByTimeId(timeId);
+        return colaboradores.stream().map(this.colaboradorMapper::modelToDTO).collect(Collectors.toList());
+
+    }
+
+    public List<TimeColaboradorDto> findTimeColaboradorByColaboradorId(Long colaboradorId) {
+        List<TimeColaboradorEntity> timeColaboradores = this.timeColaboradorRepository.findTimeColaboradorByColaboradorId(colaboradorId);
+        return timeColaboradores.stream().map(this.timeColaboradorMapper::modelToDTO).collect(Collectors.toList());
+    }
+
+
 }

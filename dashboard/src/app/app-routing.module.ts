@@ -17,7 +17,8 @@ const routes: Routes = [
   { path: 'dashboard/:esteiraId', title: 'Dashboard Projeto', component: DashProjetoComponent, canActivate: [AuthGuard]},
   { path: 'time', title:'Dashboard Time', pathMatch:'full', component: TimeComponent, canActivate: [AuthGuard] },
   { path: 'time/:esteiraId', title:'Dashboard Time', pathMatch:'full', component: TimeComponent, canActivate: [AuthGuard] },
-  { path: 'genAi-for-devs', title: 'GEN.AI for Devs', component: GenAiForDevsComponent, canActivate: [AuthGuard]},
+  { path: 'elastic-devs-ai', title: 'GEN.AI for Devs', component: GenAiForDevsComponent, canActivate: [AuthGuard]},
+  { path: 'elastic-devs-ai/:esteiraId', title: 'GEN.AI for Devs', component: GenAiForDevsComponent, canActivate: [AuthGuard]},
   { path: 'registrar-desenvolvedor', title: 'Registrar Desenvolvedor', component: RegistroNovoDevComponent, canActivate: [AuthGuard]},
   { path: ':colaboradorId', pathMatch: 'full',component: ColaboradorComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: 'login'}
