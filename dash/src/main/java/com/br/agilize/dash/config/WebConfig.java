@@ -11,7 +11,7 @@ public class WebConfig implements WebMvcConfigurer {
   @Override
   public void addCorsMappings(CorsRegistry registry) {
       registry.addMapping("/**")
-              .allowedOrigins("*") // Para produção, substitua "*" pelas origens específicas permitidas
+              .allowedOrigins("https://dash.elasticcode.com.br") // ou use "*" para permitir todas as origens
               .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
               .allowedHeaders("*")
               .allowCredentials(true);
