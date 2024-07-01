@@ -433,14 +433,33 @@
               </div>
                 <ng-template #contentEpicos let-modal>
                   <div class="modal-body custom-modal">
-                    <ul class="google-list">
-                        <li *ngFor="let item of epicsList">
-                            <div class="list-item">
-                                <h3>{{ item.name }}</h3>
-                                <p>{{ item.epic}}</p>
-                            </div>
-                        </li>
+                    <!-- Lista de Épicos -->
+                    <ul *ngIf="!showActivities" class="google-list">
+                      <li *ngFor="let item of epicsList" (click)="loadActivitiesAndOpenModal(item)">
+                        <div class="list-item">
+                          <h3>{{ item.name }}</h3>
+                          <p>{{ item.epic }}</p>
+                        </div>
+                      </li>
                     </ul>
+                    <!-- Lista de Atividades do Épico Selecionado -->
+                    <div *ngIf="showActivities">
+                      <button class="btn-voltar" (click)="backToEpics()">Voltar</button>
+                      <table class="activities-table">
+                        <thead>
+                          <tr>
+                            <th>Atividade</th>
+                            <th>Story Points</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let activity of activitiesPerEpic">
+                            <td>{{ activity.name }}</td>
+                            <td>{{ activity.points }}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </ng-template>
             </div>

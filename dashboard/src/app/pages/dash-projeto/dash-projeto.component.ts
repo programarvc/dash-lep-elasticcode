@@ -38,7 +38,8 @@ import {
   StoriesAndEpicsData,
   TotalPoints,
   TotalPointsLast60Days,
-  EpicsList
+  EpicsList,
+  ActivitiesPerEpic
 } from 'src/app/types/jiraActivities-types';
 
 import { EsteiraService } from 'src/services/esteira/esteira.service';
@@ -295,7 +296,7 @@ public lineChartOptions: ChartOptions = {
   public lineChartPlugins = [];
 
   public epicsList: EpicsList [] = [];
-  public activitiesPerEpic: AllActivities [] = [];
+  public activitiesPerEpic: ActivitiesPerEpic [] = [];
   
   //variavel com dados para armazenar a quantidade total de prs por colaborador Hasura
   currentVcsPullRequestTop5: VcsPullRequestTop5[] = [];
@@ -314,6 +315,7 @@ public lineChartOptions: ChartOptions = {
   public filterValorMaturidade: ValorDosIndicesDeMaturidadeFilter[] = [];
   public valorMaturidadeDate: Date;
   public formattedDate: string | null = null;
+  public showActivities: boolean = false; // Controla a exibição da lista de atividades
  
   constructor(
     private router: Router,
@@ -661,4 +663,15 @@ public async setCurrentMaturidade (id: number) {
       this.activitiesPerEpic = response;
     });
   }
+  
+loadActivitiesAndOpenModal(item: any): void {
+  // Suponha que getActivitiesPerEpic seja um método que atualize activitiesPerEpic com as atividades do épico selecionado
+  this.getActivitiesPerEpic(item.epic); // Atualize com o identificador correto do épico
+  this.showActivities = true; // Mostra a lista de atividades
+}
+
+backToEpics(): void {
+  this.showActivities = false; // Volta para a lista de épicos
+}
+
 }
