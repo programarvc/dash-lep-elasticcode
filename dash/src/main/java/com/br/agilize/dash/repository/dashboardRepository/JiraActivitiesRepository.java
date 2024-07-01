@@ -42,10 +42,11 @@ public interface JiraActivitiesRepository extends JpaRepository<JiraActivitiesEn
         "AND TO_DATE(updated_at, 'YYYY-MM-DD') >= CURRENT_DATE - INTERVAL '60 days'", nativeQuery = true)
     Map<String, Object> countAllStoriesLast60Days();
 
-    // Query para buscar a quantidade total de epics mais o nome dos epicos
-    @Query(value = "SELECT j.name AS name, j.epic AS epic, COUNT(j.id) AS count_epics " +
+    // Query para buscar lista de epicos dentro de 60 dias.
+    @Query(value = "SELECT j.name AS name, j.epic AS epic " +
         "FROM tms_task j " +
         "WHERE j.type_detail = 'Epic' " +
+        "AND TO_DATE(j.updated_at, 'YYYY-MM-DD') >= CURRENT_DATE - INTERVAL '60 days' " +
         "GROUP BY j.name, j.epic", nativeQuery = true)
     List<Map<String, Object>> countAndDetailsByTypeDetail();
 
@@ -86,4 +87,11 @@ public interface JiraActivitiesRepository extends JpaRepository<JiraActivitiesEn
         "AND TO_DATE(updated_at, 'YYYY-MM-DD') >= CURRENT_DATE - INTERVAL '60 days'", nativeQuery = true)
     Map<String, Object> sumTotalPointsForJiraStoriesLast60Days();
 
+    //* Será preciso alterar como os campos são salvos tirar o Jira| antes de salvar no banco para não da problema na request
+    @Query(value = "SELECT j.name AS name, j.points AS points " +
+        "FROM tms_task j " +
+        "WHERE j.parent = :epic " + 
+        "AND TO_DATE(j.updated_at, 'YYYY-MM-DD') >= CURRENT_DATE - INTERVAL '60 days'", nativeQuery = true)
+    List<Map<String, Object>> findNameAndPointForEpicEqualsParent(@Param("epic") String epic);
+    
 }

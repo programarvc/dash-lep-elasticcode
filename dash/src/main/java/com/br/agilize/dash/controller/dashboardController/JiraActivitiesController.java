@@ -90,4 +90,9 @@ public class JiraActivitiesController {
         return ResponseEntity.ok(service.getTotalPointsForJiraStoriesLast60Days());
     }
 
+    @GetMapping("/epicslistacttivities")
+    public ResponseEntity<List<Map<String, Object>>> findNameAndPointForEpicEqualsParent(@RequestParam String epic) {
+        List<Map<String, Object>> activities = service.findNameAndPointForEpicEqualsParent(epic);
+        return ResponseEntity.ok(activities);
+    }
 }

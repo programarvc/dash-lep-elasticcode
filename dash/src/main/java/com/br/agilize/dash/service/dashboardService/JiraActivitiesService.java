@@ -53,7 +53,6 @@ public class JiraActivitiesService implements CommandLineRunner {
 
 
     @Override
-   
     @Transactional
     public void run(String... args) throws Exception {
         getJiraDataAndSave();
@@ -101,7 +100,10 @@ public class JiraActivitiesService implements CommandLineRunner {
         String createdAt = jiraDataDto.getCreatedAt();
         String source = jiraDataDto.getSource();
         String updatedAt = jiraDataDto.getUpdatedAt();
-    
+        String tmsUserName = jiraDataDto.getTmsUserName();
+        String tmsUserId = jiraDataDto.getTmsUserId();
+
+
         // Verificar se a atividade já existe no banco de dados
         Optional<JiraActivitiesEntity> existingActivity = repository.findByNameAndSprintAndPriorityAndUpdatedAtAndTypeDetailAndSource(name, sprint, priority, updatedAt, typeDetail, source);
     
@@ -119,7 +121,9 @@ public class JiraActivitiesService implements CommandLineRunner {
             jiraActivitiesEntity.setCreatedAt(createdAt);
             jiraActivitiesEntity.setSource(source);
             jiraActivitiesEntity.setUpdatedAt(updatedAt);
-    
+            jiraActivitiesEntity.setTmsUserName(tmsUserName);
+            jiraActivitiesEntity.setTmsUserId(tmsUserId);
+
             // Convertendo a entidade para DTO usando o Mapper
             JiraActivitiesDto newJiraDataDto = jiraActivitiesMapper.modelToDTO(jiraActivitiesEntity);
     
@@ -241,5 +245,10 @@ public class JiraActivitiesService implements CommandLineRunner {
             System.out.println("Erro ao buscar total de pontos nos últimos 60 dias: " + e.getMessage());
             return new HashMap<>();
         }
+    }
+
+    // Método para retornar as atividades de acordo com o epico especificado
+    public List<Map<String, Object>> findNameAndPointForEpicEqualsParent(String epic) {
+        return repository.findNameAndPointForEpicEqualsParent(epic);
     }
 }

@@ -46,3 +46,13 @@ export interface JiraEpics {
   name: string;
   count_epics: number;
 }
+
+export interface EpicsList {
+  epic: string;
+  name: string;
+}
+
+export interface ActivitiesPerEpic {
+  name: string;
+  points: number;
+}

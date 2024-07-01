@@ -37,7 +37,8 @@ import {
   MediaStoriesPerEpic,
   StoriesAndEpicsData,
   TotalPoints,
-  TotalPointsLast60Days
+  TotalPointsLast60Days,
+  EpicsList
 } from 'src/app/types/jiraActivities-types';
 
 import { EsteiraService } from 'src/services/esteira/esteira.service';
@@ -258,6 +259,8 @@ export class DashProjetoComponent implements OnInit {
     count_epics: 0
   };
 
+  
+
 public lineChartData: ChartDataset<'line'>[] = [
   { 
     data: [65, 50, 40].reverse(), 
@@ -290,6 +293,9 @@ public lineChartOptions: ChartOptions = {
   public lineChartLegend = false;
   public lineChartType = 'line';
   public lineChartPlugins = [];
+
+  public epicsList: EpicsList [] = [];
+  public activitiesPerEpic: AllActivities [] = [];
   
   //variavel com dados para armazenar a quantidade total de prs por colaborador Hasura
   currentVcsPullRequestTop5: VcsPullRequestTop5[] = [];
@@ -318,6 +324,7 @@ public lineChartOptions: ChartOptions = {
     private valorMaturidadeService: valorMaturidadeService,
     private jiraActivitiesService: jiraActivitieseService,
     private modalService: NgbModal
+    
   ) {
     this.selectedOption = 0;
     this.valorMaturidadeDate = new Date();
@@ -362,6 +369,7 @@ public async setCurrent(id: number) {
   this.getAveragePoints();
   this.getTotalPointsForJiraStories();
   this.getJiraEpicsLast60Days();
+  this.getEpicList();
 }
 
 public async setCurrentMaturidade (id: number) {
@@ -640,5 +648,17 @@ public async setCurrentMaturidade (id: number) {
   open(content: any) {
     this.modalService.open(content);
   }
-  
+
+  getEpicList(): void {
+    this.jiraActivitiesService.getEpicList().subscribe((response) => {
+      this.epicsList = response;
+      console.log(this.epicsList);
+    });
+  }
+
+  getActivitiesPerEpic(epic: string): void {
+    this.jiraActivitiesService.getActivitiesPerEpic(epic).subscribe((response) => {
+      this.activitiesPerEpic = response;
+    });
+  }
 }
