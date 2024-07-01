@@ -15,6 +15,18 @@ interface CodeType {
   disabled?: boolean;
 }
 
+interface contGenAiPrompts {
+  id: number;
+  contador: number;
+  esteiraId: number;
+}
+
+interface JiraAtividades {
+  id: number;
+  esteiraId: number;
+  atividade: string;
+}
+
 @Component({
   selector: 'app-gen-ai-for-devs',
   templateUrl: './gen-ai-for-devs.component.html',
@@ -41,6 +53,23 @@ export class GenAiForDevsComponent implements OnInit {
     { id: 7, title: 'Inspeção de Segurança', icon: 'assets/images/security_inspect.png', status: 'disabled' },
     { id: 8, title: 'Geração de SQL', icon: 'assets/images/sql_generation.png', status: 'disabled' },
   ];
+
+  public contGenAiPrompts: contGenAiPrompts[] = [
+    {
+      id: 1, contador: 0, esteiraId: 1
+    },
+    {
+      id: 2, contador: 0, esteiraId: 2
+    }
+  ]
+
+  public jiraAtividades: JiraAtividades[] = [
+    { id: 1, esteiraId: 1, atividade: 'Desenvolver API Rest para a entidade Cliente' },
+    { id: 2, esteiraId: 1, atividade: 'Desenvolver API Rest para a entidade Produto' },
+    { id: 3, esteiraId: 2, atividade: 'Desenvolver API Rest para a entidade Pedido' },
+  ]
+
+  
 
   public codeTypes: CodeType[] = [
     { id: 1, tipo_de_codigo: 'CRUD', stack: 'backend' },

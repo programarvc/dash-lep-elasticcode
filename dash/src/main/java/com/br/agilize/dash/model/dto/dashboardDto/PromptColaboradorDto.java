@@ -4,9 +4,8 @@ import com.br.agilize.dash.model.dto.ColaboradorDto;
 import lombok.Data;
 
 @Data
-public class UserDto {
+public class PromptColaboradorDto {
     private Long id;
-    private String nome;
+    private PromptsHistoryDto prompt;
     private ColaboradorDto colaborador;
-
 }

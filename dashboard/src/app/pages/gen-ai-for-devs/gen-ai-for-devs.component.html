@@ -22,7 +22,12 @@
                     <div class="col-md-12" *ngIf="showCard">
                         <div class="card genai-card">
                             <div class="card-body">
-                                <h5 class="card-title">Geração de Código</h5>
+                                <div class="prompt-title-space">
+                                    <h5 class="card-title">Geração de Código</h5>
+                                    <button type="button" class="old-prompts">
+                                        Prompts Gerados >
+                                    </button>
+                                </div>
                                 <form (ngSubmit)="generateCode()">
                                     <div class="mb-3">
                                         <label class="form-label">Tipo de Stack</label>

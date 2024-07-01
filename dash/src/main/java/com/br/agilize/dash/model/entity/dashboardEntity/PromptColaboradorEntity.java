@@ -3,20 +3,23 @@ package com.br.agilize.dash.model.entity.dashboardEntity;
 import com.br.agilize.dash.model.entity.ColaboradorEntity;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+@NoArgsConstructor
 @Data
 @ToString
 @Entity
-public class UserEntity {
+public class PromptColaboradorEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "username", nullable = false, unique = true)
-    private String nome;
+    @ManyToOne
+    @JoinColumn(name="prompt_id")
+    private PromptsHistoryEntity prompt;
 
-    @OneToOne(optional = true)
-    @JoinColumn(name = "colaborador_id")
+    @ManyToOne
+    @JoinColumn(name="colaborador_id")
     private ColaboradorEntity colaborador;
 }

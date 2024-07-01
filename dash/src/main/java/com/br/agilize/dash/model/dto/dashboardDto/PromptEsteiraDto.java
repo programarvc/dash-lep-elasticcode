@@ -1,13 +1,10 @@
 package com.br.agilize.dash.model.dto.dashboardDto;
+
 import lombok.Data;
 
-import java.util.List;
-
 @Data
-public class UserEsteiraDto {
+public class PromptEsteiraDto {
     private Long id;
-   
-    private UserDto username;
-
+    private PromptsHistoryDto prompt;
     private EsteiraDeDesenvolvimentoDto esteira;
 }
