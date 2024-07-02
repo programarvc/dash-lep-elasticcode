@@ -28,6 +28,7 @@ import { AmplifyUiLoginComponent } from './pages/amplify-ui-login/amplify-ui-log
 import { TimeComponent } from './pages/time/time.component';
 import { GenAiForDevsComponent } from './pages/gen-ai-for-devs/gen-ai-for-devs.component';
 import { RegistroNovoDevComponent } from './pages/registro-novo-dev/registro-novo-dev.component';
+import { PromptHistoryModalComponent } from './components/prompt-history-modal/prompt-history-modal.component';
 
 Amplify.configure(awsconfig);
 
@@ -46,6 +47,7 @@ Amplify.configure(awsconfig);
     TimeComponent,
     GenAiForDevsComponent,
     RegistroNovoDevComponent,
+    PromptHistoryModalComponent,
   ],
   imports: [
     HttpClientModule, 
