@@ -20,6 +20,7 @@ export class PromptService {
 
     constructor(private http: HttpClient) {}
 
+    //Obter todos os prompts
     postPromptHistory(promptHistory: any): Observable<any> {
         const url: string = `${environment.api}/prompts-history`;
         return this.http
@@ -27,6 +28,7 @@ export class PromptService {
             .pipe(catchError(this.handleError<any>('postPromptHistory')));
     }
 
+    //Obter prompt por id
     getPromptHistoryById(id: any): Observable<any> {
         const url = `${environment.api}/prompts-history/${id}`;
         return this.http
@@ -34,6 +36,7 @@ export class PromptService {
             .pipe(catchError(this.handleError<any>('getPromptHistoryById')));
     }
 
+    //Obter prompts por userEsteiraId
     getPromptsHistoryByUserEsteiraId(userEsteiraId: any): Observable<any> {
         const url = `${environment.api}/prompts-history/user-esteira/${userEsteiraId}`;
         return this.http
@@ -41,6 +44,7 @@ export class PromptService {
             .pipe(catchError(this.handleError<any>('getPromptsHistoryByUserEsteiraId')));
     }
 
+    //Obter prompts por userEsteiraId
     getContPromptsByUserEsteiraId(userEsteiraId: any): Observable<any> {
         const url =`${environment.api}/prompts-history/count/user-esteira/${userEsteiraId}`;
         return this.http
