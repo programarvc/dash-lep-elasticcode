@@ -251,4 +251,9 @@ public class JiraActivitiesService implements CommandLineRunner {
     public List<Map<String, Object>> findNameAndPointForEpicEqualsParent(String epic) {
         return repository.findNameAndPointForEpicEqualsParent(epic);
     }
+
+    // Método para retornar o nome e pontos das atividades
+    public List<Map<String, Object>> findNameAndPoints() {
+        return repository.findNameAndPoints();
+    } 
 }

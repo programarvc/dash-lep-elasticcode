@@ -297,6 +297,7 @@ public lineChartOptions: ChartOptions = {
 
   public epicsList: EpicsList [] = [];
   public activitiesPerEpic: ActivitiesPerEpic [] = [];
+  public allactivitieslist : ActivitiesPerEpic [] = [];
   
   //variavel com dados para armazenar a quantidade total de prs por colaborador Hasura
   currentVcsPullRequestTop5: VcsPullRequestTop5[] = [];
@@ -372,6 +373,7 @@ public async setCurrent(id: number) {
   this.getTotalPointsForJiraStories();
   this.getJiraEpicsLast60Days();
   this.getEpicList();
+  this.getListNameAndPoints();
 }
 
 public async setCurrentMaturidade (id: number) {
@@ -664,14 +666,20 @@ public async setCurrentMaturidade (id: number) {
     });
   }
   
-loadActivitiesAndOpenModal(item: any): void {
-  // Suponha que getActivitiesPerEpic seja um método que atualize activitiesPerEpic com as atividades do épico selecionado
-  this.getActivitiesPerEpic(item.epic); // Atualize com o identificador correto do épico
-  this.showActivities = true; // Mostra a lista de atividades
-}
+  loadActivitiesAndOpenModal(item: any): void {
+    // Suponha que getActivitiesPerEpic seja um método que atualize activitiesPerEpic com as atividades do épico selecionado
+    this.getActivitiesPerEpic(item.epic); // Atualize com o identificador correto do épico
+    this.showActivities = true; // Mostra a lista de atividades
+  }
 
-backToEpics(): void {
-  this.showActivities = false; // Volta para a lista de épicos
-}
+  backToEpics(): void {
+    this.showActivities = false; // Volta para a lista de épicos
+  }
+
+  getListNameAndPoints(): void {
+    this.jiraActivitiesService.getNameAndPoints().subscribe((response) => {
+      this.allactivitieslist = response;
+    });
+  }
 
 }

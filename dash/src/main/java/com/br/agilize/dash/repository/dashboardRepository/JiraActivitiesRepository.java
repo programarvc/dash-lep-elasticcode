@@ -34,6 +34,13 @@ public interface JiraActivitiesRepository extends JpaRepository<JiraActivitiesEn
         "AND source = 'Jira'", nativeQuery = true)
     Map<String, Object> countAllStories();
 
+    // Query para buscar o nome e pontos das tarefas
+    @Query(value = "SELECT j.name AS name, j.points AS points " +
+        "FROM tms_task j " +
+        "WHERE j.type_detail IN ('História', 'Subtarefa', 'Bug') " +
+        "AND j.source = 'Jira'", nativeQuery = true)
+    List<Map<String, Object>> findNameAndPoints();
+
     // Query para buscar a quantidade total de tarefas nos últimos 60 dias
     @Query(value = "SELECT COUNT(j.id) AS story_count_last60days " +
         "FROM tms_task j " +

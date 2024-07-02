@@ -90,11 +90,19 @@ export class jiraActivitieseService {
       );
   }
 
-getActivitiesPerEpic(epic: string): Observable<any> {
-    const params = new HttpParams().set('epic', epic);
-    const url: string = `${environment.api}/jira/epicslistacttivities`;
+  getActivitiesPerEpic(epic: string): Observable<any> {
+      const params = new HttpParams().set('epic', epic);
+      const url: string = `${environment.api}/jira/epicslistacttivities`;
+      return this.http
+        .get<any>(url, { params })
+        .pipe(catchError(this.handleError<any>('getActivitiesPerEpic')));
+  }
+
+  getNameAndPoints(): Observable<any> {
+    const url: string = `${environment.api}/jira/namepoints`;
     return this.http
-      .get<any>(url, { params })
-      .pipe(catchError(this.handleError<any>('getActivitiesPerEpic')));
-}
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>('getNameAndPoints')));
+  }
+
 }
