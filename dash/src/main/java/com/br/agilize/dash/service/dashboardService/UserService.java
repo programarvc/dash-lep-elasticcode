@@ -85,4 +85,8 @@ public UserDto salvar(UserDto payload) {
     public Optional<Long> buscarIdPorNome(String nome) {
         return this.repository.findIdByNome(nome);
     }
+
+    public Long findIdByEsteiraIdAndUsernameId(Long esteiraId, Long usernameId) {
+        return this.userEsteiraRepository.findIdByEsteiraIdAndUsernameId(esteiraId, usernameId);
+    }
 }

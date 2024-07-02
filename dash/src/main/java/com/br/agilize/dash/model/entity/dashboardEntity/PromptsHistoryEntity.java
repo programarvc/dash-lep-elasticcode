@@ -30,10 +30,6 @@ public class PromptsHistoryEntity {
     private String prompt;
 
     @ManyToOne
-    @JoinTable(name = "promptcolaboradorentity", joinColumns = @JoinColumn(name = "prompt_id"), inverseJoinColumns = @JoinColumn(name = "colaborador_id"))
-    private ColaboradorEntity colaborador;
-
-    @ManyToOne
-    @JoinTable(name = "promptesteiraentity", joinColumns = @JoinColumn(name = "prompt_id"), inverseJoinColumns = @JoinColumn(name = "esteira_id"))
-    private EsteiraDeDesenvolvimentoEntity esteira;
+    @JoinColumn(name = "user_esteira_id")
+    private UserEsteiraEntity userEsteira;
 }

@@ -24,4 +24,7 @@ public interface UserEsteiraRepository extends JpaRepository<UserEsteiraEntity, 
 
     @Query("SELECT u.esteira FROM UserEsteiraEntity u WHERE u.username.id = :userId")
     List<EsteiraDeDesenvolvimentoEntity> findEsteirasByUserId(@Param("userId") Long userId);
+
+    @Query("SELECT u.id FROM UserEsteiraEntity u WHERE u.esteira.id = :esteiraId AND u.username.id = :usernameId")
+    Long findIdByEsteiraIdAndUsernameId(@Param("esteiraId") Long esteiraId, @Param("usernameId") Long usernameId);
 }
