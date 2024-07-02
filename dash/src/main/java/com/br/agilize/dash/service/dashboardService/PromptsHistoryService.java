@@ -45,4 +45,8 @@ public class PromptsHistoryService extends ServiceCrudBase<PromptsHistoryDto> {
     public void excluirPorId(Long id) {
         this.repository.deleteById(id);
     }
+
+    public Long countByUserEsteiraId(Long userEsteiraId) {
+        return this.repository.countByUserEsteiraId(userEsteiraId);
+    }
 }
