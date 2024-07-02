@@ -4,6 +4,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { CognitoService } from 'src/app/cognito.service';
 import { UserService } from 'src/services/usuario/usuario.service';
 import { PromptService } from 'src/services/prompts/prompts.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+import { PromptHistoryModalComponent } from 'src/app/components/prompt-history-modal/prompt-history-modal.component';
 
 interface GenAiMenuItem {
   id: number;
@@ -76,8 +79,6 @@ export class GenAiForDevsComponent implements OnInit {
     { id: 3, esteiraId: 2, atividade: 'Desenvolver API Rest para a entidade Pedido' },
   ]
 
-
-
   public codeTypes: CodeType[] = [
     { id: 1, tipo_de_codigo: 'CRUD', stack: 'backend' },
     { id: 2, tipo_de_codigo: 'API Rest', stack: 'backend' },
@@ -117,6 +118,7 @@ export class GenAiForDevsComponent implements OnInit {
     private cognitoService: CognitoService,
     private userService: UserService,
     private promptsService: PromptService,
+    private modalService: NgbModal,
   ) { }
 
   ngOnInit(): void {
@@ -146,7 +148,6 @@ export class GenAiForDevsComponent implements OnInit {
         //Obtém prompts por userEsteiraId
         this.promptsService.getPromptsHistoryByUserEsteiraId(this.userEsteiraId).subscribe((prompts: any) => {
           this.promptsByUserEsteiraId = prompts;
-          console.log('Prompts por userEsteiraId', this.promptsByUserEsteiraId);
         })
 
         //Obtém contagem de prompts por userEsteiraId
@@ -156,6 +157,11 @@ export class GenAiForDevsComponent implements OnInit {
         });
       });
     });
+  }
+
+  openPromptHistoryModal(): void {
+    const modalRef = this.modalService.open(PromptHistoryModalComponent, { size: 'lg' });
+    modalRef.componentInstance.prompts = this.promptsByUserEsteiraId;
   }
 
   genAiButtonSelected(buttonId: number): void {
