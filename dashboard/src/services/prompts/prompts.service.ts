@@ -34,6 +34,13 @@ export class PromptService {
             .pipe(catchError(this.handleError<any>('getPromptHistoryById')));
     }
 
+    getPromptsHistoryByUserEsteiraId(userEsteiraId: any): Observable<any> {
+        const url = `${environment.api}/prompts-history/user-esteira/${userEsteiraId}`;
+        return this.http
+            .get<any>(url)
+            .pipe(catchError(this.handleError<any>('getPromptsHistoryByUserEsteiraId')));
+    }
+
     getContPromptsByUserEsteiraId(userEsteiraId: any): Observable<any> {
         const url =`${environment.api}/prompts-history/count/user-esteira/${userEsteiraId}`;
         return this.http
