@@ -57,6 +57,8 @@ export class GenAiForDevsComponent implements OnInit {
   public userEsteiraId: number = 0;
   public userEsteiraValue: number = 0;
 
+  public contElasticPrompts: number = 0;
+
   public genaiMenu: GenAiMenuItem[] = [
     { id: 1, title: 'Manipulação de Repositório', icon: 'assets/images/repository_manipulation.png', status: 'disabled' },
     { id: 2, title: 'Build', icon: 'assets/images/build.png', status: 'disabled' },
@@ -67,15 +69,6 @@ export class GenAiForDevsComponent implements OnInit {
     { id: 7, title: 'Inspeção de Segurança', icon: 'assets/images/security_inspect.png', status: 'disabled' },
     { id: 8, title: 'Geração de SQL', icon: 'assets/images/sql_generation.png', status: 'disabled' },
   ];
-
-  public contGenAiPrompts: contGenAiPrompts[] = [
-    {
-      id: 1, contador: 0, esteiraId: 1
-    },
-    {
-      id: 2, contador: 0, esteiraId: 2
-    }
-  ]
 
   public jiraAtividades: JiraAtividades[] = [
     { id: 1, esteiraId: 1, atividade: 'Desenvolver API Rest para a entidade Cliente' },
@@ -146,6 +139,10 @@ export class GenAiForDevsComponent implements OnInit {
 
         this.userService.getUserEsteiraIdPorEsteiraIdAndUsuarioId(this.esteiraSelecionadaId, this.userId).subscribe((userEsteiraId: any) => {
           this.userEsteiraId = userEsteiraId;
+
+        this.promptsService.getContPromptsByUserEsteiraId(this.userEsteiraId).subscribe((contPrompts: any) => {
+          this.contElasticPrompts = contPrompts;
+        })
         });
       });
     });
