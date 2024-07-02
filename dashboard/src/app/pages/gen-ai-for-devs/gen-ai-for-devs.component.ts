@@ -110,6 +110,8 @@ export class GenAiForDevsComponent implements OnInit {
   private selectedStack: string | null = null;
   private inputTimeout: any;
 
+  public promptsByUserEsteiraId: any = [];
+
   constructor(
     private router: Router,
     private cognitoService: CognitoService,
@@ -137,9 +139,17 @@ export class GenAiForDevsComponent implements OnInit {
       this.userService.getUsuarioIdPorUsername(this.username).subscribe((userId: any) => {
         this.userId = userId;
 
+        //Obtém userEsteiraId por esteiraId e userId
         this.userService.getUserEsteiraIdPorEsteiraIdAndUsuarioId(this.esteiraSelecionadaId, this.userId).subscribe((userEsteiraId: any) => {
           this.userEsteiraId = userEsteiraId;
 
+        //Obtém prompts por userEsteiraId
+        this.promptsService.getPromptsHistoryByUserEsteiraId(this.userEsteiraId).subscribe((prompts: any) => {
+          this.promptsByUserEsteiraId = prompts;
+          console.log('Prompts por userEsteiraId', this.promptsByUserEsteiraId);
+        })
+
+        //Obtém contagem de prompts por userEsteiraId
         this.promptsService.getContPromptsByUserEsteiraId(this.userEsteiraId).subscribe((contPrompts: any) => {
           this.contElasticPrompts = contPrompts;
         })
