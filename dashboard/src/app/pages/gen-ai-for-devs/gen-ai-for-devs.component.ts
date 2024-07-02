@@ -1,6 +1,10 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
+import { CognitoService } from 'src/app/cognito.service';
+import { UserService } from 'src/services/usuario/usuario.service';
+import { PromptService } from 'src/services/prompts/prompts.service';
+
 interface GenAiMenuItem {
   id: number;
   title: string;
@@ -34,14 +38,24 @@ interface JiraAtividades {
 })
 export class GenAiForDevsComponent implements OnInit {
   public stackType: string | null = null;
+  public stackValue: string | null = null;
   public codeType: string | null = null;
-  public goal: string | null = null;
+  public codeTypeValue: string | null = null;
+  public entity: string | null = null;
+  public entityValue: string | null = null;
   public table: string | null = null;
+  public tableValue: string | null = null;
+  public generatedCodeValue: string | null = null;
   public isFormValid: boolean = false;
 
   public esteiraSelecionada: any = [];
   public isEsteiraSelected: boolean = false;
   public esteiraSelecionadaId: number = 0;
+
+  public username: string = '';
+  public userId: number = 0;
+  public userEsteiraId: number = 0;
+  public userEsteiraValue: number = 0;
 
   public genaiMenu: GenAiMenuItem[] = [
     { id: 1, title: 'Manipulação de Repositório', icon: 'assets/images/repository_manipulation.png', status: 'disabled' },
@@ -69,7 +83,7 @@ export class GenAiForDevsComponent implements OnInit {
     { id: 3, esteiraId: 2, atividade: 'Desenvolver API Rest para a entidade Pedido' },
   ]
 
-  
+
 
   public codeTypes: CodeType[] = [
     { id: 1, tipo_de_codigo: 'CRUD', stack: 'backend' },
@@ -105,6 +119,9 @@ export class GenAiForDevsComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private cognitoService: CognitoService,
+    private userService: UserService,
+    private promptsService: PromptService,
   ) { }
 
   ngOnInit(): void {
@@ -118,6 +135,20 @@ export class GenAiForDevsComponent implements OnInit {
       this.router.navigate([`elastic-devs-ai/${this.esteiraSelecionada.id}`]);
     }
 
+
+    //Obtém username do usuário logado
+    this.cognitoService.getLoggedInUsername().then((username: any) => {
+      this.username = username;
+
+      //Obtém id do usuário por username
+      this.userService.getUsuarioIdPorUsername(this.username).subscribe((userId: any) => {
+        this.userId = userId;
+
+        this.userService.getUserEsteiraIdPorEsteiraIdAndUsuarioId(this.esteiraSelecionadaId, this.userId).subscribe((userEsteiraId: any) => {
+          this.userEsteiraId = userEsteiraId;
+        });
+      });
+    });
   }
 
   genAiButtonSelected(buttonId: number): void {
@@ -162,7 +193,7 @@ export class GenAiForDevsComponent implements OnInit {
   generateCode(): void {
     const stackType = this.stackType;
     const codeType = this.codeType;
-    const goal = this.goal;
+    const entity = this.entity;
     const inputTable = this.table;
 
     const existingCodeType = this.codeTypes.find(type => type.tipo_de_codigo.toLowerCase() === codeType?.toLowerCase() && type.stack === stackType?.toLowerCase());
@@ -179,7 +210,7 @@ export class GenAiForDevsComponent implements OnInit {
     this.generatedCode = `
 Prompt para geração de código:
 
-aja como um copiloto de desenvolvimento, sua função é gerar o código em java para uma api-rest já existente para a entidade ${goal}.
+aja como um copiloto de desenvolvimento, sua função é gerar o código em java para uma api-rest já existente para a entidade ${entity}.
 \n`;
 
     if (inputTable) {
@@ -221,6 +252,8 @@ essas são as dependências atuais do projeto:
 
 Como pode ver ele usa o jakarta persistence, então todas as entidades são gerenciadas pelo framework. Tente fornecer algo que funcione de ponta a ponta desde a API até a parte do banco de dados.
     `;
+
+    this.registrarNovoPrompt();
   }
 
   copyToClipboard(): void {
@@ -260,6 +293,31 @@ Como pode ver ele usa o jakarta persistence, então todas as entidades são gere
   }
 
   checkFormValidity(): void {
-    this.isFormValid = !!(this.stackType && this.codeType && this.goal);
+    this.isFormValid = !!(this.stackType && this.codeType && this.entity);
+  }
+
+  public registrarNovoPrompt(): void {
+    this.entityValue = this.entity;
+    this.tableValue = this.table;
+    this.codeTypeValue = this.codeType;
+    this.stackValue = this.stackType;
+    this.generatedCodeValue = this.generatedCode;
+    this.userEsteiraValue = this.userEsteiraId;
+
+    const promptData = {
+      entidade: this.entityValue,
+      prompt: this.generatedCodeValue,
+      stack: this.stackValue,
+      tabela: this.tableValue,
+      tipo_codigo: this.codeTypeValue,
+      userEsteira: {
+        id: this.userEsteiraValue
+      }
+    }
+
+    this.promptsService.postPromptHistory(promptData).subscribe((response: any) => {
+    }, (erro: any) => {
+      console.log('Erro ao registrar prompt', erro);
+    })    
   }
 }

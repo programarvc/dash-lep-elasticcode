@@ -20,5 +20,10 @@ export class PromptService {
 
     constructor(private http: HttpClient) {}
 
-    
+    postPromptHistory(promptHistory: any): Observable<any> {
+        const url: string = `${environment.api}/prompts-history`;
+        return this.http
+            .post<any>(url, promptHistory)
+            .pipe(catchError(this.handleError<any>('postPromptHistory')));
+    }
 }

@@ -58,4 +58,11 @@ export class UserService {
       .pipe(catchError(this.handleError<any>('getUsuarioIdPorUsername')));
   }
 
+  getUserEsteiraIdPorEsteiraIdAndUsuarioId(esteiraId: number, usuarioId: number): Observable<any> {
+    const url: string = `${environment.api}/user/esteira/${esteiraId}/user/${usuarioId}`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>('getUserEsteiraIdPorEsteiraIdAndUsuarioId')));
+  }
+
 }
