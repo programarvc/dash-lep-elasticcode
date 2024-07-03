@@ -113,6 +113,8 @@ export class GenAiForDevsComponent implements OnInit {
 
   public promptsByUserEsteiraId: any = [];
 
+  public showModalContent: boolean = false;
+
   constructor(
     private router: Router,
     private cognitoService: CognitoService,
@@ -332,5 +334,9 @@ Como pode ver ele usa o jakarta persistence, então todas as entidades são gere
     }, (erro: any) => {
       console.log('Erro ao registrar prompt', erro);
     })    
+  }
+
+  open(content: any) {
+    this.modalService.open(content)
   }
 }

@@ -24,10 +24,28 @@
                             <div class="card-body">
                                 <div class="prompt-title-space">
                                     <h5 class="card-title">Geração de Código</h5>
-                                    <button type="button" class="btn btn-primary" (click)="openPromptHistoryModal()">
+                                    <button type="button" class="btn btn-primary" (click)="open(PromptsHistoryModal)">
                                         Prompts Gerados: {{this.contElasticPrompts}} >
                                     </button>
                                 </div>
+                                <!-- Modal de histórico de prompts gerados pelo desenvolvedor -->
+                                <ng-template #PromptsHistoryModal let-modal>
+                                    <div class="modal-body custom-modal">
+                                        <!-- Lista de Prompots gerados pelo desenvolvedor para a esteira atual -->
+                                        <ul *ngIf="!showModalContent" class="google-list">
+                                            <li *ngFor="let prompt of promptsByUserEsteiraId">
+                                                <div class="list-item">
+                                                    <h3>Entidade: {{ prompt.entidade }}</h3>
+                                                    <p>Tipo de Código: {{ prompt.tipo_codigo }} | Stack: {{ prompt.stack }}</p>
+                                                  </div>
+                                            </li>
+                                        </ul>
+                                        <!-- Modal de detalhes do prompt selecionado na lista-->
+                                         <div *ngIf="showModalContent">
+                                            <button class="btn-voltar" >Voltar</button>
+                                         </div>
+                                    </div>
+                                </ng-template>
                                 <form (ngSubmit)="generateCode()">
                                     <div class="mb-3">
                                         <label class="form-label">Tipo de Stack</label>
