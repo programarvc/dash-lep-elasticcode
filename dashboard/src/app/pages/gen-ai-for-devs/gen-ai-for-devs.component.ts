@@ -160,12 +160,7 @@ export class GenAiForDevsComponent implements OnInit {
       });
     });
   }
-
-  openPromptHistoryModal(): void {
-    const modalRef = this.modalService.open(PromptHistoryModalComponent, { size: 'lg' });
-    modalRef.componentInstance.prompts = this.promptsByUserEsteiraId;
-  }
-
+  
   genAiButtonSelected(buttonId: number): void {
     this.selectedButtonId = buttonId;
     if (buttonId === 6) {
