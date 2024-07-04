@@ -87,8 +87,6 @@ export class SidebarMenuComponent implements OnInit {
     this.sidebarButtonService.setSelectedButton('botao-dois');
       if(this.esteiraSelecionadaId) {
         this.router.navigate([`/time/${this.esteiraSelecionadaId}`]);
-      } else {
-
       }
   }
 
@@ -96,8 +94,6 @@ export class SidebarMenuComponent implements OnInit {
     this.sidebarButtonService.setSelectedButton('botao-um');
       if(this.esteiraSelecionadaId) {
         this.router.navigate([`/dashboard/${this.esteiraSelecionadaId}`]);
-      } else {
-
       }
   }
 
@@ -105,8 +101,6 @@ export class SidebarMenuComponent implements OnInit {
     this.sidebarButtonService.setSelectedButton('botao-tres');
     if(this.esteiraSelecionadaId) {
       this.router.navigate([`/elastic-devs-ai/${this.esteiraSelecionadaId}`]);
-    } else {
-
     }
   }
 
@@ -119,6 +113,7 @@ export class SidebarMenuComponent implements OnInit {
     this.isEsteiraSelected = true;
     this.esteiraSelecionadaId = this.esteiraSelecionada.id;
     this.modalService.dismissAll(modal);
+    this.esteiraService.setEsteiraSelecionada(this.esteiraSelecionada);
     location.reload();
   }
 
