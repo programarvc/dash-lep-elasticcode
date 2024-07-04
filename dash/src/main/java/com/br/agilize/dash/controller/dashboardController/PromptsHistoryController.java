@@ -33,4 +33,16 @@ public class PromptsHistoryController extends ControllerCrudBase<PromptsHistoryD
         List<PromptsHistoryDto> promptsHistories = this.service.findByUserEsteiraId(userEsteiraId);
         return ResponseEntity.ok(promptsHistories);
     }
+
+    @GetMapping("/esteira/{esteiraId}")
+    public ResponseEntity<List<PromptsHistoryDto>> getPromptsByEsteiraId(@PathVariable Long esteiraId) {
+        List<PromptsHistoryDto> promptsEsteiraHistories = this.service.getPromptsByEsteiraId(esteiraId);
+        return ResponseEntity.ok(promptsEsteiraHistories);
+    }
+
+    @GetMapping("/count/esteira/{esteiraId}")
+    public ResponseEntity<Long> countByEsteiraId(@PathVariable Long esteiraId) {
+        Long count = this.service.countByEsteiraId(esteiraId);
+        return ResponseEntity.ok(count);
+    }
 }

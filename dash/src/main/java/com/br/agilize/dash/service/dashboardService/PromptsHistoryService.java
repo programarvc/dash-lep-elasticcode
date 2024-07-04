@@ -54,4 +54,13 @@ public class PromptsHistoryService extends ServiceCrudBase<PromptsHistoryDto> {
         List<PromptsHistoryEntity> promptsHistories = this.repository.findByUserEsteiraId(userEsteiraId);
         return promptsHistories.stream().map(this.mapper::modelToDTO).toList();
     }
+
+    public List<PromptsHistoryDto> getPromptsByEsteiraId(Long esteiraId) {
+        List<PromptsHistoryEntity> promptsHistories = this.repository.findByEsteiraId(esteiraId);
+        return promptsHistories.stream().map(this.mapper::modelToDTO).toList();
+    }
+
+    public Long countByEsteiraId(Long esteiraId) {
+        return this.repository.countByEsteiraId(esteiraId);
+    }
 }
