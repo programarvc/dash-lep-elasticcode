@@ -250,32 +250,43 @@ export class TimeComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+
+    this.esteiraService.esteiraSelecionada$.subscribe((esteira) => {
+      if (esteira) {
+        this.esteiraSelecionada = esteira;
+        this.isEsteiraSelected = true;
+        this.esteiraSelecionadaId = this.esteiraSelecionada.id;
+        this.atualizarDados();
+      }
+    });
+
     const savedEsteira = localStorage.getItem('selectedEsteira');
     if (savedEsteira) {
       this.esteiraSelecionada = JSON.parse(savedEsteira);
       this.isEsteiraSelected = true;
       this.esteiraSelecionadaId = this.esteiraSelecionada.id;
-
       this.currentEsteira = this.esteiraSelecionada;
       this.router.navigate([`time/${this.esteiraSelecionada.id}`]);
+      this.atualizarDados();
     }
 
     this.route.paramMap.subscribe((params) => {
-
       const esteiraId = params.get('esteiraId');
-      if (esteiraId) {
+      if (esteiraId && !isNaN(Number(esteiraId))) {
+        console.log("esteiraId", esteiraId)
         this.currentEsteira.id = parseInt(esteiraId);
         this.getTimesByEsteira(parseInt(esteiraId));
         this.getColaboradoresByEsteira(parseInt(esteiraId));
         this.getTimeAndColaboradorByEsteiraId(parseInt(esteiraId));
-
       }
+
       const colaboradorId = params.get('colaboradorId');
       if (colaboradorId) {
         this.getTimesAcoesHabilidades(parseInt(colaboradorId));
 
       }
     });
+
     if (this.searchResultsCompetencias.length === 0) {
       const cardElement = document.querySelector('.card-colaborador-content');
       if (cardElement) {
@@ -285,8 +296,7 @@ export class TimeComponent implements OnInit {
   }
 
   getColaboradoresByEsteira(esteiraId: number) {
-    this.timeService.getColaboradoresByEsteiraId(this.currentEsteira.id).subscribe((response) => {
-      // Aqui está o ajuste, usando [0] para pegar o primeiro colaborador da lista
+    this.timeService.getColaboradoresByEsteiraId(esteiraId).subscribe((response) => {
       this.currentColaborador = response[0];
       this.colaboradores = response;
       this.getTimesAcoesHabilidades(this.currentColaborador.id);
@@ -733,6 +743,13 @@ export class TimeComponent implements OnInit {
     });
 
     this.selectedActivities = this.formatDate(this.dataInicioActivity) + ' - ' + this.formatDate(this.dataFimActivity);
+  }
+
+  private atualizarDados() {
+    // Recarregar os dados conforme a esteira selecionada
+    this.getTimesByEsteira(this.esteiraSelecionadaId);
+    this.getColaboradoresByEsteira(this.esteiraSelecionadaId);
+    this.getTimeAndColaboradorByEsteiraId(this.esteiraSelecionadaId);
   }
 }
 
