@@ -327,13 +327,12 @@ public lineChartOptions: ChartOptions = {
     this.valorMaturidadeDate = new Date();
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     const savedEsteira = localStorage.getItem('selectedEsteira');
     if (savedEsteira) {
       this.esteiraSelecionada = JSON.parse(savedEsteira);
       this.isEsteiraSelected = true;
       this.esteiraSelecionadaId = this.esteiraSelecionada.id;
-
       this.currentEsteira = this.esteiraSelecionada;
       this.router.navigate([`dashboard/${this.esteiraSelecionada.id}`]);
     }
@@ -607,7 +606,6 @@ public lineChartOptions: ChartOptions = {
   public getJiraStories(): void {
     this.jiraActivitiesService.getCountStories().subscribe((response) => {
       this.jiraActivities = response;
-      console.log(this.jiraActivities);
     });
   }
 
