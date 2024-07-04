@@ -36,14 +36,10 @@
                                             <li *ngFor="let prompt of promptsByUserEsteiraId">
                                                 <div class="list-item">
                                                     <h3>Entidade: {{ prompt.entidade }}</h3>
-                                                    <p>Tipo de Código: {{ prompt.tipo_codigo }} | Stack: {{ prompt.stack }}</p>
+                                                    <p>Tipo de Código: {{ prompt.tipo_codigo }} | Stack: {{ prompt.stack }} <span *ngIf="usuario.admin">| Colaborador: {{ prompt.userEsteira.username.colaborador.nome }}</span></p>
                                                   </div>
                                             </li>
                                         </ul>
-                                        <!-- Modal de detalhes do prompt selecionado na lista-->
-                                         <div *ngIf="showModalContent">
-                                            <button class="btn-voltar" >Voltar</button>
-                                         </div>
                                     </div>
                                 </ng-template>
                                 <form (ngSubmit)="generateCode()">

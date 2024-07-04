@@ -6,13 +6,86 @@ import { UserService } from 'src/services/usuario/usuario.service';
 import { PromptService } from 'src/services/prompts/prompts.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { PromptHistoryModalComponent } from 'src/app/components/prompt-history-modal/prompt-history-modal.component';
-
 interface GenAiMenuItem {
   id: number;
   title: string;
   icon: string;
   status: string;
+}
+
+interface User {
+  id: number;
+  nome: string;
+  colaborador: {
+    id: number;
+    nome: string;
+    email: string;
+    github: string;
+    jiraId: string;
+    miniBio: string;
+    habilidades: [
+      {
+        id: number;
+        nome: string;
+      }
+    ];
+    empresas: [
+      {
+        id: number;
+        nome: string;
+      }
+    ];
+    promptsHistory: string;
+  };
+  admin: boolean;
+}
+
+interface Prompt {
+  id: number;
+  stack: string;
+  tipo_codigo: string;
+  entidade: string;
+  tabela: string;
+  prompt: string;
+  userEsteira: {
+    id: number;
+    username: {
+      id: number;
+      nome: string;
+      colaborador: {
+        id: number;
+        nome: string;
+        email: string;
+        github: string;
+        jiraId: string;
+        miniBio: string;
+        habilidades: [
+          {
+            id: number;
+            nome: string;
+          }
+        ];
+        empresas: [
+          {
+            id: number;
+            nome: string;
+          }
+        ];
+        promptsHistory: string;
+      };
+      admin: boolean;
+    };
+    esteira: {
+      id: number;
+      nome: string;
+      tipo: string;
+      empresa: {
+        id: number;
+        nome: string;
+      };
+      promptsHistory: string;
+    };
+  };
 }
 
 interface CodeType {
@@ -61,6 +134,35 @@ export class GenAiForDevsComponent implements OnInit {
   public userEsteiraValue: number = 0;
 
   public contElasticPrompts: number = 0;
+
+  public usuario: User = {
+    id: 0,
+    nome: '',
+    colaborador: {
+      id: 0,
+      nome: '',
+      email: '',
+      github: '',
+      jiraId: '',
+      miniBio: '',
+      habilidades: [
+        {
+          id: 0,
+          nome: ''
+        }
+      ],
+      empresas: [
+        {
+          id: 0,
+          nome: ''
+        }
+      ],
+      promptsHistory: ''
+    },
+    admin: false
+  }
+
+  public prompts: Prompt[] = [];
 
   public genaiMenu: GenAiMenuItem[] = [
     { id: 1, title: 'Manipulação de Repositório', icon: 'assets/images/repository_manipulation.png', status: 'disabled' },
@@ -111,7 +213,7 @@ export class GenAiForDevsComponent implements OnInit {
   private selectedStack: string | null = null;
   private inputTimeout: any;
 
-  public promptsByUserEsteiraId: any = [];
+  public promptsByUserEsteiraId: Prompt[] = [];
 
   public showModalContent: boolean = false;
 
@@ -143,24 +245,43 @@ export class GenAiForDevsComponent implements OnInit {
       this.userService.getUsuarioIdPorUsername(this.username).subscribe((userId: any) => {
         this.userId = userId;
 
+        //Obtem usuario por userId
+        this.userService.getUserByUserId(this.userId).subscribe((user: any) => {
+          this.usuario = user;
+
+          //verifica se usuário é admin
+          if (this.usuario.admin === true) {
+            //Obtém contagem de prompts por EsteiraId
+            this.promptsService.getContPromptsByEsteiraId(this.esteiraSelecionadaId).subscribe((contPrompts: any) => {
+              this.contElasticPrompts = contPrompts;
+            });
+
+            //Obtém prompt por esteiraId
+            this.promptsService.getPromptsHistoryByEsteiraId(this.esteiraSelecionadaId).subscribe((prompts: any) => {
+              this.promptsByUserEsteiraId = prompts;
+              console.log('Prompts por userEsteiraId', prompts);
+            });
+          } else {
+            //Obtém contagem de prompts por userEsteiraId
+            this.promptsService.getContPromptsByUserEsteiraId(this.userEsteiraId).subscribe((contPrompts: any) => {
+              this.contElasticPrompts = contPrompts;
+            });
+
+            //Obtém prompts por userEsteiraId
+            this.promptsService.getPromptsHistoryByUserEsteiraId(this.userEsteiraId).subscribe((prompts: any) => {
+              this.promptsByUserEsteiraId = prompts;
+            });
+          }
+        });
+
         //Obtém userEsteiraId por esteiraId e userId
         this.userService.getUserEsteiraIdPorEsteiraIdAndUsuarioId(this.esteiraSelecionadaId, this.userId).subscribe((userEsteiraId: any) => {
           this.userEsteiraId = userEsteiraId;
-
-        //Obtém prompts por userEsteiraId
-        this.promptsService.getPromptsHistoryByUserEsteiraId(this.userEsteiraId).subscribe((prompts: any) => {
-          this.promptsByUserEsteiraId = prompts;
-        })
-
-        //Obtém contagem de prompts por userEsteiraId
-        this.promptsService.getContPromptsByUserEsteiraId(this.userEsteiraId).subscribe((contPrompts: any) => {
-          this.contElasticPrompts = contPrompts;
-        })
         });
       });
     });
   }
-  
+
   genAiButtonSelected(buttonId: number): void {
     this.selectedButtonId = buttonId;
     if (buttonId === 6) {
@@ -328,7 +449,7 @@ Como pode ver ele usa o jakarta persistence, então todas as entidades são gere
     this.promptsService.postPromptHistory(promptData).subscribe((response: any) => {
     }, (erro: any) => {
       console.log('Erro ao registrar prompt', erro);
-    })    
+    })
   }
 
   open(content: any) {
