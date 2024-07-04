@@ -338,7 +338,6 @@ export class TimeComponent implements OnInit {
   getTimesByColaboradorId(colaboradorId: number) {
     this.timeService.getTimesAndEsteiraByColaboradorId(colaboradorId).subscribe(response => {
       this.time = response.filter((time: { esteira: { id: any; }; }) => time.esteira.id === this.currentEsteira.id);
-
     });
   }
 
@@ -365,7 +364,6 @@ export class TimeComponent implements OnInit {
   public getDuasHabilidades(id: number): void {
     this.habilidadeService.getPrimeirasHabilidadesByColaborador(id).subscribe((response) => {
       this.duasHabilidadesByColaborador = response;
-
     })
   }
 
@@ -399,16 +397,6 @@ export class TimeComponent implements OnInit {
       this.getDuasHabilidades(colaborador.id);
     }
   }
-
-  /*public async setCurrentMetasColaborador (id: number) {
-    const metas = this.metasColaborador.find(
-      (metasColaborador) => metasColaborador.id === id
-    );
-    if (metas) {
-      this.currentMetasColaborador = metas;
-      this.getAllLatestMetaByColaboradorId(metas.id);
-    }
-  }*/
 
   handleSearch(event: string) {
     if (event !== '') {
@@ -449,19 +437,9 @@ export class TimeComponent implements OnInit {
       this.getTasksCountByColaboradorId(colaborador.id);
       this.getColaboradorEsteiraId(this.currentEsteira.id);
       this.getTimesByEsteira(this.currentEsteira.id);
-
       this.selectedTimePr = 'Todos';
     });
   }
-
-
-  /*
-   getLatestMetaByColaboradorId(colaboradorId: number){
-     this.timeService.getLatestMetaByColaboradorId(colaboradorId).subscribe((response) => {
-       this.currentMetasColaborador = response;
-     });
- 
-   }*/
 
   getAllTimesAndDevs() {
     this.getTimesByEsteira(this.currentEsteira.id);
@@ -523,15 +501,6 @@ export class TimeComponent implements OnInit {
       };
     }
   }
-
-  /*
-   //metodo anterior x
-   getPrCountByColaboradorId( colaboradorId: number) {
-     this.timeService.getPrCountByColaboradorId(colaboradorId).subscribe((response) => {
-       this.currentPrCount = response;
-     });
-   }*/
-
 
   //Metodos para retornar a quantidade de prs em tempo determinado Hasura API
 
@@ -741,7 +710,7 @@ export class TimeComponent implements OnInit {
     this.timeService.getTasksCountForColaboradorId(colaboradorId, this.dataInicioActivity, this.dataFimActivity).subscribe(data => {
       this.currentTasksCountJira.counttasks = data.counttasks || 0;
     });
-
+    
     this.selectedActivities = this.formatDate(this.dataInicioActivity) + ' - ' + this.formatDate(this.dataFimActivity);
   }
 
