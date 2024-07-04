@@ -44,11 +44,27 @@ export class PromptService {
             .pipe(catchError(this.handleError<any>('getPromptsHistoryByUserEsteiraId')));
     }
 
-    //Obter prompts por userEsteiraId
+    //Obter quantidade de prompts por userEsteiraId
     getContPromptsByUserEsteiraId(userEsteiraId: any): Observable<any> {
         const url =`${environment.api}/prompts-history/count/user-esteira/${userEsteiraId}`;
         return this.http
             .get<any>(url)
             .pipe(catchError(this.handleError<any>('getContPromptsByUserEsteiraId')));
+    }
+
+    //Obter prompts por EsteiraId
+    getPromptsHistoryByEsteiraId(esteiraId: any): Observable<any> {
+        const url =`${environment.api}/prompts-history/esteira/${esteiraId}`;
+        return this.http
+            .get<any>(url)
+            .pipe(catchError(this.handleError<any>('getPromptsHistoryByEsteiraId')));
+    }
+
+    //Obter quantidade de prompts por EsteiraId
+    getContPromptsByEsteiraId(esteiraId: any): Observable<any> {
+        const url =`${environment.api}/prompts-history/count/esteira/${esteiraId}`;
+        return this.http
+            .get<any>(url)
+            .pipe(catchError(this.handleError<any>('getContPromptsByEsteiraId')));
     }
 }
