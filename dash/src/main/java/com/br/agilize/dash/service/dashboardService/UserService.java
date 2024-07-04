@@ -1,8 +1,10 @@
 package com.br.agilize.dash.service.dashboardService;
+import com.br.agilize.dash.model.entity.ColaboradorEntity;
 import com.br.agilize.dash.model.entity.dashboardEntity.EsteiraDeDesenvolvimentoEntity;
 
 import java.util.*;
 
+import com.br.agilize.dash.repository.ColaboradorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -29,6 +31,9 @@ public class UserService extends ServiceCrudBase<UserDto> {
     private UserEsteiraRepository userEsteiraRepository;
 
     @Autowired
+    private ColaboradorRepository colaboradorRepository;
+
+    @Autowired
     private UserMapper mapper;
 
     @Autowired
@@ -48,14 +53,26 @@ public class UserService extends ServiceCrudBase<UserDto> {
     }
 
     @Override
-public UserDto salvar(UserDto payload) {
-    Optional<UserEntity> existingUser = this.repository.findByNome(payload.getNome());
-    if (existingUser.isPresent()) {
-        throw new RuntimeException("Usuário já existe");
+    public UserDto salvar(UserDto payload) {
+        Optional<UserEntity> existingUser = this.repository.findByNome(payload.getNome());
+        if (existingUser.isPresent()) {
+            throw new RuntimeException("Usuário já existe");
+        }
+
+        UserEntity userEntity = this.mapper.dtoToModel(payload);
+
+        // Verifica se colaborador está presente e tem um ID válido
+        if (userEntity.getColaborador() != null && userEntity.getColaborador().getId() != null) {
+            ColaboradorEntity colaborador = colaboradorRepository.findById(userEntity.getColaborador().getId())
+                    .orElseThrow(() -> new RuntimeException("Colaborador não encontrado"));
+            userEntity.setColaborador(colaborador);
+        } else {
+            userEntity.setColaborador(null); // Define colaborador como null se não for válido
+        }
+
+        UserEntity userSalvo = this.repository.save(userEntity);
+        return this.mapper.modelToDTO(userSalvo);
     }
-    UserEntity UserSalvo = this.repository.save(this.mapper.dtoToModel(payload));
-    return this.mapper.modelToDTO(UserSalvo);
-}
 
     @Override
     public void excluirPorId(Long id) {

@@ -16,7 +16,10 @@ public class UserEntity {
     @Column(name = "username", nullable = false, unique = true)
     private String nome;
 
-    @OneToOne(optional = true)
-    @JoinColumn(name = "colaborador_id")
+    @OneToOne
+    @JoinColumn(name = "colaborador_id", nullable = true)
     private ColaboradorEntity colaborador;
+
+    @Column(name = "is_admin", nullable = false)
+    private boolean isAdmin;
 }
