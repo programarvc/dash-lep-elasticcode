@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { CognitoService } from 'src/app/cognito.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { SidebarButtonService } from 'src/services/sidedar-button/sidebar-button.service';
 
 import {
@@ -28,6 +28,8 @@ import { EsteiraService } from 'src/services/esteira/esteira.service';
   styleUrls: ['./sidebar-menu.component.sass']
 })
 export class SidebarMenuComponent implements OnInit {
+  @ViewChild('selectEsteiraModal', { static: true }) selectEsteiraModal: any;
+
   public cognitoUser: UserEsteira[] = [];
   public esteiras: EsteiraDeDesenvolvimento[] = [];
   public tipo: TiposEnum[] = [];
@@ -44,6 +46,8 @@ export class SidebarMenuComponent implements OnInit {
   public esteiraSelecionada: any = [];
   public isEsteiraSelected: boolean = false;
   public esteiraSelecionadaId: number = 0;
+
+  private modalRef: NgbModalRef | undefined;
 
   constructor(
     private cognitoService: CognitoService,
@@ -85,21 +89,30 @@ export class SidebarMenuComponent implements OnInit {
 
   public async devDash() {
     this.sidebarButtonService.setSelectedButton('botao-dois');
-      if(this.esteiraSelecionadaId) {
-        this.router.navigate([`/time/${this.esteiraSelecionadaId}`]);
-      }
+    if (this.esteiraSelecionadaId) {
+      this.router.navigate([`/time/${this.esteiraSelecionadaId}`]);
+    } else {
+      this.open(this.selectEsteiraModal);
+      this.router.navigate([`/time/${this.esteiraSelecionadaId}`]);
+    }
   }
 
   public async dashboard() {
     this.sidebarButtonService.setSelectedButton('botao-um');
-      if(this.esteiraSelecionadaId) {
-        this.router.navigate([`/dashboard/${this.esteiraSelecionadaId}`]);
-      }
+    if (this.esteiraSelecionadaId) {
+      this.router.navigate([`/dashboard/${this.esteiraSelecionadaId}`]);
+    } else {
+      this.open(this.selectEsteiraModal);
+      this.router.navigate([`/dashboard/${this.esteiraSelecionadaId}`]);
+    }
   }
 
   public async genAi() {
     this.sidebarButtonService.setSelectedButton('botao-tres');
-    if(this.esteiraSelecionadaId) {
+    if (this.esteiraSelecionadaId) {
+      this.router.navigate([`/elastic-devs-ai/${this.esteiraSelecionadaId}`]);
+    } else {
+      this.open(this.selectEsteiraModal);
       this.router.navigate([`/elastic-devs-ai/${this.esteiraSelecionadaId}`]);
     }
   }
@@ -110,14 +123,24 @@ export class SidebarMenuComponent implements OnInit {
   }
 
   public selectEsteira(modal: any): void {
-    this.isEsteiraSelected = true;
-    this.esteiraSelecionadaId = this.esteiraSelecionada.id;
-    this.modalService.dismissAll(modal);
-    this.esteiraService.setEsteiraSelecionada(this.esteiraSelecionada);
-    location.reload();
+    if(this.esteiraSelecionadaId) {
+      this.isEsteiraSelected = true;
+      this.esteiraSelecionadaId = this.esteiraSelecionada.id;
+      this.modalService.dismissAll(modal);
+      this.esteiraService.setEsteiraSelecionada(this.esteiraSelecionada);
+      location.reload();
+    } else {
+      this.modalService.dismissAll(modal);
+      location.reload();
+    }
   }
 
   open(content: any) {
-    this.modalService.open(content)
+    this.modalRef = this.modalService.open(content);
+    this.modalRef.result.then(() => {
+      if (this.esteiraSelecionadaId) {
+        this.router.navigate([`${this.sidebarButtonService.getSelectedButton()}/${this.esteiraSelecionadaId}`]);
+      }
+    }, () => {});
   }
 }
