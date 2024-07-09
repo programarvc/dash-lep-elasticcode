@@ -262,4 +262,11 @@ public class JiraActivitiesService implements CommandLineRunner {
             return new HashMap<>();
         }
     }
+
+    //Método para reotrnar atividades disponíveis no Jira
+    public List<JiraActivitiesDto> findAvailableActivities() {
+        return repository.findAvailableActivities().stream()
+                .map(jiraActivitiesMapper::modelToDTO)
+                .collect(Collectors.toList());
+    }
 }

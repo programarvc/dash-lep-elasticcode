@@ -86,4 +86,13 @@ public interface JiraActivitiesRepository extends JpaRepository<JiraActivitiesEn
         "AND TO_DATE(updated_at, 'YYYY-MM-DD') >= CURRENT_DATE - INTERVAL '60 days'", nativeQuery = true)
     Map<String, Object> sumTotalPointsForJiraStoriesLast60Days();
 
+
+    //Query para buscar as atividades disponíveis no Jira
+    @Query(value = "SELECT j.*" +
+        "FROM tms_task j " +
+        "WHERE j.source = 'Jira'" +
+        "AND j.type_detail IN ('História', 'Subtarefa', 'Tarefa', 'Bug')" +
+        "AND j.status_detail IN ('Tarefas pendentes')" +
+        "AND j.points IS NOT NULL", nativeQuery = true)
+    List<JiraActivitiesEntity> findAvailableActivities();
 }

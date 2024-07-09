@@ -90,4 +90,10 @@ public class JiraActivitiesController {
         return ResponseEntity.ok(service.getTotalPointsForJiraStoriesLast60Days());
     }
 
+
+    @GetMapping("/atividades-disponiveis")
+    public ResponseEntity<List<JiraActivitiesDto>> findAvailableActivities() {
+        return ResponseEntity.ok(service.findAvailableActivities());
+    }
+
 }
