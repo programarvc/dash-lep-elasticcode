@@ -465,7 +465,7 @@
           </div>
           <!-- Card para o total de histórias -->
           <div class="col-md-4">
-            <div class="historias-epicos-card" onclick="open(content)">
+            <div class="historias-epicos-card" (click)="open(contentFinishedTasks)">
               <div class="historias-epicos-card-content">
                 <div class="historias-epicos-card-text">
                   <h2>Tarefas Concluidas</h2><span>(total)</span>
@@ -474,9 +474,26 @@
                   </p>
                 </div>
               </div>
+              <ng-template #contentFinishedTasks let-modal>
+                <div class="modal-body custom-modal">
+                  <table class="activities-table">
+                    <thead>
+                      <tr>
+                        <th>Atividade</th>
+                        <th>Story Points</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let activity of finishedActivities">
+                        <td>{{ activity.name }}</td>
+                        <td>{{ activity.points }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </ng-template>
             </div>
           </div>
-
           <!-- Card para a quantidade média de histórias por épico -->
           <div class="col-md-4">
             <div class="historias-epicos-card" (click)="open(contentActivities)">
