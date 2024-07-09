@@ -105,4 +105,11 @@ export class jiraActivitieseService {
       .pipe(catchError(this.handleError<any>('getNameAndPoints')));
   }
 
+  getFinishedActivities(): Observable<any> {
+    const url: string = `${environment.api}/jira/completedActivities`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>('getFinishedAcitivities')));
+  }
+
 }
