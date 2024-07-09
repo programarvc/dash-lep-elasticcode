@@ -89,5 +89,13 @@ export class jiraActivitieseService {
         catchError(this.handleError<any>('getTotalPointsForJiraStoriesLast60Days'))
       );
   }
+
+  //Endpoint retorna as tarefas pendentes no Jira
+  getPendingTasks(): Observable<any> {
+    const url: string = `${environment.api}/jira/atividades-disponiveis`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>('getPendingTasks')));
+  }
  
 }
