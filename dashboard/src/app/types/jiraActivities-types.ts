@@ -32,8 +32,6 @@ export interface StoriesAndEpicsData {
 
 export interface TotalPoints {
   total_points: number;
-  
-
 }
 
 export interface TotalPointsLast60Days {
