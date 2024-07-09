@@ -255,5 +255,12 @@ public class JiraActivitiesService implements CommandLineRunner {
     // Método para retornar o nome e pontos das atividades
     public List<Map<String, Object>> findNameAndPoints() {
         return repository.findNameAndPoints();
-    } 
+    }
+
+    //método para retornar atividades concluídas
+    public List<JiraActivitiesDto> findCompletedActivities() {
+        return repository.findCompletedActivities().stream()
+                .map(jiraActivitiesMapper::modelToDTO)
+                .collect(Collectors.toList());
+    }
 }

@@ -75,7 +75,7 @@ public interface JiraActivitiesRepository extends JpaRepository<JiraActivitiesEn
         "FROM tms_task " +
         "WHERE type_detail IN ('História', 'Subtarefa', 'Bug') " +
         "AND source = 'Jira' " +
-        "AND (status_detail = 'Concluido(Dev)' OR status_detail = 'DEPLOYED') " +
+        "AND (status_detail = 'Concluido(DEV)' OR status_detail = 'DEPLOYED' OR status_detail='Concluído')" +
         "AND points IS NOT NULL", nativeQuery = true)
     Map<String, Object> calculateTotalAndAveragePoints();
 
@@ -100,5 +100,13 @@ public interface JiraActivitiesRepository extends JpaRepository<JiraActivitiesEn
         "WHERE j.parent = :epic " + 
         "AND TO_DATE(j.updated_at, 'YYYY-MM-DD') >= CURRENT_DATE - INTERVAL '60 days'", nativeQuery = true)
     List<Map<String, Object>> findNameAndPointForEpicEqualsParent(@Param("epic") String epic);
-    
+
+    // Query para retornar lista de atividades concluídas
+    @Query(value = "SELECT j.* " +
+            "FROM tms_task j " +
+            "WHERE j.type_detail IN ('História', 'Subtarefa', 'Bug') " +
+            "AND j.source = 'Jira' " +
+            "AND j.status_detail IN ('Concluído(DEV)', 'DEPLOYED', 'Concluído') " +
+            "AND j.points IS NOT NULL", nativeQuery = true)
+    List<JiraActivitiesEntity> findCompletedActivities();
 }

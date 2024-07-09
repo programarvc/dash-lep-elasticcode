@@ -37,6 +37,12 @@ public class JiraActivitiesController {
         super();
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<List<JiraActivitiesDto>> getAll() {
+        List<JiraActivitiesDto> activities = service.findAll();
+        return ResponseEntity.ok(activities);
+    }
+
     @GetMapping("/countstory")
     public ResponseEntity<Map<String, Object>> countStories() {
         Map<String, Object> count = service.countStories();
@@ -100,5 +106,11 @@ public class JiraActivitiesController {
     public ResponseEntity<List<Map<String, Object>>> getNameAndPoints() {
         List<Map<String, Object>> result = service.findNameAndPoints();
         return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/completedActivities")
+    public ResponseEntity<List<JiraActivitiesDto>> getCompletedActivities() {
+        List<JiraActivitiesDto> completedActivities = service.findCompletedActivities();
+        return ResponseEntity.ok(completedActivities);
     }
 }
