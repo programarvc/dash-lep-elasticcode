@@ -260,8 +260,6 @@ export class DashProjetoComponent implements OnInit {
     count_epics: 0
   };
 
-  
-
 public lineChartData: ChartDataset<'line'>[] = [
   { 
     data: [65, 50, 40].reverse(), 
@@ -298,6 +296,7 @@ public lineChartOptions: ChartOptions = {
   public epicsList: EpicsList [] = [];
   public activitiesPerEpic: ActivitiesPerEpic [] = [];
   public allactivitieslist : ActivitiesPerEpic [] = [];
+  public finishedActivities: ActivitiesPerEpic [] = [];
   
   //variavel com dados para armazenar a quantidade total de prs por colaborador Hasura
   currentVcsPullRequestTop5: VcsPullRequestTop5[] = [];
@@ -374,6 +373,7 @@ public async setCurrent(id: number) {
   this.getJiraEpicsLast60Days();
   this.getEpicList();
   this.getListNameAndPoints();
+  this.getListFinishedActivities();
 }
 
 public async setCurrentMaturidade (id: number) {
@@ -605,11 +605,8 @@ public async setCurrentMaturidade (id: number) {
   public getJiraStories(): void {
     this.jiraActivitiesService.getCountStories().subscribe((response) => {
       this.jiraActivities = response;
-      console.log(this.jiraActivities);
     });
   }
-
-
 
   public getcountAllStories(): void {
     this.jiraActivitiesService.getcountAllStories().subscribe((response) => {
@@ -622,7 +619,6 @@ public async setCurrentMaturidade (id: number) {
       this.allActivities60days = response;
     });
   }
-
 
   public getJiraEpicsLast60Days(): void {
     this.jiraActivitiesService.getEpicsLast60Days().subscribe((response) => {
@@ -642,7 +638,6 @@ public async setCurrentMaturidade (id: number) {
     });
   }
 
-
   public getTotalPointsForJiraStoriesLast60Days(): void {
     this.jiraActivitiesService.getTotalPointsForJiraStoriesLast60Days().subscribe((response) => {
       this.TotalPointsLast60Days = response;
@@ -656,7 +651,6 @@ public async setCurrentMaturidade (id: number) {
   getEpicList(): void {
     this.jiraActivitiesService.getEpicList().subscribe((response) => {
       this.epicsList = response;
-      console.log(this.epicsList);
     });
   }
 
@@ -682,4 +676,9 @@ public async setCurrentMaturidade (id: number) {
     });
   }
 
+  getListFinishedActivities(): void {
+    this.jiraActivitiesService.getFinishedActivities().subscribe((response) => {
+      this.finishedActivities = response;
+    });
+  }
 }
