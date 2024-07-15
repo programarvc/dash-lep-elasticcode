@@ -5,6 +5,7 @@ import { CognitoService } from 'src/app/cognito.service';
 import { UserService } from 'src/services/usuario/usuario.service';
 import { PromptService } from 'src/services/prompts/prompts.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { jiraActivitieseService } from 'src/services/jira-activities/jira-activities.service';
 
 interface GenAiMenuItem {
   id: number;
@@ -95,16 +96,19 @@ interface CodeType {
   disabled?: boolean;
 }
 
-interface contGenAiPrompts {
-  id: number;
-  contador: number;
-  esteiraId: number;
-}
-
 interface JiraAtividades {
   id: number;
-  esteiraId: number;
-  atividade: string;
+  epic: string;
+  parent: string;
+  name: string;
+  priority: string;
+  sprint: string;
+  statusDetail: string;
+  typeDetail: string;
+  points: number;
+  createdAt: string;
+  source: string;
+  updatedAt: string;
 }
 
 @Component({
@@ -175,12 +179,6 @@ export class GenAiForDevsComponent implements OnInit {
     { id: 8, title: 'Geração de SQL', icon: 'assets/images/sql_generation.png', status: 'disabled' },
   ];
 
-  public jiraAtividades: JiraAtividades[] = [
-    { id: 1, esteiraId: 1, atividade: 'Desenvolver API Rest para a entidade Cliente' },
-    { id: 2, esteiraId: 1, atividade: 'Desenvolver API Rest para a entidade Produto' },
-    { id: 3, esteiraId: 2, atividade: 'Desenvolver API Rest para a entidade Pedido' },
-  ]
-
   public codeTypes: CodeType[] = [
     { id: 1, tipo_de_codigo: 'CRUD', stack: 'backend' },
     { id: 2, tipo_de_codigo: 'API Rest', stack: 'backend' },
@@ -215,6 +213,9 @@ export class GenAiForDevsComponent implements OnInit {
 
   public promptsByUserEsteiraId: Prompt[] = [];
 
+  public pedingJiraTasks: JiraAtividades[] = [];
+  public selectedJiraTask: string | null = null;
+
   public showModalContent: boolean = false;
 
   constructor(
@@ -223,6 +224,7 @@ export class GenAiForDevsComponent implements OnInit {
     private userService: UserService,
     private promptsService: PromptService,
     private modalService: NgbModal,
+    private jiraService: jiraActivitieseService,
   ) { }
 
   ngOnInit(): void {
@@ -280,6 +282,8 @@ export class GenAiForDevsComponent implements OnInit {
         });
       });
     });
+
+    this.getPendingJiraTasks();
   }
 
   genAiButtonSelected(buttonId: number): void {
@@ -309,7 +313,7 @@ export class GenAiForDevsComponent implements OnInit {
         ).slice(0, 3);
         this.suggestionsVisible = this.filteredCodeTypes.length > 0;
       }
-    }, 500); // Delay de 0,5 segundos para reduzir o tempo de espera
+    }, 500);
     this.clearGeneratedCode();
   }
 
@@ -339,9 +343,13 @@ export class GenAiForDevsComponent implements OnInit {
     }
 
     this.generatedCode = `
-Prompt para geração de código:
+Prompt para geração de código:\n`;
 
-aja como um copiloto de desenvolvimento, sua função é gerar o código em java para uma api-rest já existente para a entidade ${entity}.
+if(this.selectedJiraTask) {
+  this.generatedCode += `\nAtividade Jira: ${this.selectedJiraTask}\n`;
+}
+
+this.generatedCode += `\nAja como um copiloto de desenvolvimento, sua função é gerar o código em java para uma api-rest já existente para a entidade ${entity}.
 \n`;
 
     if (inputTable) {
@@ -454,5 +462,12 @@ Como pode ver ele usa o jakarta persistence, então todas as entidades são gere
 
   open(content: any) {
     this.modalService.open(content)
+  }
+
+  public getPendingJiraTasks(): void {
+    this.jiraService.getPendingTasks().subscribe((tasks: any) => {
+      this.pedingJiraTasks = tasks;
+      console.log('Tarefas pendentes', tasks);
+    })
   }
 }
