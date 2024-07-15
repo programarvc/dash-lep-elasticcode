@@ -2,6 +2,8 @@ package com.br.agilize.dash.model.dto.dashboardDto;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class PromptsHistoryDto {
     private Long id;
@@ -11,4 +13,5 @@ public class PromptsHistoryDto {
     private String tabela;
     private String prompt;
     private UserEsteiraDto userEsteira;
+    private JiraActivitiesDto jiraActivity;
 }

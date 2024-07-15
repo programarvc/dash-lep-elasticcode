@@ -1,9 +1,11 @@
 package com.br.agilize.dash.service.dashboardService;
 
 import com.br.agilize.dash.exception.DashNotFoundException;
+import com.br.agilize.dash.mapper.dashboardMapper.PromptJiraActivityMapper;
 import com.br.agilize.dash.mapper.dashboardMapper.PromptsHistoryMapper;
 import com.br.agilize.dash.model.dto.dashboardDto.PromptsHistoryDto;
 import com.br.agilize.dash.model.entity.dashboardEntity.PromptsHistoryEntity;
+import com.br.agilize.dash.repository.dashboardRepository.PromptJiraActivityRepository;
 import com.br.agilize.dash.repository.dashboardRepository.PromptsHistoryRepository;
 
 import com.br.agilize.dash.service.ServiceCrudBase;
@@ -22,6 +24,12 @@ public class PromptsHistoryService extends ServiceCrudBase<PromptsHistoryDto> {
 
     @Autowired
     private PromptsHistoryMapper mapper;
+
+    @Autowired
+    private PromptJiraActivityRepository promptJiraActivityRepository;
+
+    @Autowired
+    private PromptJiraActivityMapper promptJiraActivityMapper;
 
     @Override
     public PromptsHistoryDto obterPorId(Long id){

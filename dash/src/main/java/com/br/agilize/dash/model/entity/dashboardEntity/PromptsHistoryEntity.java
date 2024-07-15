@@ -32,4 +32,9 @@ public class PromptsHistoryEntity {
     @ManyToOne
     @JoinColumn(name = "user_esteira_id")
     private UserEsteiraEntity userEsteira;
+
+    @ManyToOne
+    @JoinColumn(name = "tms_task_id")
+    private JiraActivitiesEntity jiraActivity;
+
 }
