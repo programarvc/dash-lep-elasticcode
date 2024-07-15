@@ -75,8 +75,10 @@
                                             placeholder="Informe o tipo de código" 
                                             required
                                         >
-                                        <ul class="suggestions"
-                                            *ngIf="filteredCodeTypes.length > 0 && suggestionsVisible">
+                                        <ul 
+                                            class="suggestions"
+                                            *ngIf="filteredCodeTypes.length > 0 && suggestionsVisible"
+                                        >
                                             <li *ngFor="let suggestion of filteredCodeTypes"
                                                 (click)="selectSuggestion(suggestion)">
                                                 {{ suggestion.tipo_de_codigo }}
@@ -94,6 +96,21 @@
                                         <input class="form-control" id="table" [(ngModel)]="table" name="table"
                                             (input)="clearGeneratedCode()"
                                             placeholder="Informe a tabela para referência">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="jiraActivity" class="form-label">Atividades Pendentes (Jira)</label>
+                                        <select
+                                            class="form-control"
+                                            id="jiraActivity"
+                                            [(ngModel)]="selectedJiraTask"
+                                            name="jiraActivity"
+                                            type="select"
+                                        >
+                                            <option value="" disabled [selected]="selectedJiraTask === null">Selecione uma atividade pendente do Jira</option>
+                                            <option *ngFor="let task of pedingJiraTasks" [value]="task.name">
+                                                {{ task.name }}
+                                            </option>
+                                        </select>
                                     </div>
                                     <button type="submit" class="btn btn-primary" [disabled]="!isFormValid">Gerar
                                         Prompt</button>
