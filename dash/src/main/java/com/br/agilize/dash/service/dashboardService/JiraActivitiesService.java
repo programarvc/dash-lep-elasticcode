@@ -5,6 +5,10 @@ import io.micrometer.observation.Observation;
 import jakarta.persistence.EntityNotFoundException;
 import software.amazon.awssdk.services.cognitoidentityprovider.endpoints.internal.Value.Str;
 
+
+import org.springframework.web.client.ResourceAccessException;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -72,19 +76,35 @@ public class JiraActivitiesService implements CommandLineRunner {
         mapper.registerModule(new JavaTimeModule());
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     
-        try {
-            HttpEntity<String> request = new HttpEntity<>(headers);
-            ResponseEntity<String> response = restTemplate.exchange(restApiUrl, HttpMethod.GET, request, String.class);
+        int maxTentativas = 3;
+        for (int tentativa = 1; tentativa <= maxTentativas; tentativa++) {
+            try {
+                HttpEntity<String> request = new HttpEntity<>(headers);
+                ResponseEntity<String> response = restTemplate.exchange(restApiUrl, HttpMethod.GET, request, String.class);
     
-            JiraActivitiesResponse responseDto = mapper.readValue(response.getBody(), JiraActivitiesResponse.class);
-            List<JiraActivitiesDto> jiraDataDtos = responseDto.getTms_Task();
+                JiraActivitiesResponse responseDto = mapper.readValue(response.getBody(), JiraActivitiesResponse.class);
+                List<JiraActivitiesDto> jiraDataDtos = responseDto.getTms_Task();
     
-            for (JiraActivitiesDto jiraDataDto : jiraDataDtos) {
-                saveJiraActivityIfNotExists(jiraDataDto);
+                for (JiraActivitiesDto jiraDataDto : jiraDataDtos) {
+                    saveJiraActivityIfNotExists(jiraDataDto);
+                }
+                break; // Sai do loop se a operação for bem-sucedida
+            } catch (HttpClientErrorException | HttpServerErrorException e) {
+                System.err.println("Erro de cliente ou servidor ao acessar: " + restApiUrl + ". Tentativa " + tentativa + " de " + maxTentativas);
+                e.printStackTrace();
+            } catch (ResourceAccessException e) {
+                System.err.println("Falha de acesso ao recurso: " + restApiUrl + ". Tentativa " + tentativa + " de " + maxTentativas);
+                e.printStackTrace();
+            } catch (JsonProcessingException e) {
+                System.err.println("Erro ao processar JSON da resposta.");
+                e.printStackTrace();
+                break; // Sai do loop se houver um problema de processamento de JSON, pois é provável que seja um erro persistente
+            } catch (Exception e) {
+                System.err.println("Erro inesperado ao acessar: " + restApiUrl);
+                e.printStackTrace();
+                break; // Sai do loop para erros inesperados
             }
-        } catch (RestClientException | JsonProcessingException e) {
-            System.err.println("Não foi possível acessar ou processar a URL: " + restApiUrl);
-            e.printStackTrace();
+            // Implementar espera exponencial ou fixa aqui, se necessário
         }
     }
     
