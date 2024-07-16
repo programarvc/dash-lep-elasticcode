@@ -87,6 +87,7 @@ interface Prompt {
       promptsHistory: string;
     };
   };
+  jiraActivity: string;
 }
 
 interface CodeType {
@@ -215,6 +216,7 @@ export class GenAiForDevsComponent implements OnInit {
 
   public pedingJiraTasks: JiraAtividades[] = [];
   public selectedJiraTask: string | null = null;
+  public selectedJiraTaskValue: string | null = null;
 
   public showModalContent: boolean = false;
 
@@ -443,6 +445,8 @@ Como pode ver ele usa o jakarta persistence, então todas as entidades são gere
     this.generatedCodeValue = this.generatedCode;
     this.userEsteiraValue = this.userEsteiraId;
 
+    const selectedJiraTask = this.pedingJiraTasks.find(task => task.name === this.selectedJiraTask);
+
     const promptData = {
       entidade: this.entityValue,
       prompt: this.generatedCodeValue,
@@ -451,7 +455,8 @@ Como pode ver ele usa o jakarta persistence, então todas as entidades são gere
       tipo_codigo: this.codeTypeValue,
       userEsteira: {
         id: this.userEsteiraValue
-      }
+      },
+      jiraActivity: selectedJiraTask ? { id: selectedJiraTask.id } : null
     }
 
     this.promptsService.postPromptHistory(promptData).subscribe((response: any) => {
@@ -467,7 +472,6 @@ Como pode ver ele usa o jakarta persistence, então todas as entidades são gere
   public getPendingJiraTasks(): void {
     this.jiraService.getPendingTasks().subscribe((tasks: any) => {
       this.pedingJiraTasks = tasks;
-      console.log('Tarefas pendentes', tasks);
     })
   }
 }
