@@ -15,5 +15,4 @@ public class EsteiraDeDesenvolvimentoDto {
     private String nome;
     private TiposEnum tipo;
     private EmpresaDto empresa;
-    private List<PromptsHistoryDto> promptsHistory;
 }
