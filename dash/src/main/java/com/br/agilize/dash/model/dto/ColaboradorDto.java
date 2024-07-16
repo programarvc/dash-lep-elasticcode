@@ -15,5 +15,4 @@ public class ColaboradorDto {
     private String miniBio; // Mini Biografia
     private List<HabilidadeDto> habilidades;
     private List<EmpresaDto> empresas;
-    private List<PromptsHistoryDto> promptsHistory;
 }
