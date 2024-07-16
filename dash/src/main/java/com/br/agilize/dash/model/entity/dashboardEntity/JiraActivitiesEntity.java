@@ -55,4 +55,10 @@ public class JiraActivitiesEntity {
     @Column(name = "updated_at", columnDefinition = "TEXT")
     private String updatedAt;
 
+    @Column(name = "tms_user_name", columnDefinition = "TEXT")
+    private String tmsUserName;
+
+    @Column(name = "tms_user_id", columnDefinition = "TEXT")
+    private String tmsUserId;
+
 }

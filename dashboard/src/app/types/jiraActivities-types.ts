@@ -32,8 +32,6 @@ export interface StoriesAndEpicsData {
 
 export interface TotalPoints {
   total_points: number;
-  
-
 }
 
 export interface TotalPointsLast60Days {
@@ -45,4 +43,14 @@ export interface JiraEpics {
   epic: string;
   name: string;
   count_epics: number;
+}
+
+export interface EpicsList {
+  epic: string;
+  name: string;
+}
+
+export interface ActivitiesPerEpic {
+  name: string;
+  points: number;
 }

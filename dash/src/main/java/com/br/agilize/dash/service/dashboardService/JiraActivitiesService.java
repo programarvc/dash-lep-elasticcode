@@ -57,7 +57,6 @@ public class JiraActivitiesService implements CommandLineRunner {
 
 
     @Override
-   
     @Transactional
     public void run(String... args) throws Exception {
         getJiraDataAndSave();
@@ -121,7 +120,10 @@ public class JiraActivitiesService implements CommandLineRunner {
         String createdAt = jiraDataDto.getCreatedAt();
         String source = jiraDataDto.getSource();
         String updatedAt = jiraDataDto.getUpdatedAt();
-    
+        String tmsUserName = jiraDataDto.getTmsUserName();
+        String tmsUserId = jiraDataDto.getTmsUserId();
+
+
         // Verificar se a atividade já existe no banco de dados
         Optional<JiraActivitiesEntity> existingActivity = repository.findByNameAndSprintAndPriorityAndUpdatedAtAndTypeDetailAndSource(name, sprint, priority, updatedAt, typeDetail, source);
     
@@ -139,7 +141,9 @@ public class JiraActivitiesService implements CommandLineRunner {
             jiraActivitiesEntity.setCreatedAt(createdAt);
             jiraActivitiesEntity.setSource(source);
             jiraActivitiesEntity.setUpdatedAt(updatedAt);
-    
+            jiraActivitiesEntity.setTmsUserName(tmsUserName);
+            jiraActivitiesEntity.setTmsUserId(tmsUserId);
+
             // Convertendo a entidade para DTO usando o Mapper
             JiraActivitiesDto newJiraDataDto = jiraActivitiesMapper.modelToDTO(jiraActivitiesEntity);
     
@@ -263,9 +267,27 @@ public class JiraActivitiesService implements CommandLineRunner {
         }
     }
 
+
     //Método para reotrnar atividades disponíveis no Jira
     public List<JiraActivitiesDto> findAvailableActivities() {
         return repository.findAvailableActivities().stream()
+                .map(jiraActivitiesMapper::modelToDTO)
+                .collect(Collectors.toList());
+    }
+
+    // Método para retornar as atividades de acordo com o epico especificado
+    public List<Map<String, Object>> findNameAndPointForEpicEqualsParent(String epic) {
+        return repository.findNameAndPointForEpicEqualsParent(epic);
+    }
+
+    // Método para retornar o nome e pontos das atividades
+    public List<Map<String, Object>> findNameAndPoints() {
+        return repository.findNameAndPoints();
+    }
+
+    //método para retornar atividades concluídas
+    public List<JiraActivitiesDto> findCompletedActivities() {
+        return repository.findCompletedActivities().stream()
                 .map(jiraActivitiesMapper::modelToDTO)
                 .collect(Collectors.toList());
     }

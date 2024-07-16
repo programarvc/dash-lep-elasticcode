@@ -37,7 +37,9 @@ import {
   MediaStoriesPerEpic,
   StoriesAndEpicsData,
   TotalPoints,
-  TotalPointsLast60Days
+  TotalPointsLast60Days,
+  EpicsList,
+  ActivitiesPerEpic
 } from 'src/app/types/jiraActivities-types';
 
 import { EsteiraService } from 'src/services/esteira/esteira.service';
@@ -290,6 +292,11 @@ public lineChartOptions: ChartOptions = {
   public lineChartLegend = false;
   public lineChartType = 'line';
   public lineChartPlugins = [];
+
+  public epicsList: EpicsList [] = [];
+  public activitiesPerEpic: ActivitiesPerEpic [] = [];
+  public allactivitieslist : ActivitiesPerEpic [] = [];
+  public finishedActivities: ActivitiesPerEpic [] = [];
   
   //variavel com dados para armazenar a quantidade total de prs por colaborador Hasura
   currentVcsPullRequestTop5: VcsPullRequestTop5[] = [];
@@ -313,6 +320,8 @@ public lineChartOptions: ChartOptions = {
   public isEsteiraSelected: boolean = false;
   public esteiraSelecionadaId: number = 0;
 
+  public showActivities: boolean = false; // Controla a exibição da lista de atividades
+ 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -322,6 +331,7 @@ public lineChartOptions: ChartOptions = {
     private valorMaturidadeService: valorMaturidadeService,
     private jiraActivitiesService: jiraActivitieseService,
     private modalService: NgbModal
+    
   ) {
     this.selectedOption = 0;
     this.valorMaturidadeDate = new Date();
@@ -359,23 +369,26 @@ public lineChartOptions: ChartOptions = {
     });
   }
 
-  public async setCurrent(id: number) {
-    this.getLatestMaturidadeByEsteiraId(id);
-    this.getLatestCapacidadesByEsteiraId(id);
-    this.getValorMaturidadesByEsteiraIdAndTecnica(id);
-    this.getValorMaturidadesByEsteiraIdAndCultura(id);
-    this.getMaturidadeByEsteiraId(id);
-    this.getPrCountLast30And60And90Days();
-    this.getTop5ColaboradoresByPrs();
-    this.getTotalPrs();
-    this.getJiraStories();
-    this.getcountAllStories();
-    this.getAllActivitiesLast60Days();
-    this.getTotalPointsForJiraStoriesLast60Days();
-    this.getAveragePoints();
-    this.getTotalPointsForJiraStories();
-    this.getJiraEpicsLast60Days();
-  }
+public async setCurrent(id: number) {
+  this.getLatestMaturidadeByEsteiraId(id);
+  this.getLatestCapacidadesByEsteiraId(id);
+  this.getValorMaturidadesByEsteiraIdAndTecnica(id);
+  this.getValorMaturidadesByEsteiraIdAndCultura(id);
+  this.getMaturidadeByEsteiraId(id);
+  this.getPrCountLast30And60And90Days();
+  this.getTop5ColaboradoresByPrs();
+  this.getTotalPrs();
+  this.getJiraStories();
+  this.getcountAllStories();
+  this.getAllActivitiesLast60Days();
+  this.getTotalPointsForJiraStoriesLast60Days();
+  this.getAveragePoints();
+  this.getTotalPointsForJiraStories();
+  this.getJiraEpicsLast60Days();
+  this.getEpicList();
+  this.getListNameAndPoints();
+  this.getListFinishedActivities();
+}
 
   public async setCurrentMaturidade(id: number) {
     const maturidade = this.valorMaturidadeC.find(
@@ -609,8 +622,6 @@ public lineChartOptions: ChartOptions = {
     });
   }
 
-
-
   public getcountAllStories(): void {
     this.jiraActivitiesService.getcountAllStories().subscribe((response) => {
       this.jiraAllActivities = response;
@@ -622,7 +633,6 @@ public lineChartOptions: ChartOptions = {
       this.allActivities60days = response;
     });
   }
-
 
   public getJiraEpicsLast60Days(): void {
     this.jiraActivitiesService.getEpicsLast60Days().subscribe((response) => {
@@ -642,7 +652,6 @@ public lineChartOptions: ChartOptions = {
     });
   }
 
-
   public getTotalPointsForJiraStoriesLast60Days(): void {
     this.jiraActivitiesService.getTotalPointsForJiraStoriesLast60Days().subscribe((response) => {
       this.TotalPointsLast60Days = response;
@@ -653,4 +662,37 @@ public lineChartOptions: ChartOptions = {
     this.modalService.open(content);
   }
 
+  getEpicList(): void {
+    this.jiraActivitiesService.getEpicList().subscribe((response) => {
+      this.epicsList = response;
+    });
+  }
+
+  getActivitiesPerEpic(epic: string): void {
+    this.jiraActivitiesService.getActivitiesPerEpic(epic).subscribe((response) => {
+      this.activitiesPerEpic = response;
+    });
+  }
+  
+  loadActivitiesAndOpenModal(item: any): void {
+    // Suponha que getActivitiesPerEpic seja um método que atualize activitiesPerEpic com as atividades do épico selecionado
+    this.getActivitiesPerEpic(item.epic); // Atualize com o identificador correto do épico
+    this.showActivities = true; // Mostra a lista de atividades
+  }
+
+  backToEpics(): void {
+    this.showActivities = false; // Volta para a lista de épicos
+  }
+
+  getListNameAndPoints(): void {
+    this.jiraActivitiesService.getNameAndPoints().subscribe((response) => {
+      this.allactivitieslist = response;
+    });
+  }
+
+  getListFinishedActivities(): void {
+    this.jiraActivitiesService.getFinishedActivities().subscribe((response) => {
+      this.finishedActivities = response;
+    });
+  }
 }
