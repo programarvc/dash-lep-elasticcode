@@ -1,28 +1,29 @@
 import { Component, OnInit, Renderer2, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
-          Time,
-          TimeColaborador,
-          EsteiraDeDesenvolvimento,
-          TiposEnum,
-          Colaborador,
-          MetasColaborador,
-          IndiceDeSobrevivenciaDev,
-          VcsPullRequest,
-          TasksCountJira,
-          DataArray,
-          CompetenciasPorData,
-          AllLatestMetaByColaboradorId
+  Time,
+  TimeColaborador,
+  EsteiraDeDesenvolvimento,
+  TiposEnum,
+  Colaborador,
+  MetasColaborador,
+  IndiceDeSobrevivenciaDev,
+  VcsPullRequest,
+  TasksCountJira,
+  DataArray,
+  CompetenciasPorData,
+  AllLatestMetaByColaboradorId
 } from 'src/app/types/time-types';
 import { TimeService } from 'src/services/time/time.service';
-import {  Habilidade,
-          HabilidadeByColaborador,
-          CompetenciaByColaborador,
-          AcaoByColaborador,
-          EmpresaByColaborador,
-          Empresa,
-          Competencia,
-          Acao
+import {
+  Habilidade,
+  HabilidadeByColaborador,
+  CompetenciaByColaborador,
+  AcaoByColaborador,
+  EmpresaByColaborador,
+  Empresa,
+  Competencia,
+  Acao
 } from 'src/app/types/colaborador-types';
 import { AcaoService } from 'src/services/acao/acao.service';
 import { ColaboradorService } from 'src/services/colaborador/colaborador.service';
@@ -120,7 +121,7 @@ export class TimeComponent implements OnInit {
     data: []
   };
 
- 
+
 
   /*
   //variavel com dados para armazenar a quantidade total de prs por colaborador github API
@@ -177,7 +178,7 @@ export class TimeComponent implements OnInit {
     counttasks: 0
   };
 
-  public  currentValorIndiceDeSobrevivencia: IndiceDeSobrevivenciaDev = {
+  public currentValorIndiceDeSobrevivencia: IndiceDeSobrevivenciaDev = {
     id: 0,
     timeColaborador: {
       id: 0,
@@ -209,13 +210,13 @@ export class TimeComponent implements OnInit {
   public PrCountLast7DaysForColaborador: VcsPullRequest[] = [];
   public PrCountLast30DaysForColaborador: VcsPullRequest[] = [];
   public PrCountLast90DaysForColaborador: VcsPullRequest[] = [];
-  public allLatestMetaByColaboradorId: AllLatestMetaByColaboradorId[] = []; 
+  public allLatestMetaByColaboradorId: AllLatestMetaByColaboradorId[] = [];
   public competencias: CompetenciaByColaborador[] = [];
   public acoes: AcaoByColaborador[] = [];
   public empresas: Empresa[] = [];
   public empresasByColaborador: EmpresaByColaborador[] = [];
   public searchResultsAcoes: AcaoByColaborador[] = [];
-  public searchResultsCompetencias:  CompetenciaByColaborador[] = [];
+  public searchResultsCompetencias: CompetenciaByColaborador[] = [];
   public habilidadesByColaborador: HabilidadeByColaborador[] = [];
   public duasHabilidadesByColaborador: HabilidadeByColaborador[] = [];
   public formattedDate: string | null = null;
@@ -225,7 +226,11 @@ export class TimeComponent implements OnInit {
   public dataInicio: string = '';
   public dataFim: string = '';
   public dataInicioActivity: string = '';
-  public dataFimActivity : string = '';
+  public dataFimActivity: string = '';
+
+  public esteiraSelecionada: any = [];
+  public isEsteiraSelected: boolean = false;
+  public esteiraSelecionadaId: number = 0;
 
   constructor(
     private router: Router,
@@ -237,30 +242,51 @@ export class TimeComponent implements OnInit {
     private habilidadeService: HabilidadeService,
     private timeService: TimeService,
     private modalService: NgbModal,
-  ) { 
+  ) {
 
-      this.dataFim = new Date().toISOString().substring(0, 10);
-      this.dataFimActivity = new Date().toISOString().substring(0, 10);
+    this.dataFim = new Date().toISOString().substring(0, 10);
+    this.dataFimActivity = new Date().toISOString().substring(0, 10);
 
   }
 
   async ngOnInit(): Promise<void> {
-    this.route.paramMap.subscribe((params) => {
 
+    this.esteiraService.esteiraSelecionada$.subscribe((esteira) => {
+      if (esteira) {
+        this.esteiraSelecionada = esteira;
+        this.isEsteiraSelected = true;
+        this.esteiraSelecionadaId = this.esteiraSelecionada.id;
+        this.atualizarDados();
+      }
+    });
+
+    const savedEsteira = localStorage.getItem('selectedEsteira');
+    if (savedEsteira) {
+      this.esteiraSelecionada = JSON.parse(savedEsteira);
+      this.isEsteiraSelected = true;
+      this.esteiraSelecionadaId = this.esteiraSelecionada.id;
+      this.currentEsteira = this.esteiraSelecionada;
+      this.router.navigate([`time/${this.esteiraSelecionada.id}`]);
+      this.atualizarDados();
+    }
+
+    this.route.paramMap.subscribe((params) => {
       const esteiraId = params.get('esteiraId');
-      if (esteiraId) {
+      if (esteiraId && !isNaN(Number(esteiraId))) {
+        console.log("esteiraId", esteiraId)
         this.currentEsteira.id = parseInt(esteiraId);
         this.getTimesByEsteira(parseInt(esteiraId));
         this.getColaboradoresByEsteira(parseInt(esteiraId));
         this.getTimeAndColaboradorByEsteiraId(parseInt(esteiraId));
-
       }
+
       const colaboradorId = params.get('colaboradorId');
       if (colaboradorId) {
         this.getTimesAcoesHabilidades(parseInt(colaboradorId));
-        
+
       }
     });
+
     if (this.searchResultsCompetencias.length === 0) {
       const cardElement = document.querySelector('.card-colaborador-content');
       if (cardElement) {
@@ -269,13 +295,12 @@ export class TimeComponent implements OnInit {
     }
   }
 
-   getColaboradoresByEsteira(esteiraId: number) {
-  this.timeService.getColaboradoresByEsteiraId(esteiraId).subscribe((response) => {
-    // Aqui está o ajuste, usando [0] para pegar o primeiro colaborador da lista
-    this.currentColaborador = response[0];
-    this.colaboradores = response;
-    this.getTimesAcoesHabilidades(this.currentColaborador.id);
-  });
+  getColaboradoresByEsteira(esteiraId: number) {
+    this.timeService.getColaboradoresByEsteiraId(esteiraId).subscribe((response) => {
+      this.currentColaborador = response[0];
+      this.colaboradores = response;
+      this.getTimesAcoesHabilidades(this.currentColaborador.id);
+    });
   }
 
   getColaboradorEsteiraId(esteiraId: number) {
@@ -285,9 +310,9 @@ export class TimeComponent implements OnInit {
   }
 
   getTimesByEsteira(esteiraId: number) {
-      this.timeService.getTimesByEsteiraId(esteiraId).subscribe((response) => {
-        this.time = response;
-      });
+    this.timeService.getTimesByEsteiraId(esteiraId).subscribe((response) => {
+      this.time = response;
+    });
   }
 
   getTimeAndColaboradorByEsteiraId(esteiraId: number) {
@@ -296,8 +321,8 @@ export class TimeComponent implements OnInit {
 
     });
   }
-  
-  getValorIndicePorIdColaborador(colaboradorId: number){
+
+  getValorIndicePorIdColaborador(colaboradorId: number) {
     this.timeService.getValorIndicePorIdColaborador(colaboradorId).subscribe((response) => {
       this.currentValorIndiceDeSobrevivencia = response;
     });
@@ -310,10 +335,9 @@ export class TimeComponent implements OnInit {
     });
   }
 
-  getTimesByColaboradorId(colaboradorId: number){
+  getTimesByColaboradorId(colaboradorId: number) {
     this.timeService.getTimesAndEsteiraByColaboradorId(colaboradorId).subscribe(response => {
       this.time = response.filter((time: { esteira: { id: any; }; }) => time.esteira.id === this.currentEsteira.id);
-
     });
   }
 
@@ -340,11 +364,10 @@ export class TimeComponent implements OnInit {
   public getDuasHabilidades(id: number): void {
     this.habilidadeService.getPrimeirasHabilidadesByColaborador(id).subscribe((response) => {
       this.duasHabilidadesByColaborador = response;
-    
     })
   }
 
-  public getMetas () {
+  public getMetas() {
     this.timeService.getMetas().subscribe((response) => {
       this.metasColaborador = response;
     });
@@ -375,26 +398,16 @@ export class TimeComponent implements OnInit {
     }
   }
 
-  /*public async setCurrentMetasColaborador (id: number) {
-    const metas = this.metasColaborador.find(
-      (metasColaborador) => metasColaborador.id === id
-    );
-    if (metas) {
-      this.currentMetasColaborador = metas;
-      this.getAllLatestMetaByColaboradorId(metas.id);
-    }
-  }*/
-
   handleSearch(event: string) {
-    if(event !== ''){
-      this.searchResultsAcoes =  this.acoes.filter((acao)=>
-      acao.acao.nome.toLowerCase().includes(event.toLowerCase()));
+    if (event !== '') {
+      this.searchResultsAcoes = this.acoes.filter((acao) =>
+        acao.acao.nome.toLowerCase().includes(event.toLowerCase()));
 
-      this.searchResultsCompetencias =  this.competencias.filter((competencia)=>
-      competencia.competencia.nome.toLowerCase().includes(event.toLowerCase()));
+      this.searchResultsCompetencias = this.competencias.filter((competencia) =>
+        competencia.competencia.nome.toLowerCase().includes(event.toLowerCase()));
     }
-    else{
-      this.searchResultsAcoes= [];
+    else {
+      this.searchResultsAcoes = [];
       this.searchResultsCompetencias = [];
     }
   }
@@ -424,19 +437,9 @@ export class TimeComponent implements OnInit {
       this.getTasksCountByColaboradorId(colaborador.id);
       this.getColaboradorEsteiraId(this.currentEsteira.id);
       this.getTimesByEsteira(this.currentEsteira.id);
-    
       this.selectedTimePr = 'Todos';
     });
   }
-  
-  
- /*
-  getLatestMetaByColaboradorId(colaboradorId: number){
-    this.timeService.getLatestMetaByColaboradorId(colaboradorId).subscribe((response) => {
-      this.currentMetasColaborador = response;
-    });
-
-  }*/
 
   getAllTimesAndDevs() {
     this.getTimesByEsteira(this.currentEsteira.id);
@@ -445,68 +448,59 @@ export class TimeComponent implements OnInit {
   }
 
   getAllLatestMetaByColaboradorId(id: number): void {
-  this.timeService
-    .getAllLatestMetaByColaboradorId(id)
-    .subscribe((datas: DataArray[]) => {
-      this.allLatestMetaByColaboradorId = datas.map(data => {
-        return {
+    this.timeService
+      .getAllLatestMetaByColaboradorId(id)
+      .subscribe((datas: DataArray[]) => {
+        this.allLatestMetaByColaboradorId = datas.map(data => {
+          return {
+            id: id,
+            data: new Date(data.join('-')).toISOString()
+          };
+        });
+        if (this.allLatestMetaByColaboradorId.length > 0) {
+          this.selecionarMetaColaborador(this.allLatestMetaByColaboradorId[0].id);
+        }
+      });
+  }
+
+  public selecionarMetaColaborador(id?: number, selectedDate?: string) {
+    if (id) {
+      const meta = this.allLatestMetaByColaboradorId.find((meta) => meta.id === id);
+      if (meta) {
+        let date = selectedDate ? new Date(selectedDate) : new Date(meta.data);
+        let timestamp = date.getTime();
+        this.currentMetasColaborador = {
+          ...this.currentMetasColaborador,
           id: id,
-          data: new Date(data.join('-')).toISOString()
+          data: [timestamp.toString()]
         };
-      });
-      if(this.allLatestMetaByColaboradorId.length > 0) {
-        this.selecionarMetaColaborador(this.allLatestMetaByColaboradorId[0].id);
+        this.timeService.setCurrentMetasColaborador(this.currentMetasColaborador);
+        this.formattedDate = this.currentMetasColaborador.data[0].toString();
+        this.timeService.getTop3CompetenciasByColaboradorAndData(id, date.toISOString())
+          .subscribe((competenciasPorData: CompetenciasPorData) => {
+            const dataKey = date.toISOString().split('T')[0];
+            this.currentMetasColaborador.competencia = competenciasPorData[dataKey];
+            this.currentMetasColaborador.nota = this.currentMetasColaborador.competencia.map(c => c.nota);
+          });
       }
-    });
-  }
-
-public selecionarMetaColaborador (id?: number, selectedDate?: string) {
-  if (id) {
-    const meta = this.allLatestMetaByColaboradorId.find((meta) => meta.id === id);
-    if (meta) {
-      let date = selectedDate ? new Date(selectedDate) : new Date(meta.data);
-      let timestamp = date.getTime();
+    } else {
+      this.getMetas();
       this.currentMetasColaborador = {
-        ...this.currentMetasColaborador,
-        id: id,
-        data: [timestamp.toString()]
-      };
-      this.timeService.setCurrentMetasColaborador(this.currentMetasColaborador);
-      this.formattedDate = this.currentMetasColaborador.data[0].toString();
-      this.timeService.getTop3CompetenciasByColaboradorAndData(id, date.toISOString())
-      .subscribe((competenciasPorData: CompetenciasPorData) => {
-        const dataKey = date.toISOString().split('T')[0];
-        this.currentMetasColaborador.competencia = competenciasPorData[dataKey];
-        this.currentMetasColaborador.nota = this.currentMetasColaborador.competencia.map(c => c.nota);
-      });
-    }
-  } else {
-    this.getMetas();
-    this.currentMetasColaborador = {
-      id: 0,
-      nota: [],
-      colaborador: {
         id: 0,
-        nome: '',
-        email: '',
-        github: '',
-        miniBio: '',
-        habilidades: [],
-      },
-      data: [],
-      competencia: []
-    };
+        nota: [],
+        colaborador: {
+          id: 0,
+          nome: '',
+          email: '',
+          github: '',
+          miniBio: '',
+          habilidades: [],
+        },
+        data: [],
+        competencia: []
+      };
+    }
   }
-}
-
- /*
-  //metodo anterior x
-  getPrCountByColaboradorId( colaboradorId: number) {
-    this.timeService.getPrCountByColaboradorId(colaboradorId).subscribe((response) => {
-      this.currentPrCount = response;
-    });
-  }*/
-
 
   //Metodos para retornar a quantidade de prs em tempo determinado Hasura API
 
@@ -520,7 +514,7 @@ public selecionarMetaColaborador (id?: number, selectedDate?: string) {
   //metodo para retornar a quantidade de pr nos ultimos 7 dias por colaborador
   getPrCountLast7DaysForColaborador(colaboradorId: number) {
     this.timeService.getPrCountLast7DaysForColaborador(colaboradorId).subscribe((response) => {
-        this.currentVcsPullRequest.countpr = response.countpr || 0; // Atualiza diretamente a quantidade de PRs
+      this.currentVcsPullRequest.countpr = response.countpr || 0; // Atualiza diretamente a quantidade de PRs
     });
   }
   //metodo para retornar a quantidade de pr nos ultimos 30 dias por colaborador
@@ -538,13 +532,13 @@ public selecionarMetaColaborador (id?: number, selectedDate?: string) {
   }
 
   //metodo para retornar a quantidade de prs no ano corente por colaboradorId
-  getPrCountThisYearForColaborador(colaboradorId: number){
+  getPrCountThisYearForColaborador(colaboradorId: number) {
     this.timeService.getPrCountThisYearForColaborador(colaboradorId).subscribe((response) => {
       this.currentVcsPullRequest.countpr = response.countpr || 0; // Atualiza diretamente a quantidade de PRs
     });
   }
 
-  getPrCountLastYearForColaborador(colaboradorId: number){
+  getPrCountLastYearForColaborador(colaboradorId: number) {
     this.timeService.getPrCountLastYearForColaborador(colaboradorId).subscribe((response) => {
       this.currentVcsPullRequest.countpr = response.countpr || 0; // Atualiza diretamente a quantidade de PRs
     });
@@ -577,7 +571,7 @@ public selecionarMetaColaborador (id?: number, selectedDate?: string) {
     const colaboradorId = this.currentColaborador.id;
     this.getPrCountLast90DaysForColaborador(colaboradorId);
   }
-    
+
   //garante que o select de Ano Anterior retorne a quantidade de prs do Dev referente ao Ano anterior 
   updatePrCountToLastYear() {
     this.selectedTimePr = 'Ano anterior';
@@ -591,7 +585,7 @@ public selecionarMetaColaborador (id?: number, selectedDate?: string) {
     const colaboradorId = this.currentColaborador.id;
     this.getPrCountThisYearForColaborador(colaboradorId);
   }
-    
+
   //Modal para Data Personalizada
   open(content: any) {
     this.modalService.open(content)
@@ -601,16 +595,16 @@ public selecionarMetaColaborador (id?: number, selectedDate?: string) {
   formatDate(date: string): string {
     const [year, month, day] = date.split('-').map(Number);
     const d = new Date(year, month - 1, day);
-    
+
     let formattedMonth = '' + (d.getMonth() + 1);
     let formattedDay = '' + d.getDate();
     const formattedYear = d.getFullYear();
-    
-    if (formattedMonth.length < 2) 
+
+    if (formattedMonth.length < 2)
       formattedMonth = '0' + formattedMonth;
-    if (formattedDay.length < 2) 
+    if (formattedDay.length < 2)
       formattedDay = '0' + formattedDay;
-    
+
     return [formattedDay, formattedMonth, formattedYear].join('/');
   }
 
@@ -625,56 +619,56 @@ public selecionarMetaColaborador (id?: number, selectedDate?: string) {
     this.timeService.getPrCountDateForColaborador(colaboradorId, this.dataInicio, this.dataFim).subscribe(data => {
       this.currentVcsPullRequest.countpr = data.countpr || 0;
     });
-    
+
     this.selectedTimePr = this.formatDate(this.dataInicio) + ' - ' + this.formatDate(this.dataFim);
   }
 
   //-------metodos para quantidade de tasks concluidas por colaboradorid-------
 
   //metodo busca quantidade total de tasks concluidas por colaboradorId
-  getTasksCountByColaboradorId(colaboradorId: number){
+  getTasksCountByColaboradorId(colaboradorId: number) {
     this.timeService.getCountAllCompletedTasksByColaboradorId(colaboradorId).subscribe((response) => {
       this.currentTasksCountJira.counttasks = response.counttasks || 0;
     });
   }
 
   //metodo busca quantidade de tasks concluidas por colaboradorId nos ultimos 7 dias
-  getTasksCountLast7DaysByColaboradorId (colaboradorId: number){
+  getTasksCountLast7DaysByColaboradorId(colaboradorId: number) {
     this.timeService.getCountCompletedTasksLast7DaysByColaboradorId(this.currentColaborador.id).subscribe((response) => {
       this.currentTasksCountJira.counttasks = response.counttasks || 0;
-      });
+    });
   }
 
   //metodo busca quantidade de tasks concluidas por colaboradorId nos ultimos 30 dias
-  getTasksCountLast30DaysByColaboradorId (colaboradorId: number){
+  getTasksCountLast30DaysByColaboradorId(colaboradorId: number) {
     this.timeService.getCountCompletedTasksLast30DaysByColaboradorId(this.currentColaborador.id).subscribe((response) => {
       this.currentTasksCountJira.counttasks = response.counttasks || 0;
-      });
+    });
   }
 
   //metodo busca quantidade de tasks concluidas por colaboradorId nos ultimos 90 dias
-  getCountCompletedTasksLast90DaysByColaboradorId (colaboradorId: number){
+  getCountCompletedTasksLast90DaysByColaboradorId(colaboradorId: number) {
     this.timeService.getCountCompletedTasksLast90DaysByColaboradorId(this.currentColaborador.id).subscribe((response) => {
       this.currentTasksCountJira.counttasks = response.counttasks || 0;
-      });
+    });
   }
 
   //metdo busca quantidade de PRs por colaboradorId no ano corrente
-  getTasksCountThisYearByColaboradorId (colaboradorId: number){
+  getTasksCountThisYearByColaboradorId(colaboradorId: number) {
     this.timeService.getCountCompletedTasksThisYearByColaboradorId(this.currentColaborador.id).subscribe((response) => {
       this.currentTasksCountJira.counttasks = response.counttasks || 0;
-      });
+    });
   }
   //metdo busca quantidade de PRs por colaboradorId no ano anterior
-  getTasksCountLastYearByColaboradorId (colaborador: number){
+  getTasksCountLastYearByColaboradorId(colaborador: number) {
     this.timeService.getCountCompletedTasksLastYearByColaboradorId(this.currentColaborador.id).subscribe((response) => {
       this.currentTasksCountJira.counttasks = response.counttasks || 0;
-      });
+    });
   }
 
   updateTasksCount(timePeriod: string) {
-  this.selectedActivities = timePeriod;
-  const colaboradorId = this.currentColaborador.id;
+    this.selectedActivities = timePeriod;
+    const colaboradorId = this.currentColaborador.id;
 
     switch (timePeriod) {
       case 'Todos':
@@ -718,6 +712,13 @@ public selecionarMetaColaborador (id?: number, selectedDate?: string) {
     });
     
     this.selectedActivities = this.formatDate(this.dataInicioActivity) + ' - ' + this.formatDate(this.dataFimActivity);
+  }
+
+  private atualizarDados() {
+    // Recarregar os dados conforme a esteira selecionada
+    this.getTimesByEsteira(this.esteiraSelecionadaId);
+    this.getColaboradoresByEsteira(this.esteiraSelecionadaId);
+    this.getTimeAndColaboradorByEsteiraId(this.esteiraSelecionadaId);
   }
 }
 

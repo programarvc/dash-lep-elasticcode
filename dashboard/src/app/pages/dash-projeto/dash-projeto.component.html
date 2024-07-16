@@ -25,7 +25,8 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-            <div class="bloco-metricas" (click)="open(content)"> <!-- adicione dentro da tag para reativar o modal (click)="open(content)" -->
+            <div class="bloco-metricas" (click)="open(content)">
+              <!-- adicione dentro da tag para reativar o modal (click)="open(content)" -->
               <div class="caixa-metricas">
                 <div class="metricas">
                   <h2 class="titulo-velocidade">Métricas de Velocidade</h2>
@@ -80,7 +81,7 @@
                 </div>
               </div>
               <p class="text-resumo"></p>
-            <ng-template #content let-modal>
+              <ng-template #content let-modal>
                 <div class="modal-body custom-modal">
                   <h4 class="modal-title">Indicadores</h4>
                   <div class="painel-metricas-content">
@@ -94,17 +95,17 @@
                             <div class="content-item">
                               <span class="rectangle"></span>
                               <div>
-                                  <span class="month">mar.</span>
-                                  <span class="days">16 dias</span>
+                                <span class="month">mar.</span>
+                                <span class="days">16 dias</span>
                               </div>
-                          </div>
-                          <div class="content-item">
+                            </div>
+                            <div class="content-item">
                               <span class="rectangle"></span>
                               <div>
-                                  <span class="month">abr.</span>
-                                  <span class="days">43 dias</span>
+                                <span class="month">abr.</span>
+                                <span class="days">43 dias</span>
                               </div>
-                          </div>
+                            </div>
                           </div>
                           <div class="time-container">
                             <span class="time-month">este mês</span>
@@ -166,7 +167,7 @@
                           </div>
                         </div>
                       </div>
-                      
+
                       <div class="card-modal tx-falhas-card">
                         <div class="modal-card-title tx-falha-title">
                           <h2>Taxa de Falhas</h2>
@@ -202,13 +203,13 @@
                           <div class="potencial-content-left">
                             <span class="rectangle retangle-potencial-left"></span>
                             <div>
-                                <span class="month potencial-month">Potencial</span>
-                                <span class="days potencial-days">20 dias</span>
+                              <span class="month potencial-month">Potencial</span>
+                              <span class="days potencial-days">20 dias</span>
                             </div>
                           </div>
-                            <div class="potencial-secundary-text">
-                              <span>02 problemas a solucionar</span>
-                            </div>
+                          <div class="potencial-secundary-text">
+                            <span>02 problemas a solucionar</span>
+                          </div>
                         </div>
                         <div class="problemas-content">
                           <div class="problemas-content-right">
@@ -238,19 +239,16 @@
                         </div>
                         <div class="throughput-grafico">
                           <div style="display: block;">
-                            <canvas baseChart
-                                    [datasets]="lineChartData"
-                                    [labels]="lineChartLabels"
-                                    [options]="lineChartOptions"
-                                    [legend]="lineChartLegend">
+                            <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels"
+                              [options]="lineChartOptions" [legend]="lineChartLegend">
                             </canvas>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>  
+                  </div>
                 </div>
-              </ng-template> 
+              </ng-template>
             </div>
           </div>
           <div class="col-md-6">
@@ -356,7 +354,8 @@
                   <div class="ellipse-roxa"></div>
                   <p class="metricas-texto-cultura">Prs Concluídas</p>
                   <div class="ellipse-cinza"></div>
-                  <p class="metricas-texto-esperado-cultura">Prs Totais Projeto ({{currentVcsPullRequest60Days.countpr60days}})</p>
+                  <p class="metricas-texto-esperado-cultura">Prs Totais Projeto
+                    ({{currentVcsPullRequest60Days.countpr60days}})</p>
                 </div>
               </div>
               <div class="pontilhados-top-contribuidores">
@@ -422,44 +421,110 @@
         <div class="row">
           <!-- Card para a quantidade de épicos nos últimos 60 dias -->
           <div class="col-md-4">
-            <div class="historias-epicos-card">
+            <div class="historias-epicos-card" (click)="open(contentEpicos)">
               <div class="historias-epicos-card-content">
                 <div class="historias-epicos-card-text">
                   <h2>Épicos</h2><span>(últimos 60 dias)</span>
                   <p>
-                      {{jiraEpics.count_epics}}
+                    {{jiraEpics.count_epics}}
                   </p>
                 </div>
               </div>
+              <ng-template #contentEpicos let-modal>
+                <div class="modal-body custom-modal">
+                  <!-- Lista de Épicos -->
+                  <ul *ngIf="!showActivities" class="google-list">
+                    <li *ngFor="let item of epicsList" (click)="loadActivitiesAndOpenModal(item)">
+                      <div class="list-item">
+                        <h3>{{ item.name }}</h3>
+                        <p>{{ item.epic }}</p>
+                      </div>
+                    </li>
+                  </ul>
+                  <!-- Lista de Atividades do Épico Selecionado -->
+                  <div *ngIf="showActivities">
+                    <button class="btn-voltar" (click)="backToEpics()">Voltar</button>
+                    <table class="activities-table">
+                      <thead>
+                        <tr>
+                          <th>Atividade</th>
+                          <th>Story Points</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let activity of activitiesPerEpic">
+                          <td>{{ activity.name }}</td>
+                          <td>{{ activity.points }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </ng-template>
             </div>
           </div>
-        <!-- Card para o total de histórias -->
-        <div class="col-md-4">
-            <div class="historias-epicos-card">
-                <div class="historias-epicos-card-content">
-                    <div class="historias-epicos-card-text">
-                        <h2>Tarefas Concluidas</h2><span>(total)</span>
-                        <p>
-                            {{storiesAndEpicsData.total_stories}}
-                        </p>
-                    </div>
+          <!-- Card para o total de histórias -->
+          <div class="col-md-4">
+            <div class="historias-epicos-card" (click)="open(contentFinishedTasks)">
+              <div class="historias-epicos-card-content">
+                <div class="historias-epicos-card-text">
+                  <h2>Tarefas Concluidas</h2><span>(total)</span>
+                  <p>
+                    {{storiesAndEpicsData.total_stories}}
+                  </p>
                 </div>
-            </div>
-        </div>
-        
-        <!-- Card para a quantidade média de histórias por épico -->
-        <div class="col-md-4">
-            <div class="historias-epicos-card">
-                <div class="historias-epicos-card-content">
-                    <div class="historias-epicos-card-text">
-                        <h2>Story Points</h2><span>(média)</span>
-                        <p>
-                            {{storiesAndEpicsData.average_points}}
-                        </p>
-                    </div>
+              </div>
+              <ng-template #contentFinishedTasks let-modal>
+                <div class="modal-body custom-modal">
+                  <table class="activities-table">
+                    <thead>
+                      <tr>
+                        <th>Atividade</th>
+                        <th>Story Points</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let activity of finishedActivities">
+                        <td>{{ activity.name }}</td>
+                        <td>{{ activity.points }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
+              </ng-template>
             </div>
-        </div>
+          </div>
+          <!-- Card para a quantidade média de histórias por épico -->
+          <div class="col-md-4">
+            <div class="historias-epicos-card" (click)="open(contentActivities)">
+              <div class="historias-epicos-card-content">
+                <div class="historias-epicos-card-text">
+                  <h2>Story Points</h2><span>(média)</span>
+                  <p>
+                    {{storiesAndEpicsData.average_points}}
+                  </p>
+                </div>
+              </div>
+                <ng-template #contentActivities let-modal>
+                  <div class="modal-body custom-modal">
+                  <table class="activities-table">
+                    <thead>
+                      <tr>
+                        <th>Atividade</th>
+                        <th>Story Points</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let allactivity of allactivitieslist">
+                        <td>{{ allactivity.name }}</td>
+                        <td>{{ allactivity.points }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                </ng-template>
+            </div>
+          </div>
         </div>
         <div class="row">
           <div class="col-md-8">

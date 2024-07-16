@@ -1,10 +1,93 @@
 import { Component, OnInit, HostListener } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+
+import { CognitoService } from 'src/app/cognito.service';
+import { UserService } from 'src/services/usuario/usuario.service';
+import { PromptService } from 'src/services/prompts/prompts.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { jiraActivitieseService } from 'src/services/jira-activities/jira-activities.service';
 
 interface GenAiMenuItem {
   id: number;
   title: string;
   icon: string;
   status: string;
+}
+
+interface User {
+  id: number;
+  nome: string;
+  colaborador: {
+    id: number;
+    nome: string;
+    email: string;
+    github: string;
+    jiraId: string;
+    miniBio: string;
+    habilidades: [
+      {
+        id: number;
+        nome: string;
+      }
+    ];
+    empresas: [
+      {
+        id: number;
+        nome: string;
+      }
+    ];
+    promptsHistory: string;
+  };
+  admin: boolean;
+}
+
+interface Prompt {
+  id: number;
+  stack: string;
+  tipo_codigo: string;
+  entidade: string;
+  tabela: string;
+  prompt: string;
+  userEsteira: {
+    id: number;
+    username: {
+      id: number;
+      nome: string;
+      colaborador: {
+        id: number;
+        nome: string;
+        email: string;
+        github: string;
+        jiraId: string;
+        miniBio: string;
+        habilidades: [
+          {
+            id: number;
+            nome: string;
+          }
+        ];
+        empresas: [
+          {
+            id: number;
+            nome: string;
+          }
+        ];
+        promptsHistory: string;
+      };
+      admin: boolean;
+    };
+    esteira: {
+      id: number;
+      nome: string;
+      tipo: string;
+      empresa: {
+        id: number;
+        nome: string;
+      };
+      promptsHistory: string;
+    };
+  };
+  jiraActivity: string;
 }
 
 interface CodeType {
@@ -14,6 +97,21 @@ interface CodeType {
   disabled?: boolean;
 }
 
+interface JiraAtividades {
+  id: number;
+  epic: string;
+  parent: string;
+  name: string;
+  priority: string;
+  sprint: string;
+  statusDetail: string;
+  typeDetail: string;
+  points: number;
+  createdAt: string;
+  source: string;
+  updatedAt: string;
+}
+
 @Component({
   selector: 'app-gen-ai-for-devs',
   templateUrl: './gen-ai-for-devs.component.html',
@@ -21,10 +119,55 @@ interface CodeType {
 })
 export class GenAiForDevsComponent implements OnInit {
   public stackType: string | null = null;
+  public stackValue: string | null = null;
   public codeType: string | null = null;
-  public goal: string | null = null;
+  public codeTypeValue: string | null = null;
+  public entity: string | null = null;
+  public entityValue: string | null = null;
   public table: string | null = null;
+  public tableValue: string | null = null;
+  public generatedCodeValue: string | null = null;
   public isFormValid: boolean = false;
+
+  public esteiraSelecionada: any = [];
+  public isEsteiraSelected: boolean = false;
+  public esteiraSelecionadaId: number = 0;
+
+  public username: string = '';
+  public userId: number = 0;
+  public userEsteiraId: number = 0;
+  public userEsteiraValue: number = 0;
+
+  public contElasticPrompts: number = 0;
+
+  public usuario: User = {
+    id: 0,
+    nome: '',
+    colaborador: {
+      id: 0,
+      nome: '',
+      email: '',
+      github: '',
+      jiraId: '',
+      miniBio: '',
+      habilidades: [
+        {
+          id: 0,
+          nome: ''
+        }
+      ],
+      empresas: [
+        {
+          id: 0,
+          nome: ''
+        }
+      ],
+      promptsHistory: ''
+    },
+    admin: false
+  }
+
+  public prompts: Prompt[] = [];
 
   public genaiMenu: GenAiMenuItem[] = [
     { id: 1, title: 'Manipulação de Repositório', icon: 'assets/images/repository_manipulation.png', status: 'disabled' },
@@ -69,9 +212,81 @@ export class GenAiForDevsComponent implements OnInit {
   private selectedStack: string | null = null;
   private inputTimeout: any;
 
-  constructor() { }
+  public promptsByUserEsteiraId: Prompt[] = [];
 
-  ngOnInit(): void { }
+  public pedingJiraTasks: JiraAtividades[] = [];
+  public selectedJiraTask: string | null = null;
+  public selectedJiraTaskValue: string | null = null;
+
+  public showModalContent: boolean = false;
+
+  constructor(
+    private router: Router,
+    private cognitoService: CognitoService,
+    private userService: UserService,
+    private promptsService: PromptService,
+    private modalService: NgbModal,
+    private jiraService: jiraActivitieseService,
+  ) { }
+
+  ngOnInit(): void {
+
+    const savedEsteira = localStorage.getItem('selectedEsteira');
+    if (savedEsteira) {
+      this.esteiraSelecionada = JSON.parse(savedEsteira);
+      this.isEsteiraSelected = true;
+      this.esteiraSelecionadaId = this.esteiraSelecionada.id;
+
+      this.router.navigate([`elastic-devs-ai/${this.esteiraSelecionada.id}`]);
+    }
+
+
+    //Obtém username do usuário logado
+    this.cognitoService.getLoggedInUsername().then((username: any) => {
+      this.username = username;
+
+      //Obtém id do usuário por username
+      this.userService.getUsuarioIdPorUsername(this.username).subscribe((userId: any) => {
+        this.userId = userId;
+
+        //Obtem usuario por userId
+        this.userService.getUserByUserId(this.userId).subscribe((user: any) => {
+          this.usuario = user;
+
+          //verifica se usuário é admin
+          if (this.usuario.admin === true) {
+            //Obtém contagem de prompts por EsteiraId
+            this.promptsService.getContPromptsByEsteiraId(this.esteiraSelecionadaId).subscribe((contPrompts: any) => {
+              this.contElasticPrompts = contPrompts;
+            });
+
+            //Obtém prompt por esteiraId
+            this.promptsService.getPromptsHistoryByEsteiraId(this.esteiraSelecionadaId).subscribe((prompts: any) => {
+              this.promptsByUserEsteiraId = prompts;
+              console.log('Prompts por userEsteiraId', prompts);
+            });
+          } else {
+            //Obtém contagem de prompts por userEsteiraId
+            this.promptsService.getContPromptsByUserEsteiraId(this.userEsteiraId).subscribe((contPrompts: any) => {
+              this.contElasticPrompts = contPrompts;
+            });
+
+            //Obtém prompts por userEsteiraId
+            this.promptsService.getPromptsHistoryByUserEsteiraId(this.userEsteiraId).subscribe((prompts: any) => {
+              this.promptsByUserEsteiraId = prompts;
+            });
+          }
+        });
+
+        //Obtém userEsteiraId por esteiraId e userId
+        this.userService.getUserEsteiraIdPorEsteiraIdAndUsuarioId(this.esteiraSelecionadaId, this.userId).subscribe((userEsteiraId: any) => {
+          this.userEsteiraId = userEsteiraId;
+        });
+      });
+    });
+
+    this.getPendingJiraTasks();
+  }
 
   genAiButtonSelected(buttonId: number): void {
     this.selectedButtonId = buttonId;
@@ -100,7 +315,7 @@ export class GenAiForDevsComponent implements OnInit {
         ).slice(0, 3);
         this.suggestionsVisible = this.filteredCodeTypes.length > 0;
       }
-    }, 1500); // Delay de 1,5 segundos
+    }, 500);
     this.clearGeneratedCode();
   }
 
@@ -115,7 +330,7 @@ export class GenAiForDevsComponent implements OnInit {
   generateCode(): void {
     const stackType = this.stackType;
     const codeType = this.codeType;
-    const goal = this.goal;
+    const entity = this.entity;
     const inputTable = this.table;
 
     const existingCodeType = this.codeTypes.find(type => type.tipo_de_codigo.toLowerCase() === codeType?.toLowerCase() && type.stack === stackType?.toLowerCase());
@@ -130,9 +345,13 @@ export class GenAiForDevsComponent implements OnInit {
     }
 
     this.generatedCode = `
-Prompt para geração de código:
+Prompt para geração de código:\n`;
 
-aja como um copiloto de desenvolvimento, sua função é gerar o código em java para uma api-rest já existente para a entidade ${goal}.
+if(this.selectedJiraTask) {
+  this.generatedCode += `\nAtividade Jira: ${this.selectedJiraTask}\n`;
+}
+
+this.generatedCode += `\nAja como um copiloto de desenvolvimento, sua função é gerar o código em java para uma api-rest já existente para a entidade ${entity}.
 \n`;
 
     if (inputTable) {
@@ -174,6 +393,8 @@ essas são as dependências atuais do projeto:
 
 Como pode ver ele usa o jakarta persistence, então todas as entidades são gerenciadas pelo framework. Tente fornecer algo que funcione de ponta a ponta desde a API até a parte do banco de dados.
     `;
+
+    this.registrarNovoPrompt();
   }
 
   copyToClipboard(): void {
@@ -198,6 +419,7 @@ Como pode ver ele usa o jakarta persistence, então todas as entidades são gere
   }
 
   showSuggestions(): void {
+    this.updateSuggestions(this.codeType || '');
     this.suggestionsVisible = this.filteredCodeTypes.length > 0;
   }
 
@@ -212,6 +434,44 @@ Como pode ver ele usa o jakarta persistence, então todas as entidades são gere
   }
 
   checkFormValidity(): void {
-    this.isFormValid = !!(this.stackType && this.codeType && this.goal);
+    this.isFormValid = !!(this.stackType && this.codeType && this.entity);
+  }
+
+  public registrarNovoPrompt(): void {
+    this.entityValue = this.entity;
+    this.tableValue = this.table;
+    this.codeTypeValue = this.codeType;
+    this.stackValue = this.stackType;
+    this.generatedCodeValue = this.generatedCode;
+    this.userEsteiraValue = this.userEsteiraId;
+
+    const selectedJiraTask = this.pedingJiraTasks.find(task => task.name === this.selectedJiraTask);
+
+    const promptData = {
+      entidade: this.entityValue,
+      prompt: this.generatedCodeValue,
+      stack: this.stackValue,
+      tabela: this.tableValue,
+      tipo_codigo: this.codeTypeValue,
+      userEsteira: {
+        id: this.userEsteiraValue
+      },
+      jiraActivity: selectedJiraTask ? { id: selectedJiraTask.id } : null
+    }
+
+    this.promptsService.postPromptHistory(promptData).subscribe((response: any) => {
+    }, (erro: any) => {
+      console.log('Erro ao registrar prompt', erro);
+    })
+  }
+
+  open(content: any) {
+    this.modalService.open(content)
+  }
+
+  public getPendingJiraTasks(): void {
+    this.jiraService.getPendingTasks().subscribe((tasks: any) => {
+      this.pedingJiraTasks = tasks;
+    })
   }
 }

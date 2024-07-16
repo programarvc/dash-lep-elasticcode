@@ -29,7 +29,7 @@ import {
   PullRequest
 } from 'src/app/types/valorMaturidade-types';
 
-import { 
+import {
   JiraActivities,
   JiraEpics,
   AllActivities,
@@ -37,7 +37,9 @@ import {
   MediaStoriesPerEpic,
   StoriesAndEpicsData,
   TotalPoints,
-  TotalPointsLast60Days
+  TotalPointsLast60Days,
+  EpicsList,
+  ActivitiesPerEpic
 } from 'src/app/types/jiraActivities-types';
 
 import { EsteiraService } from 'src/services/esteira/esteira.service';
@@ -144,16 +146,16 @@ export class DashProjetoComponent implements OnInit {
       },
       data: '',
       hora: '',
-    numero: 0,
-    leadTime: 0,
-    frequencyDeployment: 0,
-    changeFailureRate: 0,
-    timeToRecovery: 0,
+      numero: 0,
+      leadTime: 0,
+      frequencyDeployment: 0,
+      changeFailureRate: 0,
+      timeToRecovery: 0,
 
-    saude: 0,
-    metricas4: 0,
-    capacidadeDora: 0,
-    mediaDeJornada: 0
+      saude: 0,
+      metricas4: 0,
+      capacidadeDora: 0,
+      mediaDeJornada: 0
     },
 
     itemDeMaturidade: {
@@ -290,6 +292,11 @@ public lineChartOptions: ChartOptions = {
   public lineChartLegend = false;
   public lineChartType = 'line';
   public lineChartPlugins = [];
+
+  public epicsList: EpicsList [] = [];
+  public activitiesPerEpic: ActivitiesPerEpic [] = [];
+  public allactivitieslist : ActivitiesPerEpic [] = [];
+  public finishedActivities: ActivitiesPerEpic [] = [];
   
   //variavel com dados para armazenar a quantidade total de prs por colaborador Hasura
   currentVcsPullRequestTop5: VcsPullRequestTop5[] = [];
@@ -303,11 +310,17 @@ public lineChartOptions: ChartOptions = {
   public itemDeMaturidade: ItemDeMaturidade[] = [];
   public valorMaturidadeTecnica: ValorDosIndicesDeMaturidadeByEsteiraIdAndTecnica[] = [];
   public valorMaturidadeCultura: ValorDosIndicesDeMaturidadeByEsteiraIdAndCultura[] = [];
-  public valorMaturidadeC:  ValorDosIndicesDeMaturidade[] = [];
+  public valorMaturidadeC: ValorDosIndicesDeMaturidade[] = [];
   public selectedOption: number;
   public filterValorMaturidade: ValorDosIndicesDeMaturidadeFilter[] = [];
   public valorMaturidadeDate: Date;
   public formattedDate: string | null = null;
+
+  public esteiraSelecionada: any = [];
+  public isEsteiraSelected: boolean = false;
+  public esteiraSelecionadaId: number = 0;
+
+  public showActivities: boolean = false; // Controla a exibição da lista de atividades
  
   constructor(
     private router: Router,
@@ -318,12 +331,22 @@ public lineChartOptions: ChartOptions = {
     private valorMaturidadeService: valorMaturidadeService,
     private jiraActivitiesService: jiraActivitieseService,
     private modalService: NgbModal
+    
   ) {
     this.selectedOption = 0;
     this.valorMaturidadeDate = new Date();
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    const savedEsteira = localStorage.getItem('selectedEsteira');
+    if (savedEsteira) {
+      this.esteiraSelecionada = JSON.parse(savedEsteira);
+      this.isEsteiraSelected = true;
+      this.esteiraSelecionadaId = this.esteiraSelecionada.id;
+      this.currentEsteira = this.esteiraSelecionada;
+      this.router.navigate([`dashboard/${this.esteiraSelecionada.id}`]);
+    }
+
     this.getCapacidades();
     this.getValorMaturidades();
     this.getMaturidade();
@@ -336,10 +359,10 @@ public lineChartOptions: ChartOptions = {
         this.getValorMaturidadesByEsteiraIdAndTecnica(parseInt(id));
         this.getValorMaturidadesByEsteiraIdAndCultura(parseInt(id));
         this.getMaturidadeByEsteiraId(parseInt(id));
-        
+
       }
       const maturidadeId = params.get('maturidadeId');
-      if (maturidadeId ) {
+      if (maturidadeId) {
         this.setCurrentMaturidade(parseInt(maturidadeId));
 
       }
@@ -362,18 +385,21 @@ public async setCurrent(id: number) {
   this.getAveragePoints();
   this.getTotalPointsForJiraStories();
   this.getJiraEpicsLast60Days();
+  this.getEpicList();
+  this.getListNameAndPoints();
+  this.getListFinishedActivities();
 }
 
-public async setCurrentMaturidade (id: number) {
-  const maturidade = this.valorMaturidadeC.find(
-    (maturidade) => maturidade.id === id
-  );
-  if (maturidade) {
-    this.currentValorMaturidade = maturidade;
-    this.getValorDoIndicesByMaturidadeId(maturidade.id);
+  public async setCurrentMaturidade(id: number) {
+    const maturidade = this.valorMaturidadeC.find(
+      (maturidade) => maturidade.id === id
+    );
+    if (maturidade) {
+      this.currentValorMaturidade = maturidade;
+      this.getValorDoIndicesByMaturidadeId(maturidade.id);
+    }
+
   }
-
-}
 
   public async getMaturidade() {
     this.esteiraService.getEsteiras().subscribe((response) => {
@@ -410,10 +436,10 @@ public async setCurrentMaturidade (id: number) {
           maturidadeData.dataHora = date.toISOString();
         });
         this.maturidadeByEsteiraId = maturidadeArray;
-        if(this.maturidadeByEsteiraId.length > 0) {
+        if (this.maturidadeByEsteiraId.length > 0) {
           this.selecionarMaturidade(this.maturidadeByEsteiraId[0].id);
         }
-        
+
       });
   }
 
@@ -429,14 +455,14 @@ public async setCurrentMaturidade (id: number) {
     });
   }
 
-  public getValorMaturidadesByEsteiraIdAndTecnica(id: number): void{
-    this.valorMaturidadeService.getValoresByEsteiraIdAndTipoMaturidadeTecnicaLatest(id).subscribe((response) =>{
+  public getValorMaturidadesByEsteiraIdAndTecnica(id: number): void {
+    this.valorMaturidadeService.getValoresByEsteiraIdAndTipoMaturidadeTecnicaLatest(id).subscribe((response) => {
       this.valorMaturidadeTecnica = response;
     });
   }
 
-  public getValorMaturidadesByEsteiraIdAndCultura(id: number): void{
-    this.valorMaturidadeService.getValorMaturidadesByEsteiraIdAndCulturaLatest(id).subscribe((response) =>{
+  public getValorMaturidadesByEsteiraIdAndCultura(id: number): void {
+    this.valorMaturidadeService.getValorMaturidadesByEsteiraIdAndCulturaLatest(id).subscribe((response) => {
       this.valorMaturidadeCultura = response;
     });
   }
@@ -446,7 +472,7 @@ public async setCurrentMaturidade (id: number) {
       .getValorDoIndicesByMaturidadeId(maturidadeId)
       .subscribe((valorMaturidade) => {
         this.valorMaturidadeC = valorMaturidade;
-        
+
       });
   }
 
@@ -458,12 +484,12 @@ public async setCurrentMaturidade (id: number) {
       });
   }
 
-  getLatestCapacidadesByEsteiraId(id : number): void{
+  getLatestCapacidadesByEsteiraId(id: number): void {
     this.capacidadeService
       .getLatestCapacidadesByEsteiraId(id)
-      .subscribe((capacidade) =>{
-      this.currentCapacidade = capacidade;
-    });
+      .subscribe((capacidade) => {
+        this.currentCapacidade = capacidade;
+      });
   }
 
   getCorJornada(jornadaGoal: number | undefined, nivel: string): string | undefined {
@@ -483,7 +509,7 @@ public async setCurrentMaturidade (id: number) {
   }
 
   getNivel(rate: number | undefined): string | undefined {
-    if (rate === null || rate === undefined){
+    if (rate === null || rate === undefined) {
       return 'sem dado';
     } else if (rate >= 0 && rate <= 25) {
       return 'Baixo';
@@ -496,40 +522,40 @@ public async setCurrentMaturidade (id: number) {
     }
   }
 
-  getFontSize (size: number | undefined): string | undefined {
-    if (size === null || size === undefined){
+  getFontSize(size: number | undefined): string | undefined {
+    if (size === null || size === undefined) {
       return '25px';
     } else {
       return '40px';
     }
   }
 
-  getFontSizeFailureRate (size: number | undefined): string | undefined {
-    if (size === null || size === undefined){
+  getFontSizeFailureRate(size: number | undefined): string | undefined {
+    if (size === null || size === undefined) {
       return '25px';
     } else {
       return '39px';
     }
   }
 
-  getFontSizeSaude (size: number | undefined): string | undefined {
-    if (size === null || size === undefined){
+  getFontSizeSaude(size: number | undefined): string | undefined {
+    if (size === null || size === undefined) {
       return '25px';
     } else {
       return '16px';
     }
   }
 
-  getFontSizeMetricas (size: number | undefined): string | undefined {
-    if (size === null || size === undefined){
+  getFontSizeMetricas(size: number | undefined): string | undefined {
+    if (size === null || size === undefined) {
       return '14px';
     } else {
       return '12px';
     }
   }
 
-  public selecionarMaturidade (id?: number) {
-   
+  public selecionarMaturidade(id?: number) {
+
     if (id) {
       const maturidade = this.maturidadeByEsteiraId.find((maturidade) => maturidade.id === id);
       if (maturidade) {
@@ -541,7 +567,7 @@ public async setCurrentMaturidade (id: number) {
         };
         this.maturidadeService.setCurrentMaturidade(this.currentMaturidade);
         this.formattedDate = this.currentMaturidade.dataHora[0].toString();
-        if(this.currentMaturidade) {
+        if (this.currentMaturidade) {
           this.getValorDoIndicesByMaturidadeId(this.currentMaturidade.id);
         }
       }
@@ -569,8 +595,8 @@ public async setCurrentMaturidade (id: number) {
         capacidadeDora: 0,
         mediaDeJornada: 0
       };
-      }
     }
+  }
 
   getPrCountLast30And60And90Days(): void {
     this.maturidadeService.getPrCountLast30And60And90Days().subscribe((response) => {
@@ -593,11 +619,8 @@ public async setCurrentMaturidade (id: number) {
   public getJiraStories(): void {
     this.jiraActivitiesService.getCountStories().subscribe((response) => {
       this.jiraActivities = response;
-      console.log(this.jiraActivities);
     });
   }
-
-
 
   public getcountAllStories(): void {
     this.jiraActivitiesService.getcountAllStories().subscribe((response) => {
@@ -610,7 +633,6 @@ public async setCurrentMaturidade (id: number) {
       this.allActivities60days = response;
     });
   }
-
 
   public getJiraEpicsLast60Days(): void {
     this.jiraActivitiesService.getEpicsLast60Days().subscribe((response) => {
@@ -630,7 +652,6 @@ public async setCurrentMaturidade (id: number) {
     });
   }
 
-
   public getTotalPointsForJiraStoriesLast60Days(): void {
     this.jiraActivitiesService.getTotalPointsForJiraStoriesLast60Days().subscribe((response) => {
       this.TotalPointsLast60Days = response;
@@ -640,5 +661,38 @@ public async setCurrentMaturidade (id: number) {
   open(content: any) {
     this.modalService.open(content);
   }
+
+  getEpicList(): void {
+    this.jiraActivitiesService.getEpicList().subscribe((response) => {
+      this.epicsList = response;
+    });
+  }
+
+  getActivitiesPerEpic(epic: string): void {
+    this.jiraActivitiesService.getActivitiesPerEpic(epic).subscribe((response) => {
+      this.activitiesPerEpic = response;
+    });
+  }
   
+  loadActivitiesAndOpenModal(item: any): void {
+    // Suponha que getActivitiesPerEpic seja um método que atualize activitiesPerEpic com as atividades do épico selecionado
+    this.getActivitiesPerEpic(item.epic); // Atualize com o identificador correto do épico
+    this.showActivities = true; // Mostra a lista de atividades
+  }
+
+  backToEpics(): void {
+    this.showActivities = false; // Volta para a lista de épicos
+  }
+
+  getListNameAndPoints(): void {
+    this.jiraActivitiesService.getNameAndPoints().subscribe((response) => {
+      this.allactivitieslist = response;
+    });
+  }
+
+  getListFinishedActivities(): void {
+    this.jiraActivitiesService.getFinishedActivities().subscribe((response) => {
+      this.finishedActivities = response;
+    });
+  }
 }

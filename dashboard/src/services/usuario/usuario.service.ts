@@ -30,6 +30,13 @@ export class UserService {
       .pipe(catchError(this.handleError<any>("getUsuarios")));
   }
 
+  getUserByUserId(id: number): Observable<any> {
+    const url: string = `${environment.api}/user/${id}`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>("getUserById")));
+  }
+
   getUserEsteiraById(id: number): Observable<any> {
     const url: string = `${environment.api}/user/esteira/${id}`;
     return this.http
@@ -56,6 +63,13 @@ export class UserService {
     return this.http
       .get<any>(url)
       .pipe(catchError(this.handleError<any>('getUsuarioIdPorUsername')));
+  }
+
+  getUserEsteiraIdPorEsteiraIdAndUsuarioId(esteiraId: number, usuarioId: number): Observable<any> {
+    const url: string = `${environment.api}/user/esteira/${esteiraId}/user/${usuarioId}`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>('getUserEsteiraIdPorEsteiraIdAndUsuarioId')));
   }
 
 }

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { Observable, of } from 'rxjs';
@@ -28,7 +28,7 @@ export class jiraActivitieseService {
   }
 
   //Endpoint retorna a quantidade de epicos no jira para um epico especificado
-  getCountEpics(): Observable<any> {
+  getEpicList(): Observable<any> {
     const url: string = `${environment.api}/jira/countepics`;
     return this.http
       .get<any>(url)
@@ -89,5 +89,35 @@ export class jiraActivitieseService {
         catchError(this.handleError<any>('getTotalPointsForJiraStoriesLast60Days'))
       );
   }
+
+  //Endpoint retorna as tarefas pendentes no Jira
+  getPendingTasks(): Observable<any> {
+    const url: string = `${environment.api}/jira/atividades-disponiveis`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>('getPendingTasks')));
+  }
  
+  getActivitiesPerEpic(epic: string): Observable<any> {
+      const params = new HttpParams().set('epic', epic);
+      const url: string = `${environment.api}/jira/epicslistacttivities`;
+      return this.http
+        .get<any>(url, { params })
+        .pipe(catchError(this.handleError<any>('getActivitiesPerEpic')));
+  }
+
+  getNameAndPoints(): Observable<any> {
+    const url: string = `${environment.api}/jira/namepoints`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>('getNameAndPoints')));
+  }
+
+  getFinishedActivities(): Observable<any> {
+    const url: string = `${environment.api}/jira/completedActivities`;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>('getFinishedAcitivities')));
+  }
+
 }

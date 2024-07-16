@@ -34,6 +34,13 @@ public interface JiraActivitiesRepository extends JpaRepository<JiraActivitiesEn
         "AND source = 'Jira'", nativeQuery = true)
     Map<String, Object> countAllStories();
 
+    // Query para buscar o nome e pontos das tarefas
+    @Query(value = "SELECT j.name AS name, j.points AS points " +
+        "FROM tms_task j " +
+        "WHERE j.type_detail IN ('História', 'Subtarefa', 'Bug') " +
+        "AND j.source = 'Jira'", nativeQuery = true)
+    List<Map<String, Object>> findNameAndPoints();
+
     // Query para buscar a quantidade total de tarefas nos últimos 60 dias
     @Query(value = "SELECT COUNT(j.id) AS story_count_last60days " +
         "FROM tms_task j " +
@@ -42,10 +49,11 @@ public interface JiraActivitiesRepository extends JpaRepository<JiraActivitiesEn
         "AND TO_DATE(updated_at, 'YYYY-MM-DD') >= CURRENT_DATE - INTERVAL '60 days'", nativeQuery = true)
     Map<String, Object> countAllStoriesLast60Days();
 
-    // Query para buscar a quantidade total de epics mais o nome dos epicos
-    @Query(value = "SELECT j.name AS name, j.epic AS epic, COUNT(j.id) AS count_epics " +
+    // Query para buscar lista de epicos dentro de 60 dias.
+    @Query(value = "SELECT j.name AS name, j.epic AS epic " +
         "FROM tms_task j " +
         "WHERE j.type_detail = 'Epic' " +
+        "AND TO_DATE(j.updated_at, 'YYYY-MM-DD') >= CURRENT_DATE - INTERVAL '60 days' " +
         "GROUP BY j.name, j.epic", nativeQuery = true)
     List<Map<String, Object>> countAndDetailsByTypeDetail();
 
@@ -67,7 +75,7 @@ public interface JiraActivitiesRepository extends JpaRepository<JiraActivitiesEn
         "FROM tms_task " +
         "WHERE type_detail IN ('História', 'Subtarefa', 'Bug') " +
         "AND source = 'Jira' " +
-        "AND (status_detail = 'Concluido(Dev)' OR status_detail = 'DEPLOYED') " +
+        "AND (status_detail = 'Concluido(DEV)' OR status_detail = 'DEPLOYED' OR status_detail='Concluído')" +
         "AND points IS NOT NULL", nativeQuery = true)
     Map<String, Object> calculateTotalAndAveragePoints();
 
@@ -86,4 +94,28 @@ public interface JiraActivitiesRepository extends JpaRepository<JiraActivitiesEn
         "AND TO_DATE(updated_at, 'YYYY-MM-DD') >= CURRENT_DATE - INTERVAL '60 days'", nativeQuery = true)
     Map<String, Object> sumTotalPointsForJiraStoriesLast60Days();
 
+
+    //Query para buscar as atividades disponíveis no Jira
+    @Query(value = "SELECT j.*" +
+        "FROM tms_task j " +
+        "WHERE j.source = 'Jira'" +
+        "AND j.type_detail IN ('História', 'Subtarefa', 'Tarefa', 'Bug')" +
+        "AND j.status_detail IN ('Tarefas pendentes')" +
+        "AND j.points IS NOT NULL", nativeQuery = true)
+    List<JiraActivitiesEntity> findAvailableActivities();
+    //* Será preciso alterar como os campos são salvos tirar o Jira| antes de salvar no banco para não da problema na request
+    @Query(value = "SELECT j.name AS name, j.points AS points " +
+        "FROM tms_task j " +
+        "WHERE j.parent = :epic " + 
+        "AND TO_DATE(j.updated_at, 'YYYY-MM-DD') >= CURRENT_DATE - INTERVAL '60 days'", nativeQuery = true)
+    List<Map<String, Object>> findNameAndPointForEpicEqualsParent(@Param("epic") String epic);
+
+    // Query para retornar lista de atividades concluídas
+    @Query(value = "SELECT j.* " +
+            "FROM tms_task j " +
+            "WHERE j.type_detail IN ('História', 'Subtarefa', 'Bug') " +
+            "AND j.source = 'Jira' " +
+            "AND j.status_detail IN ('Concluído(DEV)', 'DEPLOYED', 'Concluído') " +
+            "AND j.points IS NOT NULL", nativeQuery = true)
+    List<JiraActivitiesEntity> findCompletedActivities();
 }

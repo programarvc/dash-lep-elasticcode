@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.List;
+
 @NoArgsConstructor
 @Data
 @ToString
@@ -20,6 +22,6 @@ public class UserEsteiraEntity {
 
     @ManyToOne
     @JoinColumn(name = "esteira_id")
-    private EsteiraDeDesenvolvimentoEntity esteira;  
+    private EsteiraDeDesenvolvimentoEntity esteira;
 
 }

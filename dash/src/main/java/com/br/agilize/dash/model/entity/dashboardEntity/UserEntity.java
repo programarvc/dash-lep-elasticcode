@@ -1,8 +1,11 @@
 package com.br.agilize.dash.model.entity.dashboardEntity;
 
+import com.br.agilize.dash.model.entity.ColaboradorEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
+
+import java.util.List;
 
 @Data
 @ToString
@@ -14,4 +17,11 @@ public class UserEntity {
 
     @Column(name = "username", nullable = false, unique = true)
     private String nome;
+
+    @OneToOne
+    @JoinColumn(name = "colaborador_id", nullable = true)
+    private ColaboradorEntity colaborador;
+
+    @Column(name = "is_admin", nullable = false)
+    private boolean isAdmin;
 }

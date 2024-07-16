@@ -34,7 +34,7 @@ public class TimeController extends ControllerCrudBase<TimeDto> {
         super(service);
     }
 
-   
+
    /* @GetMapping("/esteira/{esteiraId}/colaboradores")
     public ResponseEntity<List<TimeColaboradorDto>> findTimeAndColaboradorByEsteiraId(@PathVariable Long esteiraId) {
         List<TimeColaboradorDto> timeAndColaboradores = service.findTimeAndColaboradorByEsteiraId(esteiraId);
@@ -95,4 +95,3 @@ public class TimeController extends ControllerCrudBase<TimeDto> {
     }
 
 }
-

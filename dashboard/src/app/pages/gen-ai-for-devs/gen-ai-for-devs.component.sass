@@ -5,6 +5,9 @@
     width: 100%
     overflow-x: hidden
 
+.logo-elastic-dev
+    width: 300px
+
 .genai-page h1
     color: #16233E
     font-family: Poppins
@@ -17,6 +20,11 @@
     padding-right: 20px
     margin-left: 60px
     width: calc(100% - 90px)
+
+.prompt-title-space
+    display: flex
+    justify-content: space-between
+
 
 .genai-menu-buttons
     align-items: center
@@ -86,3 +94,86 @@
 
         &:hover 
             background: #f0f0f0
+
+.custom-modal
+    height: 30.25rem
+    background: #F6F8FF
+    width: 56.25rem
+    height: 536px
+    border-radius: 15px 15px
+    position: fixed /* ou absolute, dependendo do seu caso */
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+    max-height: 100vh /* Isso garantirá que o modal nunca seja maior que a janela */
+    overflow-y: auto /* Isso permitirá a rolagem vertical se o conteúdo for maior que a altura */
+
+.custom-modal::-webkit-scrollbar
+    display: none
+
+.google-list
+    list-style: none
+    padding: 0
+    margin: 0
+
+.google-list li
+    border: 1px solid #ddd
+    margin-bottom: 10px
+    border-radius: 8px
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1)
+    transition: box-shadow 0.3s ease
+
+.google-list li:hover 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2)
+
+.list-item 
+    padding: 15px
+
+.list-item h3 
+    margin-top: 0
+    font-family: Poppins
+    font-size: 16px
+
+.list-item p 
+    margin-bottom: 0
+    font-weight: 400
+    font-size: 11px
+
+.activities-table th,
+.activities-table td 
+    border: 1px solid #ddd
+    border-radius: 3px
+    font-size: 16px
+    font-family: Poppins
+    padding: 11px
+    text-align: left
+
+.activities-table th 
+    background-color: #3686ff
+    font-size: 16px
+    font-weight: 700
+    font-family: Poppins
+
+.activities-table tr:nth-child(even) 
+    background-color: #f9f9f9
+    
+
+.activities-table tr:hover 
+    background-color: #eaeaea
+
+.btn-voltar 
+  background: none
+  color: inherit
+  border: none
+  padding: 0
+  font: inherit
+  cursor: pointer
+  outline: inherit
+  margin-bottom: 4px
+  &:hover
+    color: #3686ff
+
+.card-prompt-history
+    display: flex
+    font-weight: bold
+    gap: 5px

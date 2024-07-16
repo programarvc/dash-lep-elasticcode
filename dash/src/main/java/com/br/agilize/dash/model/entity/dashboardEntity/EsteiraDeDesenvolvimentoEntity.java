@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.List;
+
 @Data
 @ToString
 @Entity
@@ -26,6 +28,4 @@ public class EsteiraDeDesenvolvimentoEntity {
 
     @ManyToOne
     private EmpresaEntity empresa;
-
-
 }

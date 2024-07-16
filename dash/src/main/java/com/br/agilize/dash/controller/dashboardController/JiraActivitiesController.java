@@ -37,6 +37,12 @@ public class JiraActivitiesController {
         super();
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<List<JiraActivitiesDto>> getAll() {
+        List<JiraActivitiesDto> activities = service.findAll();
+        return ResponseEntity.ok(activities);
+    }
+
     @GetMapping("/countstory")
     public ResponseEntity<Map<String, Object>> countStories() {
         Map<String, Object> count = service.countStories();
@@ -90,4 +96,26 @@ public class JiraActivitiesController {
         return ResponseEntity.ok(service.getTotalPointsForJiraStoriesLast60Days());
     }
 
+    @GetMapping("/atividades-disponiveis")
+    public ResponseEntity<List<JiraActivitiesDto>> findAvailableActivities() {
+        return ResponseEntity.ok(service.findAvailableActivities());
+    }
+
+    @GetMapping("/epicslistacttivities")
+    public ResponseEntity<List<Map<String, Object>>> findNameAndPointForEpicEqualsParent(@RequestParam String epic) {
+        List<Map<String, Object>> activities = service.findNameAndPointForEpicEqualsParent(epic);
+        return ResponseEntity.ok(activities);
+    }
+
+    @GetMapping("/namepoints")
+    public ResponseEntity<List<Map<String, Object>>> getNameAndPoints() {
+        List<Map<String, Object>> result = service.findNameAndPoints();
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/completedActivities")
+    public ResponseEntity<List<JiraActivitiesDto>> getCompletedActivities() {
+        List<JiraActivitiesDto> completedActivities = service.findCompletedActivities();
+        return ResponseEntity.ok(completedActivities);
+    }
 }

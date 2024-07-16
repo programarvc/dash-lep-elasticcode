@@ -5,7 +5,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
-                        <h1>GEN.AI for Devs</h1>
+                        <img class="logo-elastic-dev img-fluid" src="../../../assets/images/Elastic_Dev_-_Preto_1.png">
                     </div>
                     <div class="col-md-12">
                         <div class="genai-menu-buttons">
@@ -22,7 +22,26 @@
                     <div class="col-md-12" *ngIf="showCard">
                         <div class="card genai-card">
                             <div class="card-body">
-                                <h5 class="card-title">Geração de Código</h5>
+                                <div class="prompt-title-space">
+                                    <h5 class="card-title">Geração de Código</h5>
+                                    <button type="button" class="btn btn-primary" (click)="open(PromptsHistoryModal)">
+                                        Prompts Gerados: {{this.contElasticPrompts}} >
+                                    </button>
+                                </div>
+                                <!-- Modal de histórico de prompts gerados pelo desenvolvedor -->
+                                <ng-template #PromptsHistoryModal let-modal>
+                                    <div class="modal-body custom-modal">
+                                        <!-- Lista de Prompots gerados pelo desenvolvedor para a esteira atual -->
+                                        <ul *ngIf="!showModalContent" class="google-list">
+                                            <li *ngFor="let prompt of promptsByUserEsteiraId">
+                                                <div class="list-item">
+                                                    <h3>Entidade: {{ prompt.entidade }}</h3>
+                                                    <p>Tipo de Código: {{ prompt.tipo_codigo }} | Stack: {{ prompt.stack }} <span *ngIf="usuario.admin">| Colaborador: {{ prompt.userEsteira.username.colaborador.nome }}</span></p>
+                                                  </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </ng-template>
                                 <form (ngSubmit)="generateCode()">
                                     <div class="mb-3">
                                         <label class="form-label">Tipo de Stack</label>
@@ -43,13 +62,23 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="codeType" class="form-label">Tipo de Código</label>
-                                        <input type="text" class="form-control" id="codeType" [(ngModel)]="codeType"
+                                        <input 
+                                            type="text" 
+                                            class="form-control" 
+                                            id="codeType"
+                                            [(ngModel)]="codeType"
                                             name="codeType"
                                             (input)="updateSuggestions(codeType || ''); clearGeneratedCode(); checkFormValidity()"
-                                            (focus)="showSuggestions()" (blur)="hideSuggestions()" autocomplete="off"
-                                            placeholder="Informe o tipo de código" required>
-                                        <ul class="suggestions"
-                                            *ngIf="filteredCodeTypes.length > 0 && suggestionsVisible">
+                                            (focus)="showSuggestions()" 
+                                            (blur)="hideSuggestions()" 
+                                            autocomplete="off"
+                                            placeholder="Informe o tipo de código" 
+                                            required
+                                        >
+                                        <ul 
+                                            class="suggestions"
+                                            *ngIf="filteredCodeTypes.length > 0 && suggestionsVisible"
+                                        >
                                             <li *ngFor="let suggestion of filteredCodeTypes"
                                                 (click)="selectSuggestion(suggestion)">
                                                 {{ suggestion.tipo_de_codigo }}
@@ -58,15 +87,36 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="goal" class="form-label">Entidade</label>
-                                        <input class="form-control" id="goal" [(ngModel)]="goal" name="goal"
+                                        <input class="form-control" id="goal" [(ngModel)]="entity" name="goal"
                                             (input)="clearGeneratedCode(); checkFormValidity()"
                                             placeholder="Informe a entidade do projeto" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <hr>
+                                        <h5>
+                                            Opcional
+                                        </h5>
                                     </div>
                                     <div class="mb-3">
                                         <label for="table" class="form-label">Tabela</label>
                                         <input class="form-control" id="table" [(ngModel)]="table" name="table"
                                             (input)="clearGeneratedCode()"
                                             placeholder="Informe a tabela para referência">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="jiraActivity" class="form-label">Atividades Pendentes (Jira)</label>
+                                        <select
+                                            class="form-control"
+                                            id="jiraActivity"
+                                            [(ngModel)]="selectedJiraTask"
+                                            name="jiraActivity"
+                                            type="select"
+                                        >
+                                            <option value="" disabled [selected]="selectedJiraTask === null">Selecione uma atividade pendente do Jira</option>
+                                            <option *ngFor="let task of pedingJiraTasks" [value]="task.name">
+                                                {{ task.name }}
+                                            </option>
+                                        </select>
                                     </div>
                                     <button type="submit" class="btn btn-primary" [disabled]="!isFormValid">Gerar
                                         Prompt</button>

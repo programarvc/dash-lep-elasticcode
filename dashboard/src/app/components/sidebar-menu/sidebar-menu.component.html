@@ -1,14 +1,44 @@
 <div class="barra-esquerda">
-    <button class="botao-dash botao-um" title="Dashboard" [ngClass]="{'selected': sidebarButtonService.getSelectedButton() === 'botao-um'}" (click)="getEsteiraIdAndUsername()">
-        <img src="../../../assets/images/menu-dash-projeto.svg" alt="Menu Dashboard"/>
+    <button type="button" class="botao-dash botao-seis" (click)="open(selectEsteiraModal)"
+        title="Selecionar Esteira" [ngClass]="{'selected': sidebarButtonService.getSelectedButton() == 'botao-seis'}">
+        <img src="../../../assets/images/selecionar-esteira.svg" alt="Selecionar Esteira" />
     </button>
-    <button class="botao-dash botao-dois" title="Dash Devs" [ngClass]="{'selected': sidebarButtonService.getSelectedButton() === 'botao-dois'}" (click)="devDash()">
-        <img src="../../../assets/images/second-button-dash-projeto.svg" alt="Menu Dev Dash"/>
+    <ng-template #selectEsteiraModal let-modal>
+        <div class="modal-body">
+            <div class="modal-selecionar-esteira">
+                <h5>Selecione a esteira</h5>
+                <select class="form-select" id="esteira" [(ngModel)]="esteiraSelecionada" name="esteira" required
+                    (ngModelChange)="onEsteiraChange($event)">
+                    <option *ngFor="let esteira of userEsteiras" [ngValue]="esteira">
+                        {{esteira.nome}} - {{esteira.empresa.nome}}
+                    </option>
+                </select>
+                <div class="botao-selecionar-esteira">
+                    <button class="btn btn-primary" type="button" (click)="selectEsteira(modal)">
+                        Selecionar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <button class="botao-dash botao-um" title="Dashboard"
+        [ngClass]="{'selected': sidebarButtonService.getSelectedButton() === 'botao-um'}"
+        (click)="dashboard()"
+        >
+        <img src="../../../assets/images/menu-dash-projeto.svg" alt="Menu Dashboard" />
     </button>
-    <button class="botao-dash botao-tres" title="GEN.AI for Devs" [ngClass]="{'selected': sidebarButtonService.getSelectedButton() === 'botao-tres'}" (click)="genAi()">
-        <img src="../../../assets/images/menu-dash-genia.svg" alt="Menu GenAI"/>
+    <button class="botao-dash botao-dois" title="Dash Devs"
+        [ngClass]="{'selected': sidebarButtonService.getSelectedButton() === 'botao-dois'}"
+        (click)="devDash()"
+        >
+        <img src="../../../assets/images/second-button-dash-projeto.svg" alt="Menu Dev Dash" />
     </button>
-    <button class="botao-dash botao-quatro" title="Logout" (click)="signOut()">
-        <img src="../../../assets/images/logout.svg" alt="Logout ElasticOps"/>
+    <button class="botao-dash botao-tres" title="GEN.AI for Devs"
+        [ngClass]="{'selected': sidebarButtonService.getSelectedButton() === 'botao-tres'}"
+        (click)="genAi()">
+        <img src="../../../assets/images/menu-dash-genia.svg" alt="Menu GenAI" />
+    </button>
+    <button class="botao-dash botao-cinco" title="Logout" (click)="signOut()">
+        <img src="../../../assets/images/logout.svg" alt="Logout ElasticOps" />
     </button>
 </div>

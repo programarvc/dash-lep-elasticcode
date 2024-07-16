@@ -61,4 +61,10 @@ public class UserController extends ControllerCrudBase<UserDto> {
         Optional<Long> userId = this.service.buscarIdPorNome(nome);
         return ResponseEntity.ok(userId);
     }
+
+    @GetMapping("/esteira/{esteiraId}/user/{usernameId}")
+    public ResponseEntity<Long> findIdByEsteiraIdAndUsernameId(@PathVariable Long esteiraId, @PathVariable Long usernameId) {
+        Long id = this.service.findIdByEsteiraIdAndUsernameId(esteiraId, usernameId);
+        return ResponseEntity.ok(id);
+    }
 }

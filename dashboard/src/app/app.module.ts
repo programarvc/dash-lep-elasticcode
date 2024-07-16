@@ -12,8 +12,6 @@ import { Amplify } from 'aws-amplify';
 import awsconfig from 'aws-exports';
 
 
-
-
 //Components
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { SidebarMenuComponent } from './components/sidebar-menu/sidebar-menu.component';
@@ -30,6 +28,7 @@ import { AmplifyUiLoginComponent } from './pages/amplify-ui-login/amplify-ui-log
 import { TimeComponent } from './pages/time/time.component';
 import { GenAiForDevsComponent } from './pages/gen-ai-for-devs/gen-ai-for-devs.component';
 import { RegistroNovoDevComponent } from './pages/registro-novo-dev/registro-novo-dev.component';
+import { PromptHistoryModalComponent } from './components/prompt-history-modal/prompt-history-modal.component';
 
 Amplify.configure(awsconfig);
 
@@ -47,7 +46,8 @@ Amplify.configure(awsconfig);
     AmplifyUiLoginComponent, 
     TimeComponent,
     GenAiForDevsComponent,
-    RegistroNovoDevComponent
+    RegistroNovoDevComponent,
+    PromptHistoryModalComponent,
   ],
   imports: [
     HttpClientModule, 

@@ -2,14 +2,7 @@ package com.br.agilize.dash.model.entity;
 
 import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
 
@@ -30,7 +23,10 @@ public class ColaboradorEntity {
     @Column(unique = true)
     private String github;
 
-    @Column(unique = true, columnDefinition = "TEXT")
+    @Column(unique = true)
+    private String jiraId;
+
+    @Column(columnDefinition = "TEXT")
     private String miniBio;
 
     @ManyToMany

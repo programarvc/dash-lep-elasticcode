@@ -22,5 +22,5 @@ public interface TimeRepository extends JpaRepository<TimeEntity, Long> {
 
     @Query(value = "SELECT * FROM TimeEntity WHERE esteira_id = :esteiraId", nativeQuery = true)
     List<TimeEntity> findTimesByEsteiraId(@Param("esteiraId") Long esteiraId);
-    
+
 }
