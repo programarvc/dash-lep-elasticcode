@@ -12,13 +12,8 @@ import java.util.List;
 public class EsteiraDeDesenvolvimentoDto {
 
     private Long id;
-
     private String nome;
-
     private TiposEnum tipo;
-
     private EmpresaDto empresa;
-
     private List<PromptsHistoryDto> promptsHistory;
-
 }
