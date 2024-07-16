@@ -6,8 +6,6 @@ import java.util.List;
 @Data
 public class UserEsteiraDto {
     private Long id;
-   
     private UserDto username;
-
     private EsteiraDeDesenvolvimentoDto esteira;
 }
