@@ -1,6 +1,4 @@
 package com.br.agilize.dash.model.entity.dashboardEntity;
-import com.br.agilize.dash.model.entity.ColaboradorEntity;
-import com.br.agilize.dash.model.entity.dashboardEntity.EsteiraDeDesenvolvimentoEntity;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -36,5 +34,4 @@ public class PromptsHistoryEntity {
     @ManyToOne
     @JoinColumn(name = "tms_task_id")
     private JiraActivitiesEntity jiraActivity;
-
 }
