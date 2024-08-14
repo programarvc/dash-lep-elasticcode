@@ -371,27 +371,34 @@ aqui segue alguns packages dentro do package principal:
 
 essas são as dependências atuais do projeto:
 
-- implementation 'org.springframework.boot:spring-boot-starter-web'
-- implementation 'org.springframework.boot:spring-boot-starter-actuator'
-- implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-- implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.0.3'
-- implementation 'org.mapstruct:mapstruct:1.5.5.Final'
-- implementation 'com.amazonaws.serverless:aws-serverless-java-container-springboot3:2.0.0-M2'
-- implementation 'io.github.cdimascio:dotenv-java:3.0.0'
-- implementation 'com.google.code.gson:gson:2.10.1'
-- implementation 'software.amazon.awssdk:secretsmanager:2.21.15'
-- implementation 'org.postgresql:postgresql'
-- implementation 'io.github.crac.com.amazonaws:aws-lambda-java-runtime-interface-client:1.0.0'
-- implementation group: 'org.apache.maven.plugins', name: 'maven-shade-plugin', version: '3.5.1'
-- implementation 'software.amazon.awssdk:bom:2.23.3'
-- implementation 'software.amazon.awssdk:cognitoidentityprovider:2.23.3'
-- implementation 'com.graphql-java:graphql-java:14.0'
-- implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
-- implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.12.3'
-- implementation 'org.apache.httpcomponents.client5:httpclient5:5.1.2'
-- implementation 'jakarta.ws.rs:jakarta.ws.rs-api:3.1.0'
+   - implementation 'org.springframework.boot:spring-boot-starter-web'
+   - implementation 'org.springframework.boot:spring-boot-starter-actuator'
+   - implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+   - implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.0.3'
+   - implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+   - implementation 'com.amazonaws.serverless:aws-serverless-java-container-springboot3:2.0.0-M2'
+   - implementation 'io.github.cdimascio:dotenv-java:3.0.0'
+   - implementation 'com.google.code.gson:gson:2.10.1'
+   - implementation 'software.amazon.awssdk:secretsmanager:2.21.15'
+   - implementation 'org.postgresql:postgresql'
+   - implementation 'io.github.crac.com.amazonaws:aws-lambda-java-runtime-interface-client:1.0.0'
+   - implementation group: 'org.apache.maven.plugins', name: 'maven-shade-plugin', version: '3.5.1'
+   - implementation 'software.amazon.awssdk:bom:2.23.3'
+   - implementation 'software.amazon.awssdk:cognitoidentityprovider:2.23.3'
+   - implementation 'com.graphql-java:graphql-java:14.0'
+   - implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
+   - implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.12.3'
+   - implementation 'org.apache.httpcomponents.client5:httpclient5:5.1.2'
+   - implementation 'jakarta.ws.rs:jakarta.ws.rs-api:3.1.0'
 
-Como pode ver ele usa o jakarta persistence, então todas as entidades são gerenciadas pelo framework. Tente fornecer algo que funcione de ponta a ponta desde a API até a parte do banco de dados.
+   - compileOnly 'org.projectlombok:lombok'
+   - annotationProcessor 'org.projectlombok:lombok'
+   - annotationProcessor "org.mapstruct:mapstruct-processor:1.5.5.Final"
+   - testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+Como pode ver, ele usa o Jakarta Persistence, então todas as entidades são gerenciadas pelo framework. Além disso, utilizamos Lombok para reduzir a verbosidade do código, eliminando a necessidade de criar getters, setters, toString, hashCode e equals manualmente. A estratégia de geração de ID utilizada é GenerationType.AUTO.
+
+Tente fornecer algo que funcione de ponta a ponta desde a API até a parte do banco de dados, utilizando as anotações do Lombok para simplificar o código das entidades e DTOs.
     `;
 
     this.registrarNovoPrompt();
