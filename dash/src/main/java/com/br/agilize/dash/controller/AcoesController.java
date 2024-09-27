@@ -28,6 +28,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class AcoesController extends ControllerCrudBase<AcoesDto> {
     private AcoesService service;
 
+    // Construtor
     public AcoesController(@Autowired AcoesService service) {
         super(service);
         this.service = service;
