@@ -22,6 +22,8 @@ import com.br.agilize.dash.service.AcoesService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+//Reiniciar o lambda
+
 @Tag(name = "AcoesController", description = "Api para gerenciar as habilidades")
 @Controller
 @RequestMapping("/acoes")
