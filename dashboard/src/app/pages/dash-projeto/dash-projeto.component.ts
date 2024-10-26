@@ -1,8 +1,7 @@
 import { ValorDosIndicesDeMaturidadeByEsteiraIdAndCultura } from './../../types/valorMaturidade-types';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ChartDataset, ChartOptions } from 'chart.js';
-
+import { ChartDataset, ChartOptions, ChartType } from 'chart.js';
 
 import {
   EsteiraDeDesenvolvimento,
@@ -260,9 +259,58 @@ export class DashProjetoComponent implements OnInit {
     count_epics: 0
   };
 
+  public radarChartData: ChartDataset<'radar'>[] = [
+    {
+      data: [30, 60, 40, 50],
+      label: 'PR',
+      fill: true,
+      backgroundColor: 'rgba(81, 130, 255, 0.2)',
+      borderColor: 'rgb(81, 130, 255)',
+      pointBackgroundColor: 'rgb(81, 130, 255)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgb(81, 130, 255)',
+      type: 'radar',
+    }
+  ];
+  
+  public radarChartLabels: string[] = [
+    'Dificuldade Ciclomática',
+    'Número de Arquivos Alterados',
+    'Número de Linhas Alteradas',
+    'Número de Commits'
+  ];
+  
+  public radarChartOptions: ChartOptions = {
+    responsive: true,
+    animation: false,
+  };
+  
+  public radarChartLegend = true;
+  public radarChartType: ChartType = 'radar';
+
+public wipBartChartData: ChartDataset<'bar'>[] = [
+  {
+    data: [58, 65, 47].reverse(),
+    label: 'Series A',
+    backgroundColor: '#978FED',
+    type: 'bar',
+    borderWidth: 1,
+  }
+];
+public wipBartChartLabels: string[] = ['Mavis', 'Monaliza', 'Tiago Santos'];
+public wipBartChartOptions: ChartOptions = {
+  responsive: true,
+  animation: false,
+  indexAxis: 'x',
+};
+public wipBartChartLegend = false;
+public wipBartChartType = 'bar';
+public wipBartChartPlugins = [];
+
 public lineChartData: ChartDataset<'line'>[] = [
   { 
-    data: [65, 50, 40].reverse(), 
+    data: [4, 8, 6].reverse(), 
     label: 'Series A',
     borderColor: '#978FED',
     backgroundColor: 'rgba(255,0,0,0.3)',
@@ -283,7 +331,7 @@ public lineChartOptions: ChartOptions = {
       ticks: {
         color: '#242424', // altera a cor do texto dos ticks para #242424
         font: {
-          weight: 'bold', // torna o texto dos ticks em negrito
+          weight: 'bold',
         },
       },
     },
@@ -292,6 +340,40 @@ public lineChartOptions: ChartOptions = {
   public lineChartLegend = false;
   public lineChartType = 'line';
   public lineChartPlugins = [];
+
+  public throughputChartData: ChartDataset<'line'>[] = [
+    { 
+      data: [65, 50, 55].reverse(), 
+      label: 'Series A',
+      borderColor: '#978FED',
+      backgroundColor: 'rgba(255,0,0,0.3)',
+      pointBackgroundColor: 'white',
+      pointBorderColor: '#978FED',
+      type: 'line',
+    },
+  ];
+    public throughputChartLabels: string[] = ['Mar', 'Abr', 'Mai'];
+  public throughputChartOptions: ChartOptions = {
+    responsive: true,
+    animation: false,
+    scales: {
+      x: {
+        grid: {
+          drawOnChartArea: false,
+        },
+        ticks: {
+          color: '#242424', // altera a cor do texto dos ticks para #242424
+          font: {
+            weight: 'bold',
+          },
+        },
+      },
+    },
+  };
+    public throughputChartLegend = false;
+    public throughputChartType = 'line';
+    public throughputChartPlugins = [];
+
 
   public epicsList: EpicsList [] = [];
   public activitiesPerEpic: ActivitiesPerEpic [] = [];

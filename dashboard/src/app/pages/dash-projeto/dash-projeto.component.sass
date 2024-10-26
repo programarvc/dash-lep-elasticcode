@@ -75,17 +75,19 @@ body
 .custom-modal::-webkit-scrollbar
     display: none
 
-
-.painel-metricas-content
-    display: flex
-    align-items: center
-
-
 .painel-metricas-content
     display: flex
     justify-content: space-between
 
+.painel-wip-graphs-content
+    align-items: center
+    display: flex
+    flex-direction: column
+
 .left-panel
+    display: flex
+    flex-direction: column
+    gap: 10px
     width: 46%
 
 .right-panel
@@ -133,7 +135,8 @@ body
     margin-left: 1.5rem
     margin-bottom: 0.25rem
 
-.modal-card-content span
+.modal-card-content span,
+.cfr-card-content span
     margin-left: 4px
 
 .modal-card-content-smalltext
@@ -147,6 +150,28 @@ body
     height: 29px
     border-radius: 2px 0px 0px 2px
     background: #5182FF
+
+.rectangle-stability
+    width: 2px
+    height: 29px
+    border-radius: 2px 0px 0px 2px
+    background: #6A5FFF
+
+.review-time-title
+    margin: 0rem 14.25rem 0rem 0rem
+    color: #6A5FFF
+
+.merge-time-title
+    margin: 0rem 14.425rem 0rem 0rem
+    color: #6A5FFF
+
+.deployment-time-title
+    margin: 0rem 12rem 0rem 0rem
+    color: #6A5FFF
+
+.active-idle-title
+    margin: 0rem 12.40rem 0rem 0rem
+    color: #6A5FFF
 
 .content-item
     display: flex
@@ -198,7 +223,7 @@ body
     white-space: nowrap
 
 .deploy-fequency-title h2
-    margin: 1rem -2.3rem 0 0 
+    margin: 1rem -0.75rem 0 0 
 
 .deploy-frequency-smalltext
     margin-left: 2.2rem
@@ -211,7 +236,7 @@ body
     border-left: 6px solid #6A5FFF
 
 .mttr-titulo
-    margin: 0rem 17.2rem 0 0
+    margin: 0rem 11.75rem 0 0
     color: #6A5FFF
 
 .mttr-smalltext
@@ -358,9 +383,47 @@ body
     padding: 0px 15px
     margin-left: 15px
 
+.wip-throughput-card
+    width: 100%
+    height: 95%
+    border-radius: 10px
+    background: #FFFFFF
+    margin-bottom: 9px
+    box-shadow: 0px 1.92px 1.92px 0px rgba(0, 0, 0, 0.0509803922)
+
+.prs-data-container
+    flex-direction: column
+    gap: 15px
+
+.first-row-content
+    display: flex
+    justify-content: space-between
+
+.graph-radar-container
+    width: 100%
+    height: 575px
+    border-radius: 10px
+    background: #FFFFFF
+    margin-bottom: 9px
+    box-shadow: 0px 1.92px 1.92px 0px rgba(0, 0, 0, 0.0509803922)
+
+
 .caixa-metricas
     display: flex
     gap: 12px
+    justify-content: center
+
+.caixa-cycle-time
+    align-items: center
+    color: black !important
+    display: flex
+    flex-direction: column
+    height: 100%
+    justify-content: center
+
+.caixa-cycle-time h2
+    margin-bottom: 20px
+
 
 .metricas
     display: flex
@@ -393,10 +456,21 @@ body
     padding: 35px 13px 44px
 
 .velocidade
-    background: #5182FF
+    background-color: #5182FF
+
+.vel-details:hover
+    background-color: #446EDA
+    cursor: pointer
 
 .estabilidade
-    background: #6A5FFF
+    background-color: #6A5FFF
+
+.estability
+    color: #6A5FFF
+
+.estability-details:hover
+    background-color: #5B52E0
+    cursor: pointer
 
 .titulo-card
     color:#FFF
@@ -462,6 +536,51 @@ body
     font-family: Poppins
     font-size: 17px
     font-weight: 500
+
+.crf-modal
+    height: 30.25rem
+    background: #F6F8FF
+    border-radius: 15px 15px
+    position: fixed
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+    max-height: 100vh
+    overflow-y: auto
+    width: 40.25rem
+
+.crf-metrics-panel
+    align-items: center
+    display: flex
+    flex-direction: column
+
+.crf-card-modal
+    background: #FFFFFF
+    border-left: 6px solid #6A5FFF
+    border-radius: 5px
+    box-shadow: 0px 3.352px 3.352px 0px rgba(0, 0, 0, 0.05)
+    color: #6A5FFF
+    display: flex
+    flex-direction: column
+    height: 90px
+    justify-content: center
+    margin-top: 8px
+    padding: 10px 15px
+    width: 100%
+
+.crf-card-modal h2
+    font-family: Poppins
+    font-size: 14px
+    font-weight: 600
+    margin: 0rem 46rem 0 0
+    text-align: center
+    white-space: nowrap
+
+.cfr-card-content
+    display: flex
+    gap: 100px
+    margin-right: 4rem
+    margin-bottom: 0.25rem
 
 .bloco-jornada
     background: #F6F8FF
@@ -594,12 +713,104 @@ body
     border-radius: 10px
     height: 5px
 
+.prs-and-wip-container
+    align-items: center
+    display: flex
+    justify-content: space-around
+    border-radius: 15px
+    height: 290px
+    margin-top: 30px
+
+.card-wip
+    background-color: lightgray
+    border-radius: 15px
+    height: 100%
+    width: 45%
+
+.card-wip:hover
+    cursor: pointer
+    background-color: darkgray
+
+.card-wip-content
+    align-items: center
+    display: flex
+    flex-direction: column
+    height: 100%
+    justify-content: center
+
+.card-wip-content h3
+    font-family: Poppins
+    font-size: 31px
+    font-weight: 600
+    text-align: center
+
+.card-wip-content span
+    font-size: 14px
+    font-weight: 600
+    text-align: center
+
+.card-wip-content p
+    font-family: Poppins
+    font-size: 47px
+    font-weight: bold
+
 .espaco-capacidades-recomendadas
     display: flex
     flex-direction: column
-    width: 100%
-    margin-top: 30px
-    
+    height: 100%
+    width: 45%
+
+
+
+.modal-card
+    background-color: #FFFFFF
+    border-radius: 5px
+    border-left: 6px solid #5182FF
+    box-shadow: 0px 3.352px 3.352px 0px rgba(0, 0, 0, 0.05)
+    display: flex
+    flex-direction: column
+    padding: 10px 35px 16px 17px
+    width: 340px
+
+.metrics-modal-content
+    align-items: center
+    display: flex
+    gap: 24px
+    justify-content: space-between
+    padding-top: 8px
+
+.left-side,
+.right-side
+    display: flex
+    gap: 15px
+
+.left-side span
+    border-radius: 3px
+    border-left: 3px solid #5182FF
+    font-family: Poppins
+    font-size: 14px
+    font-weight: 500
+    padding-left: 10px
+
+.right-side p
+    color: #5182FF
+    font-family: Poppins
+    font-size: 14px
+    font-weight: 500
+
+.right-side p span
+    font-family: Poppins
+    font-size: 28px
+    font-weight: 700
+
+.modal-card h2
+    font-size: 14px
+    font-family: Poppins
+    font-weight: 700
+    white-space: nowrap
+
+.prs-modal-title
+    color: #5182FF
 
 .espaco-capacidades-recomendadas h3
     bottom: 33px
@@ -616,6 +827,10 @@ body
     justify-content: center
     align-items: center
     flex-direction: column
+
+.capacidades-recomendadas-card:hover
+    background-color: #757E8F
+    cursor: pointer
     
 .capacidades-recomendadas-card p 
     color: #fff
@@ -637,6 +852,36 @@ body
     font-size: 14px
     font-weight: 600
     text-align: center
+
+.pr-modal-body
+    height: 30.25rem
+    background: #F6F8FF
+    width: 80%
+    height: 536px
+    border-radius: 15px 15px
+    position: fixed
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+    max-height: 100vh
+    overflow-y: auto
+    scrollbar-width: none
+
+.left-panel-pr
+    display: flex
+    flex-direction: column
+    gap: 10px
+
+.left-panel-pr,
+.right-panel-pr
+    width: 50%
+
+.throughput-pr
+    height: 315px
+    width: 100%
+
+.pr-modal-card
+    width: 95%
 
 .historias-epicos-card
     margin-top: 30px
@@ -1666,6 +1911,14 @@ body
 
 .cultura-num
     margin-left: 40px
+
+.number-cycle-time 
+    font-size: 2rem
+    color: black
+
+.cycle-time-metric
+    font-size: 2.55rem
+    color: black    
 
 @media(min-width: 1200px)
 
