@@ -12,7 +12,6 @@ import {
 } from 'src/app/types/esteira-types';
 
 import {
-  JornadaDeTransformacao,
   JornadaDeTransformacaoByEsteiraId,
   CapacidadesRecomendadas,
   ItemDeMaturidade,
