@@ -25,18 +25,29 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-            <div class="bloco-metricas" (click)="open(content)">
+            <div class="bloco-metricas">
               <!-- adicione dentro da tag para reativar o modal (click)="open(content)" -->
               <div class="caixa-metricas">
+                <!-- <h2>
+                  Cycle Time
+                </h2>
+                  <p class="text-number number-cycle-time">
+                    15
+                    <span class="texto-metricas cycle-time-metric"
+                    [ngStyle]="{'font-size': this.getFontSize(currentMaturidade?.leadTime)}">
+                      dias
+                    </span>
+                  </p> -->
                 <div class="metricas">
                   <h2 class="titulo-velocidade">Métricas de Velocidade</h2>
                   <div class="espaco-cards">
-                    <div class="card velocidade">
-                      <p class="titulo-card">Lead Time for Changes</p>
+                    <div class="card velocidade vel-details" (click)="open(content)">
+                      <p class="titulo-card">Cycle Life</p>
                       <p class="text-number">
                         <span class="texto-metricas"
                           [ngStyle]="{'font-size': this.getFontSize(currentMaturidade?.leadTime)}">
-                          {{currentMaturidade?.leadTime !== null ? currentMaturidade?.leadTime : 'sem dado'}}
+                          40
+                          <!-- {{currentMaturidade?.leadTime !== null ? currentMaturidade?.leadTime : 'sem dado'}} -->
                         </span>
                         {{currentMaturidade.leadTime !== null ? 'dias' : ''}}
                       </p>
@@ -46,8 +57,9 @@
                       <p class="text-number">
                         <span class="texto-metricas"
                           [ngStyle]="{'font-size': this.getFontSize(currentMaturidade?.frequencyDeployment)}">
-                          {{currentMaturidade?.frequencyDeployment !== null ? currentMaturidade?.frequencyDeployment :
-                          'sem dado'}}
+                          1
+                          <!-- {{currentMaturidade?.frequencyDeployment !== null ? currentMaturidade?.frequencyDeployment :
+                          'sem dado'}} -->
                         </span>
                         {{currentMaturidade.frequencyDeployment !== null ? 'por semana' : ''}}
                       </p>
@@ -57,7 +69,7 @@
                 <div class="metricas">
                   <h2 class="titulo-estabilidade">Métricas de Estabilidade</h2>
                   <div class="espaco-cards">
-                    <div class="card estabilidade">
+                    <div class="card estabilidade estability-details" (click)="open(cfr)">
                       <p class="titulo-card">Change Failure Rate</p>
                       <p class="text-number">
                         <span class="texto-metricas"
@@ -67,12 +79,145 @@
                         </span>
                       </p>
                     </div>
+                    <ng-template #cfr let-modal>
+                      <div class="modal-body custom-modal crf-modal">
+                        <h4 class="modal-title">Indicadores</h4>
+                          <div class="crf-metrics-panel">
+                            <div class="crf-card-modal">
+                                <h2>Bug Fix Rate</h2>
+                              <div class="cfr-card-content">
+                                <div class="modal-card-content-smalltext">
+                                  <div class="content-item">
+                                    <span class="rectangle-stability"></span>
+                                    <div>
+                                      <span class="month">mar.</span>
+                                      <span class="days">10%</span>
+                                    </div>
+                                  </div>
+                                  <div class="content-item">
+                                    <span class="rectangle-stability"></span>
+                                    <div>
+                                      <span class="month">abr.</span>
+                                      <span class="days">12%</span>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="time-container estability">
+                                  <span class="time-month">este mês</span>
+                                  <span class="time-days">15%</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="crf-card-modal">
+                                <h2>Reopen Rate</h2>
+                              <div class="cfr-card-content">
+                                <div class="modal-card-content-smalltext">
+                                  <div class="content-item">
+                                    <span class="rectangle-stability"></span>
+                                    <div>
+                                      <span class="month">mar.</span>
+                                      <span class="days">7%</span>
+                                    </div>
+                                  </div>
+                                  <div class="content-item">
+                                    <span class="rectangle-stability"></span>
+                                    <div>
+                                      <span class="month">abr.</span>
+                                      <span class="days">9%</span>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="time-container deploy-frequency-time estability">
+                                  <span class="time-month">este mês</span>
+                                  <span class="time-days">6%</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="crf-card-modal">
+                                <h2>Failed Deployments</h2>
+                              <div class="cfr-card-content">
+                                <div class="modal-card-content-smalltext">
+                                  <div class="content-item">
+                                    <span class="rectangle-stability"></span>
+                                    <div>
+                                      <span class="month">mar.</span>
+                                      <span class="days">6 deploys</span>
+                                    </div>
+                                  </div>
+                                  <div class="content-item">
+                                    <span class="rectangle-stability"></span>
+                                    <div>
+                                      <span class="month">abr.</span>
+                                      <span class="days">2 deploys</span>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="time-container mttr-time estability">
+                                  <span class="time-month">este mês</span>
+                                  <span class="time-days">1 deploy</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="crf-card-modal">
+                                <h2>Defect Density</h2>
+                              <div class="cfr-card-content">
+                                <div class="modal-card-content-smalltext">
+                                  <div class="content-item">
+                                    <span class="rectangle-stability"></span>
+                                    <div>
+                                      <span class="month">mar.</span>
+                                      <span class="days">1</span>
+                                    </div>
+                                  </div>
+                                  <div class="content-item">
+                                    <span class="rectangle-stability"></span>
+                                    <div>
+                                      <span class="month">abr.</span>
+                                      <span class="days">2</span>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="time-container estability">
+                                  <span class="time-month">este mês</span>
+                                  <span class="time-days">1 a cada 10 tasks</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="crf-card-modal">
+                                <h2>Time to Repair</h2>
+                              <div class="cfr-card-content">
+                                <div class="modal-card-content-smalltext">
+                                  <div class="content-item">
+                                    <span class="rectangle-stability"></span>
+                                    <div>
+                                      <span class="month">mar.</span>
+                                      <span class="days">3 dias</span>
+                                    </div>
+                                  </div>
+                                  <div class="content-item">
+                                    <span class="rectangle-stability"></span>
+                                    <div>
+                                      <span class="month">abr.</span>
+                                      <span class="days">2 dias</span>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="time-container deploy-frequency-time estability">
+                                  <span class="time-month">este mês</span>
+                                  <span class="time-days">3 dias</span>
+                                </div>
+                              </div>
+                            </div>     
+                        </div>
+                      </div>
+                    </ng-template>
                     <div class="card estabilidade">
                       <p class="titulo-card">Mean Time to Recovery</p>
                       <p class="text-number">
                         <span class="texto-metricas"
                           [ngStyle]="{'font-size': this.getFontSize(currentMaturidade?.timeToRecovery)}">
-                          {{currentMaturidade?.timeToRecovery ?? 'sem dado' }}
+                          3
+                          <!-- {{currentMaturidade?.timeToRecovery ?? 'sem dado' }} -->
                         </span>
                         {{currentMaturidade?.timeToRecovery !== null ? 'horas' : ''}}
                       </p>
@@ -86,7 +231,182 @@
                   <h4 class="modal-title">Indicadores</h4>
                   <div class="painel-metricas-content">
                     <div class="left-panel">
-                      <div class="card-modal ">
+                      <div class="modal-card">
+                        <h2 class="prs-modal-title">
+                          Lead Time
+                        </h2>
+                        <div class="metrics-modal-content">
+                          <div class="left-side">
+                            <span>
+                              out.<br>
+                              16 dias
+                            </span>
+                            <span>
+                              mar.<br>
+                              7 dias
+                            </span>
+                          </div>
+                          <div class="right-side">
+                            <p>
+                              este mês<br>
+                                <span>
+                                  18 dias
+                                </span>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-card">
+                        <h2 class="prs-modal-title">
+                          Coding Time (Active Time)
+                        </h2>
+                        <div class="metrics-modal-content">
+                          <div class="left-side">
+                            <span>
+                              out.<br>
+                              13 dias
+                            </span>
+                            <span>
+                              mar.<br>
+                              11 dias
+                            </span>
+                          </div>
+                          <div class="right-side">
+                            <p>
+                              este mês<br>
+                                <span>
+                                  12 dias
+                                </span>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-card">
+                        <h2 class="prs-modal-title">
+                          Review Time
+                        </h2>
+                        <div class="metrics-modal-content">
+                          <div class="left-side">
+                            <span>
+                              out.<br>
+                              9 dias
+                            </span>
+                            <span>
+                              mar.<br>
+                              10 dias
+                            </span>
+                          </div>
+                          <div class="right-side">
+                            <p>
+                              este mês<br>
+                                <span>
+                                  9 dias
+                                </span>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-card">
+                        <h2 class="prs-modal-title">
+                          Pull Request Time
+                        </h2>
+                        <div class="metrics-modal-content">
+                          <div class="left-side">
+                            <span>
+                              out.<br>
+                              3 dias
+                            </span>
+                            <span>
+                              mar.<br>
+                              2 dias
+                            </span>
+                          </div>
+                          <div class="right-side">
+                            <p>
+                              este mês<br>
+                                <span>
+                                  3 dias
+                                </span>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-card">
+                        <h2 class="prs-modal-title">
+                          Merge Time
+                        </h2>
+                        <div class="metrics-modal-content">
+                          <div class="left-side">
+                            <span>
+                              out.<br>
+                              2 dias
+                            </span>
+                            <span>
+                              mar.<br>
+                              3 dias
+                            </span>
+                          </div>
+                          <div class="right-side">
+                            <p>
+                              este mês<br>
+                                <span>
+                                  4 dias
+                                </span>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-card">
+                        <h2 class="prs-modal-title">
+                          Deployment Time
+                        </h2>
+                        <div class="metrics-modal-content">
+                          <div class="left-side">
+                            <span>
+                              out.<br>
+                              1 dia
+                            </span>
+                            <span>
+                              mar.<br>
+                              1 dia
+                            </span>
+                          </div>
+                          <div class="right-side">
+                            <p>
+                              este mês<br>
+                                <span>
+                                  0,5 dia
+                                </span>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-card">
+                        <h2 class="prs-modal-title">
+                          Active/Idle Time
+                        </h2>
+                        <div class="metrics-modal-content">
+                          <div class="left-side">
+                            <span>
+                              out.<br>
+                              8 dias
+                            </span>
+                            <span>
+                              mar.<br>
+                              11 dias
+                            </span>
+                          </div>
+                          <div class="right-side">
+                            <p>
+                              este mês<br>
+                                <span>
+                                  10 dias
+                                </span>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- <div class="card-modal ">
                         <div class="modal-card-title">
                           <h2>Lead Time</h2>
                         </div>
@@ -115,7 +435,7 @@
                       </div>
                       <div class="card-modal">
                         <div class="modal-card-title deploy-fequency-title">
-                          <h2>Freq. de Deploy</h2>
+                          <h2>Coding Time</h2>
                         </div>
                         <div class="modal-card-content">
                           <div class="modal-card-content-smalltext deploy-frequency-smalltext">
@@ -123,26 +443,26 @@
                               <span class="rectangle"></span>
                               <div>
                                 <span class="month">mar.</span>
-                                <span class="days">15 deploys</span>
+                                <span class="days">7 dias</span>
                               </div>
                             </div>
                             <div class="content-item">
                               <span class="rectangle"></span>
                               <div>
                                 <span class="month">abr.</span>
-                                <span class="days">25 deploys</span>
+                                <span class="days">9 dias</span>
                               </div>
                             </div>
                           </div>
                           <div class="time-container deploy-frequency-time">
                             <span class="time-month">este mês</span>
-                            <span class="time-days">6 deploys</span>
+                            <span class="time-days">6 dias</span>
                           </div>
                         </div>
                       </div>
                       <div class="card-modal mttr-card">
                         <div class="modal-card-title mttr-titulo">
-                          <h2>MTTR</h2>
+                          <h2>Pull Request Time</h2>
                         </div>
                         <div class="modal-card-content">
                           <div class="modal-card-content-smalltext mttr-smalltext">
@@ -150,27 +470,27 @@
                               <span class="rectangle mttr-retangle"></span>
                               <div>
                                 <span class="month">mar.</span>
-                                <span class="days">16 horas</span>
+                                <span class="days">16 dias</span>
                               </div>
                             </div>
                             <div class="content-item">
                               <span class="rectangle mttr-retangle"></span>
                               <div>
                                 <span class="month">abr.</span>
-                                <span class="days">27 horas</span>
+                                <span class="days">27 dias</span>
                               </div>
                             </div>
                           </div>
                           <div class="time-container mttr-time">
                             <span class="time-month">este mês</span>
-                            <span class="time-days">8 horas</span>
+                            <span class="time-days">8 dias</span>
                           </div>
                         </div>
                       </div>
 
                       <div class="card-modal tx-falhas-card">
-                        <div class="modal-card-title tx-falha-title">
-                          <h2>Taxa de Falhas</h2>
+                        <div class="modal-card-title review-time-title">
+                          <h2>Review Time</h2>
                         </div>
                         <div class="modal-card-content">
                           <div class="modal-card-content-smalltext tx-falha-smalltext">
@@ -178,23 +498,108 @@
                               <span class="rectangle tx-falha-retangle"></span>
                               <div>
                                 <span class="month">mar.</span>
-                                <span class="days">12%</span>
+                                <span class="days">12 dias</span>
                               </div>
                             </div>
                             <div class="content-item">
                               <span class="rectangle tx-falha-retangle"></span>
                               <div>
                                 <span class="month">abr.</span>
-                                <span class="days">14%</span>
+                                <span class="days">14 dias</span>
                               </div>
                             </div>
                           </div>
                           <div class="time-container tx-falha-conteiner">
                             <span class="time-month">este mês</span>
-                            <span class="time-days">11%</span>
+                            <span class="time-days">11 dias</span>
                           </div>
                         </div>
                       </div>
+
+                      <div class="card-modal tx-falhas-card">
+                        <div class="modal-card-title merge-time-title">
+                          <h2>Merge Time</h2>
+                        </div>
+                        <div class="modal-card-content">
+                          <div class="modal-card-content-smalltext tx-falha-smalltext">
+                            <div class="content-item">
+                              <span class="rectangle tx-falha-retangle"></span>
+                              <div>
+                                <span class="month">mar.</span>
+                                <span class="days">12 dias</span>
+                              </div>
+                            </div>
+                            <div class="content-item">
+                              <span class="rectangle tx-falha-retangle"></span>
+                              <div>
+                                <span class="month">abr.</span>
+                                <span class="days">14 dias</span>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="time-container tx-falha-conteiner">
+                            <span class="time-month">este mês</span>
+                            <span class="time-days">11 dias</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="card-modal tx-falhas-card">
+                        <div class="modal-card-title deployment-time-title">
+                          <h2>Deployment Time</h2>
+                        </div>
+                        <div class="modal-card-content">
+                          <div class="modal-card-content-smalltext tx-falha-smalltext">
+                            <div class="content-item">
+                              <span class="rectangle tx-falha-retangle"></span>
+                              <div>
+                                <span class="month">mar.</span>
+                                <span class="days">12 dias</span>
+                              </div>
+                            </div>
+                            <div class="content-item">
+                              <span class="rectangle tx-falha-retangle"></span>
+                              <div>
+                                <span class="month">abr.</span>
+                                <span class="days">14 dias</span>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="time-container tx-falha-conteiner">
+                            <span class="time-month">este mês</span>
+                            <span class="time-days">11 dias</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="card-modal tx-falhas-card">
+                        <div class="modal-card-title active-idle-title">
+                          <h2>Active/Idle Time</h2>
+                        </div>
+                        <div class="modal-card-content">
+                          <div class="modal-card-content-smalltext tx-falha-smalltext">
+                            <div class="content-item">
+                              <span class="rectangle tx-falha-retangle"></span>
+                              <div>
+                                <span class="month">mar.</span>
+                                <span class="days">12 dias</span>
+                              </div>
+                            </div>
+                            <div class="content-item">
+                              <span class="rectangle tx-falha-retangle"></span>
+                              <div>
+                                <span class="month">abr.</span>
+                                <span class="days">14 dias</span>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="time-container tx-falha-conteiner">
+                            <span class="time-month">este mês</span>
+                            <span class="time-days">11 dias</span>
+                          </div>
+                        </div>
+                      </div> -->
+
                     </div>
                     <div class="right-panel ">
                       <h2 class="title-secundary">Iniciativas e problemas</h2>
@@ -204,7 +609,7 @@
                             <span class="rectangle retangle-potencial-left"></span>
                             <div>
                               <span class="month potencial-month">Potencial</span>
-                              <span class="days potencial-days">20 dias</span>
+                              <span class="days potencial-days">30 dias</span>
                             </div>
                           </div>
                           <div class="potencial-secundary-text">
@@ -216,15 +621,15 @@
                             <div class="mini-card-estoque">
                               <span class="rectangle"></span>
                               <div class="month problemas-month">
-                                <span>Muito estoque para</span><br>
-                                <span>homologação</span>
+                                <span>Diminuir</span><br>
+                                <span>tempo de espera</span>
                               </div>
                             </div>
                             <div class="mini-card-estoque">
                               <span class="rectangle"></span>
                               <div class="month problemas-month">
-                                <span>Tempo alto de</span><br>
-                                <span>homologação</span>
+                                <span>Atraso para pick-up</span><br>
+                                <span>das atividades</span>
                               </div>
                             </div>
                           </div>
@@ -239,8 +644,8 @@
                         </div>
                         <div class="throughput-grafico">
                           <div style="display: block;">
-                            <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels"
-                              [options]="lineChartOptions" [legend]="lineChartLegend">
+                            <canvas baseChart [datasets]="throughputChartData" [labels]="throughputChartLabels"
+                              [options]="throughputChartOptions" [legend]="throughputChartLegend">
                             </canvas>
                           </div>
                         </div>
@@ -289,50 +694,60 @@
                     <h3>
                       Atividades<br>
                       <span class="story-points-dash">
-                        (últimos 60 dias - jira)
+                        (últimos 90 dias - jira)
                       </span>
                     </h3>
                     <div class="rate-value-4key">
                       <span>
-                        {{allActivities60days.story_count_last60days}}
+                        54
+                        <!-- {{allActivities60days.story_count_last60days}} -->
                       </span>
                       <span class="rate-saude"
                         [ngStyle]="{'font-size': this.getFontSizeMetricas(jiraAllActivities?.story_count)}">
-                        {{jiraAllActivities.story_count}}
+                        60
+                        <!-- {{jiraAllActivities.story_count}} -->
                         <!--{{currentMaturidade?.capacidadeDora !== null ? '%' : ''}}-->
                       </span>
                     </div>
                     <div class="jornada-card-bar-content"
                       [style.display]="(jiraAllActivities?.story_count === null) ? 'none' : 'block'">
                       <div class="jornada-card-bar">
-                        <div class="jornada-card-goal"
+                        <!-- <div class="jornada-card-goal"
                           [ngStyle]="{'width': (allActivities60days?.story_count_last60days !== null ? allActivities60days?.story_count_last60days : 0) + '%'}">
-                        </div>
+                        </div> -->
+                        <div class="jornada-card-goal"
+                        [ngStyle]="{'width': '89%'}">
+                      </div>
                       </div>
                     </div>
                   </div>
                   <div class="jornada-card">
                     <h3>
-                      Story Points<br>
+                      Pontos<br>
                       <span class="story-points-dash">
-                        (últimos 60 dias - jira)
+                        (últimos 90 dias - jira)
                       </span>
                     </h3>
                     <div class="rate-value-4key">
                       <span>
-                        {{TotalPointsLast60Days.total_points_last60days}}
+                        170
+                        <!-- {{TotalPointsLast60Days.total_points_last60days}} -->
                       </span>
                       <span class="rate-saude"
                         [ngStyle]="{'font-size': this.getFontSizeMetricas(TotalPoints?.total_points)}">
-                        {{TotalPoints.total_points}}
+                        208
+                        <!-- {{TotalPoints.total_points}} -->
                       </span>
                     </div>
                     <div class="jornada-card-bar-content"
                       [style.display]="(TotalPoints.total_points === null) ? 'none' : 'block'">
                       <div class="jornada-card-bar">
-                        <div class="jornada-card-goal"
+                        <!-- <div class="jornada-card-goal"
                           [ngStyle]="{'width': ((TotalPointsLast60Days.total_points_last60days / TotalPoints.total_points) * 100) + '%'}">
-                        </div>
+                        </div> -->
+                        <div class="jornada-card-goal"
+                        [ngStyle]="{'width': '81.73%'}">
+                      </div>
                       </div>
                     </div>
                   </div>
@@ -406,15 +821,214 @@
             </div>
           </div>
           <div class="col-md-6">
-            <div class="espaco-capacidades-recomendadas">
-              <div class="capacidades-recomendadas-card">
-                <div class="prs-dashboard">
-                  <h3>Pull Requests</h3><span>(últimos 60 dias - git)</span>
+            <div class="prs-and-wip-container">
+              <div class="espaco-capacidades-recomendadas">
+                <div class="capacidades-recomendadas-card" (click)="open(prData)">
+                  <div class="prs-dashboard">
+                    <h3>Pull Requests</h3><span>(últimos 90 dias - git)</span>
+                    <p>
+                      14
+                      <!-- {{currentVcsPullRequest60Days.countpr60days}} -->
+                    </p>
+                  </div>
+                </div>
+                <ng-template #prData let-modal>
+                  <div class="modal-body pr-modal-body">
+                    <h4 class="modal-title">Indicadores</h4>
+                    <div class="painel-metricas-content prs-data-container">
+                      <div class="first-row-content">
+                        <div class="left-panel-pr">
+                          <div class="modal-card pr-modal-card">
+                            <h2 class="prs-modal-title">
+                              Review Time
+                            </h2>
+                            <div class="metrics-modal-content">
+                              <div class="left-side">
+                                <span>
+                                  out.<br>
+                                  9 dias
+                                </span>
+                                <span>
+                                  mar.<br>
+                                  10 dias
+                                </span>
+                              </div>
+                              <div class="right-side">
+                                <p>
+                                  este mês<br>
+                                    <span>
+                                      9 dias
+                                    </span>
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="modal-card pr-modal-card">
+                            <h2 class="prs-modal-title">
+                              Code Smells
+                            </h2>
+                            <div class="metrics-modal-content">
+                              <div class="left-side">
+                                <span>
+                                  out.<br>
+                                  6
+                                </span>
+                                <span>
+                                  mar.<br>
+                                  4 
+                                </span>
+                              </div>
+                              <div class="right-side">
+                                <p>
+                                  este mês<br>
+                                    <span>
+                                      8 ocorrências
+                                    </span>
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="modal-card pr-modal-card">
+                            <h2 class="prs-modal-title">
+                              Duplicate Code
+                            </h2>
+                            <div class="metrics-modal-content">
+                              <div class="left-side">
+                                <span>
+                                  out.<br>
+                                  16
+                                </span>
+                                <span>
+                                  mar.<br>
+                                  20
+                                </span>
+                              </div>
+                              <div class="right-side">
+                                <p>
+                                  este mês<br>
+                                    <span>
+                                      17 duplicidades
+                                    </span>
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="modal-card pr-modal-card">
+                            <h2 class="prs-modal-title">
+                              Vulnerabillities
+                            </h2>
+                            <div class="metrics-modal-content">
+                              <div class="left-side">
+                                <span>
+                                  out.<br>
+                                  2
+                                </span>
+                                <span>
+                                  mar.<br>
+                                  2
+                                </span>
+                              </div>
+                              <div class="right-side">
+                                <p>
+                                  este mês<br>
+                                    <span>
+                                      1 vulnerabilidade
+                                    </span>
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>
+                        <div class="right-panel-pr">
+                          <h2 class="title-secundary">Pull Request (PR) Size</h2>
+                          <div class="throughput-card throughput-pr">
+                            <div class="throughput-content-text">
+                              <!-- <h3 class="throughput-title">Pull Request (PR) Size</h3> -->
+                              <div class="throughput-subtext">
+                                <p>Baseados nos últimos 90 dias</p>
+                              </div>
+                            </div>
+                            <div class="throughput-grafico">
+                              <div style="display: block;">
+                                <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels"
+                                  [options]="lineChartOptions" [legend]="lineChartLegend">
+                                </canvas>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="prs-radar">
+                        <div class="graph-radar-container">
+                          <div class="throughput-content-text">
+                            <!-- <h3 class="throughput-title">Pull Request (PR) Size</h3> -->
+                            <div class="throughput-subtext">
+                              <p>Baseados nos últimos 90 dias</p>
+                            </div>
+                          </div>
+                          <div class="throughput-grafico">
+                            <div style="display: block;">
+                              <canvas baseChart       
+                              [datasets]="radarChartData" 
+                              [labels]="radarChartLabels"
+                              [options]="radarChartOptions"
+                              [legend]="radarChartLegend">
+                              </canvas>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </div>
+              <div class="card-wip" (click)="open(contentWip)">
+                <div class="card-wip-content">
+                  <h3>WIP</h3>
+                  <span>(últimos 90 dias)</span>
                   <p>
-                    {{currentVcsPullRequest60Days.countpr60days}}
+                    6
                   </p>
                 </div>
               </div>
+              <ng-template #contentWip let-modal>
+                <div class="modal-body custom-modal">
+                  <h4 class="modal-title">Indicadores</h4>
+                  <div class="painel-wip-graphs-content">
+                      <div class="wip-throughput-card">
+                        <div class="throughput-content-text">
+                          <h3 class="throughput-title">Work In Progress</h3>
+                          <div class="throughput-subtext">
+                            <p>Baseados nas últimas 12 semanas</p>
+                          </div>
+                        </div>
+                        <div class="throughput-grafico">
+                          <div style="display: block;">
+                            <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels"
+                              [options]="lineChartOptions" [legend]="lineChartLegend">
+                            </canvas>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="wip-throughput-card">
+                        <div class="throughput-content-text">
+                          <h3 class="throughput-title">Work Distribuition</h3>
+                          <div class="throughput-subtext">
+                            <p>Baseados nos últimos 90 dias</p>
+                          </div>
+                        </div>
+                        <div class="throughput-grafico">
+                          <div style="display: block;">
+                            <canvas baseChart [datasets]="wipBartChartData" [labels]="wipBartChartLabels"
+                              [options]="wipBartChartOptions" [legend]="wipBartChartLegend">
+                            </canvas>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              </ng-template>
             </div>
           </div>
         </div>
@@ -424,7 +1038,7 @@
             <div class="historias-epicos-card" (click)="open(contentEpicos)">
               <div class="historias-epicos-card-content">
                 <div class="historias-epicos-card-text">
-                  <h2>Épicos</h2><span>(últimos 60 dias)</span>
+                  <h2>Épicos</h2><span>(últimos 90 dias)</span>
                   <p>
                     {{jiraEpics.count_epics}}
                   </p>
@@ -470,7 +1084,8 @@
                 <div class="historias-epicos-card-text">
                   <h2>Tarefas Concluidas</h2><span>(total)</span>
                   <p>
-                    {{storiesAndEpicsData.total_stories}}
+                    170
+                    <!-- {{storiesAndEpicsData.total_stories}} -->
                   </p>
                 </div>
               </div>
@@ -499,7 +1114,7 @@
             <div class="historias-epicos-card" (click)="open(contentActivities)">
               <div class="historias-epicos-card-content">
                 <div class="historias-epicos-card-text">
-                  <h2>Story Points</h2><span>(média)</span>
+                  <h2>Pontos</h2><span>(média)</span>
                   <p>
                     {{storiesAndEpicsData.average_points}}
                   </p>

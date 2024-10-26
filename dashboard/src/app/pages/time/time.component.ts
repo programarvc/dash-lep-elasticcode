@@ -227,6 +227,7 @@ export class TimeComponent implements OnInit {
   public dataFim: string = '';
   public dataInicioActivity: string = '';
   public dataFimActivity: string = '';
+  public prDevCount: number = 0;
 
   public esteiraSelecionada: any = [];
   public isEsteiraSelected: boolean = false;
