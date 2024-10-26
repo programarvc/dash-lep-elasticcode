@@ -18,7 +18,7 @@
                     </div>
                 </div>
                 <div class="filter-dev-data">
-                    <div ngbDropdown>
+                    <!-- <div ngbDropdown>
                         <button type="button" class="dropdown-dev-toggle" id="dropdownMaturidades" ngbDropdownToggle>
                             {{ currentMetasColaborador ? ('Medição das Metas - ' + (formattedDate | date: 'dd/MM/yyyy')) : 'Selecione'}}
                         </button>
@@ -27,6 +27,61 @@
                                 Medição das Metas - {{metasCData.data | date: 'dd/MM/yyyy'}}
                             </button>
                         </div>
+                    </div> -->
+                    <div class="pr-count-selector">
+                        <div ngbDropdown>
+                            <button type="button" class="dropdown-pr-toggle" id="dropdownPr" ngbDropdownToggle>
+                                {{selectedTimePr}}
+                            </button>
+                            <div ngbDropdownMenu aria-labelledby="dropdownPr">
+                                <button ngbDropdownItem (click)="updatePrCountToTotal()">
+                                    Todos
+                                </button>
+                                <button ngbDropdownItem (click)="updatePrCountToLastYear()">
+                                    Ano anterior
+                                </button>
+                                <button ngbDropdownItem (click)="updatePrCountToThisYear()">
+                                    Este ano
+                                </button>
+                                <button ngbDropdownItem (click)="updatePrCountToLast7Days()">
+                                    7 d
+                                </button>
+                                <button ngbDropdownItem (click)="updatePrCountToLast30Days()">
+                                    30 d
+                                </button>
+                                <button ngbDropdownItem (click)="updatePrCountToLast90Days()">
+                                    90 d
+                                </button>
+                                <button ngbDropdownItem (click)="open(content)">
+                                    Data personalizada
+                                </button>
+                                <ng-template #content let-c="close" let-d="dismiss">
+                                    <div class="modal-header modal-prs-header">
+                                        <h4 class="modal-title">
+                                            Selecione as datas
+                                        </h4>
+                                        <button type="button" class="close button-modal" aria-label="Close" (click)="d('Cross click')">
+                                            <span aria-hidden="true">X</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body modal-prs-body">
+                                        <div class="campo-data campo-1">
+                                            <label for="data-inicio">Data Inicial</label>
+                                            <input type="date" [(ngModel)]="dataInicio">
+                                        </div>
+                                        <div class="campo-data">
+                                            <label for="data-fim">Data Final</label>
+                                            <input type="date" [(ngModel)]="dataFim">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer modal-prs-footer">
+                                        <button class="button-modal" type="button" (click)="updateDates()">
+                                            Ok
+                                        </button>
+                                    </div>
+                                </ng-template>
+                            </div> 
+                        </div> 
                     </div>
                 </div>
                 <div class="search">
@@ -72,344 +127,138 @@
     <app-sidebar-menu></app-sidebar-menu>
     <div class="dev-dashboard">
     <div class="row">
-        <div class="col-md-3">
-            <div class="card">
-                <div class="pr-count-header">
-                    <h2>Pull Requests<br><span>(do github)</span></h2>
-                </div> 
-                <div class="pr-count">
-                    <p><b>{{currentVcsPullRequest.countpr}}</b></p>
-                </div>
-                <div class="pr-count-selector">
-                    <div ngbDropdown>
-                        <button type="button" class="dropdown-pr-toggle" id="dropdownPr" ngbDropdownToggle>
-                            {{selectedTimePr}}
-                        </button>
-                        <div ngbDropdownMenu aria-labelledby="dropdownPr">
-                            <button ngbDropdownItem (click)="updatePrCountToTotal()">
-                                Todos
-                            </button>
-                            <button ngbDropdownItem (click)="updatePrCountToLastYear()">
-                                Ano anterior
-                            </button>
-                            <button ngbDropdownItem (click)="updatePrCountToThisYear()">
-                                Este ano
-                            </button>
-                            <button ngbDropdownItem (click)="updatePrCountToLast7Days()">
-                                7 d
-                            </button>
-                            <button ngbDropdownItem (click)="updatePrCountToLast30Days()">
-                                30 d
-                            </button>
-                            <button ngbDropdownItem (click)="updatePrCountToLast90Days()">
-                                90 d
-                            </button>
-                            <button ngbDropdownItem (click)="open(content)">
-                                Data personalizada
-                            </button>
-                            <ng-template #content let-c="close" let-d="dismiss">
-                                <div class="modal-header modal-prs-header">
-                                    <h4 class="modal-title">
-                                        Selecione as datas
-                                    </h4>
-                                    <button type="button" class="close button-modal" aria-label="Close" (click)="d('Cross click')">
-                                        <span aria-hidden="true">X</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body modal-prs-body">
-                                    <div class="campo-data campo-1">
-                                        <label for="data-inicio">Data Inicial</label>
-                                        <input type="date" [(ngModel)]="dataInicio">
-                                    </div>
-                                    <div class="campo-data">
-                                        <label for="data-fim">Data Final</label>
-                                        <input type="date" [(ngModel)]="dataFim">
-                                    </div>
-                                </div>
-                                <div class="modal-footer modal-prs-footer">
-                                    <button class="button-modal" type="button" (click)="updateDates()">
-                                        Ok
-                                    </button>
-                                </div>
-                            </ng-template>
-                        </div> 
-                    </div> 
-                </div>
-            </div>
-            <div class="card">
-                <h2>Atividades Concluídas<br><span>(do jira)</span></h2>
-                <div class="activities-count">
-                    <p>
-                        <b>
-                            {{currentTasksCountJira.counttasks}}
-                        </b>
-                    </p>
-                </div>
-                <div class="pr-count-selector">
-                    <div ngbDropdown>
-                        <button type="button" class="dropdown-actv-toggle" id="dropdownActv" ngbDropdownToggle>
-                            {{selectedActivities}}
-                        </button>
-                        <div ngbDropdownMenu aria-labelledby="dropdownActv">
-                            <button ngbDropdownItem (click)="updateTasksCount('Todos')">
-                                Todos
-                            </button>
-                            <button ngbDropdownItem (click)="updateTasksCount('Ano anterior')">
-                                Ano anterior
-                            </button>
-                            <button ngbDropdownItem (click)="updateTasksCount('Este ano')">
-                                Este ano
-                            </button>
-                            <button ngbDropdownItem (click)="updateTasksCount('7 d')">
-                                7 d
-                            </button>
-                            <button ngbDropdownItem (click)="updateTasksCount('30 d')">
-                                30 d
-                            </button>
-                            <button ngbDropdownItem (click)="updateTasksCount('90 d')">
-                                90 d
-                            </button>
-                            <button ngbDropdownItem (click)="openActivity(contentActivity)">
-                                Data personalizada
-                            </button>
-                            <ng-template #content let-c="close" let-d="dismiss">
-                                <div class="modal-header modal-prs-header">
-                                    <h4 class="modal-title">
-                                        Selecione as datas
-                                    </h4>
-                                    <button type="button" class="close button-modal" aria-label="Close" (click)="d('Cross click')">
-                                        <span aria-hidden="true">X</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body modal-prs-body">
-                                    <div class="campo-data campo-1">
-                                        <label for="data-inicio">Data Inicial</label>
-                                        <input type="date" [(ngModel)]="dataInicioActivity">
-                                    </div>
-                                    <div class="campo-data">
-                                        <label for="data-fim">Data Final</label>
-                                        <input type="date" [(ngModel)]="dataFimActivity">
-                                    </div>
-                                </div>
-                                <div class="modal-footer modal-prs-footer">
-                                    <button class="button-modal" type="button" (click)="updateDatesActivity()">
-                                        Ok
-                                    </button>
-                                </div>
-                            </ng-template> <ng-template #contentActivity let-c="close" let-d="dismiss">
-                                <div class="modal-header modal-activities-header">
-                                    <h4 class="modal-title">
-                                        Selecione as datas
-                                    </h4>
-                                    <button type="button" class="close button-modal" aria-label="Close" (click)="d('Cross click')">
-                                        <span aria-hidden="true">X</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body modal-activities-body">
-                                    <div class="campo-data campo-1">
-                                        <label for="data-inicio-activity">Data Inicial</label>
-                                        <input type="date" [(ngModel)]="dataInicioActivity">
-                                    </div>
-                                    <div class="campo-data">
-                                        <label for="data-fim-activity">Data Final</label>
-                                        <input type="date" [(ngModel)]="dataFimActivity">
-                                    </div>
-                                </div>
-                                <div class="modal-footer modal-activities-footer">
-                                    <button class="button-modal" type="button" (click)="updateDatesActivity()">
-                                        Ok
-                                    </button>
-                                </div>
-                            </ng-template>
-                        </div> 
-                    </div> 
-                </div>
-            </div> 
-            <div class="card">
-                <h2>Story Points<br><span>(do jira)</span></h2>
-                <div class="pr-count">
-                    <p>
-                        <b>
-                            {{currentTasksCountJira.counttasks * 3}}
-                        </b>
-                    </p>
-                </div>
-            </div>
-            <div class="card">
-                <h2>Biografia</h2>
-                <div class="bio-content">
-                    <p class="card-colaborador-content">{{ currentColaborador.miniBio}}</p>
-                    <div class="tecnologias-bio">
-                        <span>Tecnologias:</span>
-                        <p 
-                            *ngFor="let habilidade of habilidadesByColaborador; 
-                            let isLast = last"
-                        >
-                            {{ habilidade.habilidade.nome }}{{ isLast ? ' ' : ',' }}
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="card list-metas">
-                <h2>Metas Estabelecidas</h2>
-                <div class="card-colaborador-content list-content">
-                    <ul>
-                        <li *ngFor="let competenciaNota of currentMetasColaborador.competencia;">
-                            <p>{{competenciaNota.competencia}} - <span>{{competenciaNota.nota}}</span></p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="card">
-                <h2>Indice de Sobrevivência do Dev</h2>
-                <div class="pr-count">
-                    <p><b>{{currentValorIndiceDeSobrevivencia.valorIndice}}</b></p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-9">
-            <section class="table-time">
-                <div class="table-responsive">
-                    <table class="competencies">
-                        <thead>
-                            <tr>
-                                <th>Competências</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="legend">
-                                <td>
-                                    <div class="informations">
-                                        <div class="advancement">
-                                            <div class="color"></div>
-                                            <span>Progresso</span>
-                                        </div>
-                                        <div class="goal">
-                                            <div class="color"></div>
-                                            <span>Meta</span>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="levels">
-                                        <span>0</span>
-                                        <span>2</span>
-                                        <span>4</span>
-                                        <span>6</span>
-                                        <span>8</span>
-                                        <span>10</span>
-                                    </div>
-                                </td>
-                            </tr>
-                            <ng-container *ngIf="searchResultsCompetencias.length===0">
-                            <tr *ngFor="let competencia of competencias" >
-                                <td>{{competencia.competencia.nome}}</td>
-                                <td>
-                                    <div class="progress-bar-content">
-                                        <div class="progress-bar">
-                                            <div class="progress-goal"
-                                                [ngStyle]="{'width': (competencia.progresso * 10).toString() + '%'}">
-                                                <div class="goal-value" style="left: 96.5%">
-                                                    <span>{{competencia.meta}}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            </ng-container>
-                            <ng-container *ngIf="searchResultsCompetencias.length>0">
-                            <tr
-                             *ngFor="let competencia of searchResultsCompetencias">
-                                <td>{{competencia.competencia.nome}}</td>
-                                <td>
-                                    <div class="progress-bar-content">
-                                        <div class="progress-bar">
-                                            <div class="progress-goal"
-                                                [ngStyle]="{'width': (competencia.progresso * 10).toString() + '%'}">
-                                                <div class="goal-value" style="left: 96.5%">
-                                                    <span>{{competencia.meta}}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            </ng-container>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-        </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
-            <section>
-                <div class="content">
-                    <div class="table-responsive">
-                        <table class="courses">
-                            <thead>
-                                <tr>
-                                    <th>Ações necessárias para concluir as metas</th>
-                                    <th>Progresso</th>
-                                    <th>Iniciado</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr></tr>
-                                <ng-container *ngIf="searchResultsAcoes.length===0">
-                                <tr *ngFor="let acao of acoes">
-                                    <td>
-                                        <div class="discipline">
-                                            <!---<div class="method">
-                                                <img src="./assets/images/tv.png" alt="tv">
-                                                <b>Online</b>
-                                            </div>-->
-                                            <span>{{acao.acao.nome}}</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="progress-bar">
-                                            <div class="progress-goal"
-                                                [ngStyle]="{'width': (acao.progresso).toString() + '%'}">
-                                                <span>{{acao.progresso}}%</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td></td>
-                                </tr>
+        <div class="col-md-4">
+            <div class="cards-container">
+                <div class="dev-card">
+                    <h2>
+                        Tarefas Concluídas
+                        <span>(jira)</span>
+                    </h2>
+                    <p>
+                        <b>
+                            <!-- {{currentTasksCountJira.counttasks}} -->
+                            <ng-container *ngIf="currentColaborador.nome === 'Mavis Martins'">
+                                25
+                             </ng-container>
+                             <ng-container *ngIf="currentColaborador.nome === 'Monaliza Loren'">
+                                7
                             </ng-container>
-                            <ng-container *ngIf="searchResultsAcoes.length>0">
-                                <tr *ngFor="let acao of searchResultsAcoes">
-                                    <td>
-                                        <div class="discipline">
-                                            <!---<div class="method">
-                                                <img src="./assets/images/tv.png" alt="tv">
-                                                <b>Online</b>
-                                            </div>-->
-                                            <span>{{acao.acao.nome}}</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="progress-bar">
-                                            <div class="progress-goal"
-                                                [ngStyle]="{'width': (acao.progresso).toString() + '%'}">
-                                                <span>{{acao.progresso}}%</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td></td>
-                                </tr>
+                            <ng-container *ngIf="currentColaborador.nome === 'Tiago Santos'">
+                                18
                             </ng-container>
-                            </tbody>
-                        </table>
-                    </div>
+                        </b>
+                    </p>
                 </div>
-            </section>
+                <div class="dev-card">
+                    <h2>
+                        Pontos
+                        <span>(jira)</span>
+                    </h2>
+                    <p>
+                        <b>
+                            <!-- {{currentTasksCountJira.counttasks * 3}} -->
+                            <ng-container *ngIf="currentColaborador.nome === 'Mavis Martins'">
+                                85
+                             </ng-container>
+                             <ng-container *ngIf="currentColaborador.nome === 'Monaliza Loren'">
+                                20
+                            </ng-container>
+                            <ng-container *ngIf="currentColaborador.nome === 'Tiago Santos'">
+                                65
+                            </ng-container>
+                        </b>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="cards-container">
+                <div class="dev-card">
+                    <h2>
+                        Pull Requests
+                        <span>(git)</span>
+                    </h2>
+                    <p>
+                        <b>
+                            <!-- {{currentVcsPullRequest.countpr}} -->
+                             <ng-container *ngIf="currentColaborador.nome === 'Mavis Martins'">
+                                7
+                             </ng-container>
+                             <ng-container *ngIf="currentColaborador.nome === 'Monaliza Loren'">
+                                1
+                            </ng-container>
+                            <ng-container *ngIf="currentColaborador.nome === 'Tiago Santos'">
+                                6
+                            </ng-container>
+                        </b>
+                    </p>
+                </div>
+                <div class="dev-card">
+                    <h2>
+                        Commits
+                        <span>(git)</span>
+                    </h2>
+                    <p>
+                        <b>
+                            <ng-container *ngIf="currentColaborador.nome === 'Mavis Martins'">
+                                30
+                             </ng-container>
+                             <ng-container *ngIf="currentColaborador.nome === 'Monaliza Loren'">
+                                10
+                            </ng-container>
+                            <ng-container *ngIf="currentColaborador.nome === 'Tiago Santos'">
+                                12
+                            </ng-container>
+                        </b>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="cards-container">
+                <div class="dev-card">
+                    <h2>
+                        Bugs/Defects
+                        <span>(jira)</span>
+                    </h2>
+                    <p>
+                        <b>
+                            <ng-container *ngIf="currentColaborador.nome === 'Mavis Martins'">
+                                12
+                             </ng-container>
+                             <ng-container *ngIf="currentColaborador.nome === 'Monaliza Loren'">
+                                3
+                            </ng-container>
+                            <ng-container *ngIf="currentColaborador.nome === 'Tiago Santos'">
+                                5
+                            </ng-container>
+                        </b>
+                    </p>
+                </div>
+                <div class="dev-card">
+                    <h2>
+                        Número de Esteiras
+                    </h2>
+                    <p>
+                        <b>
+                            <ng-container *ngIf="currentColaborador.nome === 'Mavis Martins'">
+                                1
+                             </ng-container>
+                             <ng-container *ngIf="currentColaborador.nome === 'Monaliza Loren'">
+                                1
+                            </ng-container>
+                            <ng-container *ngIf="currentColaborador.nome === 'Tiago Santos'">
+                                1
+                            </ng-container>
+                        </b>
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
-    <section class="graphic">
+    <!-- <section class="graphic">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -419,6 +268,63 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
     </div>
+    <!-- <div class="dev-filter-container">
+        <div class="pr-count-selector">
+            <div ngbDropdown>
+                <button type="button" class="dropdown-pr-toggle" id="dropdownPr" ngbDropdownToggle>
+                    {{selectedTimePr}}
+                </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownPr">
+                    <button ngbDropdownItem (click)="updatePrCountToTotal()">
+                        Todos
+                    </button>
+                    <button ngbDropdownItem (click)="updatePrCountToLastYear()">
+                        Ano anterior
+                    </button>
+                    <button ngbDropdownItem (click)="updatePrCountToThisYear()">
+                        Este ano
+                    </button>
+                    <button ngbDropdownItem (click)="updatePrCountToLast7Days()">
+                        7 d
+                    </button>
+                    <button ngbDropdownItem (click)="updatePrCountToLast30Days()">
+                        30 d
+                    </button>
+                    <button ngbDropdownItem (click)="updatePrCountToLast90Days()">
+                        90 d
+                    </button>
+                    <button ngbDropdownItem (click)="open(content)">
+                        Data personalizada
+                    </button>
+                    <ng-template #content let-c="close" let-d="dismiss">
+                        <div class="modal-header modal-prs-header">
+                            <h4 class="modal-title">
+                                Selecione as datas
+                            </h4>
+                            <button type="button" class="close button-modal" aria-label="Close" (click)="d('Cross click')">
+                                <span aria-hidden="true">X</span>
+                            </button>
+                        </div>
+                        <div class="modal-body modal-prs-body">
+                            <div class="campo-data campo-1">
+                                <label for="data-inicio">Data Inicial</label>
+                                <input type="date" [(ngModel)]="dataInicio">
+                            </div>
+                            <div class="campo-data">
+                                <label for="data-fim">Data Final</label>
+                                <input type="date" [(ngModel)]="dataFim">
+                            </div>
+                        </div>
+                        <div class="modal-footer modal-prs-footer">
+                            <button class="button-modal" type="button" (click)="updateDates()">
+                                Ok
+                            </button>
+                        </div>
+                    </ng-template>
+                </div> 
+            </div> 
+        </div>
+    </div> -->
 </main>  
