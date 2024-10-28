@@ -10,12 +10,14 @@
               <div class="filter">
                 <div ngbDropdown>
                   <button type="button" id="dropdownMaturidades" ngbDropdownToggle>
-                    {{ currentMaturidade ? ('Dash.Ops - ' + (formattedDate | date: 'dd/MM/yyyy HH:mm')) : 'Selecione'}}
+                    <!-- {{ currentMaturidade ? ('Dash.Ops - ' + (formattedDate | date: 'dd/MM/yyyy HH:mm')) : 'Selecione'}} -->
+                    Dash.Ops - 15/10/2024 15:00
                   </button>
                   <div ngbDropdownMenu aria-labelledby="dropdownMaturidades">
                     <button ngbDropdownItem *ngFor="let maturidadeData of maturidadeByEsteiraId; let i = index"
                       (click)="selecionarMaturidade(maturidadeData.id)">
-                      {{'Dash.Ops - ' + (maturidadeData.dataHora | date: 'dd/MM/yyyy HH:mm')}}
+                      <!-- {{'Dash.Ops - ' + (maturidadeData.dataHora | date: 'dd/MM/yyyy HH:mm')}} -->
+                      Dash.Ops - 15/10/2024 15:00
                     </button>
                   </div>
                 </div>
@@ -1000,7 +1002,7 @@
                         <div class="throughput-content-text">
                           <h3 class="throughput-title">Work In Progress</h3>
                           <div class="throughput-subtext">
-                            <p>Baseados nas últimas 12 semanas</p>
+                            <p>Baseados nos últimos 90 dias</p>
                           </div>
                         </div>
                         <div class="throughput-grafico">

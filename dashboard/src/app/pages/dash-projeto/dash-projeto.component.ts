@@ -317,7 +317,7 @@ public lineChartData: ChartDataset<'line'>[] = [
     type: 'line',
   },
 ];
-  public lineChartLabels: string[] = ['Mar', 'Abr', 'Mai'];
+  public lineChartLabels: string[] = ['Jul', 'Ago', 'Set'];
 public lineChartOptions: ChartOptions = {
   responsive: true,
   animation: false,
@@ -350,7 +350,7 @@ public lineChartOptions: ChartOptions = {
       type: 'line',
     },
   ];
-    public throughputChartLabels: string[] = ['Mar', 'Abr', 'Mai'];
+    public throughputChartLabels: string[] = ['Jul', 'Ago', 'Set'];
   public throughputChartOptions: ChartOptions = {
     responsive: true,
     animation: false,
